@@ -161,7 +161,7 @@ function DiagramBlock({ block, topicColor }) {
 
 function ComparisonBlock({ block, topicColor }) {
   return (
-    <div style={{ margin: '16px 0', display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '12px', alignItems: 'start' }}>
+    <div className="comparison-block" style={{ margin: '16px 0' }}>
       <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.2)' }}>
         <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#10b981', marginBottom: '10px' }}>{block.left.title}</div>
         <ul style={{ margin: 0, paddingLeft: '18px', listStyle: 'none' }}>
@@ -170,7 +170,7 @@ function ComparisonBlock({ block, topicColor }) {
           ))}
         </ul>
       </div>
-      <div style={{ alignSelf: 'center', fontWeight: 900, fontSize: '1.2rem', color: 'var(--color-text-muted)', padding: '0 4px' }}>VS</div>
+      <div style={{ alignSelf: 'center', textAlign: 'center', fontWeight: 900, fontSize: '1.2rem', color: 'var(--color-text-muted)', padding: '4px' }}>VS</div>
       <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)' }}>
         <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#ef4444', marginBottom: '10px' }}>{block.right.title}</div>
         <ul style={{ margin: 0, paddingLeft: '18px', listStyle: 'none' }}>
