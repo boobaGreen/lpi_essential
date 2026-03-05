@@ -3,6 +3,8 @@ import { getTopic, getLesson } from '../data/topics.js'
 import { useGame } from '../context/GameContext.jsx'
 import { quizzesByTopic } from '../data/quizzes/index.js'
 import { lessonContent } from '../data/lessonContent.js'
+import { extendedContent } from '../data/extendedContent/index.js'
+import ExtendedContent from '../components/lesson/ExtendedContent.jsx'
 import Quiz from '../components/games/Quiz.jsx'
 import { motion } from 'framer-motion'
 import { ArrowLeft, CheckCircle, BookOpen, Sparkles } from 'lucide-react'
@@ -185,6 +187,11 @@ export default function LessonPage() {
           <h3 className="font-bold" style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Contenuto in arrivo!</h3>
           <p style={{ color: 'var(--color-text-muted)' }}>Questa lezione sarà disponibile presto con fumetti e contenuti interattivi.</p>
         </div>
+      )}
+
+      {/* Extended Content */}
+      {extendedContent[lessonId] && (
+        <ExtendedContent data={extendedContent[lessonId]} topicColor={topicColor} />
       )}
 
       {/* Quiz Section */}
