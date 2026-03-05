@@ -1,0 +1,161 @@
+// RHCSA Quiz — Topic 8: Utenti e Gruppi (Italiano) — 15 domande
+
+export const rhcsaTopic8Quizzes = [
+  // ─── Utenti ───
+  {
+    id: 'q-rhcsa-8-1-001', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Quale comando crea un utente "mario" con home directory e shell bash?',
+    options: [
+      'useradd mario',
+      'useradd -m -s /bin/bash mario',
+      'adduser mario --shell bash',
+      'usermod -m -s /bin/bash mario',
+    ],
+    correct: 1,
+    explanation: '-m crea la home directory, -s specifica la shell. Su RHEL, useradd crea la home di default con il profilo in /etc/default/useradd.',
+  },
+  {
+    id: 'q-rhcsa-8-1-002', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Quale comando imposta la password per l\'utente "mario"?',
+    options: ['usermod -p mario', 'passwd mario', 'chpasswd mario', 'shadow mario'],
+    correct: 1,
+    explanation: 'passwd <utente> imposta interattivamente la password. Solo root può cambiare la password di altri utenti.',
+  },
+  {
+    id: 'q-rhcsa-8-1-003', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Come si crea un utente "service" senza home directory e con shell /sbin/nologin (account di servizio)?',
+    options: [
+      'useradd -r -s /sbin/nologin service',
+      'useradd -M -s /sbin/nologin service',
+      'useradd --no-home --system service',
+      'Sia A che B',
+    ],
+    correct: 3,
+    explanation: '-r crea un account di sistema (UID basso), -M non crea home. Entrambi utili per account di servizio.',
+  },
+  {
+    id: 'q-rhcsa-8-1-004', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Come si blocca l\'account "mario" impedendone il login?',
+    options: [
+      'usermod -L mario',
+      'passwd -l mario',
+      'usermod -s /sbin/nologin mario',
+      'Tutte le precedenti funzionano',
+    ],
+    correct: 3,
+    explanation: 'usermod -L aggiunge ! alla password in shadow; passwd -l fa lo stesso; -s /sbin/nologin cambia la shell. Metodi diversi.',
+  },
+  {
+    id: 'q-rhcsa-8-1-005', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Come si imposta la scadenza della password di "mario" a 90 giorni?',
+    options: [
+      'passwd -x 90 mario',
+      'chage -M 90 mario',
+      'usermod --max-age 90 mario',
+      'Sia A che B',
+    ],
+    correct: 3,
+    explanation: 'chage -M <giorni> e passwd -x <giorni> impostano entrambi il numero massimo di giorni prima che la password scada.',
+  },
+  {
+    id: 'q-rhcsa-8-1-006', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Quali file contengono rispettivamente le informazioni utente e le password hashate?',
+    options: [
+      '/etc/passwd e /etc/shadow',
+      '/etc/users e /etc/passwords',
+      '/etc/shadow e /etc/passwd',
+      '/etc/passwd e /etc/group',
+    ],
+    correct: 0,
+    explanation: '/etc/passwd = info utente (pubblica), /etc/shadow = password hashate (solo root). /etc/group = gruppi.',
+  },
+  {
+    id: 'q-rhcsa-8-1-007', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Come si verifica a quale gruppo appartiene l\'utente corrente?',
+    options: ['whoami', 'id', 'groups', 'Sia B che C'],
+    correct: 3,
+    explanation: 'id mostra UID, GID e tutti i gruppi. groups mostra solo i nomi dei gruppi. Entrambi utili.',
+  },
+  // ─── Gruppi e sudo ───
+  {
+    id: 'q-rhcsa-8-2-001', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Come si aggiunge "mario" al gruppo supplementare "wheel"?',
+    options: [
+      'usermod -G wheel mario',
+      'usermod -aG wheel mario',
+      'groupadd wheel mario',
+      'gpasswd -a mario wheel',
+    ],
+    correct: 1,
+    explanation: 'usermod -aG (append to Group) aggiunge al gruppo senza rimuovere gli altri. Senza -a si sostituiscono tutti i gruppi!',
+  },
+  {
+    id: 'q-rhcsa-8-2-002', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Su RHEL9, il gruppo "wheel" permette a un utente di:',
+    options: [
+      'Accedere alla console fisica',
+      'Eseguire comandi come root con sudo',
+      'Modificare i file di sistema',
+      'Accedere a tutte le directory',
+    ],
+    correct: 1,
+    explanation: 'Il gruppo wheel è configurato in /etc/sudoers per permettere sudo a tutti i suoi membri.',
+  },
+  {
+    id: 'q-rhcsa-8-2-003', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Come si aggiunge la regola sudo per permettere a "mario" di eseguire tutti i comandi senza password?',
+    options: [
+      'Aggiungere in /etc/sudoers: mario ALL=(ALL) NOPASSWD:ALL',
+      'Aggiungere in /etc/sudoers.d/mario: mario ALL=(ALL) NOPASSWD:ALL',
+      'usermod -G sudo mario',
+      'Sia A che B',
+    ],
+    correct: 3,
+    explanation: 'Sia /etc/sudoers (con visudo) che file in /etc/sudoers.d/ funzionano. /etc/sudoers.d/ è più ordinato.',
+  },
+  {
+    id: 'q-rhcsa-8-2-004', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Quale comando si usa per modificare /etc/sudoers in modo sicuro?',
+    options: ['vi /etc/sudoers', 'visudo', 'sudo edit /etc/sudoers', 'nano /etc/sudoers'],
+    correct: 1,
+    explanation: 'visudo valida la sintassi prima di salvare, impedendo di corrompere sudoers e perdere accesso sudo.',
+  },
+  {
+    id: 'q-rhcsa-8-2-005', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Come si crea un gruppo "developers" con GID 1500?',
+    options: [
+      'groupadd -g 1500 developers',
+      'groupadd developers --gid 1500',
+      'addgroup -g 1500 developers',
+      'groupmod -g 1500 developers',
+    ],
+    correct: 0,
+    explanation: 'groupadd -g <GID> <nome> crea il gruppo con l\'ID specificato. groupmod modifica un gruppo esistente.',
+  },
+  {
+    id: 'q-rhcsa-8-1-008', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Come si crea un utente "mario" con UID 1500, home /home/mario e commento "Mario Rossi"?',
+    options: [
+      'useradd -u 1500 -c "Mario Rossi" -m mario',
+      'useradd -i 1500 -d "Mario Rossi" mario',
+      'useradd -U 1500 --comment "Mario Rossi" mario',
+      'adduser mario -u 1500',
+    ],
+    correct: 0,
+    explanation: 'useradd: -u UID, -c commento (GECOS), -m crea home. -d specifica il PATH della home (non il commento).',
+  },
+  {
+    id: 'q-rhcsa-8-2-006', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Come si mostra quando scade l\'account e la password di "mario"?',
+    options: ['chage -l mario', 'passwd -S mario', 'cat /etc/shadow | grep mario', 'Tutte le precedenti'],
+    correct: 3,
+    explanation: 'chage -l è il più leggibile. passwd -S mostra lo stato. /etc/shadow contiene i raw data.',
+  },
+  {
+    id: 'q-rhcsa-8-1-009', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Come si elimina l\'utente "mario" insieme alla sua home directory?',
+    options: ['userdel mario', 'userdel -r mario', 'deluser mario --remove-home', 'usermod -d /dev/null mario'],
+    correct: 1,
+    explanation: 'userdel -r elimina l\'utente E la sua home directory e mail spool. Senza -r solo l\'account viene rimosso.',
+  },
+]
