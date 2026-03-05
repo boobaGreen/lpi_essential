@@ -44,7 +44,7 @@ export default function Navbar() {
         background: 'rgba(13, 17, 23, 0.92)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--color-border)',
-        overflow: 'hidden',          // ← impedisce qualsiasi overflow orizzontale
+        overflowX: 'clip',           // previene scroll orizzontale senza tagliare il dropdown
       }}
     >
       <div

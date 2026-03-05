@@ -62,7 +62,7 @@ export default function LanguageSelector() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.15 }}
-            className="glass-card"
+            className="glass-card glass-card--dropdown"
             style={{
               position: 'absolute',
               top: 'calc(100% + 8px)',

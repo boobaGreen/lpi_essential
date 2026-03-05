@@ -92,6 +92,15 @@ body {
   transform: translateY(-2px);
 }
 
+/* Variante per dropdown: niente transform al hover */
+.glass-card--dropdown {
+  border-radius: 12px;
+}
+.glass-card--dropdown:hover {
+  transform: none;
+}
+
+
 .neon-text {
   text-shadow:
     0 0 10px currentColor,
