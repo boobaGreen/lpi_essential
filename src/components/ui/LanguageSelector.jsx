@@ -9,7 +9,7 @@ export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const buttonRef = useRef(null)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
-  const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 })
+  const [dropdownPos, setDropdownPos] = useState(null)
 
   useEffect(() => {
     const handler = () => setIsMobile(window.innerWidth < 768)
@@ -17,20 +17,21 @@ export default function LanguageSelector() {
     return () => window.removeEventListener('resize', handler)
   }, [])
 
-  // Calcola la posizione del dropdown in base alla posizione del bottone
-  useEffect(() => {
-    if (isOpen && buttonRef.current) {
+  const activeLang = languages.find(l => l.code === currentLang) || languages[0]
+
+  // Calcola la posizione PRIMA di aprire — nessun salto al primo render
+  const handleToggle = () => {
+    if (!isOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect()
       setDropdownPos({
         top: rect.bottom + 8,
         right: window.innerWidth - rect.right,
       })
     }
-  }, [isOpen])
+    setIsOpen(prev => !prev)
+  }
 
-  const activeLang = languages.find(l => l.code === currentLang) || languages[0]
-
-  // Chiude il dropdown cliccando fuori
+  // Chiude cliccando fuori
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (buttonRef.current && !buttonRef.current.contains(event.target)) {
@@ -45,7 +46,7 @@ export default function LanguageSelector() {
     <div style={{ position: 'relative' }}>
       <button
         ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -66,41 +67,51 @@ export default function LanguageSelector() {
       >
         {!isMobile && <Globe size={16} />}
         <span style={{ fontSize: isMobile ? '1.1rem' : '1.2rem' }}>{activeLang.flag}</span>
-        {!isMobile && <ChevronDown size={14} style={{ color: 'var(--color-text-muted)', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />}
+        {!isMobile && (
+          <ChevronDown
+            size={14}
+            style={{
+              color: 'var(--color-text-muted)',
+              transform: isOpen ? 'rotate(180deg)' : 'none',
+              transition: 'transform 0.2s',
+            }}
+          />
+        )}
       </button>
 
-      {/* Portal: overlay blur + dropdown menu, entrambi nel body per stare sopra tutto */}
       {createPortal(
-        <AnimatePresence>
-          {isOpen && (
-            <>
-              {/* Overlay sfocato (solo mobile) */}
-              {isMobile && (
-                <motion.div
-                  key="lang-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() => setIsOpen(false)}
-                  style={{
-                    position: 'fixed',
-                    inset: 0,
-                    background: 'rgba(0, 0, 0, 0.6)',
-                    backdropFilter: 'blur(8px)',
-                    WebkitBackdropFilter: 'blur(8px)',
-                    zIndex: 9998,
-                  }}
-                />
-              )}
+        <>
+          {/* Overlay sfocato — solo mobile, AnimatePresence separato */}
+          <AnimatePresence>
+            {isOpen && isMobile && (
+              <motion.div
+                key="lang-overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                onClick={() => setIsOpen(false)}
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  background: 'rgba(0, 0, 0, 0.6)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  zIndex: 9998,
+                }}
+              />
+            )}
+          </AnimatePresence>
 
-              {/* Dropdown menu — sopra l'overlay */}
+          {/* Dropdown menu — AnimatePresence separato, niente salto */}
+          <AnimatePresence>
+            {isOpen && dropdownPos && (
               <motion.div
                 key="lang-dropdown"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.15 }}
+                initial={{ opacity: 0, scale: 0.95, y: -6 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -6 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
                 className="glass-card glass-card--dropdown"
                 style={{
                   position: 'fixed',
@@ -113,6 +124,7 @@ export default function LanguageSelector() {
                   flexDirection: 'column',
                   gap: '4px',
                   boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+                  transformOrigin: 'top right',
                 }}
               >
                 {languages.map(lang => (
@@ -145,9 +157,9 @@ export default function LanguageSelector() {
                   </button>
                 ))}
               </motion.div>
-            </>
-          )}
-        </AnimatePresence>,
+            )}
+          </AnimatePresence>
+        </>,
         document.body
       )}
     </div>
