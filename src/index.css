@@ -291,15 +291,78 @@ body {
 }
 
 /* ============================================
-   Deep Dive CTA button (ExtendedContent)
+   Deep Dive Accordion — mobile enhancements
    ============================================ */
 
+/* Shimmer sweep across the card, runs periodically */
+@keyframes deep-dive-shimmer {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(220%) skewX(-15deg); }
+}
+
+/* Breathing glow border */
+@keyframes deep-dive-border-pulse {
+  0%, 100% { box-shadow: 0 0 0px transparent; }
+  50%       { box-shadow: 0 0 0 3px var(--dd-color, #00b4ff44), 0 4px 20px var(--dd-color, #00b4ff30); }
+}
+
+/* Tap ripple */
+@keyframes deep-dive-tap {
+  from { opacity: 0.35; transform: scale(0.95); }
+  to   { opacity: 0;    transform: scale(1.04); }
+}
+
+/* The shimmer overlay element */
+.deep-dive-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.deep-dive-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.10),
+    transparent
+  );
+  animation: deep-dive-shimmer 3.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+/* Border pulse — applied on the wrapper */
+.deep-dive-pulse {
+  animation: deep-dive-border-pulse 2.4s ease-in-out infinite;
+}
+
+/* Mobile tap highlight */
+.deep-dive-btn:active {
+  background-color: rgba(255,255,255,0.04);
+}
+
+/* CTA label: hidden by default (mobile), shown ≥480px */
 .deep-dive-cta {
   display: none !important;
+}
+
+/* Mobile-only tap hint (shows BELOW 480px) */
+.deep-dive-tap-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 @media (min-width: 480px) {
   .deep-dive-cta {
     display: block !important;
+  }
+  .deep-dive-tap-hint {
+    display: none !important;
   }
 }

@@ -257,26 +257,16 @@ export default function ExtendedContent({ data, topicColor, t }) {
       <motion.button
         onClick={() => setIsExpanded(!isExpanded)}
         whileHover={{ y: -3, boxShadow: `0 8px 32px ${topicColor}30` }}
-        whileTap={{ scale: 0.98 }}
-        animate={!isExpanded ? {
-          boxShadow: [
-            `0 0 0px ${topicColor}00`,
-            `0 4px 24px ${topicColor}45`,
-            `0 0 0px ${topicColor}00`,
-          ],
-        } : {}}
-        transition={!isExpanded ? {
-          duration: 2.8,
-          repeat: Infinity,
-          repeatDelay: 2.5,
-          ease: 'easeInOut',
-        } : { duration: 0.25 }}
+        whileTap={{ scale: 0.96, backgroundColor: `${topicColor}08` }}
+        className={`deep-dive-btn${!isExpanded ? ' deep-dive-pulse' : ''}`}
         style={{
+          '--dd-color': topicColor + '44',
           width: '100%',
+          position: 'relative',
           background: isExpanded
-            ? `linear-gradient(135deg, ${topicColor}20 0%, ${topicColor}08 100%)`
-            : `linear-gradient(135deg, rgba(255,255,255,0.07) 0%, ${topicColor}14 100%)`,
-          border: `2px solid ${isExpanded ? topicColor + '80' : topicColor + '45'}`,
+            ? `linear-gradient(135deg, ${topicColor}22 0%, ${topicColor}0a 100%)`
+            : `linear-gradient(135deg, rgba(255,255,255,0.07) 0%, ${topicColor}18 100%)`,
+          border: `2px solid ${isExpanded ? topicColor + '90' : topicColor + '55'}`,
           borderRadius: isExpanded ? '14px 14px 0 0' : '14px',
           cursor: 'pointer',
           padding: 0,
@@ -285,14 +275,17 @@ export default function ExtendedContent({ data, topicColor, t }) {
           transition: 'border-color 0.3s ease, border-radius 0.3s ease, background 0.3s ease',
         }}
       >
+        {/* Shimmer sweep overlay — always present when collapsed */}
+        {!isExpanded && <div className="deep-dive-shimmer" />}
+
         {/* Top accent bar — vivid gradient stripe */}
         {!isExpanded && (
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             style={{
-              height: '3px',
-              background: `linear-gradient(90deg, ${topicColor}, ${topicColor}60, transparent)`,
+              height: '4px',
+              background: `linear-gradient(90deg, ${topicColor}, ${topicColor}80, ${topicColor}20, transparent)`,
               transformOrigin: 'left',
             }}
           />
@@ -374,7 +367,6 @@ export default function ExtendedContent({ data, topicColor, t }) {
 
           {/* CTA right side */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-            {/* Explicit CTA pill */}
             <AnimatePresence>
               {!isExpanded && (
                 <motion.div
@@ -382,17 +374,32 @@ export default function ExtendedContent({ data, topicColor, t }) {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.2 }}
-                  style={{
-                    padding: '6px 14px', borderRadius: '8px',
-                    background: topicColor,
-                    color: '#0a0e1a',
-                    fontSize: '0.75rem', fontWeight: 800,
-                    letterSpacing: '0.05em',
-                    display: 'none', // hidden on mobile, shown via CSS
-                  }}
-                  className="deep-dive-cta"
                 >
-                  {t('expand') || 'Apri'}
+                  {/* Desktop CTA pill */}
+                  <div
+                    className="deep-dive-cta"
+                    style={{
+                      padding: '6px 16px', borderRadius: '8px',
+                      background: topicColor,
+                      color: '#0a0e1a',
+                      fontSize: '0.75rem', fontWeight: 800,
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    {t('expand') || 'Apri'}
+                  </div>
+                  {/* Mobile tap hint */}
+                  <motion.div
+                    className="deep-dive-tap-hint"
+                    animate={{ opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{
+                      fontSize: '0.7rem', fontWeight: 700,
+                      color: topicColor, letterSpacing: '0.04em',
+                    }}
+                  >
+                    👆 {t('expand') || 'Apri'}
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
