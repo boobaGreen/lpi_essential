@@ -95,9 +95,10 @@ export default function LanguageSelector() {
                   position: 'fixed',
                   inset: 0,
                   background: 'rgba(0, 0, 0, 0.6)',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
+                  backdropFilter: 'blur(5px)',
+                  WebkitBackdropFilter: 'blur(5px)',
                   zIndex: 9998,
+                  willChange: 'opacity',
                 }}
               />
             )}
@@ -108,10 +109,10 @@ export default function LanguageSelector() {
             {isOpen && dropdownPos && (
               <motion.div
                 key="lang-dropdown"
-                initial={{ opacity: 0, scale: 0.95, y: -6 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -6 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
+                initial={{ opacity: 0, ...(isMobile ? {} : { scale: 0.95, y: -6 }) }}
+                animate={{ opacity: 1, ...(isMobile ? {} : { scale: 1, y: 0 }) }}
+                exit={{ opacity: 0, ...(isMobile ? {} : { scale: 0.95, y: -6 }) }}
+                transition={{ duration: isMobile ? 0.12 : 0.15, ease: 'easeOut' }}
                 className="glass-card glass-card--dropdown"
                 style={{
                   position: 'fixed',
