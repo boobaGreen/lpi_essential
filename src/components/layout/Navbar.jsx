@@ -1,13 +1,25 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useGame } from '../../context/GameContext.jsx'
 import { Flame, Gamepad2, GraduationCap, Home, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches)
+  useEffect(() => {
+    const mql = window.matchMedia(query)
+    const handler = (e) => setMatches(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
+  }, [query])
+  return matches
+}
 
 export default function Navbar() {
   const { xp, level, levelTitle, xpProgress, streak } = useGame()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   const links = [
     { to: '/', label: 'Home', icon: Home },
@@ -15,53 +27,101 @@ export default function Navbar() {
     { to: '/exam', label: 'Esame', icon: GraduationCap },
   ]
 
+  // Close mobile menu when switching to desktop
+  useEffect(() => {
+    if (isDesktop) setMobileOpen(false)
+  }, [isDesktop])
+
   return (
-    <nav className="sticky top-0 z-50 bg-[var(--color-bg-secondary)]/90 backdrop-blur-md border-b border-[var(--color-border)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        background: 'rgba(13, 17, 23, 0.92)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid var(--color-border)',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 24px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '64px',
+          }}
+        >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 no-underline">
-            <span className="text-2xl">🐧</span>
-            <span className="text-xl font-bold gradient-text hidden sm:inline">LinuxQuest</span>
+          <Link to="/" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '1.5rem' }}>🐧</span>
+            <span className="font-bold gradient-text" style={{ fontSize: '1.25rem' }}>LinuxQuest</span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
-            {links.map(({ to, label, icon: Icon }) => (
-              <Link
-                key={to}
-                to={to}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium no-underline transition-colors ${
-                  location.pathname === to
-                    ? 'text-[var(--color-neon-blue)] bg-[var(--color-neon-blue)]/10'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-                }`}
-              >
-                <Icon size={18} />
-                {label}
-              </Link>
-            ))}
-          </div>
+          {isDesktop && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {links.map(({ to, label, icon: Icon }) => {
+                const active = location.pathname === to
+                return (
+                  <Link
+                    key={to}
+                    to={to}
+                    className="no-underline"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 16px',
+                      borderRadius: '10px',
+                      fontSize: '0.875rem',
+                      fontWeight: 600,
+                      color: active ? 'var(--color-neon-blue)' : 'var(--color-text-secondary)',
+                      background: active ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
+                      transition: 'color 0.2s, background 0.2s',
+                    }}
+                    onMouseEnter={e => { if (!active) { e.currentTarget.style.color = 'var(--color-text-primary)' } }}
+                    onMouseLeave={e => { if (!active) { e.currentTarget.style.color = 'var(--color-text-secondary)' } }}
+                  >
+                    <Icon size={18} />
+                    {label}
+                  </Link>
+                )
+              })}
+            </div>
+          )}
 
           {/* XP Bar + Stats */}
-          <div className="flex items-center gap-4">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             {/* Streak */}
             {streak > 0 && (
-              <div className="flex items-center gap-1 text-[var(--color-neon-orange)]">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-neon-orange)' }}>
                 <Flame size={18} />
-                <span className="text-sm font-bold">{streak}</span>
+                <span style={{ fontSize: '0.875rem', fontWeight: 700 }}>{streak}</span>
               </div>
             )}
 
             {/* Level & XP */}
-            <div className="flex items-center gap-3">
-              <div className="text-right hidden sm:block">
-                <div className="text-xs text-[var(--color-text-muted)]">Lv.{level}</div>
-                <div className="text-xs font-semibold text-[var(--color-neon-green)]">{xp} XP</div>
-              </div>
-              <div className="w-24 h-2 bg-[var(--color-xp-bg)] rounded-full overflow-hidden">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {isDesktop && (
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>Lv.{level}</div>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--color-neon-green)' }}>{xp} XP</div>
+                </div>
+              )}
+              <div style={{ width: '96px', height: '8px', background: 'var(--color-xp-bg)', borderRadius: '9999px', overflow: 'hidden' }}>
                 <motion.div
-                  className="h-full bg-gradient-to-r from-[var(--color-neon-green)] to-[var(--color-neon-blue)] rounded-full"
+                  style={{
+                    height: '100%',
+                    background: 'linear-gradient(to right, var(--color-neon-green), var(--color-neon-blue))',
+                    borderRadius: '9999px',
+                  }}
                   initial={{ width: 0 }}
                   animate={{ width: `${xpProgress}%` }}
                   transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -70,41 +130,60 @@ export default function Navbar() {
             </div>
 
             {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 text-[var(--color-text-secondary)]"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            {!isDesktop && (
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                style={{
+                  padding: '8px',
+                  color: 'var(--color-text-secondary)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* Mobile Nav */}
       <AnimatePresence>
-        {mobileOpen && (
+        {mobileOpen && !isDesktop && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden border-t border-[var(--color-border)] overflow-hidden"
+            style={{
+              borderTop: '1px solid var(--color-border)',
+              overflow: 'hidden',
+            }}
           >
-            <div className="px-4 py-3 space-y-2">
-              {links.map(({ to, label, icon: Icon }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg no-underline transition-colors ${
-                    location.pathname === to
-                      ? 'text-[var(--color-neon-blue)] bg-[var(--color-neon-blue)]/10'
-                      : 'text-[var(--color-text-secondary)]'
-                  }`}
-                >
-                  <Icon size={20} />
-                  {label}
-                </Link>
-              ))}
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {links.map(({ to, label, icon: Icon }) => {
+                const active = location.pathname === to
+                return (
+                  <Link
+                    key={to}
+                    to={to}
+                    onClick={() => setMobileOpen(false)}
+                    className="no-underline"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '12px 16px',
+                      borderRadius: '10px',
+                      color: active ? 'var(--color-neon-blue)' : 'var(--color-text-secondary)',
+                      background: active ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
+                    }}
+                  >
+                    <Icon size={20} />
+                    {label}
+                  </Link>
+                )
+              })}
             </div>
           </motion.div>
         )}

@@ -8,9 +8,15 @@ import ExamPage from './pages/ExamPage.jsx'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[var(--color-bg-primary)]">
+    <div style={{ minHeight: '100vh', background: 'var(--color-bg-primary)' }}>
       <Navbar />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main
+        style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '32px 24px',
+        }}
+      >
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/topic/:topicId" element={<TopicPage />} />

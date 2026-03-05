@@ -13,7 +13,7 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
   const [answers, setAnswers] = useState([])
 
   if (!questions || questions.length === 0) {
-    return <div className="glass-card p-6 text-center text-[var(--color-text-muted)]">Nessuna domanda disponibile.</div>
+    return <div className="glass-card" style={{ padding: '24px', textAlign: 'center', color: 'var(--color-text-muted)' }}>Nessuna domanda disponibile.</div>
   }
 
   const question = questions[currentIndex]
@@ -21,7 +21,7 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
   const total = questions.length
 
   if (!question) {
-    return <div className="glass-card p-6 text-center text-[var(--color-text-muted)]">Caricamento...</div>
+    return <div className="glass-card" style={{ padding: '24px', textAlign: 'center', color: 'var(--color-text-muted)' }}>Caricamento...</div>
   }
 
   const handleSelect = (index) => {
@@ -48,7 +48,7 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
       
       if (score + (isCorrect ? 1 : 0) === total) {
         earnBadge('perfect-quiz')
-        addXP(20) // bonus perfect
+        addXP(20)
       }
       if (completedQuizzes.length === 0) {
         earnBadge('first-quiz')
@@ -61,30 +61,42 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
     const percentage = Math.round((finalScore / total) * 100)
     
     return (
-      <motion.div 
-        className="glass-card p-8 text-center"
+      <motion.div
+        className="glass-card"
+        style={{ padding: '32px', textAlign: 'center' }}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <Trophy size={48} className="mx-auto mb-4" style={{ color: percentage >= 70 ? 'var(--color-success)' : 'var(--color-warning)' }} />
-        <h2 className="text-2xl font-black mb-2">
+        <Trophy size={48} style={{ margin: '0 auto 16px', color: percentage >= 70 ? 'var(--color-success)' : 'var(--color-warning)' }} />
+        <h2 className="font-black" style={{ fontSize: '1.5rem', marginBottom: '8px' }}>
           {percentage >= 70 ? '🎉 Ottimo lavoro!' : '💪 Continua a studiare!'}
         </h2>
-        <p className="text-4xl font-black my-4" style={{ color: topicColor }}>
+        <p className="font-black" style={{ fontSize: '2.5rem', margin: '16px 0', color: topicColor }}>
           {finalScore}/{total}
         </p>
-        <p className="text-[var(--color-text-secondary)] mb-6">
+        <p style={{ color: 'var(--color-text-secondary)', marginBottom: '24px' }}>
           {percentage >= 90 ? 'Perfetto! Sei prontissimo!' : 
            percentage >= 70 ? 'Bene! Rivedi gli errori per migliorare.' :
            'Rivedi la lezione e riprova!'}
         </p>
         
         {/* Answer review */}
-        <div className="space-y-2 mb-6 text-left">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px', textAlign: 'left' }}>
           {answers.map((a, i) => (
-            <div key={i} className={`flex items-center gap-2 text-sm p-2 rounded-lg ${a.correct ? 'bg-[var(--color-success)]/10' : 'bg-[var(--color-error)]/10'}`}>
-              {a.correct ? <CheckCircle size={16} className="text-[var(--color-success)]" /> : <XCircle size={16} className="text-[var(--color-error)]" />}
-              <span className="text-[var(--color-text-secondary)]">
+            <div
+              key={i}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                fontSize: '0.875rem',
+                padding: '10px 12px',
+                borderRadius: '10px',
+                background: a.correct ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)',
+              }}
+            >
+              {a.correct ? <CheckCircle size={16} style={{ color: 'var(--color-success)', flexShrink: 0 }} /> : <XCircle size={16} style={{ color: 'var(--color-error)', flexShrink: 0 }} />}
+              <span style={{ color: 'var(--color-text-secondary)' }}>
                 D{i + 1}: {questions[i]?.question?.substring(0, 60) || 'Domanda'}...
               </span>
             </div>
@@ -99,24 +111,24 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
   }
 
   return (
-    <motion.div 
-      className="glass-card p-6"
+    <motion.div
+      className="glass-card"
+      style={{ padding: '28px' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
       {/* Progress */}
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm text-[var(--color-text-muted)]">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+        <span style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
           Domanda {currentIndex + 1}/{total}
         </span>
-        <span className="text-sm font-bold" style={{ color: topicColor }}>
+        <span className="font-bold" style={{ fontSize: '0.875rem', color: topicColor }}>
           {score} corrette
         </span>
       </div>
-      <div className="w-full h-1.5 bg-[var(--color-bg-primary)] rounded-full mb-6 overflow-hidden">
+      <div style={{ width: '100%', height: '6px', background: 'var(--color-bg-primary)', borderRadius: '9999px', marginBottom: '24px', overflow: 'hidden' }}>
         <motion.div
-          className="h-full rounded-full"
-          style={{ background: topicColor }}
+          style={{ height: '100%', borderRadius: '9999px', background: topicColor }}
           animate={{ width: `${((currentIndex + 1) / total) * 100}%` }}
         />
       </div>
@@ -129,11 +141,11 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
         >
-          <h3 className="text-lg font-bold mb-5 text-[var(--color-text-primary)]">
+          <h3 className="font-bold" style={{ fontSize: '1.1rem', marginBottom: '24px', color: 'var(--color-text-primary)', lineHeight: 1.5 }}>
             {question.question}
           </h3>
 
-          <div className="space-y-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {question.options.map((option, i) => {
               let borderColor = 'var(--color-border)'
               let bg = 'transparent'
@@ -154,21 +166,42 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
                 <motion.button
                   key={i}
                   onClick={() => handleSelect(i)}
-                  className="w-full text-left p-4 rounded-xl border transition-all"
-                  style={{ borderColor, background: bg }}
+                  className="border"
+                  style={{
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '16px 18px',
+                    borderRadius: '12px',
+                    borderColor,
+                    background: bg,
+                    cursor: showResult ? 'default' : 'pointer',
+                    transition: 'border-color 0.2s, background 0.2s',
+                  }}
                   whileHover={!showResult ? { scale: 1.01 } : {}}
                   whileTap={!showResult ? { scale: 0.99 } : {}}
                   disabled={showResult}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-full border flex items-center justify-center text-sm font-bold shrink-0"
-                      style={{ borderColor, color: showResult && i === question.correct ? 'var(--color-success)' : 'var(--color-text-secondary)' }}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <span
+                      className="font-bold"
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        border: `1px solid ${borderColor}`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.875rem',
+                        flexShrink: 0,
+                        color: showResult && i === question.correct ? 'var(--color-success)' : 'var(--color-text-secondary)',
+                      }}
                     >
                       {String.fromCharCode(65 + i)}
                     </span>
-                    <span className="text-[var(--color-text-primary)] text-sm">{option}</span>
-                    {showResult && i === question.correct && <CheckCircle size={18} className="ml-auto text-[var(--color-success)]" />}
-                    {showResult && i === selectedAnswer && !isCorrect && i !== question.correct && <XCircle size={18} className="ml-auto text-[var(--color-error)]" />}
+                    <span style={{ color: 'var(--color-text-primary)', fontSize: '0.9rem', lineHeight: 1.5 }}>{option}</span>
+                    {showResult && i === question.correct && <CheckCircle size={18} style={{ marginLeft: 'auto', color: 'var(--color-success)' }} />}
+                    {showResult && i === selectedAnswer && !isCorrect && i !== question.correct && <XCircle size={18} style={{ marginLeft: 'auto', color: 'var(--color-error)' }} />}
                   </div>
                 </motion.button>
               )
@@ -177,12 +210,18 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
 
           {/* Explanation */}
           {showResult && question.explanation && (
-            <motion.div 
-              className="mt-4 p-4 rounded-xl bg-[var(--color-bg-primary)] border border-[var(--color-border)]"
+            <motion.div
+              style={{
+                marginTop: '20px',
+                padding: '16px',
+                borderRadius: '12px',
+                background: 'var(--color-bg-primary)',
+                border: '1px solid var(--color-border)',
+              }}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
             >
-              <p className="text-sm text-[var(--color-text-secondary)]">
+              <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
                 💡 <strong>Spiegazione:</strong> {question.explanation}
               </p>
             </motion.div>
@@ -190,9 +229,10 @@ export default function Quiz({ questions, quizId, topicColor, onComplete }) {
 
           {/* Next button */}
           {showResult && (
-            <motion.button 
-              className="btn-primary mt-4 w-full flex items-center justify-center gap-2"
+            <motion.button
+              className="btn-primary"
               onClick={handleNext}
+              style={{ marginTop: '20px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
