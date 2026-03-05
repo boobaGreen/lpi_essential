@@ -160,7 +160,7 @@ export default function LessonPage() {
               color: topicColor,
             }}
           >
-            Topic {topicId}
+            {t('topic') || 'Topic'} {topicId}
           </span>
           {isCompleted && (
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--color-success)' }}>

@@ -135,8 +135,10 @@ export default function Navbar() {
                   }}
                   initial={{ width: 0 }}
                   animate={{ width: `${xpProgress}%` }}
-                  transition={{ duration: 0.5, ease: 'easeOut' }}
-                />
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                  <div className="animate-shimmer" style={{ width: '100%', height: '100%' }} />
+                </motion.div>
               </div>
             </div>
 

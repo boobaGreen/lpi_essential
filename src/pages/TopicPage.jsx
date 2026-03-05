@@ -53,7 +53,7 @@ export default function TopicPage() {
           <span style={{ fontSize: '3rem' }}>{topic.icon}</span>
           <div style={{ flex: 1 }}>
             <h1 className="font-black" style={{ fontSize: '1.75rem', color: topicColor }}>
-              Topic {topic.id}: {topic.title}
+              {t('topic') || 'Topic'} {topic.id}: {topic.title}
             </h1>
             <p style={{ color: 'var(--color-text-secondary)', marginTop: '4px', fontSize: '0.95rem' }}>{topic.description}</p>
           </div>

@@ -158,9 +158,9 @@ export default function Dashboard() {
         gap: '20px' 
       }}>
         <StatCard icon={Zap} label={t('totalXp')} value={xp} color="var(--color-neon-green)" />
-        <StatCard icon={Flame} label="Streak" value={streak} color="var(--color-neon-orange)" />
+        <StatCard icon={Flame} label={t('streak') || 'Streak'} value={streak} color="var(--color-neon-orange)" />
         <StatCard icon={BookOpen} label={t('completedTopics')} value={`${completedCount}/${totalLessons}`} color="var(--color-neon-blue)" />
-        <StatCard icon={Trophy} label="Badge" value={badges.length} color="var(--color-neon-purple)" />
+        <StatCard icon={Trophy} label={t('badges') || 'Badge'} value={badges.length} color="var(--color-neon-purple)" />
       </div>
 
       {/* Overall Progress */}
@@ -179,7 +179,9 @@ export default function Dashboard() {
             initial={{ width: 0 }}
             animate={{ width: `${overallProgress}%` }}
             transition={{ duration: 1, ease: 'easeOut' }}
-          />
+          >
+            <div className="animate-shimmer" style={{ width: '100%', height: '100%' }} />
+          </motion.div>
         </div>
       </div>
 
