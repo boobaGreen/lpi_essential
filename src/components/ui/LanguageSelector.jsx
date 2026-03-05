@@ -7,6 +7,13 @@ export default function LanguageSelector() {
   const { currentLang, changeLanguage, languages } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
 
   const activeLang = languages.find(l => l.code === currentLang) || languages[0]
 
@@ -28,23 +35,24 @@ export default function LanguageSelector() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: isMobile ? '4px' : '8px',
           background: 'transparent',
           border: '1px solid var(--color-border)',
-          padding: '6px 12px',
+          padding: isMobile ? '5px 8px' : '6px 12px',
           borderRadius: '8px',
           color: 'var(--color-text-primary)',
           cursor: 'pointer',
           fontSize: '0.875rem',
           fontWeight: 600,
-          transition: 'border-color 0.2s'
+          transition: 'border-color 0.2s',
+          flexShrink: 0,
         }}
         onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-neon-blue)'}
         onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
       >
-        <Globe size={16} />
-        <span style={{ fontSize: '1.2rem' }}>{activeLang.flag}</span>
-        <ChevronDown size={14} style={{ color: 'var(--color-text-muted)', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+        {!isMobile && <Globe size={16} />}
+        <span style={{ fontSize: isMobile ? '1.1rem' : '1.2rem' }}>{activeLang.flag}</span>
+        {!isMobile && <ChevronDown size={14} style={{ color: 'var(--color-text-muted)', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />}
       </button>
 
       <AnimatePresence>

@@ -44,13 +44,16 @@ export default function Navbar() {
         background: 'rgba(13, 17, 23, 0.92)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--color-border)',
+        overflow: 'hidden',          // ← impedisce qualsiasi overflow orizzontale
       }}
     >
       <div
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: '0 24px',
+          padding: '0 16px',         // ← ridotto da 24 a 16px su tutti, ma funzionale
+          width: '100%',
+          boxSizing: 'border-box',   // ← il padding non sfora il 100%
         }}
       >
         <div
@@ -58,13 +61,22 @@ export default function Navbar() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '64px',
+            height: '60px',
+            gap: '8px',              // ← gap minimo tra logo e destra
           }}
         >
           {/* Logo */}
-          <Link to="/" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '1.5rem' }}>🐧</span>
-            <span className="font-bold gradient-text" style={{ fontSize: '1.25rem' }}>LinuxQuest</span>
+          <Link
+            to="/"
+            className="no-underline"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              flexShrink: 1,         // ← può restringersi se serve
+              minWidth: 0,
+            }}
+          >
+            <span style={{ fontSize: '1.4rem', flexShrink: 0 }}>🐧</span>
+            <span className="font-bold gradient-text" style={{ fontSize: '1.15rem', whiteSpace: 'nowrap' }}>LinuxQuest</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -107,7 +119,7 @@ export default function Navbar() {
           )}
 
           {/* XP Bar + Stats + Lang */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '16px' : '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '16px' : '8px', flexShrink: 0 }}>
             <LanguageSelector />
 
             {/* Streak — desktop only */}
