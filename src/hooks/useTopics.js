@@ -31,6 +31,7 @@ import { rhcsaTopics as rhcsaTopicsPT } from '../locales/pt/rhcsa_topics.js'
 import { rhcsaTopics as rhcsaTopicsRU } from '../locales/ru/rhcsa_topics.js'
 import { rhcsaTopics as rhcsaTopicsZH } from '../locales/zh/rhcsa_topics.js'
 import { rhcsaLessonContent as rhcsaLessonContentIT } from '../locales/it/rhcsa_lessonContent.js'
+import { rhcsaLessonContent as rhcsaLessonContentEN } from '../locales/en/rhcsa_lessonContent.js'
 import { allRhcsaQuizzes, rhcsaQuizzesByTopic } from '../data/rhcsa/quizzes/index.js'
 
 // ─── Dizionari LPI ──────────────────────────────────────────────────────────
@@ -54,11 +55,11 @@ const getRhcsaTopics = (lang) =>
   (rhcsaTopicDict[lang]?.length ? rhcsaTopicDict[lang] : null)
   ?? rhcsaTopicsEN
 
-// lessonContent RHCSA: per ora solo IT, fallback a IT per tutte le lingue
+// lessonContent RHCSA: IT e EN complete, altre lingue fallback a EN poi IT
 const rhcsaLessonContentDict = {
   it: rhcsaLessonContentIT,
-  en: rhcsaLessonContentIT, // TODO: English version
-  // altre lingue: TODO
+  en: rhcsaLessonContentEN,
+  // Altre lingue: fallback a EN — da tradurre in futuro
 }
 
 export function useTopics() {
