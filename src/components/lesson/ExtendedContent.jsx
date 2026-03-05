@@ -289,10 +289,23 @@ export default function ExtendedContent({ data, topicColor, t }) {
           {t('deepDiveLabel') || '📚 Deep Dive'} — {data.title}
         </span>
         <motion.span
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          animate={isExpanded
+            ? { rotate: 180, y: 0 }
+            : {
+                rotate: 0,
+                y: [0, 5, 0, 5, 0],
+              }
+          }
+          transition={isExpanded
+            ? { duration: 0.35, ease: 'easeInOut' }
+            : {
+                rotate: { duration: 0.3 },
+                y: { duration: 1.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' },
+              }
+          }
+          style={{ color: isExpanded ? topicColor : 'var(--color-text-muted)', display: 'flex' }}
         >
-          <ChevronDown size={22} />
+          <ChevronDown size={24} />
         </motion.span>
       </motion.button>
 
