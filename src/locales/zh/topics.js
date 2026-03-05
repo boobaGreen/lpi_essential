@@ -2,7 +2,7 @@ export const zhTopics = [
   {
     "id": 1,
     "title": "Linux 社区",
-    "subtitle": "Open Source e Carriera",
+    "subtitle": "开源与职业",
     "icon": "🌍",
     "color": "neon-blue",
     "weight": 7,
@@ -11,29 +11,29 @@ export const zhTopics = [
       {
         "id": "1-1",
         "title": "Linux 和操作系统的演变",
-        "subtitle": "Da Unix a oggi: la storia e le distribuzioni"
+        "subtitle": "从 Unix 到今天：历史与发行版"
       },
       {
         "id": "1-2",
         "title": "开源应用程序",
-        "subtitle": "Suite ufficio, server, linguaggi di programmazione"
+        "subtitle": "办公套件、服务器、编程语言"
       },
       {
         "id": "1-3",
         "title": "开源软件和许可证",
-        "subtitle": "GPL, MIT, Apache e i modelli di business"
+        "subtitle": "GPL、MIT、Apache 和商业模式"
       },
       {
         "id": "1-4",
         "title": "ICT 和 Linux 技能",
-        "subtitle": "Desktop, privacy, crittografia"
+        "subtitle": "桌面、隐私、密码学"
       }
     ]
   },
   {
     "id": 2,
-    "title": "使用Linux系统",
-    "subtitle": "Command Line e Filesystem",
+    "title": "使用 Linux 系统",
+    "subtitle": "命令行与文件系统",
     "icon": "⌨️",
     "color": "neon-green",
     "weight": 8,
@@ -42,91 +42,91 @@ export const zhTopics = [
       {
         "id": "2-1",
         "title": "命令行基础知识",
-        "subtitle": "Shell, prompt, comandi e quoting"
+        "subtitle": "Shell、提示符、命令和引用"
       },
       {
         "id": "2-2",
         "title": "变量和环境",
-        "subtitle": "Variabili locali, ambientali e PATH"
+        "subtitle": "本地变量、环境变量和 PATH"
       },
       {
         "id": "2-3",
         "title": "获取帮助",
-        "subtitle": "man, info, --help e locate/find"
+        "subtitle": "man、info、--help 和 locate/find"
       },
       {
         "id": "2-4",
         "title": "导航和文件管理",
-        "subtitle": "FHS, percorsi, mkdir, cp, mv, rm, globbing"
+        "subtitle": "FHS、路径、mkdir、cp、mv、rm、通配符"
       }
     ]
   },
   {
     "id": 3,
     "title": "命令行的力量",
-    "subtitle": "Archiviazione, Pipe e Scripting",
+    "subtitle": "归档、管道与脚本",
     "icon": "💪",
     "color": "neon-purple",
     "weight": 9,
-    "description": "压缩、存储、I/O 重定向、管道、grep、正则表达式和 Bash 脚本。",
+    "description": "压缩、归档、I/O 重定向、管道、grep、正则表达式和 Bash 脚本。",
     "lessons": [
       {
         "id": "3-1",
         "title": "归档和压缩",
-        "subtitle": "gzip, bzip2, xz, tar e zip"
+        "subtitle": "gzip、bzip2、xz、tar 和 zip"
       },
       {
         "id": "3-2",
-        "title": "I/O 和管道重定向",
-        "subtitle": "stdin, stdout, stderr, pipe e filtri"
+        "title": "I/O 重定向和管道",
+        "subtitle": "stdin、stdout、stderr、管道和过滤器"
       },
       {
         "id": "3-3",
         "title": "Grep 和正则表达式",
-        "subtitle": "Cercare pattern nei file con regex"
+        "subtitle": "使用正则表达式在文件中搜索模式"
       },
       {
         "id": "3-4",
-        "title": "bash 脚本",
-        "subtitle": "Shebang, variabili, condizioni e cicli"
+        "title": "Bash 脚本",
+        "subtitle": "Shebang、变量、条件和循环"
       }
     ]
   },
   {
     "id": 4,
-    "title": "Linux操作系统",
-    "subtitle": "Hardware, Kernel e Rete",
+    "title": "Linux 操作系统",
+    "subtitle": "硬件、内核与网络",
     "icon": "🖥️",
     "color": "neon-orange",
     "weight": 8,
-    "description": "操作系统、硬件、内核、进程、系统日志和网络的选择。",
+    "description": "操作系统选择、硬件、内核、进程、系统日志和网络。",
     "lessons": [
       {
         "id": "4-1",
         "title": "选择操作系统",
-        "subtitle": "Categorie di SO e criteri di scelta"
+        "subtitle": "操作系统类别和选择标准"
       },
       {
         "id": "4-2",
-        "title": "电脑硬件",
-        "subtitle": "CPU, RAM, HDD vs SSD, RAID, dispositivi"
+        "title": "计算机硬件",
+        "subtitle": "CPU、RAM、HDD vs SSD、RAID、设备"
       },
       {
         "id": "4-3",
         "title": "内核、进程和日志",
-        "subtitle": "boot, /proc, ps, top e journalctl"
+        "subtitle": "启动、/proc、ps、top 和 journalctl"
       },
       {
         "id": "4-4",
-        "title": "联网",
-        "subtitle": "IPv4, IPv6, subnet, DNS e porte"
+        "title": "网络",
+        "subtitle": "IPv4、IPv6、子网、DNS 和端口"
       }
     ]
   },
   {
     "id": 5,
     "title": "安全和权限",
-    "subtitle": "Utenti, Gruppi e File",
+    "subtitle": "用户、组与文件",
     "icon": "🔒",
     "color": "neon-pink",
     "weight": 7,
@@ -135,22 +135,22 @@ export const zhTopics = [
       {
         "id": "5-1",
         "title": "安全和用户类型",
-        "subtitle": "root, utenti standard, account di sistema"
+        "subtitle": "root、普通用户、系统帐户"
       },
       {
         "id": "5-2",
         "title": "用户和组管理",
-        "subtitle": "/etc/passwd, /etc/shadow, useradd, passwd"
+        "subtitle": "/etc/passwd、/etc/shadow、useradd、passwd"
       },
       {
         "id": "5-3",
         "title": "文件权限",
-        "subtitle": "rwx, chmod, chown e permessi speciali"
+        "subtitle": "rwx、chmod、chown 和特殊权限"
       },
       {
         "id": "5-4",
         "title": "特殊文件和链接",
-        "subtitle": "File temporanei, hard link e symbolic link"
+        "subtitle": "临时文件、硬链接和符号链接"
       }
     ]
   }

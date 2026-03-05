@@ -13,18 +13,21 @@ import { zhTopics } from '../locales/zh/topics.js'
 import { lessonContent as itLessonContent } from '../locales/it/lessonContent.js'
 import { lessonContent as enLessonContent } from '../locales/en/lessonContent.js'
 import { lessonContent as esLessonContent } from '../locales/es/lessonContent.js'
-
-const fallbackLessonContent = itLessonContent
+import { lessonContent as deLessonContent } from '../locales/de/lessonContent.js'
+import { lessonContent as frLessonContent } from '../locales/fr/lessonContent.js'
+import { lessonContent as ptLessonContent } from '../locales/pt/lessonContent.js'
+import { lessonContent as ruLessonContent } from '../locales/ru/lessonContent.js'
+import { lessonContent as zhLessonContent } from '../locales/zh/lessonContent.js'
 
 const lessonContentDict = {
   it: itLessonContent,
   en: enLessonContent,
   es: esLessonContent,
-  de: fallbackLessonContent,
-  ru: fallbackLessonContent,
-  pt: fallbackLessonContent,
-  fr: fallbackLessonContent,
-  zh: fallbackLessonContent,
+  de: deLessonContent,
+  fr: frLessonContent,
+  pt: ptLessonContent,
+  ru: ruLessonContent,
+  zh: zhLessonContent,
 }
 
 const topicDict = {

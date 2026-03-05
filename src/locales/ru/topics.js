@@ -2,38 +2,38 @@ export const ruTopics = [
   {
     "id": 1,
     "title": "Сообщество Linux",
-    "subtitle": "Open Source e Carriera",
+    "subtitle": "Open Source и Карьера",
     "icon": "🌍",
     "color": "neon-blue",
     "weight": 7,
-    "description": "Эволюция Linux, дистрибутивов, приложений, лицензий с открытым исходным кодом и карьеры в сфере ИКТ.",
+    "description": "Эволюция Linux, дистрибутивы, приложения, лицензии open source и карьера в ИКТ.",
     "lessons": [
       {
         "id": "1-1",
         "title": "Эволюция Linux и операционных систем",
-        "subtitle": "Da Unix a oggi: la storia e le distribuzioni"
+        "subtitle": "От Unix до наших дней: история и дистрибутивы"
       },
       {
         "id": "1-2",
         "title": "Приложения с открытым исходным кодом",
-        "subtitle": "Suite ufficio, server, linguaggi di programmazione"
+        "subtitle": "Офисные пакеты, серверы, языки программирования"
       },
       {
         "id": "1-3",
-        "title": "Программное обеспечение с открытым исходным кодом и лицензии",
-        "subtitle": "GPL, MIT, Apache e i modelli di business"
+        "title": "Открытое ПО и лицензии",
+        "subtitle": "GPL, MIT, Apache и бизнес-модели"
       },
       {
         "id": "1-4",
         "title": "Навыки ИКТ и Linux",
-        "subtitle": "Desktop, privacy, crittografia"
+        "subtitle": "Рабочий стол, конфиденциальность, криптография"
       }
     ]
   },
   {
     "id": 2,
     "title": "Использование системы Linux",
-    "subtitle": "Command Line e Filesystem",
+    "subtitle": "Командная строка и файловая система",
     "icon": "⌨️",
     "color": "neon-green",
     "weight": 8,
@@ -42,100 +42,100 @@ export const ruTopics = [
       {
         "id": "2-1",
         "title": "Основы командной строки",
-        "subtitle": "Shell, prompt, comandi e quoting"
+        "subtitle": "Shell, приглашение, команды и экранирование"
       },
       {
         "id": "2-2",
-        "title": "Переменные и среда",
-        "subtitle": "Variabili locali, ambientali e PATH"
+        "title": "Переменные и окружение",
+        "subtitle": "Локальные переменные, переменные среды и PATH"
       },
       {
         "id": "2-3",
-        "title": "Получить помощь",
-        "subtitle": "man, info, --help e locate/find"
+        "title": "Получение справки",
+        "subtitle": "man, info, --help и locate/find"
       },
       {
         "id": "2-4",
         "title": "Навигация и управление файлами",
-        "subtitle": "FHS, percorsi, mkdir, cp, mv, rm, globbing"
+        "subtitle": "FHS, пути, mkdir, cp, mv, rm, подстановка"
       }
     ]
   },
   {
     "id": 3,
-    "title": "Сила командной строки",
-    "subtitle": "Archiviazione, Pipe e Scripting",
+    "title": "Мощь командной строки",
+    "subtitle": "Архивация, Каналы и Скрипты",
     "icon": "💪",
     "color": "neon-purple",
     "weight": 9,
-    "description": "Сжатие, хранение, перенаправление ввода-вывода, каналы, grep, регулярные выражения и сценарии Bash.",
+    "description": "Сжатие, архивация, перенаправление ввода/вывода, каналы, grep, регулярные выражения и Bash-скрипты.",
     "lessons": [
       {
         "id": "3-1",
-        "title": "Архивирование и сжатие",
-        "subtitle": "gzip, bzip2, xz, tar e zip"
+        "title": "Архивация и сжатие",
+        "subtitle": "gzip, bzip2, xz, tar и zip"
       },
       {
         "id": "3-2",
-        "title": "Ввод-вывод и перенаправление каналов",
-        "subtitle": "stdin, stdout, stderr, pipe e filtri"
+        "title": "Перенаправление ввода/вывода и каналы",
+        "subtitle": "stdin, stdout, stderr, каналы и фильтры"
       },
       {
         "id": "3-3",
         "title": "Grep и регулярные выражения",
-        "subtitle": "Cercare pattern nei file con regex"
+        "subtitle": "Поиск шаблонов в файлах с помощью regex"
       },
       {
         "id": "3-4",
-        "title": "Bash-скрипты",
-        "subtitle": "Shebang, variabili, condizioni e cicli"
+        "title": "Скрипты Bash",
+        "subtitle": "Shebang, переменные, условия и циклы"
       }
     ]
   },
   {
     "id": 4,
     "title": "Операционная система Linux",
-    "subtitle": "Hardware, Kernel e Rete",
+    "subtitle": "Оборудование, Ядро и Сеть",
     "icon": "🖥️",
     "color": "neon-orange",
     "weight": 8,
-    "description": "Выбор ОС, оборудования, ядра, процессов, системных журналов и сети.",
+    "description": "Выбор ОС, оборудование, ядро, процессы, системные журналы и сеть.",
     "lessons": [
       {
         "id": "4-1",
         "title": "Выбор операционной системы",
-        "subtitle": "Categorie di SO e criteri di scelta"
+        "subtitle": "Категории ОС и критерии выбора"
       },
       {
         "id": "4-2",
-        "title": "Компьютерное оборудование",
-        "subtitle": "CPU, RAM, HDD vs SSD, RAID, dispositivi"
+        "title": "Аппаратное обеспечение компьютера",
+        "subtitle": "CPU, RAM, HDD vs SSD, RAID, устройства"
       },
       {
         "id": "4-3",
         "title": "Ядро, процессы и журналы",
-        "subtitle": "boot, /proc, ps, top e journalctl"
+        "subtitle": "boot, /proc, ps, top и journalctl"
       },
       {
         "id": "4-4",
-        "title": "сеть",
-        "subtitle": "IPv4, IPv6, subnet, DNS e porte"
+        "title": "Сеть",
+        "subtitle": "IPv4, IPv6, подсети, DNS и порты"
       }
     ]
   },
   {
     "id": 5,
-    "title": "Безопасность и разрешения",
-    "subtitle": "Utenti, Gruppi e File",
+    "title": "Безопасность и права доступа",
+    "subtitle": "Пользователи, Группы и Файлы",
     "icon": "🔒",
     "color": "neon-pink",
     "weight": 7,
-    "description": "Учетные записи пользователей, системные файлы, разрешения, право собственности, специальные разрешения и ссылки.",
+    "description": "Учётные записи, системные файлы, права доступа, владение, специальные разрешения и ссылки.",
     "lessons": [
       {
         "id": "5-1",
         "title": "Безопасность и типы пользователей",
-        "subtitle": "root, utenti standard, account di sistema"
+        "subtitle": "root, обычные пользователи, системные учётные записи"
       },
       {
         "id": "5-2",
@@ -144,13 +144,13 @@ export const ruTopics = [
       },
       {
         "id": "5-3",
-        "title": "Разрешения для файлов",
-        "subtitle": "rwx, chmod, chown e permessi speciali"
+        "title": "Права доступа к файлам",
+        "subtitle": "rwx, chmod, chown и специальные разрешения"
       },
       {
         "id": "5-4",
         "title": "Специальные файлы и ссылки",
-        "subtitle": "File temporanei, hard link e symbolic link"
+        "subtitle": "Временные файлы, жёсткие и символические ссылки"
       }
     ]
   }

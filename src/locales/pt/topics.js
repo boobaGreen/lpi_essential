@@ -1,115 +1,115 @@
 export const ptTopics = [
   {
     "id": 1,
-    "title": "A comunidade Linux",
-    "subtitle": "Open Source e Carriera",
+    "title": "A Comunidade Linux",
+    "subtitle": "Open Source e Carreira",
     "icon": "🌍",
     "color": "neon-blue",
     "weight": 7,
-    "description": "Evolução do Linux, distribuições, aplicações, licenças de código aberto e carreira em TIC.",
+    "description": "Evolução do Linux, distribuições, aplicações, licenças open source e carreira em TIC.",
     "lessons": [
       {
         "id": "1-1",
-        "title": "Evolução do Linux e dos sistemas operacionais",
-        "subtitle": "Da Unix a oggi: la storia e le distribuzioni"
+        "title": "Evolução do Linux e Sistemas Operacionais",
+        "subtitle": "Do Unix até hoje: a história e as distribuições"
       },
       {
         "id": "1-2",
-        "title": "Aplicativos de código aberto",
-        "subtitle": "Suite ufficio, server, linguaggi di programmazione"
+        "title": "Aplicações Open Source",
+        "subtitle": "Suítes de escritório, servidores, linguagens de programação"
       },
       {
         "id": "1-3",
-        "title": "Software e licenças de código aberto",
-        "subtitle": "GPL, MIT, Apache e i modelli di business"
+        "title": "Software Open Source e Licenças",
+        "subtitle": "GPL, MIT, Apache e modelos de negócio"
       },
       {
         "id": "1-4",
-        "title": "Habilidades em TIC e Linux",
-        "subtitle": "Desktop, privacy, crittografia"
+        "title": "Competências TIC e Linux",
+        "subtitle": "Desktop, privacidade, criptografia"
       }
     ]
   },
   {
     "id": 2,
-    "title": "Usando o sistema Linux",
-    "subtitle": "Command Line e Filesystem",
+    "title": "Uso do Sistema Linux",
+    "subtitle": "Linha de Comando e Sistema de Arquivos",
     "icon": "⌨️",
     "color": "neon-green",
     "weight": 8,
-    "description": "Noções básicas de linha de comando, variáveis, ajuda, sistemas de arquivos e gerenciamento de arquivos.",
+    "description": "Fundamentos da linha de comando, variáveis, ajuda, sistemas de arquivos e gerenciamento de arquivos.",
     "lessons": [
       {
         "id": "2-1",
-        "title": "Noções básicas de linha de comando",
-        "subtitle": "Shell, prompt, comandi e quoting"
+        "title": "Fundamentos da Linha de Comando",
+        "subtitle": "Shell, prompt, comandos e quoting"
       },
       {
         "id": "2-2",
-        "title": "Variáveis ​​e Ambiente",
-        "subtitle": "Variabili locali, ambientali e PATH"
+        "title": "Variáveis e Ambiente",
+        "subtitle": "Variáveis locais, de ambiente e PATH"
       },
       {
         "id": "2-3",
-        "title": "Obtenha ajuda",
+        "title": "Obter Ajuda",
         "subtitle": "man, info, --help e locate/find"
       },
       {
         "id": "2-4",
-        "title": "Navegação e gerenciamento de arquivos",
-        "subtitle": "FHS, percorsi, mkdir, cp, mv, rm, globbing"
+        "title": "Navegação e Gerenciamento de Arquivos",
+        "subtitle": "FHS, caminhos, mkdir, cp, mv, rm, globbing"
       }
     ]
   },
   {
     "id": 3,
-    "title": "O poder da linha de comando",
-    "subtitle": "Archiviazione, Pipe e Scripting",
+    "title": "O Poder da Linha de Comando",
+    "subtitle": "Arquivamento, Pipes e Scripting",
     "icon": "💪",
     "color": "neon-purple",
     "weight": 9,
-    "description": "Compactação, armazenamento, redirecionamento de E/S, pipes, grep, regex e scripts Bash.",
+    "description": "Compressão, arquivamento, redirecionamento de E/S, pipes, grep, regex e scripting Bash.",
     "lessons": [
       {
         "id": "3-1",
-        "title": "Arquivamento e compactação",
+        "title": "Arquivamento e Compressão",
         "subtitle": "gzip, bzip2, xz, tar e zip"
       },
       {
         "id": "3-2",
-        "title": "Redirecionamento de E/S e Pipe",
-        "subtitle": "stdin, stdout, stderr, pipe e filtri"
+        "title": "Redirecionamento de E/S e Pipes",
+        "subtitle": "stdin, stdout, stderr, pipes e filtros"
       },
       {
         "id": "3-3",
-        "title": "Grep e expressões regulares",
-        "subtitle": "Cercare pattern nei file con regex"
+        "title": "Grep e Expressões Regulares",
+        "subtitle": "Buscar padrões em arquivos com regex"
       },
       {
         "id": "3-4",
         "title": "Scripts Bash",
-        "subtitle": "Shebang, variabili, condizioni e cicli"
+        "subtitle": "Shebang, variáveis, condições e laços"
       }
     ]
   },
   {
     "id": 4,
-    "title": "O sistema operacional Linux",
-    "subtitle": "Hardware, Kernel e Rete",
+    "title": "O Sistema Operacional Linux",
+    "subtitle": "Hardware, Kernel e Rede",
     "icon": "🖥️",
     "color": "neon-orange",
     "weight": 8,
-    "description": "Escolha de sistema operacional, hardware, kernel, processos, logs do sistema e rede.",
+    "description": "Escolha do SO, hardware, kernel, processos, logs do sistema e rede.",
     "lessons": [
       {
         "id": "4-1",
-        "title": "Escolhendo um sistema operacional",
-        "subtitle": "Categorie di SO e criteri di scelta"
+        "title": "Escolher um Sistema Operacional",
+        "subtitle": "Categorias de SO e critérios de escolha"
       },
       {
         "id": "4-2",
-        "title": "Hardware de computador",
-        "subtitle": "CPU, RAM, HDD vs SSD, RAID, dispositivi"
+        "title": "Hardware do Computador",
+        "subtitle": "CPU, RAM, HDD vs SSD, RAID, dispositivos"
       },
       {
         "id": "4-3",
@@ -119,38 +119,38 @@ export const ptTopics = [
       {
         "id": "4-4",
         "title": "Rede",
-        "subtitle": "IPv4, IPv6, subnet, DNS e porte"
+        "subtitle": "IPv4, IPv6, sub-redes, DNS e portas"
       }
     ]
   },
   {
     "id": 5,
-    "title": "Segurança e permissões",
-    "subtitle": "Utenti, Gruppi e File",
+    "title": "Segurança e Permissões",
+    "subtitle": "Usuários, Grupos e Arquivos",
     "icon": "🔒",
     "color": "neon-pink",
     "weight": 7,
-    "description": "Contas de usuário, arquivos de sistema, permissões, propriedade, permissões especiais e links.",
+    "description": "Contas de usuário, arquivos do sistema, permissões, propriedade, permissões especiais e links.",
     "lessons": [
       {
         "id": "5-1",
-        "title": "Segurança e tipos de usuários",
-        "subtitle": "root, utenti standard, account di sistema"
+        "title": "Segurança e Tipos de Usuário",
+        "subtitle": "root, usuários padrão, contas do sistema"
       },
       {
         "id": "5-2",
-        "title": "Gerenciamento de usuários e grupos",
+        "title": "Gerenciamento de Usuários e Grupos",
         "subtitle": "/etc/passwd, /etc/shadow, useradd, passwd"
       },
       {
         "id": "5-3",
-        "title": "Permissões de arquivo",
-        "subtitle": "rwx, chmod, chown e permessi speciali"
+        "title": "Permissões de Arquivos",
+        "subtitle": "rwx, chmod, chown e permissões especiais"
       },
       {
         "id": "5-4",
-        "title": "Arquivos e links especiais",
-        "subtitle": "File temporanei, hard link e symbolic link"
+        "title": "Arquivos Especiais e Links",
+        "subtitle": "Arquivos temporários, hard links e links simbólicos"
       }
     ]
   }

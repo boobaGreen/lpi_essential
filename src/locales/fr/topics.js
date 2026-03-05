@@ -2,38 +2,38 @@ export const frTopics = [
   {
     "id": 1,
     "title": "La communauté Linux",
-    "subtitle": "Open Source e Carriera",
+    "subtitle": "Open Source et Carrière",
     "icon": "🌍",
     "color": "neon-blue",
     "weight": 7,
-    "description": "Evolution de Linux, distributions, applications, licences open source et carrière TIC.",
+    "description": "Évolution de Linux, distributions, applications, licences open source et carrière TIC.",
     "lessons": [
       {
         "id": "1-1",
         "title": "Évolution de Linux et des systèmes d'exploitation",
-        "subtitle": "Da Unix a oggi: la storia e le distribuzioni"
+        "subtitle": "D'Unix à aujourd'hui : l'histoire et les distributions"
       },
       {
         "id": "1-2",
-        "title": "Applications libres",
-        "subtitle": "Suite ufficio, server, linguaggi di programmazione"
+        "title": "Applications Open Source",
+        "subtitle": "Suites bureautiques, serveurs, langages de programmation"
       },
       {
         "id": "1-3",
-        "title": "Logiciels et licences Open Source",
-        "subtitle": "GPL, MIT, Apache e i modelli di business"
+        "title": "Logiciels et Licences Open Source",
+        "subtitle": "GPL, MIT, Apache et modèles économiques"
       },
       {
         "id": "1-4",
         "title": "Compétences TIC et Linux",
-        "subtitle": "Desktop, privacy, crittografia"
+        "subtitle": "Bureau, vie privée, cryptographie"
       }
     ]
   },
   {
     "id": 2,
     "title": "Utiliser le système Linux",
-    "subtitle": "Command Line e Filesystem",
+    "subtitle": "Ligne de commande et système de fichiers",
     "icon": "⌨️",
     "color": "neon-green",
     "weight": 8,
@@ -42,100 +42,100 @@ export const frTopics = [
       {
         "id": "2-1",
         "title": "Bases de la ligne de commande",
-        "subtitle": "Shell, prompt, comandi e quoting"
+        "subtitle": "Shell, prompt, commandes et quoting"
       },
       {
         "id": "2-2",
         "title": "Variables et environnement",
-        "subtitle": "Variabili locali, ambientali e PATH"
+        "subtitle": "Variables locales, d'environnement et PATH"
       },
       {
         "id": "2-3",
         "title": "Obtenir de l'aide",
-        "subtitle": "man, info, --help e locate/find"
+        "subtitle": "man, info, --help et locate/find"
       },
       {
         "id": "2-4",
         "title": "Navigation et gestion de fichiers",
-        "subtitle": "FHS, percorsi, mkdir, cp, mv, rm, globbing"
+        "subtitle": "FHS, chemins, mkdir, cp, mv, rm, globbing"
       }
     ]
   },
   {
     "id": 3,
     "title": "La puissance de la ligne de commande",
-    "subtitle": "Archiviazione, Pipe e Scripting",
+    "subtitle": "Archivage, Pipes et Scripting",
     "icon": "💪",
     "color": "neon-purple",
     "weight": 9,
-    "description": "Compression, stockage, redirection d'E/S, tubes, grep, regex et scripts Bash.",
+    "description": "Compression, archivage, redirection d'E/S, tubes, grep, regex et scripts Bash.",
     "lessons": [
       {
         "id": "3-1",
         "title": "Archivage et compression",
-        "subtitle": "gzip, bzip2, xz, tar e zip"
+        "subtitle": "gzip, bzip2, xz, tar et zip"
       },
       {
         "id": "3-2",
-        "title": "Redirection d'E/S et de canalisations",
-        "subtitle": "stdin, stdout, stderr, pipe e filtri"
+        "title": "Redirection d'E/S et tubes",
+        "subtitle": "stdin, stdout, stderr, tubes et filtres"
       },
       {
         "id": "3-3",
         "title": "Grep et expressions régulières",
-        "subtitle": "Cercare pattern nei file con regex"
+        "subtitle": "Rechercher des motifs dans les fichiers avec regex"
       },
       {
         "id": "3-4",
-        "title": "Scripts bash",
-        "subtitle": "Shebang, variabili, condizioni e cicli"
+        "title": "Scripts Bash",
+        "subtitle": "Shebang, variables, conditions et boucles"
       }
     ]
   },
   {
     "id": 4,
     "title": "Le système d'exploitation Linux",
-    "subtitle": "Hardware, Kernel e Rete",
+    "subtitle": "Matériel, Noyau et Réseau",
     "icon": "🖥️",
     "color": "neon-orange",
     "weight": 8,
-    "description": "Choix du système d'exploitation, du matériel, du noyau, des processus, des journaux système et de la mise en réseau.",
+    "description": "Choix du système d'exploitation, matériel, noyau, processus, journaux système et réseau.",
     "lessons": [
       {
         "id": "4-1",
         "title": "Choisir un système d'exploitation",
-        "subtitle": "Categorie di SO e criteri di scelta"
+        "subtitle": "Catégories de SE et critères de choix"
       },
       {
         "id": "4-2",
         "title": "Matériel informatique",
-        "subtitle": "CPU, RAM, HDD vs SSD, RAID, dispositivi"
+        "subtitle": "CPU, RAM, HDD vs SSD, RAID, périphériques"
       },
       {
         "id": "4-3",
         "title": "Noyau, processus et journaux",
-        "subtitle": "boot, /proc, ps, top e journalctl"
+        "subtitle": "boot, /proc, ps, top et journalctl"
       },
       {
         "id": "4-4",
-        "title": "Réseautage",
-        "subtitle": "IPv4, IPv6, subnet, DNS e porte"
+        "title": "Réseau",
+        "subtitle": "IPv4, IPv6, sous-réseaux, DNS et ports"
       }
     ]
   },
   {
     "id": 5,
     "title": "Sécurité et autorisations",
-    "subtitle": "Utenti, Gruppi e File",
+    "subtitle": "Utilisateurs, Groupes et Fichiers",
     "icon": "🔒",
     "color": "neon-pink",
     "weight": 7,
-    "description": "Comptes d'utilisateurs, fichiers système, autorisations, propriété, autorisations spéciales et liens.",
+    "description": "Comptes utilisateurs, fichiers système, autorisations, propriété, autorisations spéciales et liens.",
     "lessons": [
       {
         "id": "5-1",
         "title": "Sécurité et types d'utilisateurs",
-        "subtitle": "root, utenti standard, account di sistema"
+        "subtitle": "root, utilisateurs standard, comptes système"
       },
       {
         "id": "5-2",
@@ -145,12 +145,12 @@ export const frTopics = [
       {
         "id": "5-3",
         "title": "Autorisations de fichiers",
-        "subtitle": "rwx, chmod, chown e permessi speciali"
+        "subtitle": "rwx, chmod, chown et autorisations spéciales"
       },
       {
         "id": "5-4",
         "title": "Fichiers et liens spéciaux",
-        "subtitle": "File temporanei, hard link e symbolic link"
+        "subtitle": "Fichiers temporaires, liens physiques et liens symboliques"
       }
     ]
   }
