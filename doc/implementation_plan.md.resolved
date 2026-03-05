@@ -1,0 +1,319 @@
+# 🐧🎮 LinuxQuest — App Gamificata LPI Linux Essentials
+
+## Obiettivo
+Creare una web app interattiva e gamificata che guidi l'utente dal livello zero al superamento dell'esame LPI Linux Essentials (010-160), usando giochi, fumetti, animazioni e simulazioni d'esame.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Autenticazione**: propongo di usare **localStorage** senza backend/DB per la v1. I progressi vengono salvati nel browser. Niente login, niente server. Questo permette di avere un'app **statica deployabile ovunque** (Vercel, Netlify, GitHub Pages). Se in futuro servisse login multi-device, possiamo aggiungere Supabase o Firebase. **Sei d'accordo con questo approccio?**
+
+> [!IMPORTANT]
+> **Scope v1**: L'app avrà tutto il contenuto dei 5 topic + simulazione esame. La gamification include XP, livelli, badge, streaks e leaderboard locale. I "giochi" sono quiz interattivi, drag & drop, terminale simulato, memory cards e fumetti narrativi. **Non** un vero terminale Linux in-browser (troppo complesso per v1). **Va bene così?**
+
+---
+
+## Tech Stack
+
+| Layer | Tecnologia | Motivazione |
+|-------|-----------|-------------|
+| **Framework** | React 18 + Vite | Veloce, moderno, SPA reattiva |
+| **Styling** | Tailwind CSS v3 | Richiesto dall'utente, ottimo per UI dinamiche |
+| **Routing** | React Router v6 | Navigazione SPA |
+| **State** | React Context + useReducer | Sufficiente per stato globale (progresso, XP, etc.) |
+| **Persistenza** | localStorage | Zero backend, progressi salvati nel browser |
+| **Animazioni** | Framer Motion | Animazioni fluide per gamification |
+| **Icons** | Lucide React | Icone SVG leggere |
+| **Deployment** | Statico (Vercel/Netlify) | Zero costi server |
+
+### Perché NO Database?
+- **v1 single-player**: i progressi sono dell'utente locale
+- **Zero infrastruttura**: deploy statico su qualsiasi hosting
+- **Privacy**: nessun dato utente inviato a server
+- **Se servirà in futuro**: Supabase (PostgreSQL + Auth) si aggiunge facilmente
+
+---
+
+## Architettura dell'App
+
+```
+src/
+├── main.jsx                    # Entry point
+├── App.jsx                     # Router principale
+├── index.css                   # Tailwind + CSS globale
+│
+├── data/                       # Contenuto statico (dai .md)
+│   ├── topics.js               # Struttura 5 topic con lezioni
+│   ├── quizzes/                # Domande per ogni topic
+│   │   ├── topic1.js
+│   │   ├── topic2.js
+│   │   ├── topic3.js
+│   │   ├── topic4.js
+│   │   └── topic5.js
+│   ├── comics/                 # Testi per fumetti
+│   │   └── stories.js
+│   └── examSimulation.js       # Pool domande simulazione
+│
+├── context/
+│   └── GameContext.jsx         # Stato globale (XP, livello, badge, progresso)
+│
+├── hooks/
+│   ├── useLocalStorage.js      # Persistenza in localStorage
+│   └── useGameProgress.js      # Logica progressi e XP
+│
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.jsx          # Barra navigazione con XP e livello
+│   │   ├── Sidebar.jsx         # Menu topic e progressi
+│   │   └── Footer.jsx
+│   │
+│   ├── gamification/
+│   │   ├── XPBar.jsx           # Barra esperienza animata
+│   │   ├── LevelBadge.jsx      # Badge livello corrente
+│   │   ├── StreakCounter.jsx    # Giorni consecutivi
+│   │   ├── BadgeGallery.jsx    # Collezione badge sbloccati
+│   │   ├── Leaderboard.jsx     # Classifica locale (storico)
+│   │   └── Confetti.jsx        # Effetto celebrazione
+│   │
+│   ├── learning/
+│   │   ├── TopicCard.jsx       # Card topic nella dashboard
+│   │   ├── LessonView.jsx      # Visualizzazione lezione
+│   │   ├── ComicStrip.jsx      # Fumetto con pannelli animati
+│   │   ├── InfoCard.jsx        # Card informativa animata
+│   │   ├── CommandDemo.jsx     # Demo comandi con output finto
+│   │   └── CheatSheet.jsx      # Tabella riassuntiva interattiva
+│   │
+│   ├── games/
+│   │   ├── Quiz.jsx            # Quiz a scelta multipla
+│   │   ├── DragAndDrop.jsx     # Associa concetti (drag & drop)
+│   │   ├── MemoryGame.jsx      # Memory card (comando ↔ descrizione)
+│   │   ├── TerminalChallenge.jsx # Sfida terminale (input → output corretto)
+│   │   ├── FillTheGap.jsx      # Completa il comando
+│   │   └── TrueFalse.jsx       # Vero o Falso rapido
+│   │
+│   └── exam/
+│       ├── ExamSimulation.jsx  # Simulazione esame completa (40 domande, timer)
+│       ├── ExamResult.jsx      # Risultato con analisi per topic
+│       └── ReviewMode.jsx      # Revisione errori con spiegazioni
+│
+├── pages/
+│   ├── Dashboard.jsx           # Home con progressi, streak, next step
+│   ├── TopicPage.jsx           # Pagina singolo topic
+│   ├── LessonPage.jsx          # Singola lezione con contenuto + giochi
+│   ├── GamesHub.jsx            # Hub giochi per esercitarsi
+│   ├── ExamPage.jsx            # Simulazione esame
+│   ├── ProfilePage.jsx         # Profilo con statistiche e badge
+│   └── SettingsPage.jsx        # Impostazioni (reset, tema)
+│
+└── utils/
+    ├── xpCalculator.js         # Calcolo XP e livelli
+    ├── badgeRules.js           # Regole per sbloccare badge
+    └── shuffleArray.js         # Utility per randomizzare
+```
+
+---
+
+## Flusso Utente (User Journey)
+
+```
+┌──────────────┐     ┌───────────────┐     ┌──────────────┐
+│  DASHBOARD   │────→│  SCEGLI TOPIC │────→│   LEZIONE    │
+│  (Home)      │     │  (1-5)        │     │  con Fumetti │
+│  XP, Streak  │     │  Progress %   │     │  e Animazioni│
+└──────────────┘     └───────────────┘     └──────┬───────┘
+                                                   │
+                                                   ▼
+                                           ┌──────────────┐
+                                           │   MINI-GAME  │
+                                           │  (Quiz, D&D, │
+                                           │   Memory...) │
+                                           └──────┬───────┘
+                                                   │ +XP
+                                                   ▼
+                                           ┌──────────────┐
+                      ┌────────────────────│ LEZIONE SUCC.│
+                      │  Tutti completati  │ o RINFORZO   │
+                      ▼                    └──────────────┘
+              ┌──────────────┐
+              │  SIMULAZIONE │
+              │    ESAME     │
+              │ 40 domande   │
+              │ 60 minuti    │
+              └──────┬───────┘
+                     │
+            ┌────────┼────────┐
+            ▼                 ▼
+    ┌──────────────┐  ┌──────────────┐
+    │  SUPERATO!   │  │  NON PASSATO │
+    │  🎉 Badge    │  │  Review errori│
+    │  Confetti    │  │  Rinforzo    │
+    └──────────────┘  └──────────────┘
+```
+
+---
+
+## Sistema Gamification
+
+### XP e Livelli
+
+| Azione | XP Guadagnati |
+|--------|--------------|
+| Completare una lezione (letta) | +20 XP |
+| Quiz corretto (per domanda) | +10 XP |
+| Memory Game completato | +30 XP |
+| Drag & Drop corretto | +15 XP |
+| Terminal Challenge | +25 XP |
+| Simulazione esame completata | +100 XP |
+| Simulazione superata (≥500/800) | +200 XP bonus |
+| Streak giornaliero | +5 XP × giorni consecutivi |
+
+| Livello | XP Richiesti | Titolo |
+|---------|-------------|--------|
+| 1 | 0 | 🐣 Noob |
+| 2 | 100 | 🔰 Principiante |
+| 3 | 300 | 📖 Studente |
+| 4 | 600 | 💻 Praticante |
+| 5 | 1000 | 🛠️ Competente |
+| 6 | 1500 | 🧑‍💻 Esperto |
+| 7 | 2200 | 🏆 Maestro |
+| 8 | 3000 | 🐧 Linux Guru |
+
+### Badge
+
+| Badge | Condizione |
+|-------|-----------|
+| 🎯 Primo Quiz | Completa il primo quiz |
+| 🔥 Streak 3 | 3 giorni consecutivi |
+| 🔥 Streak 7 | 7 giorni consecutivi |
+| 📚 Topic Master (×5) | Completa tutte le lezioni di un topic |
+| 🧠 Memory King | Completa tutti i Memory Game |
+| 💯 Perfect Score | Quiz senza errori |
+| 🎓 Ready for Exam | Completa tutti i 5 topic |
+| 🏅 Exam Passed | Supera la simulazione d'esame |
+| ⭐ Perfectionist | Supera l'esame con >700/800 |
+
+---
+
+## Tipi di Contenuto per Topic
+
+| Topic | Contenuti Interattivi |
+|-------|----------------------|
+| **1 - Comunità Linux** | 🎨 Fumetto "La Storia di Linux" + Quiz distribuzioni + Drag&Drop licenze ↔ tipo |
+| **2 - Uso del Sistema** | 💻 Terminal Challenge (comandi base) + Memory (comando ↔ funzione) + Fill-the-gap PATH |
+| **3 - Command Line** | 💻 Terminal Challenge (pipe, grep, regex) + Drag&Drop (operatori I/O) + Quiz scripting |
+| **4 - Sistema Operativo** | 🎨 Infografica HW interattiva + Quiz networking + Memory (porte ↔ servizi) |
+| **5 - Sicurezza** | 💻 Terminal Challenge (chmod) + Drag&Drop (permessi ottali ↔ rwx) + Quiz utenti/gruppi |
+
+---
+
+## Simulazione Esame
+
+- **40 domande** da pool randomizzato (~120 domande totali)
+- **Timer 60 minuti** con avviso a 10 min
+- Mix: scelta multipla, vero/falso, completamento
+- Punteggio simulato su **scala 200-800** (pass = 500)
+- **Review mode**: rivedi ogni errore con spiegazione dettagliata
+- **Retry**: ripeti con domande diverse
+- **Analisi per topic**: mostra i punti deboli
+
+---
+
+## Proposed Changes
+
+### Inizializzazione Progetto
+
+#### [NEW] Setup Vite + React + Tailwind
+- `npx create-vite@latest ./ --template react`
+- Installazione dipendenze: `tailwindcss`, `react-router-dom`, `framer-motion`, `lucide-react`
+- Configurazione Tailwind con tema custom (colori gaming, dark mode)
+
+---
+
+### Fase 1 — Fondamenta (Struttura + Design System)
+
+#### [NEW] Design System e Layout
+- `src/index.css` — tema dark gaming con gradients, colori neon
+- `src/components/layout/` — Navbar, Sidebar, Footer
+- `src/context/GameContext.jsx` — stato globale
+- `src/hooks/useLocalStorage.js` — persistenza
+
+#### [NEW] Dati Statici
+- `src/data/topics.js` — struttura contenuti (dai 6 .md)
+- `src/data/quizzes/topic1-5.js` — ~25 domande per topic
+- `src/data/examSimulation.js` — pool ~120 domande
+
+---
+
+### Fase 2 — Pagine Core
+
+#### [NEW] Dashboard e Navigazione
+- `src/pages/Dashboard.jsx` — home con progressi, suggerimento prossimo step
+- `src/pages/TopicPage.jsx` — overview topic con lezioni
+- `src/App.jsx` — routing completo
+
+#### [NEW] Lezioni con Fumetti
+- `src/pages/LessonPage.jsx` — lezione singola
+- `src/components/learning/ComicStrip.jsx` — pannelli fumetto animati
+- `src/components/learning/CommandDemo.jsx` — demo comando con output
+
+---
+
+### Fase 3 — Mini-Giochi
+
+#### [NEW] Componenti Gioco
+- `src/components/games/Quiz.jsx`
+- `src/components/games/DragAndDrop.jsx`
+- `src/components/games/MemoryGame.jsx`
+- `src/components/games/TerminalChallenge.jsx`
+- `src/components/games/FillTheGap.jsx`
+
+---
+
+### Fase 4 — Gamification
+
+#### [NEW] Sistema XP e Badge
+- `src/components/gamification/XPBar.jsx`
+- `src/components/gamification/BadgeGallery.jsx`
+- `src/components/gamification/Confetti.jsx`
+- `src/utils/xpCalculator.js`
+- `src/utils/badgeRules.js`
+
+---
+
+### Fase 5 — Simulazione Esame
+
+#### [NEW] Esame Simulato
+- `src/pages/ExamPage.jsx`
+- `src/components/exam/ExamSimulation.jsx`
+- `src/components/exam/ExamResult.jsx`
+- `src/components/exam/ReviewMode.jsx`
+
+---
+
+### Fase 6 — Polish e Deploy
+
+- Animazioni micro-interactions
+- Responsive (mobile-first)
+- PWA (installabile su telefono)
+- Deploy su Vercel
+
+---
+
+## Verification Plan
+
+### Automated Tests
+- Non previsti per v1 (progetto didattico). Se vuoi, possiamo aggiungere Vitest per i test dei calcoli XP.
+
+### Manual Verification (Browser)
+1. **Dashboard**: verificare che mostra XP, livello, streak, stato topic
+2. **Topic → Lezione → Quiz**: navigare un flusso completo, verificare che XP si aggiornano
+3. **Memory Game**: giocare e verificare che rileva le coppie
+4. **Terminal Challenge**: inserire comandi e verificare feedback corretto/errato
+5. **Simulazione Esame**: completare l'esame, verificare timer, punteggio, review
+6. **Persistenza**: ricaricare pagina → verificare che progressi sono salvati
+7. **Responsive**: testare su mobile (Chrome DevTools)
+
+> [!TIP]
+> Svilupperemo in fasi incrementali. Ogni fase sarà testabile con `npm run dev` nel browser.

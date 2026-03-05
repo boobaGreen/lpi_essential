@@ -1,0 +1,77 @@
+export const topic2Quizzes = [
+  {
+    lessonId: '2-1',
+    question: 'Quale shell è quella predefinita nella maggior parte delle distribuzioni Linux?',
+    options: ['zsh', 'fish', 'bash', 'csh'],
+    correct: 2,
+    explanation: 'Bash (Bourne Again Shell) è la shell predefinita nella maggior parte delle distribuzioni Linux.',
+  },
+  {
+    lessonId: '2-1',
+    question: 'Quale simbolo indica un utente root nel prompt?',
+    options: ['$', '#', '@', '!'],
+    correct: 1,
+    explanation: 'Il simbolo # indica l\'utente root, mentre $ indica un utente normale.',
+  },
+  {
+    lessonId: '2-1',
+    question: 'Cosa fa il quoting con le virgolette doppie (")?',
+    options: [
+      'Impedisce qualsiasi espansione',
+      'Permette l\'espansione delle variabili ma non del globbing',
+      'Non ha effetto',
+      'Esegue il contenuto come comando'
+    ],
+    correct: 1,
+    explanation: 'Le virgolette doppie permettono l\'espansione di variabili ($VAR) ma impediscono il globbing (* e ?).',
+  },
+  {
+    lessonId: '2-2',
+    question: 'Quale comando mostra il valore della variabile PATH?',
+    options: ['show PATH', 'echo $PATH', 'print PATH', 'cat PATH'],
+    correct: 1,
+    explanation: 'echo $PATH stampa il valore della variabile d\'ambiente PATH.',
+  },
+  {
+    lessonId: '2-2',
+    question: 'Quale comando rende una variabile locale disponibile ai processi figli?',
+    options: ['share', 'export', 'set', 'push'],
+    correct: 1,
+    explanation: 'export rende una variabile locale disponibile come variabile d\'ambiente per i processi figli.',
+  },
+  {
+    lessonId: '2-3',
+    question: 'Quale comando mostra il manuale di un comando Linux?',
+    options: ['help comando', 'man comando', 'info comando', '--help comando'],
+    correct: 1,
+    explanation: 'man (manual) mostra la pagina del manuale completa per un comando.',
+  },
+  {
+    lessonId: '2-3',
+    question: 'Quale comando cerca un file nel filesystem per nome?',
+    options: ['search', 'grep', 'find', 'look'],
+    correct: 2,
+    explanation: 'find cerca file e directory nel filesystem. Es: find / -name "file.txt"',
+  },
+  {
+    lessonId: '2-4',
+    question: 'In quale directory si trovano i file di configurazione del sistema?',
+    options: ['/bin', '/etc', '/var', '/opt'],
+    correct: 1,
+    explanation: '/etc contiene i file di configurazione del sistema (es. /etc/passwd, /etc/fstab).',
+  },
+  {
+    lessonId: '2-4',
+    question: 'Quale comando crea una directory incluse le directory padre mancanti?',
+    options: ['mkdir -f', 'mkdir -r', 'mkdir -p', 'mkdir -a'],
+    correct: 2,
+    explanation: 'mkdir -p crea la directory e tutte le directory padre necessarie.',
+  },
+  {
+    lessonId: '2-4',
+    question: 'Quale pattern glob corrisponde a qualsiasi singolo carattere?',
+    options: ['*', '?', '[]', '#'],
+    correct: 1,
+    explanation: '? corrisponde a esattamente un singolo carattere. * corrisponde a zero o più caratteri.',
+  },
+]

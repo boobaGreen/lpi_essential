@@ -1,0 +1,77 @@
+export const topic3Quizzes = [
+  {
+    lessonId: '3-1',
+    question: 'Quale algoritmo di compressione produce generalmente i file più piccoli?',
+    options: ['gzip', 'bzip2', 'xz', 'compress'],
+    correct: 2,
+    explanation: 'xz offre il miglior rapporto di compressione, ma è anche il più lento.',
+  },
+  {
+    lessonId: '3-1',
+    question: 'Quale comando crea un archivio tar compresso con gzip?',
+    options: ['tar -czf archivio.tar.gz dir/', 'tar -xzf archivio.tar.gz dir/', 'gzip dir/', 'zip -r archivio.tar.gz dir/'],
+    correct: 0,
+    explanation: 'tar -czf: c=create, z=gzip, f=file. Crea un archivio .tar.gz.',
+  },
+  {
+    lessonId: '3-1',
+    question: 'Quale estensione indica un file compresso con bzip2?',
+    options: ['.gz', '.bz2', '.xz', '.zip'],
+    correct: 1,
+    explanation: 'bzip2 produce file con estensione .bz2.',
+  },
+  {
+    lessonId: '3-2',
+    question: 'Quale operatore redirige lo stdout sovrascrivendo il file?',
+    options: ['>>', '>', '<', '|'],
+    correct: 1,
+    explanation: '> redirige lo stdout verso un file, sovrascrivendolo. >> appende.',
+  },
+  {
+    lessonId: '3-2',
+    question: 'Quale operatore redirige lo stderr?',
+    options: ['1>', '2>', '0>', '3>'],
+    correct: 1,
+    explanation: '2> redirige lo stderr (file descriptor 2). 1> o > redirige lo stdout.',
+  },
+  {
+    lessonId: '3-2',
+    question: 'Cosa fa il pipe (|)?',
+    options: [
+      'Scrive in un file',
+      'Connette lo stdout di un comando allo stdin del successivo',
+      'Esegue due comandi in parallelo',
+      'Crea un link simbolico'
+    ],
+    correct: 1,
+    explanation: 'Il pipe (|) passa l\'output di un comando come input al comando successivo.',
+  },
+  {
+    lessonId: '3-3',
+    question: 'Quale opzione di grep esegue una ricerca case-insensitive?',
+    options: ['-r', '-i', '-v', '-c'],
+    correct: 1,
+    explanation: 'grep -i ignora la distinzione tra maiuscole e minuscole.',
+  },
+  {
+    lessonId: '3-3',
+    question: 'Nella regex, cosa significa il metacarattere "." ?',
+    options: ['Fine della riga', 'Un punto letterale', 'Qualsiasi singolo carattere', 'Inizio della riga'],
+    correct: 2,
+    explanation: 'Il punto (.) nelle espressioni regolari corrisponde a qualsiasi singolo carattere.',
+  },
+  {
+    lessonId: '3-4',
+    question: 'Quale riga deve essere la prima in uno script Bash?',
+    options: ['#!/bin/bash', '#/bin/bash', '//bin/bash', '!#/bin/bash'],
+    correct: 0,
+    explanation: '#!/bin/bash è lo shebang: indica al sistema quale interprete usare per eseguire lo script.',
+  },
+  {
+    lessonId: '3-4',
+    question: 'Come si accede al primo argomento passato a uno script?',
+    options: ['$0', '$1', '$#', '$@'],
+    correct: 1,
+    explanation: '$1 è il primo argomento. $0 è il nome dello script. $# è il numero di argomenti. $@ sono tutti gli argomenti.',
+  },
+]
