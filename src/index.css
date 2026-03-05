@@ -289,3 +289,17 @@ body {
     align-items: start;
   }
 }
+
+/* ============================================
+   Deep Dive CTA button (ExtendedContent)
+   ============================================ */
+
+.deep-dive-cta {
+  display: none !important;
+}
+
+@media (min-width: 480px) {
+  .deep-dive-cta {
+    display: block !important;
+  }
+}

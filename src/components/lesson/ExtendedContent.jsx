@@ -246,126 +246,203 @@ function RenderBlock({ block, topicColor, index, t }) {
 
 export default function ExtendedContent({ data, topicColor, t }) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const sectionCount = data?.sections?.length ?? 0
 
   if (!data || !data.sections || data.sections.length === 0) return null
 
   return (
-    <div style={{ margin: '24px 0' }}>
-      {/* Toggle Button — bouncy deep dive */}
+    <div style={{ margin: '32px 0' }}>
+
+      {/* ── TRIGGER CARD ── */}
       <motion.button
         onClick={() => setIsExpanded(!isExpanded)}
-        whileHover={{ scale: 1.03, y: -2 }}
-        whileTap={{ scale: 0.97 }}
+        whileHover={{ y: -3, boxShadow: `0 8px 32px ${topicColor}30` }}
+        whileTap={{ scale: 0.98 }}
         animate={!isExpanded ? {
-          scale: [1, 1.025, 1, 1.025, 1],
           boxShadow: [
             `0 0 0px ${topicColor}00`,
-            `0 0 12px ${topicColor}60`,
-            `0 0 0px ${topicColor}00`,
-            `0 0 12px ${topicColor}60`,
+            `0 4px 24px ${topicColor}45`,
             `0 0 0px ${topicColor}00`,
           ],
-        } : { scale: 1, boxShadow: `0 0 0px ${topicColor}00` }}
+        } : {}}
         transition={!isExpanded ? {
-          duration: 2.4,
+          duration: 2.8,
           repeat: Infinity,
-          repeatDelay: 3,
+          repeatDelay: 2.5,
           ease: 'easeInOut',
-        } : { duration: 0.2 }}
+        } : { duration: 0.25 }}
         style={{
-          width: '100%', padding: '16px 20px',
+          width: '100%',
           background: isExpanded
-            ? `${topicColor}15`
-            : `linear-gradient(135deg, rgba(255,255,255,0.05) 0%, ${topicColor}0d 100%)`,
-          border: `2px solid ${isExpanded ? topicColor + '60' : topicColor + '35'}`,
-          borderRadius: '14px', cursor: 'pointer',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          color: isExpanded ? topicColor : 'var(--color-text-secondary)',
-          transition: 'all 0.3s ease',
+            ? `linear-gradient(135deg, ${topicColor}20 0%, ${topicColor}08 100%)`
+            : `linear-gradient(135deg, rgba(255,255,255,0.07) 0%, ${topicColor}14 100%)`,
+          border: `2px solid ${isExpanded ? topicColor + '80' : topicColor + '45'}`,
+          borderRadius: isExpanded ? '14px 14px 0 0' : '14px',
+          cursor: 'pointer',
+          padding: 0,
+          overflow: 'hidden',
+          textAlign: 'left',
+          transition: 'border-color 0.3s ease, border-radius 0.3s ease, background 0.3s ease',
         }}
       >
-        <span style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 700, fontSize: '1rem' }}>
-          <BookOpen size={20} style={{ color: topicColor }} />
-          {t('deepDiveLabel') || '📚 Deep Dive'} — {data.title}
-        </span>
-        {/* Right side CTA */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-          {/* "Apri" label — only when collapsed */}
-          <AnimatePresence>
-            {!isExpanded && (
-              <motion.span
-                initial={{ opacity: 0, x: 6 }}
-                animate={{ opacity: [0.6, 1, 0.6], x: 0 }}
-                exit={{ opacity: 0, x: 6 }}
-                transition={{ opacity: { duration: 1.4, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 0.2 } }}
-                style={{
-                  fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.08em',
-                  color: topicColor, textTransform: 'uppercase',
-                }}
-              >
-                {t('expand') || 'Apri'}
-              </motion.span>
-            )}
-          </AnimatePresence>
-
-          {/* Bouncy chevron inside glowing ring */}
+        {/* Top accent bar — vivid gradient stripe */}
+        {!isExpanded && (
           <motion.div
-            animate={isExpanded
-              ? { scale: 1, boxShadow: `0 0 0px ${topicColor}00` }
-              : {
-                  scale: [1, 1.15, 1, 1.15, 1],
-                  boxShadow: [
-                    `0 0 0px ${topicColor}00`,
-                    `0 0 10px ${topicColor}90`,
-                    `0 0 0px ${topicColor}00`,
-                    `0 0 10px ${topicColor}90`,
-                    `0 0 0px ${topicColor}00`,
-                  ],
-                }
-            }
-            transition={isExpanded
-              ? { duration: 0.3 }
-              : { duration: 1.6, repeat: Infinity, repeatDelay: 2, ease: 'easeInOut' }
-            }
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
             style={{
-              width: '34px', height: '34px', borderRadius: '50%',
+              height: '3px',
+              background: `linear-gradient(90deg, ${topicColor}, ${topicColor}60, transparent)`,
+              transformOrigin: 'left',
+            }}
+          />
+        )}
+
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '14px',
+          padding: '18px 20px',
+        }}>
+          {/* Icon container */}
+          <motion.div
+            animate={!isExpanded ? {
+              rotate: [0, -8, 8, -5, 0],
+            } : { rotate: 0 }}
+            transition={!isExpanded ? {
+              duration: 1.2,
+              repeat: Infinity,
+              repeatDelay: 4,
+              ease: 'easeInOut',
+            } : {}}
+            style={{
+              width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: isExpanded ? `${topicColor}25` : `${topicColor}12`,
-              border: `2px solid ${isExpanded ? topicColor + 'aa' : topicColor + '50'}`,
+              background: `${topicColor}20`,
+              border: `2px solid ${topicColor}50`,
+              fontSize: '1.3rem',
             }}
           >
-            <motion.span
+            📚
+          </motion.div>
+
+          {/* Text content */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {/* Badge row */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', gap: '4px',
+                padding: '2px 10px', borderRadius: '99px',
+                background: `${topicColor}25`,
+                border: `1px solid ${topicColor}60`,
+                fontSize: '0.68rem', fontWeight: 800,
+                color: topicColor, textTransform: 'uppercase', letterSpacing: '0.1em',
+              }}>
+                {isExpanded ? '▲ ' : '▼ '}{t('deepDiveBadge') || 'Deep Dive'}
+              </span>
+              <span style={{
+                fontSize: '0.7rem', color: 'var(--color-text-muted)',
+                fontWeight: 600,
+              }}>
+                {sectionCount} {t('deepDiveSections') || 'sezioni'}
+              </span>
+            </div>
+            {/* Title */}
+            <div style={{
+              fontWeight: 700, fontSize: '0.95rem',
+              color: isExpanded ? topicColor : 'var(--color-text-primary)',
+              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+              transition: 'color 0.3s ease',
+            }}>
+              {data.title}
+            </div>
+            {/* Subtitle — only when collapsed */}
+            <AnimatePresence>
+              {!isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  style={{
+                    fontSize: '0.78rem', color: 'var(--color-text-muted)',
+                    marginTop: '2px', overflow: 'hidden',
+                  }}
+                >
+                  {t('deepDiveHint') || 'Approfondisci gli argomenti avanzati →'}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* CTA right side */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+            {/* Explicit CTA pill */}
+            <AnimatePresence>
+              {!isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  style={{
+                    padding: '6px 14px', borderRadius: '8px',
+                    background: topicColor,
+                    color: '#0a0e1a',
+                    fontSize: '0.75rem', fontWeight: 800,
+                    letterSpacing: '0.05em',
+                    display: 'none', // hidden on mobile, shown via CSS
+                  }}
+                  className="deep-dive-cta"
+                >
+                  {t('expand') || 'Apri'}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Chevron circle */}
+            <motion.div
               animate={isExpanded
-                ? { rotate: 180, y: 0 }
-                : { rotate: 0, y: [0, 4, 0, 4, 0] }
+                ? { scale: 1 }
+                : { scale: [1, 1.18, 1, 1.18, 1] }
               }
               transition={isExpanded
-                ? { duration: 0.35, ease: 'easeInOut' }
-                : { y: { duration: 1.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' } }
+                ? { duration: 0.3 }
+                : { duration: 1.4, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }
               }
-              style={{ display: 'flex', color: isExpanded ? topicColor : topicColor + 'cc' }}
+              style={{
+                width: '38px', height: '38px', borderRadius: '50%', flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: isExpanded ? topicColor : `${topicColor}18`,
+                border: `2px solid ${isExpanded ? topicColor : topicColor + '60'}`,
+                boxShadow: isExpanded ? 'none' : `0 0 12px ${topicColor}50`,
+                transition: 'background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+              }}
             >
-              <ChevronDown size={20} />
-            </motion.span>
-          </motion.div>
+              <motion.span
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                style={{ display: 'flex', color: isExpanded ? '#0a0e1a' : topicColor }}
+              >
+                <ChevronDown size={20} />
+              </motion.span>
+            </motion.div>
+          </div>
         </div>
       </motion.button>
 
-      {/* Expandable Content */}
+      {/* ── EXPANDED CONTENT ── */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeInOut' }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             style={{ overflow: 'hidden' }}
           >
             <div style={{
-              padding: '24px 20px', marginTop: '2px',
-              background: 'rgba(255,255,255,0.02)',
-              borderRadius: '0 0 12px 12px',
-              border: `1px solid ${topicColor}20`,
+              padding: '24px 20px',
+              background: `linear-gradient(180deg, ${topicColor}08 0%, transparent 60px)`,
+              borderRadius: '0 0 14px 14px',
+              border: `2px solid ${topicColor}45`,
               borderTop: 'none',
             }}>
               {data.sections.map((block, i) => (

@@ -123,6 +123,9 @@ export const ui = {
   topic: "Sujet",
   // Extended Content
   deepDiveLabel: "📚 Approfondissement",
+  deepDiveBadge: "Approfondissement",
+  deepDiveSections: "sections",
+  deepDiveHint: "Explorer les sujets avancés →",
   expand: "Ouvrir",
   extNote: "Note",
   extWarning: "Attention",

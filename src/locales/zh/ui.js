@@ -123,6 +123,9 @@ export const ui = {
   topic: "主题",
   // Extended Content
   deepDiveLabel: "📚 深度学习",
+  deepDiveBadge: "深度学习",
+  deepDiveSections: "部分",
+  deepDiveHint: "探索高级主题 →",
   expand: "展开",
   extNote: "注意",
   extWarning: "警告",
