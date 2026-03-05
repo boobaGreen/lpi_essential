@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useLanguage } from '../../context/LanguageContext.jsx'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, ChevronDown, Check } from 'lucide-react'
@@ -46,6 +47,8 @@ export default function LanguageSelector() {
           fontWeight: 600,
           transition: 'border-color 0.2s',
           flexShrink: 0,
+          position: 'relative',
+          zIndex: 101,
         }}
         onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-neon-blue)'}
         onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
@@ -55,25 +58,32 @@ export default function LanguageSelector() {
         {!isMobile && <ChevronDown size={14} style={{ color: 'var(--color-text-muted)', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />}
       </button>
 
+      {/* Overlay mobile renderizzato nel body via Portal per bypassare il backdrop-filter del nav */}
+      {isMobile && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              key="lang-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsOpen(false)}
+              style={{
+                position: 'fixed',
+                inset: 0,
+                background: 'rgba(0, 0, 0, 0.6)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                zIndex: 98,
+              }}
+            />
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
+
       <AnimatePresence>
-        {isOpen && isMobile && (
-          <motion.div
-            key="overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setIsOpen(false)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'rgba(0, 0, 0, 0.55)',
-              backdropFilter: 'blur(6px)',
-              WebkitBackdropFilter: 'blur(6px)',
-              zIndex: 98,
-            }}
-          />
-        )}
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
