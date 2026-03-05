@@ -288,25 +288,67 @@ export default function ExtendedContent({ data, topicColor, t }) {
           <BookOpen size={20} style={{ color: topicColor }} />
           {t('deepDiveLabel') || '📚 Deep Dive'} — {data.title}
         </span>
-        <motion.span
-          animate={isExpanded
-            ? { rotate: 180, y: 0 }
-            : {
-                rotate: 0,
-                y: [0, 5, 0, 5, 0],
+        {/* Right side CTA */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+          {/* "Apri" label — only when collapsed */}
+          <AnimatePresence>
+            {!isExpanded && (
+              <motion.span
+                initial={{ opacity: 0, x: 6 }}
+                animate={{ opacity: [0.6, 1, 0.6], x: 0 }}
+                exit={{ opacity: 0, x: 6 }}
+                transition={{ opacity: { duration: 1.4, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 0.2 } }}
+                style={{
+                  fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.08em',
+                  color: topicColor, textTransform: 'uppercase',
+                }}
+              >
+                {t('expand') || 'Apri'}
+              </motion.span>
+            )}
+          </AnimatePresence>
+
+          {/* Bouncy chevron inside glowing ring */}
+          <motion.div
+            animate={isExpanded
+              ? { scale: 1, boxShadow: `0 0 0px ${topicColor}00` }
+              : {
+                  scale: [1, 1.15, 1, 1.15, 1],
+                  boxShadow: [
+                    `0 0 0px ${topicColor}00`,
+                    `0 0 10px ${topicColor}90`,
+                    `0 0 0px ${topicColor}00`,
+                    `0 0 10px ${topicColor}90`,
+                    `0 0 0px ${topicColor}00`,
+                  ],
+                }
+            }
+            transition={isExpanded
+              ? { duration: 0.3 }
+              : { duration: 1.6, repeat: Infinity, repeatDelay: 2, ease: 'easeInOut' }
+            }
+            style={{
+              width: '34px', height: '34px', borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: isExpanded ? `${topicColor}25` : `${topicColor}12`,
+              border: `2px solid ${isExpanded ? topicColor + 'aa' : topicColor + '50'}`,
+            }}
+          >
+            <motion.span
+              animate={isExpanded
+                ? { rotate: 180, y: 0 }
+                : { rotate: 0, y: [0, 4, 0, 4, 0] }
               }
-          }
-          transition={isExpanded
-            ? { duration: 0.35, ease: 'easeInOut' }
-            : {
-                rotate: { duration: 0.3 },
-                y: { duration: 1.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' },
+              transition={isExpanded
+                ? { duration: 0.35, ease: 'easeInOut' }
+                : { y: { duration: 1.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' } }
               }
-          }
-          style={{ color: isExpanded ? topicColor : 'var(--color-text-muted)', display: 'flex' }}
-        >
-          <ChevronDown size={24} />
-        </motion.span>
+              style={{ display: 'flex', color: isExpanded ? topicColor : topicColor + 'cc' }}
+            >
+              <ChevronDown size={20} />
+            </motion.span>
+          </motion.div>
+        </div>
       </motion.button>
 
       {/* Expandable Content */}

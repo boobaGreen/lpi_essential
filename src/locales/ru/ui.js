@@ -123,6 +123,7 @@ export const ui = {
   topic: "Тема",
   // Extended Content
   deepDiveLabel: "📚 Углублённое изучение",
+  expand: "Открыть",
   extNote: "Примечание",
   extWarning: "Предупреждение",
   extSuggestion: "Совет",
