@@ -13,6 +13,18 @@ export const COURSES = {
     description: 'Fondamentali di Linux: FOSS, file system, comandi base, sicurezza.',
     tags: ['Linux', 'FOSS', 'CLI', 'LPI'],
   },
+  'rhcsa': {
+    id: 'rhcsa',
+    name: 'RHCSA',
+    code: 'EX200',
+    icon: '🎯',
+    color: '#ee0000',        // Red Hat red
+    topicCount: 10,
+    available: true,
+    description: 'Red Hat Certified System Administrator: storage, rete, SELinux, container.',
+    tags: ['Linux', 'RHEL', 'SysAdmin', 'Red Hat', 'EX200'],
+    disclaimer: 'practical-exam',   // flag: mostra disclaimer "esame pratico"
+  },
   'lpic-1': {
     id: 'lpic-1',
     name: 'LPIC-1',
