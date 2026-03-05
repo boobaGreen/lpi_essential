@@ -56,6 +56,24 @@ export default function LanguageSelector() {
       </button>
 
       <AnimatePresence>
+        {isOpen && isMobile && (
+          <motion.div
+            key="overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setIsOpen(false)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0, 0, 0, 0.55)',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              zIndex: 98,
+            }}
+          />
+        )}
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -69,7 +87,7 @@ export default function LanguageSelector() {
               right: 0,
               minWidth: '200px',
               padding: '8px',
-              zIndex: 100,
+              zIndex: 99,
               display: 'flex',
               flexDirection: 'column',
               gap: '4px',
