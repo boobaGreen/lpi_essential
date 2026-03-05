@@ -6,6 +6,7 @@ import TerminalChallenge from '../components/games/TerminalChallenge.jsx'
 import DragDropGame from '../components/games/DragDropGame.jsx'
 import FillGapGame from '../components/games/FillGapGame.jsx'
 import TrueFalseGame from '../components/games/TrueFalseGame.jsx'
+import QuizGame from '../components/games/QuizGame.jsx'
 import { useState } from 'react'
 import { useGame } from '../context/GameContext.jsx'
 
@@ -16,6 +17,7 @@ const levels = [
 ]
 
 const gameComponents = {
+  quiz: { component: QuizGame, title: '🧠 Quiz Rapidi', color: 'var(--color-neon-blue)' },
   memory: { component: MemoryGame, title: '🃏 Memory Game', color: 'var(--color-neon-green)' },
   terminal: { component: TerminalChallenge, title: '💻 Terminal Challenge', color: 'var(--color-neon-purple)' },
   dragdrop: { component: DragDropGame, title: '🧩 Drag & Drop', color: 'var(--color-neon-orange)' },
@@ -48,10 +50,8 @@ export default function GamesHub() {
       id: 'quiz',
       icon: '🧠',
       title: 'Quiz Rapidi',
-      description: 'Metti alla prova le tue conoscenze con quiz a scelta multipla per ogni topic.',
-      link: '/topic/1',
+      description: 'Metti alla prova le tue conoscenze con quiz a scelta multipla da tutti i topic.',
       color: 'var(--color-neon-blue)',
-      isLink: true,
     },
     { id: 'memory', icon: '🃏', title: 'Memory Game', description: 'Abbina comandi Linux alle loro descrizioni. Allena la tua memoria!', color: 'var(--color-neon-green)' },
     { id: 'terminal', icon: '💻', title: 'Terminal Challenge', description: 'Scrivi il comando giusto! Come un vero sysadmin!', color: 'var(--color-neon-purple)' },
@@ -190,7 +190,7 @@ export default function GamesHub() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
         {games.map((game, i) => {
-          const highest = game.isLink ? -1 : getHighestCompleted(game.id)
+          const highest = getHighestCompleted(game.id)
           return (
             <motion.div
               key={game.id}
@@ -198,48 +198,34 @@ export default function GamesHub() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
             >
-              {game.isLink ? (
-                <Link to={game.link} className="no-underline">
-                  <div className="glass-card" style={{ padding: '24px', cursor: 'pointer', transition: 'border-color 0.2s', height: '100%' }}
-                    onMouseEnter={e => e.currentTarget.style.borderColor = game.color}
-                    onMouseLeave={e => e.currentTarget.style.borderColor = ''}
-                  >
-                    <span style={{ fontSize: '2.5rem' }}>{game.icon}</span>
-                    <h3 className="font-bold" style={{ marginTop: '12px', fontSize: '1.1rem', color: game.color }}>{game.title}</h3>
-                    <p style={{ color: 'var(--color-text-muted)', marginTop: '8px', fontSize: '0.875rem' }}>{game.description}</p>
-                    <span className="font-bold" style={{ display: 'inline-block', marginTop: '12px', fontSize: '0.75rem', color: game.color }}>Gioca →</span>
-                  </div>
-                </Link>
-              ) : (
-                <div
-                  className="glass-card"
-                  style={{ padding: '24px', cursor: 'pointer', transition: 'border-color 0.2s', height: '100%' }}
-                  onClick={() => setShowLevelPicker(game.id)}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = game.color}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = ''}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: '2.5rem' }}>{game.icon}</span>
-                    {/* Level stars */}
-                    <div style={{ display: 'flex', gap: '3px' }}>
-                      {[1, 2, 3].map(lv => (
-                        <Star key={lv} size={14} style={{
-                          color: highest >= lv ? levels[lv - 1].color : '#555',
-                          fill: highest >= lv ? levels[lv - 1].color : 'transparent',
-                        }} />
-                      ))}
-                    </div>
-                  </div>
-                  <h3 className="font-bold" style={{ marginTop: '12px', fontSize: '1.1rem', color: game.color }}>{game.title}</h3>
-                  <p style={{ color: 'var(--color-text-muted)', marginTop: '8px', fontSize: '0.875rem' }}>{game.description}</p>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
-                    <span className="font-bold" style={{ fontSize: '0.75rem', color: game.color }}>Scegli livello →</span>
-                    {highest > 0 && (
-                      <span style={{ fontSize: '0.7rem', color: levels[highest - 1].color, fontWeight: 600 }}>{levels[highest - 1].icon} Lv.{highest}</span>
-                    )}
+              <div
+                className="glass-card"
+                style={{ padding: '24px', cursor: 'pointer', transition: 'border-color 0.2s', height: '100%' }}
+                onClick={() => setShowLevelPicker(game.id)}
+                onMouseEnter={e => e.currentTarget.style.borderColor = game.color}
+                onMouseLeave={e => e.currentTarget.style.borderColor = ''}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: '2.5rem' }}>{game.icon}</span>
+                  {/* Level stars */}
+                  <div style={{ display: 'flex', gap: '3px' }}>
+                    {[1, 2, 3].map(lv => (
+                      <Star key={lv} size={14} style={{
+                        color: highest >= lv ? levels[lv - 1].color : '#555',
+                        fill: highest >= lv ? levels[lv - 1].color : 'transparent',
+                      }} />
+                    ))}
                   </div>
                 </div>
-              )}
+                <h3 className="font-bold" style={{ marginTop: '12px', fontSize: '1.1rem', color: game.color }}>{game.title}</h3>
+                <p style={{ color: 'var(--color-text-muted)', marginTop: '8px', fontSize: '0.875rem' }}>{game.description}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
+                  <span className="font-bold" style={{ fontSize: '0.75rem', color: game.color }}>Scegli livello →</span>
+                  {highest > 0 && (
+                    <span style={{ fontSize: '0.7rem', color: levels[highest - 1].color, fontWeight: 600 }}>{levels[highest - 1].icon} Lv.{highest}</span>
+                  )}
+                </div>
+              </div>
             </motion.div>
           )
         })}
