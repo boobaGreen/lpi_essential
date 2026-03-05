@@ -1,96 +1,137 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Gamepad2, Brain, Terminal, Puzzle, ArrowLeft } from 'lucide-react'
+import { Gamepad2, ArrowLeft } from 'lucide-react'
+import MemoryGame from '../components/games/MemoryGame.jsx'
+import TerminalChallenge from '../components/games/TerminalChallenge.jsx'
+import DragDropGame from '../components/games/DragDropGame.jsx'
+import FillGapGame from '../components/games/FillGapGame.jsx'
+import TrueFalseGame from '../components/games/TrueFalseGame.jsx'
+import { useState } from 'react'
+
+const gameComponents = {
+  memory: { component: MemoryGame, title: '🃏 Memory Game', color: 'var(--color-neon-green)' },
+  terminal: { component: TerminalChallenge, title: '💻 Terminal Challenge', color: 'var(--color-neon-purple)' },
+  dragdrop: { component: DragDropGame, title: '🧩 Drag & Drop', color: 'var(--color-neon-orange)' },
+  fillgap: { component: FillGapGame, title: '📝 Completa il Comando', color: 'var(--color-neon-pink)' },
+  truefalse: { component: TrueFalseGame, title: '⚡ Vero o Falso', color: 'var(--color-neon-yellow)' },
+}
 
 export default function GamesHub() {
+  const [activeGame, setActiveGame] = useState(null)
+
   const games = [
     {
+      id: 'quiz',
       icon: '🧠',
       title: 'Quiz Rapidi',
       description: 'Metti alla prova le tue conoscenze con quiz a scelta multipla per ogni topic.',
-      link: '/topic/1/lesson/1-1',
+      link: '/topic/1',
       color: 'var(--color-neon-blue)',
-      available: true,
+      isLink: true,
     },
     {
+      id: 'memory',
       icon: '🃏',
       title: 'Memory Game',
       description: 'Abbina comandi Linux alle loro descrizioni. Allena la tua memoria!',
-      link: '#',
       color: 'var(--color-neon-green)',
-      available: false,
     },
     {
+      id: 'terminal',
       icon: '💻',
       title: 'Terminal Challenge',
-      description: 'Scrivi il comando giusto e verifica l\'output. Come un vero sysadmin!',
-      link: '#',
+      description: 'Scrivi il comando giusto! Come un vero sysadmin!',
       color: 'var(--color-neon-purple)',
-      available: false,
     },
     {
+      id: 'dragdrop',
       icon: '🧩',
       title: 'Drag & Drop',
-      description: 'Trascina e rilascia per associare concetti: licenze, permessi, porte...',
-      link: '#',
+      description: 'Associa concetti: licenze, permessi, porte di rete e altro!',
       color: 'var(--color-neon-orange)',
-      available: false,
     },
     {
+      id: 'fillgap',
       icon: '📝',
       title: 'Completa il Comando',
       description: 'Riempi gli spazi vuoti nei comandi Linux. Fill-the-gap!',
-      link: '#',
       color: 'var(--color-neon-pink)',
-      available: false,
     },
     {
+      id: 'truefalse',
       icon: '⚡',
       title: 'Vero o Falso',
-      description: 'Rispondi il più velocemente possibile: è vero o falso?',
-      link: '#',
+      description: 'Rispondi il più velocemente possibile: è vero o falso? Hai 10 secondi!',
       color: 'var(--color-neon-yellow)',
-      available: false,
     },
   ]
 
+  // Active game view
+  if (activeGame && gameComponents[activeGame]) {
+    const GameComp = gameComponents[activeGame].component
+    const gameInfo = gameComponents[activeGame]
+    return (
+      <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <button
+          onClick={() => setActiveGame(null)}
+          className="inline-flex items-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+          style={{ gap: '8px', marginBottom: '16px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.875rem' }}
+        >
+          <ArrowLeft size={18} /> Hub Giochi
+        </button>
+        <h2 className="font-black" style={{ fontSize: '1.5rem', marginBottom: '20px' }}>
+          <span style={{ color: gameInfo.color }}>{gameInfo.title}</span>
+        </h2>
+        <GameComp onComplete={() => setActiveGame(null)} />
+      </div>
+    )
+  }
+
+  // Hub grid view
   return (
-    <div className="space-y-6">
-      <Link to="/" className="inline-flex items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] no-underline transition-colors">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Link to="/" className="inline-flex items-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] no-underline transition-colors" style={{ gap: '8px' }}>
         <ArrowLeft size={18} />
-        <span className="text-sm">Dashboard</span>
+        <span style={{ fontSize: '0.875rem' }}>Dashboard</span>
       </Link>
 
-      <div className="text-center py-4">
-        <h1 className="text-3xl font-black">
-          <Gamepad2 className="inline mr-2 text-[var(--color-neon-purple)]" size={32} />
+      <div className="text-center" style={{ padding: '16px 0' }}>
+        <h1 className="font-black" style={{ fontSize: '2rem' }}>
+          <Gamepad2 className="inline text-[var(--color-neon-purple)]" size={32} style={{ marginRight: '8px' }} />
           <span className="gradient-text">Hub Giochi</span>
         </h1>
-        <p className="text-[var(--color-text-secondary)] mt-2">Scegli un gioco e guadagna XP mentre impari!</p>
+        <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '8px' }}>Scegli un gioco e guadagna XP mentre impari! 🎮</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
         {games.map((game, i) => (
           <motion.div
-            key={i}
+            key={game.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
+            transition={{ delay: i * 0.08 }}
           >
-            {game.available ? (
+            {game.isLink ? (
               <Link to={game.link} className="no-underline">
-                <div className="glass-card p-6 cursor-pointer h-full">
-                  <span className="text-4xl">{game.icon}</span>
-                  <h3 className="text-lg font-bold mt-3" style={{ color: game.color }}>{game.title}</h3>
-                  <p className="text-sm text-[var(--color-text-muted)] mt-2">{game.description}</p>
+                <div className="glass-card cursor-pointer h-full hover:border-[var(--color-neon-blue)]" style={{ padding: '24px', transition: 'border-color 0.2s' }}>
+                  <span style={{ fontSize: '2.5rem' }}>{game.icon}</span>
+                  <h3 className="font-bold" style={{ marginTop: '12px', fontSize: '1.1rem', color: game.color }}>{game.title}</h3>
+                  <p className="text-[var(--color-text-muted)]" style={{ marginTop: '8px', fontSize: '0.875rem' }}>{game.description}</p>
+                  <span className="inline-block font-bold" style={{ marginTop: '12px', fontSize: '0.75rem', color: game.color }}>Gioca →</span>
                 </div>
               </Link>
             ) : (
-              <div className="glass-card p-6 opacity-50 h-full">
-                <span className="text-4xl">{game.icon}</span>
-                <h3 className="text-lg font-bold mt-3" style={{ color: game.color }}>{game.title}</h3>
-                <p className="text-sm text-[var(--color-text-muted)] mt-2">{game.description}</p>
-                <span className="inline-block mt-3 text-xs px-2 py-1 rounded-full bg-[var(--color-bg-primary)] text-[var(--color-text-muted)]">🔒 Prossimamente</span>
+              <div
+                className="glass-card cursor-pointer h-full"
+                style={{ padding: '24px', transition: 'border-color 0.2s' }}
+                onClick={() => setActiveGame(game.id)}
+                onMouseEnter={e => e.currentTarget.style.borderColor = game.color}
+                onMouseLeave={e => e.currentTarget.style.borderColor = ''}
+              >
+                <span style={{ fontSize: '2.5rem' }}>{game.icon}</span>
+                <h3 className="font-bold" style={{ marginTop: '12px', fontSize: '1.1rem', color: game.color }}>{game.title}</h3>
+                <p className="text-[var(--color-text-muted)]" style={{ marginTop: '8px', fontSize: '0.875rem' }}>{game.description}</p>
+                <span className="inline-block font-bold" style={{ marginTop: '12px', fontSize: '0.75rem', color: game.color }}>Gioca →</span>
               </div>
             )}
           </motion.div>

@@ -2,81 +2,11 @@ import { useParams, Link } from 'react-router-dom'
 import { getTopic, getLesson } from '../data/topics.js'
 import { useGame } from '../context/GameContext.jsx'
 import { quizzesByTopic } from '../data/quizzes/index.js'
+import { lessonContent } from '../data/lessonContent.js'
 import Quiz from '../components/games/Quiz.jsx'
 import { motion } from 'framer-motion'
 import { ArrowLeft, CheckCircle, BookOpen, Sparkles } from 'lucide-react'
 import { useState, useEffect } from 'react'
-
-const lessonContent = {
-  '1-1': {
-    comic: {
-      title: 'La Nascita di Linux 🐧',
-      panels: [
-        { emoji: '🏛️', text: '1969 — Nei laboratori AT&T nasce Unix, un sistema operativo rivoluzionario...' },
-        { emoji: '👨‍💻', text: '1991 — Un giovane studente finlandese, Linus Torvalds, inizia a sviluppare un kernel libero...' },
-        { emoji: '🐧', text: '"Sto facendo un sistema operativo libero, solo un hobby..." — Il post che cambiò tutto!' },
-        { emoji: '🌍', text: 'Oggi Linux è ovunque: server, cloud, smartphone (Android), IoT, supercomputer!' },
-      ]
-    },
-    keyPoints: [
-      { title: 'Famiglie di Distribuzioni', items: ['Debian → Ubuntu, Mint', 'Red Hat → RHEL, Fedora, CentOS', 'SUSE → SLES, openSUSE'] },
-      { title: 'Gestori Pacchetti', items: ['Debian: dpkg, apt (.deb)', 'Red Hat: rpm, yum, dnf (.rpm)', 'SUSE: rpm, zypper (.rpm)'] },
-      { title: 'Sistemi Embedded', items: ['Android = kernel Linux modificato', 'Raspberry Pi + Raspbian', 'Linux nel 90% del cloud pubblico'] },
-    ],
-    terminal: { prompt: '$ cat /etc/os-release', output: 'NAME="Ubuntu"\nVERSION="22.04 LTS"\nID=ubuntu\nID_LIKE=debian' },
-  },
-  '1-2': {
-    comic: {
-      title: 'Il Mondo delle App Open Source 📦',
-      panels: [
-        { emoji: '📝', text: 'LibreOffice: Writer, Calc, Impress — la suite libera che sfida Microsoft Office!' },
-        { emoji: '🌐', text: 'Firefox e Chromium: browser web liberi e potenti.' },
-        { emoji: '🖥️', text: 'Apache e Nginx: i server web che fanno girare Internet!' },
-        { emoji: '💻', text: 'C, Java, Python, Bash: i linguaggi che fanno vivere Linux.' },
-      ]
-    },
-    keyPoints: [
-      { title: 'App Desktop', items: ['LibreOffice, GIMP, Blender, VLC, Audacity'] },
-      { title: 'App Server', items: ['Apache, Nginx (web)', 'MariaDB, PostgreSQL (database)', 'Samba, NFS (file sharing)'] },
-      { title: 'Linguaggi', items: ['Compilato: C, Java', 'Interpretato: Python, Perl, JavaScript, Bash'] },
-    ],
-    terminal: { prompt: '$ apt search libreoffice', output: 'libreoffice - office productivity suite\nlibreoffice-calc - spreadsheet\nlibreoffice-writer - word processor' },
-  },
-  '1-3': {
-    comic: {
-      title: 'Le 4 Libertà del Software 🔓',
-      panels: [
-        { emoji: '0️⃣', text: 'Libertà 0: Usare il programma per qualsiasi scopo!' },
-        { emoji: '1️⃣', text: 'Libertà 1: Studiare come funziona e modificarlo!' },
-        { emoji: '2️⃣', text: 'Libertà 2: Ridistribuire copie ad altri!' },
-        { emoji: '3️⃣', text: 'Libertà 3: Distribuire le tue versioni modificate!' },
-      ]
-    },
-    keyPoints: [
-      { title: 'Licenze Copyleft', items: ['GPL: codice derivato deve restare GPL', 'LGPL: permette linking con proprietario', 'AGPL: estende GPL al SaaS'] },
-      { title: 'Licenze Permissive', items: ['MIT: molto breve e permissiva', 'BSD: simile a MIT', 'Apache 2.0: concessione brevetti'] },
-      { title: 'Business Open Source', items: ['Supporto (Red Hat)', 'Doppia licenza', 'SaaS, Certificazioni'] },
-    ],
-    terminal: { prompt: '$ head -5 /usr/share/common-licenses/GPL-3', output: 'GNU GENERAL PUBLIC LICENSE\nVersion 3, 29 June 2007\nCopyright (C) 2007 Free Software Foundation' },
-  },
-  '1-4': {
-    comic: {
-      title: 'Privacy e Sicurezza Digitale 🔒',
-      panels: [
-        { emoji: '🖥️', text: 'GNOME o KDE? Scegli il tuo Desktop Environment!' },
-        { emoji: '🍪', text: 'Attenzione ai cookie di terze parti: ti tracciano ovunque!' },
-        { emoji: '🔒', text: 'HTTPS = HTTP + TLS. Cerca il lucchetto nel browser!' },
-        { emoji: '🔑', text: 'GnuPG: crittografia asimmetrica. Chiave pubblica per crittare, privata per decrittare.' },
-      ]
-    },
-    keyPoints: [
-      { title: 'Desktop Environment', items: ['GNOME (GTK) — Semplicità', 'KDE (Qt) — Personalizzazione', 'XFCE, LXDE — Leggeri'] },
-      { title: 'Privacy', items: ['Cookie terze parti = tracciamento', 'DNT ≠ garanzia di privacy', 'Navigazione privata ≠ anonimato'] },
-      { title: 'Crittografia', items: ['TLS/SSL per connessioni', 'GnuPG per file/email', 'dm-crypt/LUKS per dischi'] },
-    ],
-    terminal: { prompt: '$ gpg --list-keys', output: 'pub   rsa4096 2024-01-15 [SC]\n      ABCD1234...\nuid   [ultimate] Carol <carol@example.com>' },
-  },
-}
 
 function ComicStrip({ comic }) {
   return (
