@@ -82,7 +82,7 @@ function TerminalDemo({ terminal, t }) {
 
 export default function LessonPage() {
   const { t } = useLanguage()
-  const { topicId, lessonId } = useParams()
+  const { topicId, lessonId, courseId } = useParams()
   const { getTopic, getLesson, lessonContent, quizzesByTopic, extendedContent } = useTopics()
   const topic = getTopic(topicId)
   const lesson = getLesson(topicId, lessonId)
@@ -138,7 +138,7 @@ export default function LessonPage() {
     <div style={{ maxWidth: '960px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Back */}
       <Link
-        to={`/topic/${topicId}`}
+        to={`/course/${courseId}/topic/${topicId}`}
         className="no-underline"
         style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}
       >
@@ -235,16 +235,16 @@ export default function LessonPage() {
       {/* Navigation */}
       <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '20px', borderTop: '1px solid var(--color-border)' }}>
         {prev ? (
-          <Link to={`/topic/${topicId}/lesson/${prev.id}`} className="btn-secondary no-underline" style={{ fontSize: '0.875rem' }}>
+          <Link to={`/course/${courseId}/topic/${topicId}/lesson/${prev.id}`} className="btn-secondary no-underline" style={{ fontSize: '0.875rem' }}>
             ← {prev.title}
           </Link>
         ) : <div />}
         {next ? (
-          <Link to={`/topic/${topicId}/lesson/${next.id}`} className="btn-primary no-underline" style={{ fontSize: '0.875rem' }}>
+          <Link to={`/course/${courseId}/topic/${topicId}/lesson/${next.id}`} className="btn-primary no-underline" style={{ fontSize: '0.875rem' }}>
             {next.title} →
           </Link>
         ) : (
-          <Link to={`/topic/${topicId}`} className="btn-primary no-underline" style={{ fontSize: '0.875rem' }}>
+          <Link to={`/course/${courseId}/topic/${topicId}`} className="btn-primary no-underline" style={{ fontSize: '0.875rem' }}>
             {t('endTopic')}
           </Link>
         )}

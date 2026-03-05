@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Gamepad2, ArrowLeft, Lock, Star, Trophy, Zap } from 'lucide-react'
 import MemoryGame from '../components/games/MemoryGame.jsx'
@@ -12,6 +12,7 @@ import { useGame } from '../context/GameContext.jsx'
 import { useLanguage } from '../context/LanguageContext.jsx'
 
 export default function GamesHub() {
+  const { courseId } = useParams()
   const [activeGame, setActiveGame] = useState(null)
   const [selectedLevel, setSelectedLevel] = useState(null)
   const [showLevelPicker, setShowLevelPicker] = useState(null)
@@ -179,7 +180,7 @@ export default function GamesHub() {
   // Hub grid view
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <Link to="/" className="no-underline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
+      <Link to={`/course/${courseId}`} className="no-underline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
         <ArrowLeft size={18} />
         <span>{t('navDashboard')}</span>
       </Link>

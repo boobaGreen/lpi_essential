@@ -1,6 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { useGame } from '../../context/GameContext.jsx'
 import { useLanguage } from '../../context/LanguageContext.jsx'
+import { useCourse } from '../../context/CourseContext.jsx'
 import LanguageSelector from '../ui/LanguageSelector.jsx'
 import { Flame, Gamepad2, GraduationCap, Home, Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
@@ -20,14 +21,20 @@ function useMediaQuery(query) {
 export default function Navbar() {
   const { xp, level, levelTitle, xpProgress, streak } = useGame()
   const { t } = useLanguage()
+  const { currentCourse } = useCourse()
   const location = useLocation()
+  const { courseId } = useParams()
   const [mobileOpen, setMobileOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 768px)')
 
-  const links = [
+  // Build links dynamically: if we have a courseId in the URL, use it; otherwise link to home only
+  const activeCourseId = courseId || null
+  const links = activeCourseId ? [
+    { to: `/course/${activeCourseId}`, label: t('navHome'), icon: Home },
+    { to: `/course/${activeCourseId}/games`, label: t('navGames'), icon: Gamepad2 },
+    { to: `/course/${activeCourseId}/exam`, label: t('navExam'), icon: GraduationCap },
+  ] : [
     { to: '/', label: t('navHome'), icon: Home },
-    { to: '/games', label: t('navGames'), icon: Gamepad2 },
-    { to: '/exam', label: t('navExam'), icon: GraduationCap },
   ]
 
   // Close mobile menu when switching to desktop
@@ -71,12 +78,23 @@ export default function Navbar() {
             className="no-underline"
             style={{
               display: 'flex', alignItems: 'center', gap: '6px',
-              flexShrink: 1,         // ← può restringersi se serve
+              flexShrink: 1,
               minWidth: 0,
             }}
           >
             <span style={{ fontSize: '1.4rem', flexShrink: 0 }}>🐧</span>
             <span className="font-bold gradient-text" style={{ fontSize: '1.15rem', whiteSpace: 'nowrap' }}>LinuxQuest</span>
+            {currentCourse && activeCourseId && (
+              <span style={{
+                fontSize: '0.6rem', fontWeight: 700, padding: '2px 7px', borderRadius: '99px',
+                background: `${currentCourse.color}20`,
+                border: `1px solid ${currentCourse.color}50`,
+                color: currentCourse.color,
+                whiteSpace: 'nowrap', flexShrink: 0,
+              }}>
+                {currentCourse.code}
+              </span>
+            )}
           </Link>
 
           {/* Desktop Nav */}

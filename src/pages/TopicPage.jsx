@@ -7,7 +7,7 @@ import { ArrowLeft, BookOpen, CheckCircle, ChevronRight } from 'lucide-react'
 
 export default function TopicPage() {
   const { t } = useLanguage()
-  const { topicId } = useParams()
+  const { topicId, courseId } = useParams()
   const { getTopic } = useTopics()
   const topic = getTopic(topicId)
   const { completedLessons } = useGame()
@@ -34,7 +34,7 @@ export default function TopicPage() {
     <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Back */}
       <Link
-        to="/"
+        to={`/course/${courseId}`}
         className="no-underline"
         style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}
       >
@@ -100,7 +100,7 @@ export default function TopicPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Link
-                  to={`/topic/${topic.id}/lesson/${lesson.id}`}
+                  to={`/course/${courseId}/topic/${topic.id}/lesson/${lesson.id}`}
                   className="no-underline"
                   style={{ display: 'block' }}
                 >

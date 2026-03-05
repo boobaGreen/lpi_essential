@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useGame } from '../context/GameContext.jsx'
 import { useLanguage } from '../context/LanguageContext.jsx'
 import { useTopics } from '../hooks/useTopics.js'
@@ -40,7 +40,7 @@ function ExamTimer({ timeLeft, total }) {
   )
 }
 
-function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) {
+function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, courseId }) {
   const { t } = useLanguage()
   const { saveExamAttempt, addXP, earnBadge, examAttempts } = useGame()
   const { topics } = useTopics()
@@ -152,13 +152,14 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
       {/* Actions */}
       <div style={{ display: 'flex', gap: '16px' }}>
         <button onClick={onRetry} className="btn-primary" style={{ flex: 1 }}>🔄 {t('retryBtn')}</button>
-        <Link to="/" className="btn-secondary no-underline text-center" style={{ flex: 1 }}>← Dashboard</Link>
+        <Link to={`/course/${courseId}`} className="btn-secondary no-underline text-center" style={{ flex: 1 }}>← Dashboard</Link>
       </div>
     </motion.div>
   )
 }
 
 export default function ExamPage() {
+  const { courseId } = useParams()
   const { t } = useLanguage()
   const { topics, allQuizzes } = useTopics()
   const [mode, setMode] = useState('intro') // intro | exam | results
@@ -230,7 +231,7 @@ export default function ExamPage() {
   if (mode === 'intro') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '768px', margin: '0 auto' }}>
-        <Link to="/" className="inline-flex items-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] no-underline transition-colors" style={{ gap: '8px' }}>
+        <Link to={`/course/${courseId}`} className="inline-flex items-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] no-underline transition-colors" style={{ gap: '8px' }}>
           <ArrowLeft size={18} />
           <span style={{ fontSize: '0.875rem' }}>{t('navDashboard')}</span>
         </Link>
@@ -288,6 +289,7 @@ export default function ExamPage() {
         questions={questions}
         score={score}
         timeUsed={timeUsed}
+        courseId={courseId}
         onClose={() => setMode('intro')}
         onRetry={startExam}
       />

@@ -1,18 +1,19 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useGame } from '../context/GameContext.jsx'
 import { useLanguage } from '../context/LanguageContext.jsx'
 import { useTopics } from '../hooks/useTopics.js'
+import { useCourse } from '../context/CourseContext.jsx'
 import { motion } from 'framer-motion'
-import { 
-  BookOpen, Trophy, Flame, Target, Gamepad2, GraduationCap, 
-  ChevronRight, Zap, Star 
+import {
+  BookOpen, Trophy, Flame, Target, Gamepad2, GraduationCap,
+  ChevronRight, Zap, Star
 } from 'lucide-react'
 
-function TopicCard({ topic, progress, completedLessons, t, index = 0 }) {
+function TopicCard({ topic, progress, completedLessons, t, index = 0, courseId }) {
   const totalLessons = topic.lessons.length
   const doneLessons = topic.lessons.filter(l => completedLessons.includes(l.id)).length
   const percentage = totalLessons > 0 ? Math.round((doneLessons / totalLessons) * 100) : 0
-  
+
   const colorMap = {
     'neon-blue': 'var(--color-neon-blue)',
     'neon-green': 'var(--color-neon-green)',
@@ -29,30 +30,30 @@ function TopicCard({ topic, progress, completedLessons, t, index = 0 }) {
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
     >
-      <Link to={`/topic/${topic.id}`} className="block no-underline">
+      <Link to={`/course/${courseId}/topic/${topic.id}`} className="block no-underline">
         <div className="glass-card cursor-pointer group" style={{ padding: '24px' }}>
           <div className="flex items-start justify-between" style={{ marginBottom: '16px' }}>
             <span style={{ fontSize: '2.5rem' }}>{topic.icon}</span>
-            <span 
+            <span
               className="font-bold rounded-full"
-              style={{ 
+              style={{
                 fontSize: '0.75rem',
                 padding: '4px 12px',
                 background: `${topicColor}20`,
-                color: topicColor 
+                color: topicColor
               }}
             >
               {t('weight')} {topic.weight}
             </span>
           </div>
-          
+
           <h3 className="font-bold text-[var(--color-text-primary)]" style={{ fontSize: '1.125rem', marginBottom: '4px' }}>
             {topic.title}
           </h3>
           <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem', marginBottom: '16px' }}>
             {topic.subtitle}
           </p>
-          
+
           {/* Progress bar */}
           <div style={{ marginBottom: '8px' }}>
             <div className="flex justify-between" style={{ fontSize: '0.75rem', marginBottom: '6px' }}>
@@ -69,7 +70,7 @@ function TopicCard({ topic, progress, completedLessons, t, index = 0 }) {
               />
             </div>
           </div>
-          
+
           <div className="flex items-center text-[var(--color-text-muted)] group-hover:text-[var(--color-neon-blue)] transition-colors" style={{ fontSize: '0.875rem', marginTop: '12px', gap: '4px' }}>
             <span>{percentage === 100 ? t('review') : t('continue')}</span>
             <ChevronRight size={16} />
@@ -104,11 +105,13 @@ function StatCard({ icon: Icon, label, value, color }) {
 }
 
 export default function Dashboard() {
-  const { 
-    xp, level, levelTitle, streak, completedLessons, 
-    completedQuizzes, badges, examAttempts, topicProgress 
+  const { courseId } = useParams()
+  const {
+    xp, level, levelTitle, streak, completedLessons,
+    completedQuizzes, badges, examAttempts, topicProgress
   } = useGame()
   const { t } = useLanguage()
+  const { currentCourse } = useCourse()
   const { topics, getTotalLessons } = useTopics()
 
   const totalLessons = getTotalLessons()
@@ -122,14 +125,14 @@ export default function Dashboard() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
       {/* Hero */}
-      <motion.div 
+      <motion.div
         className="text-center"
         style={{ paddingTop: '32px', paddingBottom: '32px' }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <h1 className="font-black" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '12px' }}>
-          <span className="gradient-text">LinuxQuest</span> 🐧
+          <span className="gradient-text">{currentCourse?.name || 'LinuxQuest'}</span> {currentCourse?.icon || '🐧'}
         </h1>
         <p className="text-[var(--color-text-secondary)]" style={{ fontSize: '1.125rem', maxWidth: '640px', margin: '0 auto' }}>
           {t('welcomeBack')}
@@ -191,15 +194,15 @@ export default function Dashboard() {
         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
         gap: '24px' 
       }}>
-        <Link to="/games" className="no-underline">
-          <motion.div 
+        <Link to={`/course/${courseId}/games`} className="no-underline">
+          <motion.div
             className="glass-card flex items-center cursor-pointer"
             style={{ padding: '24px', gap: '16px' }}
             whileHover={{ scale: 1.02, backgroundColor: 'rgba(26, 31, 53, 0.9)', borderColor: 'var(--color-neon-purple)' }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.2 }}
           >
-            <div 
+            <div
               className="rounded-xl bg-[var(--color-neon-purple)]/20 flex items-center justify-center"
               style={{ width: '48px', height: '48px', flexShrink: 0 }}
             >
@@ -213,15 +216,15 @@ export default function Dashboard() {
           </motion.div>
         </Link>
         
-        <Link to="/exam" className="no-underline">
-          <motion.div 
+        <Link to={`/course/${courseId}/exam`} className="no-underline">
+          <motion.div
             className="glass-card flex items-center cursor-pointer"
             style={{ padding: '24px', gap: '16px' }}
             whileHover={{ scale: 1.02, backgroundColor: 'rgba(26, 31, 53, 0.9)', borderColor: 'var(--color-neon-pink)' }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.2 }}
           >
-            <div 
+            <div
               className="rounded-xl bg-[var(--color-neon-pink)]/20 flex items-center justify-center"
               style={{ width: '48px', height: '48px', flexShrink: 0 }}
             >
@@ -250,10 +253,11 @@ export default function Dashboard() {
           gap: '24px' 
         }}>
           {topics.map((topic, index) => (
-            <TopicCard 
-              key={topic.id} 
-              topic={topic} 
+            <TopicCard
+              key={topic.id}
+              topic={topic}
               index={index}
+              courseId={courseId}
               progress={topicProgress[topic.id]}
               completedLessons={completedLessons}
               t={t}
