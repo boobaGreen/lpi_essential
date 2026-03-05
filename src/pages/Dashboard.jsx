@@ -8,7 +8,7 @@ import {
   ChevronRight, Zap, Star 
 } from 'lucide-react'
 
-function TopicCard({ topic, progress, completedLessons, t }) {
+function TopicCard({ topic, progress, completedLessons, t, index = 0 }) {
   const totalLessons = topic.lessons.length
   const doneLessons = topic.lessons.filter(l => completedLessons.includes(l.id)).length
   const percentage = totalLessons > 0 ? Math.round((doneLessons / totalLessons) * 100) : 0
@@ -27,7 +27,7 @@ function TopicCard({ topic, progress, completedLessons, t }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
     >
       <Link to={`/topic/${topic.id}`} className="block no-underline">
         <div className="glass-card cursor-pointer group" style={{ padding: '24px' }}>
@@ -193,7 +193,9 @@ export default function Dashboard() {
           <motion.div 
             className="glass-card flex items-center cursor-pointer"
             style={{ padding: '24px', gap: '16px' }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, backgroundColor: 'rgba(26, 31, 53, 0.9)', borderColor: 'var(--color-neon-purple)' }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
           >
             <div 
               className="rounded-xl bg-[var(--color-neon-purple)]/20 flex items-center justify-center"
@@ -201,10 +203,11 @@ export default function Dashboard() {
             >
               <Gamepad2 size={24} className="text-[var(--color-neon-purple)]" />
             </div>
-            <div>
+            <div style={{ flex: 1 }}>
               <h3 className="font-bold text-[var(--color-text-primary)]">🎮 {t('playAndLearn')}</h3>
               <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>{t('playAndLearnDesc')}</p>
             </div>
+            <ChevronRight size={20} className="text-[var(--color-text-muted)]" />
           </motion.div>
         </Link>
         
@@ -212,7 +215,9 @@ export default function Dashboard() {
           <motion.div 
             className="glass-card flex items-center cursor-pointer"
             style={{ padding: '24px', gap: '16px' }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, backgroundColor: 'rgba(26, 31, 53, 0.9)', borderColor: 'var(--color-neon-pink)' }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
           >
             <div 
               className="rounded-xl bg-[var(--color-neon-pink)]/20 flex items-center justify-center"
@@ -220,12 +225,13 @@ export default function Dashboard() {
             >
               <GraduationCap size={24} className="text-[var(--color-neon-pink)]" />
             </div>
-            <div>
+            <div style={{ flex: 1 }}>
               <h3 className="font-bold text-[var(--color-text-primary)]">📝 {t('examSim')}</h3>
               <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>
                 {bestExam !== null ? t('examSimDesc').replace('{{score}}', bestExam) : t('examSimFallback')}
               </p>
             </div>
+            <ChevronRight size={20} className="text-[var(--color-text-muted)]" />
           </motion.div>
         </Link>
       </div>
@@ -241,10 +247,11 @@ export default function Dashboard() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
           gap: '24px' 
         }}>
-          {topics.map((topic) => (
+          {topics.map((topic, index) => (
             <TopicCard 
               key={topic.id} 
               topic={topic} 
+              index={index}
               progress={topicProgress[topic.id]}
               completedLessons={completedLessons}
               t={t}

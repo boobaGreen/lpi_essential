@@ -118,4 +118,7 @@ export const ui = {
   dragdropTitle: "Drag & Drop",
   fillgapTitle: "Fill the Blank",
   truefalseTitle: "True or False",
+  streak: "Streak",
+  badges: "Badges",
+  topic: "Topic",
 }

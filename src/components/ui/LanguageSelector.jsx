@@ -29,7 +29,7 @@ export default function LanguageSelector() {
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          background: 'var(--color-surface)',
+          background: 'transparent',
           border: '1px solid var(--color-border)',
           padding: '6px 12px',
           borderRadius: '8px',
@@ -81,7 +81,7 @@ export default function LanguageSelector() {
                   gap: '12px',
                   width: '100%',
                   padding: '10px 12px',
-                  background: currentLang === lang.code ? 'var(--color-surface-hover)' : 'transparent',
+                  background: currentLang === lang.code ? 'rgba(255,255,255,0.05)' : 'transparent',
                   border: 'none',
                   borderRadius: '6px',
                   color: currentLang === lang.code ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
@@ -89,8 +89,8 @@ export default function LanguageSelector() {
                   textAlign: 'left',
                   transition: 'background 0.2s, color 0.2s'
                 }}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
-                onMouseLeave={e => e.currentTarget.style.background = currentLang === lang.code ? 'var(--color-surface-hover)' : 'transparent'}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                onMouseLeave={e => e.currentTarget.style.background = currentLang === lang.code ? 'rgba(255,255,255,0.05)' : 'transparent'}
               >
                 <span style={{ fontSize: '1.2rem' }}>{lang.flag}</span>
                 <span style={{ flex: 1, fontWeight: currentLang === lang.code ? 700 : 500 }}>{lang.name}</span>

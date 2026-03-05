@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Trophy, RotateCcw, Terminal } from 'lucide-react'
 
 import { useGameData } from '../../hooks/useGameData.js'
+import { useLanguage } from '../../context/LanguageContext.jsx'
 
 const levelConfig = {
   1: { count: 6, maxDiff: 1, xp: 15, label: 'Principiante' },
@@ -22,6 +23,9 @@ function shuffleArray(arr) {
 
 export default function TerminalChallenge({ onComplete, level = 1 }) {
   const { addXP, completeGame } = useGame()
+  const { t } = useLanguage()
+  const { terminalChallengeData } = useGameData()
+  const allChallenges = terminalChallengeData || []
   const config = levelConfig[level] || levelConfig[1]
   const pool = allChallenges.filter(c => c.difficulty <= config.maxDiff)
   const [shuffled] = useState(() => shuffleArray(pool).slice(0, config.count))
@@ -63,15 +67,15 @@ export default function TerminalChallenge({ onComplete, level = 1 }) {
       <motion.div className="glass-card" style={{ padding: '32px', textAlign: 'center' }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
         <Trophy size={48} style={{ margin: '0 auto 16px', color: 'var(--color-neon-green)' }} />
         <h2 className="font-black" style={{ fontSize: '1.5rem', marginBottom: '8px' }}>
-          {finalScore === shuffled.length ? '🏆 Perfetto!' : finalScore >= config.count - 1 ? '🎉 Ottimo!' : '💪 Continua!'}
+          {finalScore === shuffled.length ? `🏆 ${t('perfectTitle') || 'Perfetto!'}` : finalScore >= config.count - 1 ? `🎉 ${t('greatTitle') || 'Ottimo!'}` : `💪 ${t('keepGoingTitle') || 'Continua!'}`}
         </h2>
         <p className="font-black" style={{ fontSize: '2rem', color: 'var(--color-neon-green)' }}>{finalScore}/{shuffled.length}</p>
-        <p style={{ color: 'var(--color-text-secondary)', marginTop: '8px', fontSize: '0.875rem' }}>Livello: {config.label}</p>
+        <p style={{ color: 'var(--color-text-secondary)', marginTop: '8px', fontSize: '0.875rem' }}>{t('levelLabel') || 'Livello:'} {config.label}</p>
         <div style={{ display: 'flex', gap: '12px', marginTop: '20px', justifyContent: 'center' }}>
           <button onClick={() => { setCurrentIndex(0); setScore(0); setFinished(false); setResult(null); setInput(''); setHintIndex(-1) }} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <RotateCcw size={16} /> Riprova
+            <RotateCcw size={16} /> {t('retryBtn') || 'Riprova'}
           </button>
-          {onComplete && <button onClick={onComplete} className="btn-secondary">Chiudi</button>}
+          {onComplete && <button onClick={onComplete} className="btn-secondary">{t('closeBtn') || 'Chiudi'}</button>}
         </div>
       </motion.div>
     )
@@ -81,10 +85,10 @@ export default function TerminalChallenge({ onComplete, level = 1 }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <span style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-          Challenge {currentIndex + 1}/{shuffled.length}
+          {t('challenge') || 'Challenge'} {currentIndex + 1}/{shuffled.length}
         </span>
         <span className="font-bold" style={{ fontSize: '0.875rem', color: 'var(--color-neon-green)' }}>
-          ✅ {score} corrette
+          ✅ {score} {t('correctAnswers') || 'corrette'}
         </span>
       </div>
 
@@ -101,7 +105,7 @@ export default function TerminalChallenge({ onComplete, level = 1 }) {
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}
-                placeholder="Scrivi il comando..."
+                placeholder={t('writeCommand') || "Scrivi il comando..."}
                 disabled={!!result}
                 autoFocus
                 className="font-mono"
@@ -111,11 +115,11 @@ export default function TerminalChallenge({ onComplete, level = 1 }) {
             {result && (
               <div style={{ marginTop: '12px', paddingTop: '8px', borderTop: '1px solid #30363d' }}>
                 {result === 'correct' ? (
-                  <p className="font-mono" style={{ fontSize: '0.85rem', color: 'var(--color-success)' }}>✅ Corretto! +{config.xp} XP</p>
+                  <p className="font-mono" style={{ fontSize: '0.85rem', color: 'var(--color-success)' }}>✅ {t('correctBadge') || 'Corretto!'} +{config.xp} XP</p>
                 ) : (
                   <p className="font-mono" style={{ fontSize: '0.85rem' }}>
-                    <span style={{ color: 'var(--color-error)' }}>❌ Non esatto.</span>
-                    <span style={{ color: 'var(--color-text-muted)' }}> Risposta: </span>
+                    <span style={{ color: 'var(--color-error)' }}>❌ {t('notExact') || 'Non esatto.'}</span>
+                    <span style={{ color: 'var(--color-text-muted)' }}> {t('answerLabel') || 'Risposta:'} </span>
                     <span style={{ color: 'var(--color-neon-green)' }}>{challenge.answer}</span>
                   </p>
                 )}
@@ -126,7 +130,7 @@ export default function TerminalChallenge({ onComplete, level = 1 }) {
         <div style={{ display: 'flex', gap: '8px', marginTop: '12px', alignItems: 'center' }}>
           {!result && (
             <button onClick={showHint} className="btn-secondary" style={{ fontSize: '0.75rem', padding: '4px 12px' }} disabled={hintIndex >= challenge.hints.length - 1}>
-              💡 Suggerimento
+              💡 {t('hintBtn') || 'Suggerimento'}
             </button>
           )}
           {hintIndex >= 0 && challenge.hints.slice(0, hintIndex + 1).map((hint, i) => (
@@ -137,11 +141,11 @@ export default function TerminalChallenge({ onComplete, level = 1 }) {
 
       {!result ? (
         <button onClick={handleSubmit} className="btn-primary" disabled={!input.trim()} style={{ width: '100%' }}>
-          <Terminal size={16} style={{ display: 'inline', marginRight: '8px' }} /> Esegui
+          <Terminal size={16} style={{ display: 'inline', marginRight: '8px' }} /> {t('executeBtn') || 'Esegui'}
         </button>
       ) : (
         <button onClick={handleNext} className="btn-primary" style={{ width: '100%' }}>
-          {currentIndex < shuffled.length - 1 ? 'Prossima challenge →' : 'Vedi risultati 🏆'}
+          {currentIndex < shuffled.length - 1 ? `${t('nextChallengeBtn') || 'Prossima challenge'} →` : `${t('seeResultsBtn') || 'Vedi risultati'} 🏆`}
         </button>
       )}
     </div>

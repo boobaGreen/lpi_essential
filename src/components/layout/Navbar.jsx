@@ -87,10 +87,16 @@ export default function Navbar() {
                       fontWeight: 600,
                       color: active ? 'var(--color-neon-blue)' : 'var(--color-text-secondary)',
                       background: active ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
-                      transition: 'color 0.2s, background 0.2s',
+                      transition: 'all 0.2s',
                     }}
-                    onMouseEnter={e => { if (!active) { e.currentTarget.style.color = 'var(--color-text-primary)' } }}
-                    onMouseLeave={e => { if (!active) { e.currentTarget.style.color = 'var(--color-text-secondary)' } }}
+                    onMouseEnter={e => { 
+                      if (!active) e.currentTarget.style.color = 'var(--color-text-primary)'
+                      e.currentTarget.style.transform = 'scale(1.05)'
+                    }}
+                    onMouseLeave={e => { 
+                      if (!active) e.currentTarget.style.color = 'var(--color-text-secondary)'
+                      e.currentTarget.style.transform = 'scale(1)'
+                    }}
                   >
                     <Icon size={18} />
                     {label}
@@ -120,7 +126,7 @@ export default function Navbar() {
                   <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--color-neon-green)' }}>{xp} XP</div>
                 </div>
               )}
-              <div style={{ width: '96px', height: '8px', background: 'var(--color-xp-bg)', borderRadius: '9999px', overflow: 'hidden' }}>
+              <div style={{ width: '120px', height: '8px', background: 'var(--color-xp-bg)', borderRadius: '9999px', overflow: 'hidden' }}>
                 <motion.div
                   style={{
                     height: '100%',

@@ -22,6 +22,8 @@ function shuffleArray(arr) {
 
 export default function TrueFalseGame({ onComplete, level = 1 }) {
   const { addXP, completeGame } = useGame()
+  const { trueFalseData } = useGameData()
+  const allStatements = trueFalseData || []
   const config = levelConfig[level] || levelConfig[1]
   const pool = allStatements.filter(s => s.difficulty <= config.maxDiff)
   const [questions] = useState(() => shuffleArray(pool).slice(0, config.count))

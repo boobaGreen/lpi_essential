@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Trophy, RotateCcw, ArrowRight } from 'lucide-react'
 
 import { useGameData } from '../../hooks/useGameData.js'
+import { useLanguage } from '../../context/LanguageContext.jsx'
 
 const levelConfig = {
   1: { count: 6, maxDiff: 1, xp: 10, label: 'Principiante' },
@@ -22,6 +23,7 @@ function shuffleArray(arr) {
 
 export default function FillGapGame({ onComplete, level = 1 }) {
   const { addXP, completeGame } = useGame()
+  const { t } = useLanguage()
   const { fillGapData: allChallenges } = useGameData()
   const config = levelConfig[level] || levelConfig[1]
   const pool = allChallenges.filter(c => c.difficulty <= config.maxDiff)
@@ -60,15 +62,15 @@ export default function FillGapGame({ onComplete, level = 1 }) {
       <motion.div className="glass-card" style={{ padding: '32px', textAlign: 'center' }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
         <Trophy size={48} style={{ margin: '0 auto 16px', color: 'var(--color-neon-pink)' }} />
         <h2 className="font-black" style={{ fontSize: '1.5rem', marginBottom: '8px' }}>
-          {finalScore >= challenges.length - 1 ? '🎉 Ottimo!' : '💪 Continua!'}
+          {finalScore >= challenges.length - 1 ? `🎉 ${t('greatTitle') || 'Ottimo!'}` : `💪 ${t('keepGoingTitle') || 'Continua!'}`}
         </h2>
         <p className="font-black" style={{ fontSize: '2rem', color: 'var(--color-neon-pink)' }}>{finalScore}/{challenges.length}</p>
-        <p style={{ color: 'var(--color-text-secondary)', marginTop: '8px', fontSize: '0.875rem' }}>Livello: {config.label}</p>
+        <p style={{ color: 'var(--color-text-secondary)', marginTop: '8px', fontSize: '0.875rem' }}>{t('levelLabel') || 'Livello:'} {config.label}</p>
         <div style={{ display: 'flex', gap: '12px', marginTop: '20px', justifyContent: 'center' }}>
           <button onClick={() => { setCurrentIndex(0); setScore(0); setFinished(false); setResult(null); setInput(''); setShowHint(false) }} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <RotateCcw size={16} /> Riprova
+            <RotateCcw size={16} /> {t('retryBtn') || 'Riprova'}
           </button>
-          {onComplete && <button onClick={onComplete} className="btn-secondary">Chiudi</button>}
+          {onComplete && <button onClick={onComplete} className="btn-secondary">{t('closeBtn') || 'Chiudi'}</button>}
         </div>
       </motion.div>
     )
@@ -80,16 +82,16 @@ export default function FillGapGame({ onComplete, level = 1 }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <span style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-          Domanda {currentIndex + 1}/{challenges.length}
+          {t('questionNum') || 'Domanda'} {currentIndex + 1}/{challenges.length}
         </span>
         <span className="font-bold" style={{ fontSize: '0.875rem', color: 'var(--color-neon-pink)' }}>
-          ✅ {score} corrette
+          ✅ {score} {t('correctAnswers') || 'corrette'}
         </span>
       </div>
 
       <div className="glass-card" style={{ padding: '24px' }}>
         <p className="font-bold" style={{ fontSize: '1rem', marginBottom: '20px', color: 'var(--color-text-primary)' }}>
-          📝 Completa il comando:
+          {t('completeCommand') || '📝 Completa il comando:'}
         </p>
 
         <div className="terminal-box" style={{ marginBottom: '16px' }}>
@@ -113,7 +115,7 @@ export default function FillGapGame({ onComplete, level = 1 }) {
           {result === 'wrong' && (
             <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #30363d' }}>
               <span className="font-mono" style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-                Risposta corretta: <span className="font-bold" style={{ color: 'var(--color-neon-green)' }}>{challenge.answer}</span>
+                {t('correctAnswerIs') || 'Risposta corretta:'} <span className="font-bold" style={{ color: 'var(--color-neon-green)' }}>{challenge.answer}</span>
               </span>
             </div>
           )}
@@ -121,15 +123,15 @@ export default function FillGapGame({ onComplete, level = 1 }) {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px' }}>
           <input
-            type="text" value={input} onChange={e => setInput(e.target.value)} placeholder="Scrivi qui..."
+            type="text" value={input} onChange={e => setInput(e.target.value)} placeholder={t('writeHere') || 'Scrivi qui...'}
             disabled={!!result} autoFocus className="font-mono"
             style={{ flex: 1, padding: '12px 16px', fontSize: '0.9rem', borderRadius: '12px', border: '1px solid var(--color-border)', background: 'var(--color-bg-primary)', color: 'var(--color-text-primary)', outline: 'none' }}
           />
           {!result ? (
-            <button type="submit" className="btn-primary" disabled={!input.trim()}>Verifica</button>
+            <button type="submit" className="btn-primary" disabled={!input.trim()}>{t('verifyBtn') || 'Verifica'}</button>
           ) : (
             <button type="button" onClick={handleNext} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              {currentIndex < challenges.length - 1 ? <>Avanti <ArrowRight size={16} /></> : 'Risultati 🏆'}
+              {currentIndex < challenges.length - 1 ? <>{t('nextBtn') || 'Avanti'} <ArrowRight size={16} /></> : `${t('seeResultsBtn') || 'Risultati'} 🏆`}
             </button>
           )}
         </form>
@@ -138,7 +140,7 @@ export default function FillGapGame({ onComplete, level = 1 }) {
           <div style={{ marginTop: '12px' }}>
             {!showHint ? (
               <button onClick={() => setShowHint(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--color-neon-yellow)' }}>
-                💡 Mostra suggerimento
+                💡 {t('showHint') || 'Mostra suggerimento'}
               </button>
             ) : (
               <span style={{ fontSize: '0.8rem', color: 'var(--color-neon-yellow)' }}>💡 {challenge.hint}</span>
