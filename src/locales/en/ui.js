@@ -121,4 +121,10 @@ export const ui = {
   streak: "Streak",
   badges: "Badges",
   topic: "Topic",
+  // Extended Content
+  deepDiveLabel: "📚 Deep Dive",
+  extNote: "Note",
+  extWarning: "Warning",
+  extSuggestion: "Tip",
+  extExamTip: "Exam Tip",
 }

@@ -118,4 +118,13 @@ export const ui = {
   dragdropTitle: "Glisser-Déposer",
   fillgapTitle: "Complétez la commande",
   truefalseTitle: "Vrai ou Faux",
+  streak: "Série",
+  badges: "Badges",
+  topic: "Sujet",
+  // Extended Content
+  deepDiveLabel: "📚 Approfondissement",
+  extNote: "Note",
+  extWarning: "Attention",
+  extSuggestion: "Conseil",
+  extExamTip: "Conseil d'examen",
 }

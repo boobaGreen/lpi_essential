@@ -118,4 +118,13 @@ export const ui = {
   dragdropTitle: "拖放",
   fillgapTitle: "命令填空",
   truefalseTitle: "对与错",
+  streak: "连续",
+  badges: "徽章",
+  topic: "主题",
+  // Extended Content
+  deepDiveLabel: "📚 深度学习",
+  extNote: "注意",
+  extWarning: "警告",
+  extSuggestion: "提示",
+  extExamTip: "考试提示",
 }

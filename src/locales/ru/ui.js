@@ -118,4 +118,13 @@ export const ui = {
   dragdropTitle: "Перетаскивание",
   fillgapTitle: "Дополните команду",
   truefalseTitle: "Правда или ложь",
+  streak: "Серия",
+  badges: "Значки",
+  topic: "Тема",
+  // Extended Content
+  deepDiveLabel: "📚 Углублённое изучение",
+  extNote: "Примечание",
+  extWarning: "Предупреждение",
+  extSuggestion: "Совет",
+  extExamTip: "Совет к экзамену",
 }

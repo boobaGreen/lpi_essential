@@ -107,40 +107,71 @@ export default function Navbar() {
           )}
 
           {/* XP Bar + Stats + Lang */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '16px' : '12px' }}>
             <LanguageSelector />
-            
-            {/* Streak */}
-            {streak > 0 && (
+
+            {/* Streak — desktop only */}
+            {isDesktop && streak > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-neon-orange)' }}>
                 <Flame size={18} />
                 <span style={{ fontSize: '0.875rem', fontWeight: 700 }}>{streak}</span>
               </div>
             )}
 
-            {/* Level & XP */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              {isDesktop && (
+            {/* Level & XP — desktop only */}
+            {isDesktop && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>Lv.{level}</div>
                   <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--color-neon-green)' }}>{xp} XP</div>
                 </div>
-              )}
-              <div style={{ width: '120px', height: '8px', background: 'var(--color-xp-bg)', borderRadius: '9999px', overflow: 'hidden' }}>
-                <motion.div
-                  style={{
-                    height: '100%',
-                    background: 'linear-gradient(to right, var(--color-neon-green), var(--color-neon-blue))',
-                    borderRadius: '9999px',
-                  }}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${xpProgress}%` }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                  <div className="animate-shimmer" style={{ width: '100%', height: '100%' }} />
-                </motion.div>
+                <div style={{ width: '100px', height: '7px', background: 'var(--color-xp-bg)', borderRadius: '9999px', overflow: 'hidden' }}>
+                  <motion.div
+                    style={{
+                      height: '100%',
+                      background: 'linear-gradient(to right, var(--color-neon-green), var(--color-neon-blue))',
+                      borderRadius: '9999px',
+                    }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${xpProgress}%` }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                  >
+                    <div className="animate-shimmer" style={{ width: '100%', height: '100%' }} />
+                  </motion.div>
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Mobile: compact XP pill + streak */}
+            {!isDesktop && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {streak > 0 && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', color: 'var(--color-neon-orange)', fontSize: '0.8rem', fontWeight: 700 }}>
+                    <Flame size={15} />
+                    <span>{streak}</span>
+                  </div>
+                )}
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: '4px',
+                  padding: '3px 8px', borderRadius: '9999px',
+                  background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.25)',
+                }}>
+                  <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-neon-green)' }}>Lv.{level}</span>
+                  <div style={{ width: '40px', height: '4px', background: 'var(--color-xp-bg)', borderRadius: '9999px', overflow: 'hidden' }}>
+                    <motion.div
+                      style={{
+                        height: '100%',
+                        background: 'linear-gradient(to right, var(--color-neon-green), var(--color-neon-blue))',
+                        borderRadius: '9999px',
+                      }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${xpProgress}%` }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Mobile menu button */}
             {!isDesktop && (
@@ -152,6 +183,7 @@ export default function Navbar() {
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
+                  flexShrink: 0,
                 }}
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}

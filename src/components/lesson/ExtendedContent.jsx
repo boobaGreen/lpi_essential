@@ -251,24 +251,42 @@ export default function ExtendedContent({ data, topicColor, t }) {
 
   return (
     <div style={{ margin: '24px 0' }}>
-      {/* Toggle Button */}
+      {/* Toggle Button — bouncy deep dive */}
       <motion.button
         onClick={() => setIsExpanded(!isExpanded)}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
+        whileHover={{ scale: 1.03, y: -2 }}
+        whileTap={{ scale: 0.97 }}
+        animate={!isExpanded ? {
+          scale: [1, 1.025, 1, 1.025, 1],
+          boxShadow: [
+            `0 0 0px ${topicColor}00`,
+            `0 0 12px ${topicColor}60`,
+            `0 0 0px ${topicColor}00`,
+            `0 0 12px ${topicColor}60`,
+            `0 0 0px ${topicColor}00`,
+          ],
+        } : { scale: 1, boxShadow: `0 0 0px ${topicColor}00` }}
+        transition={!isExpanded ? {
+          duration: 2.4,
+          repeat: Infinity,
+          repeatDelay: 3,
+          ease: 'easeInOut',
+        } : { duration: 0.2 }}
         style={{
           width: '100%', padding: '16px 20px',
-          background: isExpanded ? `${topicColor}15` : 'rgba(255,255,255,0.03)',
-          border: `1px solid ${isExpanded ? topicColor + '40' : 'var(--color-border)'}`,
-          borderRadius: '12px', cursor: 'pointer',
+          background: isExpanded
+            ? `${topicColor}15`
+            : `linear-gradient(135deg, rgba(255,255,255,0.05) 0%, ${topicColor}0d 100%)`,
+          border: `2px solid ${isExpanded ? topicColor + '60' : topicColor + '35'}`,
+          borderRadius: '14px', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           color: isExpanded ? topicColor : 'var(--color-text-secondary)',
           transition: 'all 0.3s ease',
         }}
       >
         <span style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 700, fontSize: '1rem' }}>
-          <BookOpen size={20} />
-          {t('extDeepDive')} — {data.title}
+          <BookOpen size={20} style={{ color: topicColor }} />
+          {t('deepDiveLabel') || '📚 Deep Dive'} — {data.title}
         </span>
         <motion.span
           animate={{ rotate: isExpanded ? 180 : 0 }}

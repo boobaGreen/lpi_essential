@@ -118,4 +118,13 @@ export const ui = {
   dragdropTitle: "Drag & Drop",
   fillgapTitle: "Befehl vervollständigen",
   truefalseTitle: "Wahr oder Falsch",
+  streak: "Serie",
+  badges: "Abzeichen",
+  topic: "Thema",
+  // Extended Content
+  deepDiveLabel: "📚 Vertiefung",
+  extNote: "Hinweis",
+  extWarning: "Warnung",
+  extSuggestion: "Tipp",
+  extExamTip: "Prüfungstipp",
 }
