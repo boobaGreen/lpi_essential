@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useGame } from '../../context/GameContext.jsx'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle, XCircle, ArrowRight, Trophy, Clock } from 'lucide-react'
-import { allQuizzes } from '../../data/quizzes/index.js'
+import { useTopics } from '../../hooks/useTopics.js'
+import { useLanguage } from '../../context/LanguageContext.jsx'
 
 function shuffleArray(arr) {
   const a = [...arr]
@@ -37,12 +38,19 @@ export default function QuizGame({ level = 1, onComplete }) {
   const [finished, setFinished] = useState(false)
   const [timeLeft, setTimeLeft] = useState(config.timePerQuestion)
   const { addXP, completeGame } = useGame()
+  const { allQuizzes } = useTopics()
+  const { language, t } = useLanguage()
 
   useEffect(() => {
+    setCurrent(0)
+    setScore(0)
+    setSelected(null)
+    setShowFeedback(false)
+    setFinished(false)
     const pool = shuffleArray(allQuizzes)
     setQuestions(pool.slice(0, config.count))
     setTimeLeft(config.timePerQuestion)
-  }, [level])
+  }, [level, config.count, config.timePerQuestion, language])
 
   // Timer per question
   useEffect(() => {
@@ -115,7 +123,7 @@ export default function QuizGame({ level = 1, onComplete }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       {/* Progress */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-        <span>Domanda {current + 1}/{questions.length}</span>
+        <span>{t('questionNum') || 'Domanda'} {current + 1}/{questions.length}</span>
         <span style={{ color: q.topicId ? `var(--color-neon-${['blue','green','purple','orange','pink'][q.topicId-1]})` : 'var(--color-text-muted)', fontWeight: 600, fontSize: '0.75rem' }}>
           {topicNames[q.topicId] || ''}
         </span>
@@ -196,14 +204,14 @@ export default function QuizGame({ level = 1, onComplete }) {
             <div style={{
               padding: '14px 18px', borderRadius: '10px', fontSize: '0.88rem', lineHeight: 1.6,
               background: selected === q.correct ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
-              border: `1px solid ${selected === q.correct ? '#22c55e40' : '#ef444440'}`,
+              border: `1px solid \${selected === q.correct ? '#22c55e40' : '#ef444440'}`,
               color: 'var(--color-text-secondary)',
             }}>
-              {selected === -1 ? '⏱️ Tempo scaduto! ' : selected === q.correct ? '✅ Corretto! ' : '❌ Sbagliato! '}
+              {selected === -1 ? `⏱️ \${t('timeUp') || 'Tempo scaduto!'} ` : selected === q.correct ? `✅ \${t('correctBadge') || 'Corretto!'} ` : `❌ \${t('wrongBadge') || 'Sbagliato!'} `}
               {q.explanation}
             </div>
             <button className="btn-primary" onClick={handleNext} style={{ width: '100%', marginTop: '12px' }}>
-              {current + 1 >= questions.length ? '📊 Vedi Risultati' : 'Prossima Domanda →'}
+              {current + 1 >= questions.length ? `📊 \${t('seeResultsBtn') || 'Vedi Risultati'}` : `\${t('nextBtn') || 'Prossima Domanda'} →`}
             </button>
           </motion.div>
         )}

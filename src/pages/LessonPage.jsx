@@ -1,9 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
-import { getTopic, getLesson } from '../data/topics.js'
+import { useLanguage } from '../context/LanguageContext.jsx'
+import { useTopics } from '../hooks/useTopics.js'
 import { useGame } from '../context/GameContext.jsx'
-import { quizzesByTopic } from '../data/quizzes/index.js'
-import { lessonContent } from '../data/lessonContent.js'
-import { extendedContent } from '../data/extendedContent/index.js'
 import ExtendedContent from '../components/lesson/ExtendedContent.jsx'
 import Quiz from '../components/games/Quiz.jsx'
 import { motion } from 'framer-motion'
@@ -67,14 +65,14 @@ function KeyPoints({ points, topicColor }) {
   )
 }
 
-function TerminalDemo({ terminal }) {
+function TerminalDemo({ terminal, t }) {
   return (
     <div className="terminal-box" style={{ marginBottom: '24px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '10px', borderBottom: '1px solid #30363d' }}>
         <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f57' }} />
         <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#febc2e' }} />
         <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#28c840' }} />
-        <span style={{ fontSize: '0.75rem', color: '#8b949e', marginLeft: '8px' }}>terminale</span>
+        <span style={{ fontSize: '0.75rem', color: '#8b949e', marginLeft: '8px' }}>{t('terminalLabel')}</span>
       </div>
       <div className="prompt">{terminal.prompt}</div>
       <div className="output" style={{ whiteSpace: 'pre-line', marginTop: '6px' }}>{terminal.output}</div>
@@ -83,7 +81,9 @@ function TerminalDemo({ terminal }) {
 }
 
 export default function LessonPage() {
+  const { t } = useLanguage()
   const { topicId, lessonId } = useParams()
+  const { getTopic, getLesson, lessonContent, quizzesByTopic, extendedContent } = useTopics()
   const topic = getTopic(topicId)
   const lesson = getLesson(topicId, lessonId)
   const { completedLessons, completeLesson, addXP, earnBadge, completedQuizzes } = useGame()
@@ -114,8 +114,8 @@ export default function LessonPage() {
   if (!topic || !lesson) {
     return (
       <div style={{ textAlign: 'center', paddingTop: '80px' }}>
-        <h2 className="text-2xl font-bold text-[var(--color-error)]">Lezione non trovata</h2>
-        <Link to="/" className="btn-primary no-underline" style={{ display: 'inline-block', marginTop: '16px' }}>Torna alla Home</Link>
+        <h2 className="text-2xl font-bold text-[var(--color-error)]">{t('lessonNotFound')}</h2>
+        <Link to="/" className="btn-primary no-underline" style={{ display: 'inline-block', marginTop: '16px' }}>{t('backToHome')}</Link>
       </div>
     )
   }
@@ -143,7 +143,7 @@ export default function LessonPage() {
         style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}
       >
         <ArrowLeft size={18} />
-        <span>Torna a {topic.title}</span>
+        <span>{t('backToTopic').replace('{{topic}}', topic.title)}</span>
       </Link>
 
       {/* Header */}
@@ -164,7 +164,7 @@ export default function LessonPage() {
           </span>
           {isCompleted && (
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--color-success)' }}>
-              <CheckCircle size={14} /> Completata
+              <CheckCircle size={14} /> {t('completedBadge')}
             </span>
           )}
         </div>
@@ -179,19 +179,19 @@ export default function LessonPage() {
         <div>
           <ComicStrip comic={content.comic} />
           <KeyPoints points={content.keyPoints} topicColor={topicColor} />
-          <TerminalDemo terminal={content.terminal} />
+          <TerminalDemo terminal={content.terminal} t={t} />
         </div>
       ) : (
         <div className="glass-card" style={{ padding: '40px', textAlign: 'center' }}>
           <BookOpen size={48} style={{ margin: '0 auto 16px', color: 'var(--color-text-muted)' }} />
-          <h3 className="font-bold" style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Contenuto in arrivo!</h3>
-          <p style={{ color: 'var(--color-text-muted)' }}>Questa lezione sarà disponibile presto con fumetti e contenuti interattivi.</p>
+          <h3 className="font-bold" style={{ fontSize: '1.1rem', marginBottom: '8px' }}>{t('contentArriving')}</h3>
+          <p style={{ color: 'var(--color-text-muted)' }}>{t('contentArrivingDesc')}</p>
         </div>
       )}
 
       {/* Extended Content */}
       {extendedContent[lessonId] && (
-        <ExtendedContent data={extendedContent[lessonId]} topicColor={topicColor} />
+        <ExtendedContent data={extendedContent[lessonId]} topicColor={topicColor} t={t} />
       )}
 
       {/* Quiz Section */}
@@ -205,7 +205,7 @@ export default function LessonPage() {
               whileTap={{ scale: 0.98 }}
               style={{ width: '100%', textAlign: 'center' }}
             >
-              🎯 {quizDone ? 'Rifai il Quiz' : 'Inizia il Quiz!'} ({lessonQuizzes.length} domande)
+              🎯 {quizDone ? t('redoQuiz') : t('startQuiz')} ({lessonQuizzes.length} {t('questionsCount')})
             </motion.button>
           ) : (
             <Quiz
@@ -228,7 +228,7 @@ export default function LessonPage() {
           whileTap={{ scale: 0.98 }}
           style={{ width: '100%' }}
         >
-          ✅ Segna come completata (+20 XP)
+          ✅ {t('markCompleted')} (+20 XP)
         </motion.button>
       )}
 
@@ -245,7 +245,7 @@ export default function LessonPage() {
           </Link>
         ) : (
           <Link to={`/topic/${topicId}`} className="btn-primary no-underline" style={{ fontSize: '0.875rem' }}>
-            Fine Topic →
+            {t('endTopic')}
           </Link>
         )}
       </div>

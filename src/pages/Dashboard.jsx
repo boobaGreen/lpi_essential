@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useGame } from '../context/GameContext.jsx'
-import { topics, getTotalLessons } from '../data/topics.js'
+import { useLanguage } from '../context/LanguageContext.jsx'
+import { useTopics } from '../hooks/useTopics.js'
 import { motion } from 'framer-motion'
 import { 
   BookOpen, Trophy, Flame, Target, Gamepad2, GraduationCap, 
   ChevronRight, Zap, Star 
 } from 'lucide-react'
 
-function TopicCard({ topic, progress, completedLessons }) {
+function TopicCard({ topic, progress, completedLessons, t }) {
   const totalLessons = topic.lessons.length
   const doneLessons = topic.lessons.filter(l => completedLessons.includes(l.id)).length
   const percentage = totalLessons > 0 ? Math.round((doneLessons / totalLessons) * 100) : 0
@@ -41,7 +42,7 @@ function TopicCard({ topic, progress, completedLessons }) {
                 color: topicColor 
               }}
             >
-              Peso: {topic.weight}
+              {t('weight')} {topic.weight}
             </span>
           </div>
           
@@ -55,7 +56,7 @@ function TopicCard({ topic, progress, completedLessons }) {
           {/* Progress bar */}
           <div style={{ marginBottom: '8px' }}>
             <div className="flex justify-between" style={{ fontSize: '0.75rem', marginBottom: '6px' }}>
-              <span className="text-[var(--color-text-muted)]">{doneLessons}/{totalLessons} lezioni</span>
+              <span className="text-[var(--color-text-muted)]">{doneLessons}/{totalLessons} {t('lessonsProgress')}</span>
               <span style={{ color: topicColor }} className="font-semibold">{percentage}%</span>
             </div>
             <div className="w-full bg-[var(--color-bg-primary)] rounded-full overflow-hidden" style={{ height: '8px' }}>
@@ -70,7 +71,7 @@ function TopicCard({ topic, progress, completedLessons }) {
           </div>
           
           <div className="flex items-center text-[var(--color-text-muted)] group-hover:text-[var(--color-neon-blue)] transition-colors" style={{ fontSize: '0.875rem', marginTop: '12px', gap: '4px' }}>
-            <span>{percentage === 100 ? 'Rivedi' : 'Continua'}</span>
+            <span>{percentage === 100 ? t('review') : t('continue')}</span>
             <ChevronRight size={16} />
           </div>
         </div>
@@ -107,6 +108,8 @@ export default function Dashboard() {
     xp, level, levelTitle, streak, completedLessons, 
     completedQuizzes, badges, examAttempts, topicProgress 
   } = useGame()
+  const { t } = useLanguage()
+  const { topics, getTotalLessons } = useTopics()
 
   const totalLessons = getTotalLessons()
   const completedCount = completedLessons.length
@@ -129,7 +132,7 @@ export default function Dashboard() {
           <span className="gradient-text">LinuxQuest</span> 🐧
         </h1>
         <p className="text-[var(--color-text-secondary)]" style={{ fontSize: '1.125rem', maxWidth: '640px', margin: '0 auto' }}>
-          Impara Linux giocando e supera l'esame <strong>LPI Linux Essentials</strong>
+          {t('welcomeBack')}
         </p>
         <div 
           className="bg-[var(--color-bg-card)] border border-[var(--color-border)]"
@@ -144,7 +147,7 @@ export default function Dashboard() {
         >
           <span style={{ fontSize: '1.125rem' }}>{levelTitle.split(' ')[0]}</span>
           <span className="font-semibold text-[var(--color-text-primary)]" style={{ fontSize: '0.875rem' }}>{levelTitle.split(' ').slice(1).join(' ')}</span>
-          <span className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>• Livello {level}</span>
+          <span className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>• {t('level')} {level}</span>
         </div>
       </motion.div>
 
@@ -154,10 +157,10 @@ export default function Dashboard() {
         gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
         gap: '20px' 
       }}>
-        <StatCard icon={Zap} label="Punti XP" value={xp} color="var(--color-neon-green)" />
-        <StatCard icon={Flame} label="Streak giorni" value={streak} color="var(--color-neon-orange)" />
-        <StatCard icon={BookOpen} label="Lezioni completate" value={`${completedCount}/${totalLessons}`} color="var(--color-neon-blue)" />
-        <StatCard icon={Trophy} label="Badge ottenuti" value={badges.length} color="var(--color-neon-purple)" />
+        <StatCard icon={Zap} label={t('totalXp')} value={xp} color="var(--color-neon-green)" />
+        <StatCard icon={Flame} label="Streak" value={streak} color="var(--color-neon-orange)" />
+        <StatCard icon={BookOpen} label={t('completedTopics')} value={`${completedCount}/${totalLessons}`} color="var(--color-neon-blue)" />
+        <StatCard icon={Trophy} label="Badge" value={badges.length} color="var(--color-neon-purple)" />
       </div>
 
       {/* Overall Progress */}
@@ -165,7 +168,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
           <h2 className="font-bold flex items-center" style={{ fontSize: '1.125rem', gap: '8px' }}>
             <Target size={20} className="text-[var(--color-neon-blue)]" />
-            Progresso Globale
+            {t('yourProgress')}
           </h2>
           <span className="font-black gradient-text" style={{ fontSize: '1.5rem' }}>{overallProgress}%</span>
         </div>
@@ -199,8 +202,8 @@ export default function Dashboard() {
               <Gamepad2 size={24} className="text-[var(--color-neon-purple)]" />
             </div>
             <div>
-              <h3 className="font-bold text-[var(--color-text-primary)]">🎮 Gioca & Impara</h3>
-              <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>Quiz, Memory, Terminal Challenge...</p>
+              <h3 className="font-bold text-[var(--color-text-primary)]">🎮 {t('playAndLearn')}</h3>
+              <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>{t('playAndLearnDesc')}</p>
             </div>
           </motion.div>
         </Link>
@@ -218,9 +221,9 @@ export default function Dashboard() {
               <GraduationCap size={24} className="text-[var(--color-neon-pink)]" />
             </div>
             <div>
-              <h3 className="font-bold text-[var(--color-text-primary)]">📝 Simulazione Esame</h3>
+              <h3 className="font-bold text-[var(--color-text-primary)]">📝 {t('examSim')}</h3>
               <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>
-                {bestExam !== null ? `Miglior punteggio: ${bestExam}/800` : '40 domande • 60 minuti'}
+                {bestExam !== null ? t('examSimDesc').replace('{{score}}', bestExam) : t('examSimFallback')}
               </p>
             </div>
           </motion.div>
@@ -231,7 +234,7 @@ export default function Dashboard() {
       <div>
         <h2 className="font-bold flex items-center" style={{ fontSize: '1.25rem', marginBottom: '24px', gap: '8px' }}>
           <Star size={20} className="text-[var(--color-neon-yellow)]" />
-          I 5 Topic dell'Esame
+          {t('the5Topics')}
         </h2>
         <div style={{ 
           display: 'grid', 
@@ -244,6 +247,7 @@ export default function Dashboard() {
               topic={topic} 
               progress={topicProgress[topic.id]}
               completedLessons={completedLessons}
+              t={t}
             />
           ))}
         </div>

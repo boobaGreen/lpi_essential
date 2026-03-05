@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useGame } from '../../context/GameContext.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
+import LanguageSelector from '../ui/LanguageSelector.jsx'
 import { Flame, Gamepad2, GraduationCap, Home, Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -17,14 +19,15 @@ function useMediaQuery(query) {
 
 export default function Navbar() {
   const { xp, level, levelTitle, xpProgress, streak } = useGame()
+  const { t } = useLanguage()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 768px)')
 
   const links = [
-    { to: '/', label: 'Home', icon: Home },
-    { to: '/games', label: 'Giochi', icon: Gamepad2 },
-    { to: '/exam', label: 'Esame', icon: GraduationCap },
+    { to: '/', label: t('navHome'), icon: Home },
+    { to: '/games', label: t('navGames'), icon: Gamepad2 },
+    { to: '/exam', label: t('navExam'), icon: GraduationCap },
   ]
 
   // Close mobile menu when switching to desktop
@@ -97,8 +100,10 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* XP Bar + Stats */}
+          {/* XP Bar + Stats + Lang */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <LanguageSelector />
+            
             {/* Streak */}
             {streak > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-neon-orange)' }}>

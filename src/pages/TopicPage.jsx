@@ -1,19 +1,22 @@
 import { useParams, Link } from 'react-router-dom'
-import { getTopic } from '../data/topics.js'
+import { useLanguage } from '../context/LanguageContext.jsx'
+import { useTopics } from '../hooks/useTopics.js'
 import { useGame } from '../context/GameContext.jsx'
 import { motion } from 'framer-motion'
 import { ArrowLeft, BookOpen, CheckCircle, ChevronRight } from 'lucide-react'
 
 export default function TopicPage() {
+  const { t } = useLanguage()
   const { topicId } = useParams()
+  const { getTopic } = useTopics()
   const topic = getTopic(topicId)
   const { completedLessons } = useGame()
 
   if (!topic) {
     return (
       <div style={{ textAlign: 'center', paddingTop: '80px' }}>
-        <h2 className="text-2xl font-bold text-[var(--color-error)]">Topic non trovato</h2>
-        <Link to="/" className="btn-primary no-underline" style={{ display: 'inline-block', marginTop: '16px' }}>Torna alla Home</Link>
+        <h2 className="text-2xl font-bold text-[var(--color-error)]">{t('topicNotFound')}</h2>
+        <Link to="/" className="btn-primary no-underline" style={{ display: 'inline-block', marginTop: '16px' }}>{t('backToHome')}</Link>
       </div>
     )
   }
@@ -36,7 +39,7 @@ export default function TopicPage() {
         style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}
       >
         <ArrowLeft size={18} />
-        <span>Torna alla Dashboard</span>
+        <span>{t('backToDashboard')}</span>
       </Link>
 
       {/* Topic Header */}
@@ -67,13 +70,13 @@ export default function TopicPage() {
               color: topicColor,
             }}
           >
-            Peso esame: {topic.weight}
+            {t('examWeight')} {topic.weight}
           </span>
           <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-            {topic.lessons.length} lezioni
+            {topic.lessons.length} {t('lessonsCount')}
           </span>
           <span style={{ fontSize: '0.75rem', color: 'var(--color-neon-green)', fontWeight: 600 }}>
-            {topic.lessons.filter(l => completedLessons.includes(l.id)).length}/{topic.lessons.length} completate
+            {topic.lessons.filter(l => completedLessons.includes(l.id)).length}/{topic.lessons.length} {t('lessonsCompleted')}
           </span>
         </div>
       </motion.div>
@@ -82,7 +85,7 @@ export default function TopicPage() {
       <div>
         <h2 className="font-bold" style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
           <BookOpen size={20} style={{ color: topicColor }} />
-          Lezioni
+          {t('lessons')}
         </h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

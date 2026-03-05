@@ -3,48 +3,7 @@ import { useGame } from '../../context/GameContext.jsx'
 import { motion } from 'framer-motion'
 import { Trophy, RotateCcw, ArrowRight } from 'lucide-react'
 
-const allChallenges = [
-  // Livello 1: base
-  { prompt: 'Per creare una directory: _____ nomedir', answer: 'mkdir', hint: 'Make Directory', difficulty: 1 },
-  { prompt: 'Per cancellare un file: _____ nomefile', answer: 'rm', hint: 'Remove', difficulty: 1 },
-  { prompt: 'Per copiare un file: _____ sorgente destinazione', answer: 'cp', hint: 'Copy', difficulty: 1 },
-  { prompt: 'Per spostare un file: _____ sorgente destinazione', answer: 'mv', hint: 'Move', difficulty: 1 },
-  { prompt: 'Per vedere la directory corrente: _____', answer: 'pwd', hint: 'Print Working Directory', difficulty: 1 },
-  { prompt: 'Per creare un file vuoto: _____ nomefile', answer: 'touch', hint: 'Tocca/crea', difficulty: 1 },
-  { prompt: 'Per mostrare il contenuto: _____ nomefile', answer: 'cat', hint: 'Concatenate', difficulty: 1 },
-  { prompt: 'Per leggere il manuale: _____ ls', answer: 'man', hint: 'Manual', difficulty: 1 },
-  { prompt: 'Per stampare del testo: _____ "Hello World"', answer: 'echo', hint: 'Eco/stampa', difficulty: 1 },
-  { prompt: 'Per listare i file con dettagli: _____ -la', answer: 'ls', hint: 'List', difficulty: 1 },
-  // Livello 2: intermedi
-  { prompt: 'Per vedere i processi: _____ aux', answer: 'ps', hint: 'Process Status', difficulty: 2 },
-  { prompt: 'Per cambiare permessi: _____ 755 script.sh', answer: 'chmod', hint: 'Change Mode', difficulty: 2 },
-  { prompt: 'Per cambiare proprietario: _____ user:group file', answer: 'chown', hint: 'Change Owner', difficulty: 2 },
-  { prompt: 'Per cercare testo: _____ "pattern" file.txt', answer: 'grep', hint: 'Global Regular Expression Print', difficulty: 2 },
-  { prompt: 'Per estrarre un archivio tar.gz: tar _____ archivio.tar.gz', answer: '-xzf', hint: 'eXtract gZip File', difficulty: 2 },
-  { prompt: 'Per aggiungere un utente: _____ -m nuovoutente', answer: 'useradd', hint: 'User Add', difficulty: 2 },
-  { prompt: 'Per vedere lo spazio disco: _____ -h', answer: 'df', hint: 'Disk Free', difficulty: 2 },
-  { prompt: 'Per cercare file nel filesystem: _____ / -name "*.log"', answer: 'find', hint: 'Cerca nel filesystem', difficulty: 2 },
-  { prompt: 'Per mostrare le prime righe: _____ -n 5 file.txt', answer: 'head', hint: 'Testa/inizio', difficulty: 2 },
-  { prompt: 'Per mostrare le ultime righe: _____ -n 5 file.txt', answer: 'tail', hint: 'Coda/fine', difficulty: 2 },
-  { prompt: 'Per montare un filesystem: _____ /dev/sda1 /mnt', answer: 'mount', hint: 'Monta', difficulty: 2 },
-  { prompt: 'Per testare la connettività: _____ google.com', answer: 'ping', hint: 'Invia pacchetto ICMP', difficulty: 2 },
-  { prompt: 'Per scaricare un file da URL: _____ http://example.com/file', answer: 'wget', hint: 'Web Get', difficulty: 2 },
-  // Livello 3: avanzati
-  { prompt: 'Per terminare un processo: _____ -9 PID', answer: 'kill', hint: 'Termina processo', difficulty: 3 },
-  { prompt: 'Per seguire un log in tempo reale: tail _____ /var/log/syslog', answer: '-f', hint: 'Follow', difficulty: 3 },
-  { prompt: 'Per creare un link simbolico: ln _____ target link', answer: '-s', hint: 'Symbolic', difficulty: 3 },
-  { prompt: 'Per modificare testo inline: _____ -i "s/old/new/g" file', answer: 'sed', hint: 'Stream Editor', difficulty: 3 },
-  { prompt: 'Per contare righe/parole/byte: _____ -l file.txt', answer: 'wc', hint: 'Word Count', difficulty: 3 },
-  { prompt: 'Per ordinare righe: _____ -rn data.txt', answer: 'sort', hint: 'Ordina', difficulty: 3 },
-  { prompt: 'Per tagliare colonne: _____ -d: -f1 /etc/passwd', answer: 'cut', hint: 'Taglia/estrai', difficulty: 3 },
-  { prompt: 'Per sincronizzare file: _____ -avz src/ dest/', answer: 'rsync', hint: 'Remote Sync', difficulty: 3 },
-  { prompt: 'Per estrarre colonne con pattern: _____ \'{print $1}\' file', answer: 'awk', hint: 'Linguaggio di processing', difficulty: 3 },
-  { prompt: 'Per mostrare file aperti: _____ -i :80', answer: 'lsof', hint: 'List Open Files', difficulty: 3 },
-  { prompt: 'Per gestire servizi systemd: _____ restart nginx', answer: 'systemctl', hint: 'System Control', difficulty: 3 },
-  { prompt: 'Per modificare la crontab: _____ -e', answer: 'crontab', hint: 'Cron Table', difficulty: 3 },
-  { prompt: 'Per vedere connessioni di rete: _____ -tuln', answer: 'ss', hint: 'Socket Statistics', difficulty: 3 },
-  { prompt: 'Per tradurre caratteri: echo "hello" | _____ a-z A-Z', answer: 'tr', hint: 'Translate', difficulty: 3 },
-]
+import { useGameData } from '../../hooks/useGameData.js'
 
 const levelConfig = {
   1: { count: 6, maxDiff: 1, xp: 10, label: 'Principiante' },
@@ -63,6 +22,7 @@ function shuffleArray(arr) {
 
 export default function FillGapGame({ onComplete, level = 1 }) {
   const { addXP, completeGame } = useGame()
+  const { fillGapData: allChallenges } = useGameData()
   const config = levelConfig[level] || levelConfig[1]
   const pool = allChallenges.filter(c => c.difficulty <= config.maxDiff)
   const [challenges] = useState(() => shuffleArray(pool).slice(0, config.count))

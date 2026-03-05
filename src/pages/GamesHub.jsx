@@ -9,27 +9,31 @@ import TrueFalseGame from '../components/games/TrueFalseGame.jsx'
 import QuizGame from '../components/games/QuizGame.jsx'
 import { useState } from 'react'
 import { useGame } from '../context/GameContext.jsx'
-
-const levels = [
-  { id: 1, name: 'Principiante', icon: '🌱', color: '#22c55e', label: 'Facile', stars: 1 },
-  { id: 2, name: 'Intermedio', icon: '⚔️', color: '#f59e0b', label: 'Medio', stars: 2 },
-  { id: 3, name: 'Esperto', icon: '🏆', color: '#ef4444', label: 'Difficile', stars: 3 },
-]
-
-const gameComponents = {
-  quiz: { component: QuizGame, title: '🧠 Quiz Rapidi', color: 'var(--color-neon-blue)' },
-  memory: { component: MemoryGame, title: '🃏 Memory Game', color: 'var(--color-neon-green)' },
-  terminal: { component: TerminalChallenge, title: '💻 Terminal Challenge', color: 'var(--color-neon-purple)' },
-  dragdrop: { component: DragDropGame, title: '🧩 Drag & Drop', color: 'var(--color-neon-orange)' },
-  fillgap: { component: FillGapGame, title: '📝 Completa il Comando', color: 'var(--color-neon-pink)' },
-  truefalse: { component: TrueFalseGame, title: '⚡ Vero o Falso', color: 'var(--color-neon-yellow)' },
-}
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 export default function GamesHub() {
   const [activeGame, setActiveGame] = useState(null)
   const [selectedLevel, setSelectedLevel] = useState(null)
   const [showLevelPicker, setShowLevelPicker] = useState(null)
   const { completedGames = [] } = useGame()
+  const { t } = useLanguage()
+
+  const levels = [
+    { id: 1, name: t('levelBeginner'), icon: '🌱', color: '#22c55e', label: t('difficultyEasy'), stars: 1 },
+    { id: 2, name: t('levelIntermediate'), icon: '⚔️', color: '#f59e0b', label: t('difficultyMedium'), stars: 2 },
+    { id: 3, name: t('levelExpert'), icon: '🏆', color: '#ef4444', label: t('difficultyHard'), stars: 3 },
+  ]
+
+  const gameComponents = {
+    quiz: { component: QuizGame, title: `🧠 ${t('quizTitle')}`, color: 'var(--color-neon-blue)' },
+    memory: { component: MemoryGame, title: `🃏 ${t('memoryTitle')}`, color: 'var(--color-neon-green)' },
+    terminal: { component: TerminalChallenge, title: `💻 ${t('terminalTitle')}`, color: 'var(--color-neon-purple)' },
+    dragdrop: { component: DragDropGame, title: `🧩 ${t('dragdropTitle')}`, color: 'var(--color-neon-orange)' },
+    fillgap: { component: FillGapGame, title: `📝 ${t('fillgapTitle')}`, color: 'var(--color-neon-pink)' },
+    truefalse: { component: TrueFalseGame, title: `⚡ ${t('truefalseTitle')}`, color: 'var(--color-neon-yellow)' },
+  }
+
+
 
   // Check if a level is unlocked: level 1 always, level 2 needs level 1 complete, level 3 needs level 2 complete
   const isLevelUnlocked = (gameId, levelId) => {
@@ -49,15 +53,15 @@ export default function GamesHub() {
     {
       id: 'quiz',
       icon: '🧠',
-      title: 'Quiz Rapidi',
-      description: 'Metti alla prova le tue conoscenze con quiz a scelta multipla da tutti i topic.',
+      title: t('quizTitle'),
+      description: t('quizDesc'),
       color: 'var(--color-neon-blue)',
     },
-    { id: 'memory', icon: '🃏', title: 'Memory Game', description: 'Abbina comandi Linux alle loro descrizioni. Allena la tua memoria!', color: 'var(--color-neon-green)' },
-    { id: 'terminal', icon: '💻', title: 'Terminal Challenge', description: 'Scrivi il comando giusto! Come un vero sysadmin!', color: 'var(--color-neon-purple)' },
-    { id: 'dragdrop', icon: '🧩', title: 'Drag & Drop', description: 'Associa concetti: licenze, permessi, porte di rete e altro!', color: 'var(--color-neon-orange)' },
-    { id: 'fillgap', icon: '📝', title: 'Completa il Comando', description: 'Riempi gli spazi vuoti nei comandi Linux. Fill-the-gap!', color: 'var(--color-neon-pink)' },
-    { id: 'truefalse', icon: '⚡', title: 'Vero o Falso', description: 'Rispondi il più velocemente possibile: è vero o falso? Hai 10 secondi!', color: 'var(--color-neon-yellow)' },
+    { id: 'memory', icon: '🃏', title: t('memoryTitle'), description: t('memoryDesc'), color: 'var(--color-neon-green)' },
+    { id: 'terminal', icon: '💻', title: t('terminalTitle'), description: t('terminalDesc'), color: 'var(--color-neon-purple)' },
+    { id: 'dragdrop', icon: '🧩', title: t('dragdropTitle'), description: t('dragdropDesc'), color: 'var(--color-neon-orange)' },
+    { id: 'fillgap', icon: '📝', title: t('fillgapTitle'), description: t('fillgapDesc'), color: 'var(--color-neon-pink)' },
+    { id: 'truefalse', icon: '⚡', title: t('truefalseTitle'), description: t('truefalseDesc'), color: 'var(--color-neon-yellow)' },
   ]
 
   // Active game view with selected level
@@ -71,7 +75,7 @@ export default function GamesHub() {
           onClick={() => { setActiveGame(null); setSelectedLevel(null); setShowLevelPicker(null) }}
           style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '16px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.875rem', color: 'var(--color-text-muted)' }}
         >
-          <ArrowLeft size={18} /> Hub Giochi
+          <ArrowLeft size={18} /> {t('gamesHubTitle')}
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <h2 className="font-black" style={{ fontSize: '1.5rem' }}>
@@ -96,7 +100,7 @@ export default function GamesHub() {
           onClick={() => setShowLevelPicker(null)}
           style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.875rem', color: 'var(--color-text-muted)' }}
         >
-          <ArrowLeft size={18} /> Hub Giochi
+          <ArrowLeft size={18} /> {t('gamesHubTitle')}
         </button>
 
         <div style={{ textAlign: 'center' }}>
@@ -138,12 +142,12 @@ export default function GamesHub() {
                 <span style={{ fontSize: '2rem' }}>{unlocked ? level.icon : '🔒'}</span>
                 <div style={{ flex: 1, textAlign: 'left' }}>
                   <div className="font-bold" style={{ fontSize: '1.05rem', color: unlocked ? 'var(--color-text-primary)' : 'var(--color-text-muted)' }}>
-                    Livello {level.id}: {level.name}
+                    {t('level')} {level.id}: {level.name}
                   </div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '2px' }}>
-                    {level.id === 1 && 'Contenuto base, tempo rilassato'}
-                    {level.id === 2 && 'Più contenuti, parametri sfidanti'}
-                    {level.id === 3 && 'Tutto il contenuto, massima difficoltà'}
+                    {level.id === 1 && t('level1Desc')}
+                    {level.id === 2 && t('level2Desc')}
+                    {level.id === 3 && t('level3Desc')}
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
@@ -164,7 +168,7 @@ export default function GamesHub() {
         {highest > 0 && (
           <div className="glass-card" style={{ padding: '16px 20px', textAlign: 'center' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-              Livello massimo completato: <strong style={{ color: levels[highest - 1].color }}>{levels[highest - 1].name} {levels[highest - 1].icon}</strong>
+              {t('maxLevelCompleted')} <strong style={{ color: levels[highest - 1].color }}>{levels[highest - 1].name} {levels[highest - 1].icon}</strong>
             </span>
           </div>
         )}
@@ -177,15 +181,15 @@ export default function GamesHub() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <Link to="/" className="no-underline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
         <ArrowLeft size={18} />
-        <span>Dashboard</span>
+        <span>{t('navDashboard')}</span>
       </Link>
 
       <div style={{ textAlign: 'center', padding: '16px 0' }}>
         <h1 className="font-black" style={{ fontSize: '2rem' }}>
           <Gamepad2 className="inline" size={32} style={{ marginRight: '8px', color: 'var(--color-neon-purple)' }} />
-          <span className="gradient-text">Hub Giochi</span>
+          <span className="gradient-text">{t('gamesHubTitle')}</span>
         </h1>
-        <p style={{ color: 'var(--color-text-secondary)', marginTop: '8px' }}>Scegli un gioco e guadagna XP mentre impari! 🎮 ⭐ Ogni gioco ha 3 livelli di difficoltà!</p>
+        <p style={{ color: 'var(--color-text-secondary)', marginTop: '8px' }}>{t('gamesHubDesc')}</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
@@ -220,9 +224,9 @@ export default function GamesHub() {
                 <h3 className="font-bold" style={{ marginTop: '12px', fontSize: '1.1rem', color: game.color }}>{game.title}</h3>
                 <p style={{ color: 'var(--color-text-muted)', marginTop: '8px', fontSize: '0.875rem' }}>{game.description}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
-                  <span className="font-bold" style={{ fontSize: '0.75rem', color: game.color }}>Scegli livello →</span>
+                  <span className="font-bold" style={{ fontSize: '0.75rem', color: game.color }}>{t('chooseLevel')}</span>
                   {highest > 0 && (
-                    <span style={{ fontSize: '0.7rem', color: levels[highest - 1].color, fontWeight: 600 }}>{levels[highest - 1].icon} Lv.{highest}</span>
+                    <span style={{ fontSize: '0.7rem', color: levels[highest - 1].color, fontWeight: 600 }}>{levels[highest - 1].icon} {t('level')}.{highest}</span>
                   )}
                 </div>
               </div>

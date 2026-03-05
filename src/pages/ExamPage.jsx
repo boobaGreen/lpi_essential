@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useGame } from '../context/GameContext.jsx'
-import { allQuizzes } from '../data/quizzes/index.js'
-import { topics } from '../data/topics.js'
+import { useLanguage } from '../context/LanguageContext.jsx'
+import { useTopics } from '../hooks/useTopics.js'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, GraduationCap, Clock, AlertTriangle, Trophy, CheckCircle, XCircle, ArrowRight, BarChart3 } from 'lucide-react'
 import { useState, useEffect, useRef, useCallback } from 'react'
@@ -41,7 +41,9 @@ function ExamTimer({ timeLeft, total }) {
 }
 
 function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) {
+  const { t } = useLanguage()
   const { saveExamAttempt, addXP, earnBadge, examAttempts } = useGame()
+  const { topics } = useTopics()
   const maxScore = 800
   const scaledScore = Math.round((score / questions.length) * maxScore)
   const passed = scaledScore >= 500
@@ -82,17 +84,17 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
       <div className="glass-card text-center" style={{ padding: '32px' }}>
         <Trophy size={56} className="mx-auto" style={{ color: passed ? 'var(--color-success)' : 'var(--color-error)', marginBottom: '16px' }} />
         <h2 className="text-3xl font-black" style={{ marginBottom: '8px' }}>
-          {passed ? '🎉 PROMOSSO!' : '📚 Non ancora...'}
+          {passed ? '🎉 ' + t('passedTitle') : '📚 ' + t('notYetTitle')}
         </h2>
         <div className="font-black" style={{ fontSize: '3rem', color: passed ? 'var(--color-success)' : 'var(--color-error)' }}>
           {scaledScore}/800
         </div>
         <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '8px' }}>
-          {score}/{questions.length} risposte corrette ({percentage}%)
-          {passed ? ' — Minimo 500/800 ✅' : ' — Servono 500/800 per passare'}
+          {score}/{questions.length} {t('correctAnswers')} ({percentage}%)
+          {passed ? ' — ' + t('minToPass1') + ' ✅' : ' — ' + t('minToPass2')}
         </p>
         <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem', marginTop: '4px' }}>
-          Tempo: {Math.floor(timeUsed / 60)}m {timeUsed % 60}s
+          {t('timeLabel')} {Math.floor(timeUsed / 60)}m {timeUsed % 60}s
         </p>
       </div>
 
@@ -100,7 +102,7 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
       <div className="glass-card" style={{ padding: '24px' }}>
         <h3 className="font-bold" style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <BarChart3 size={20} className="text-[var(--color-neon-blue)]" />
-          Risultati per Topic
+          {t('resultsByTopic')}
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {Object.entries(topicResults).map(([tid, result]) => {
@@ -125,7 +127,7 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
 
       {/* Answer review */}
       <div className="glass-card" style={{ padding: '24px' }}>
-        <h3 className="font-bold" style={{ marginBottom: '16px' }}>📝 Revisione Risposte</h3>
+        <h3 className="font-bold" style={{ marginBottom: '16px' }}>📝 {t('reviewAnswers')}</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '400px', overflowY: 'auto' }}>
           {answers.map((a, i) => (
             <div
@@ -140,7 +142,7 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
             >
               {a.correct ? <CheckCircle size={16} className="text-[var(--color-success)] shrink-0" style={{ marginTop: '2px' }} /> : <XCircle size={16} className="text-[var(--color-error)] shrink-0" style={{ marginTop: '2px' }} />}
               <span className="text-[var(--color-text-secondary)]">
-                <strong>D{i + 1}:</strong> {questions[i]?.question?.substring(0, 80)}...
+                <strong>{t('questionNum')} {i + 1}:</strong> {questions[i]?.question?.substring(0, 80)}...
               </span>
             </div>
           ))}
@@ -149,7 +151,7 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
 
       {/* Actions */}
       <div style={{ display: 'flex', gap: '16px' }}>
-        <button onClick={onRetry} className="btn-primary" style={{ flex: 1 }}>🔄 Riprova</button>
+        <button onClick={onRetry} className="btn-primary" style={{ flex: 1 }}>🔄 {t('retryBtn')}</button>
         <Link to="/" className="btn-secondary no-underline text-center" style={{ flex: 1 }}>← Dashboard</Link>
       </div>
     </motion.div>
@@ -157,6 +159,8 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry }) 
 }
 
 export default function ExamPage() {
+  const { t } = useLanguage()
+  const { topics, allQuizzes } = useTopics()
   const [mode, setMode] = useState('intro') // intro | exam | results
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -179,7 +183,7 @@ export default function ExamPage() {
     setTimeLeft(EXAM_TIME)
     setStartTime(Date.now())
     setMode('exam')
-  }, [])
+  }, [allQuizzes])
 
   useEffect(() => {
     if (mode === 'exam') {
@@ -228,21 +232,21 @@ export default function ExamPage() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '768px', margin: '0 auto' }}>
         <Link to="/" className="inline-flex items-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] no-underline transition-colors" style={{ gap: '8px' }}>
           <ArrowLeft size={18} />
-          <span style={{ fontSize: '0.875rem' }}>Dashboard</span>
+          <span style={{ fontSize: '0.875rem' }}>{t('navDashboard')}</span>
         </Link>
 
         <motion.div className="text-center" style={{ paddingTop: '32px', paddingBottom: '16px' }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <GraduationCap size={64} className="mx-auto text-[var(--color-neon-pink)]" style={{ marginBottom: '16px' }} />
-          <h1 className="text-3xl font-black gradient-text">Simulazione Esame</h1>
+          <h1 className="text-3xl font-black gradient-text">{t('examSim')}</h1>
           <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '12px', fontSize: '1.125rem' }}>LPI Linux Essentials (010-160)</p>
         </motion.div>
 
         <div className="glass-card" style={{ padding: '28px' }}>
-          <h2 className="font-bold" style={{ fontSize: '1.25rem', marginBottom: '20px' }}>📋 Regole dell'Esame</h2>
+          <h2 className="font-bold" style={{ fontSize: '1.25rem', marginBottom: '20px' }}>📋 {t('examRules')}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
               <div className="font-black text-[var(--color-neon-blue)]" style={{ fontSize: '2rem' }}>40</div>
-              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>Domande</div>
+              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>{t('examQuestions')}</div>
             </div>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
               <div className="font-black text-[var(--color-neon-orange)]" style={{ fontSize: '2rem' }}>60</div>
@@ -258,8 +262,8 @@ export default function ExamPage() {
         <div className="glass-card flex items-start" style={{ padding: '20px', gap: '12px', borderColor: 'rgba(234, 179, 8, 0.3)' }}>
           <AlertTriangle size={20} className="text-[var(--color-warning)] shrink-0" style={{ marginTop: '2px' }} />
           <div>
-            <p className="font-bold text-[var(--color-warning)]" style={{ fontSize: '0.875rem' }}>Attenzione</p>
-            <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>Le domande sono randomizzate dal pool di {allQuizzes.length} domande. Il timer parte appena inizi!</p>
+            <p className="font-bold text-[var(--color-warning)]" style={{ fontSize: '0.875rem' }}>{t('examWarningTitle')}</p>
+            <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>{t('examWarningText').replace('{{total}}', allQuizzes.length)}</p>
           </div>
         </div>
 
@@ -270,7 +274,7 @@ export default function ExamPage() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          🚀 Inizia l'Esame
+          🚀 {t('startExam')}
         </motion.button>
       </div>
     )
@@ -300,11 +304,11 @@ export default function ExamPage() {
       {/* Header */}
       <div className="glass-card flex items-center justify-between" style={{ padding: '16px 20px' }}>
         <span className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>
-          📝 Domanda <strong>{currentIndex + 1}</strong>/{total}
+          📝 {t('questionNum')} <strong>{currentIndex + 1}</strong>/{total}
         </span>
         <ExamTimer timeLeft={timeLeft} total={EXAM_TIME} />
         <span className="font-bold text-[var(--color-neon-green)]" style={{ fontSize: '0.875rem' }}>
-          ✅ {score} corrette
+          ✅ {score} {t('correctBadge')}
         </span>
       </div>
 
@@ -391,7 +395,7 @@ export default function ExamPage() {
               animate={{ opacity: 1 }}
             >
               <p className="text-[var(--color-text-secondary)]" style={{ fontSize: '0.875rem' }}>
-                💡 <strong>Spiegazione:</strong> {question.explanation}
+                💡 <strong>{t('explanation')}</strong> {question.explanation}
               </p>
             </motion.div>
           )}
@@ -405,9 +409,9 @@ export default function ExamPage() {
               animate={{ opacity: 1 }}
             >
               {currentIndex < total - 1 ? (
-                <>Prossima <ArrowRight size={18} /></>
+                <>{t('nextBtn')} <ArrowRight size={18} /></>
               ) : (
-                <>Vedi Risultati <Trophy size={18} /></>
+                <>{t('seeResultsBtn')} <Trophy size={18} /></>
               )}
             </motion.button>
           )}

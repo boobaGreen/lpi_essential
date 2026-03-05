@@ -54,12 +54,12 @@ function TableBlock({ block, topicColor }) {
   )
 }
 
-function InfoboxBlock({ block }) {
+function InfoboxBlock({ block, t }) {
   const variants = {
-    tip: { icon: <Lightbulb size={18} />, border: '#10b981', bg: 'rgba(16,185,129,0.08)', label: '💡 Suggerimento' },
-    warning: { icon: <AlertTriangle size={18} />, border: '#f59e0b', bg: 'rgba(245,158,11,0.08)', label: '⚠️ Attenzione' },
-    note: { icon: <Info size={18} />, border: '#3b82f6', bg: 'rgba(59,130,246,0.08)', label: '📝 Nota' },
-    exam: { icon: <BookOpen size={18} />, border: '#a855f7', bg: 'rgba(168,85,247,0.08)', label: '🎯 Tip Esame LPI' },
+    tip: { icon: <Lightbulb size={18} />, border: '#10b981', bg: 'rgba(16,185,129,0.08)', label: t('extSuggestion') },
+    warning: { icon: <AlertTriangle size={18} />, border: '#f59e0b', bg: 'rgba(245,158,11,0.08)', label: t('extWarning') },
+    note: { icon: <Info size={18} />, border: '#3b82f6', bg: 'rgba(59,130,246,0.08)', label: t('extNote') },
+    exam: { icon: <BookOpen size={18} />, border: '#a855f7', bg: 'rgba(168,85,247,0.08)', label: t('extExamTip') },
   }
   const v = variants[block.variant] || variants.note
   return (
@@ -216,7 +216,7 @@ function ListBlock({ block, topicColor }) {
 
 // ─── Block Dispatcher ───
 
-function RenderBlock({ block, topicColor, index }) {
+function RenderBlock({ block, topicColor, index, t }) {
   const renderers = {
     heading: HeadingBlock,
     paragraph: ParagraphBlock,
@@ -237,14 +237,14 @@ function RenderBlock({ block, topicColor, index }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: Math.min(index * 0.03, 0.5) }}
     >
-      <Component block={block} topicColor={topicColor} />
+      <Component block={block} topicColor={topicColor} t={t} />
     </motion.div>
   )
 }
 
 // ─── Main Component ───
 
-export default function ExtendedContent({ data, topicColor }) {
+export default function ExtendedContent({ data, topicColor, t }) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   if (!data || !data.sections || data.sections.length === 0) return null
@@ -268,7 +268,7 @@ export default function ExtendedContent({ data, topicColor }) {
       >
         <span style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 700, fontSize: '1rem' }}>
           <BookOpen size={20} />
-          📖 Approfondimento — {data.title}
+          {t('extDeepDive')} — {data.title}
         </span>
         <motion.span
           animate={{ rotate: isExpanded ? 180 : 0 }}
@@ -296,7 +296,7 @@ export default function ExtendedContent({ data, topicColor }) {
               borderTop: 'none',
             }}>
               {data.sections.map((block, i) => (
-                <RenderBlock key={i} block={block} topicColor={topicColor} index={i} />
+                <RenderBlock key={i} block={block} topicColor={topicColor} index={i} t={t} />
               ))}
             </div>
           </motion.div>
