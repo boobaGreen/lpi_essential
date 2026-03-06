@@ -1,10 +1,9 @@
-import { BookOpen, HardDrive, Terminal, Shield } from 'lucide-react'
 
 export const lpic1_101_topics = [
   {
     id: 1,
     title: '101. Systemarchitektur',
-    icon: HardDrive,
+    icon: '🖥️',
     description: 'Hardware, Systemstart und Runlevels konfigurieren.',
     lessons: [
       { id: 'lpic1-101-1-1', title: 'Hardware-Einstellungen ermitteln und konfigurieren' },
@@ -15,7 +14,7 @@ export const lpic1_101_topics = [
   {
     id: 2,
     title: '102. Linux-Installation & Paketverwaltung',
-    icon: BookOpen,
+    icon: '📦',
     description: 'Festplattenlayout, Bootmanager und Shared Libraries verwalten.',
     lessons: [
       { id: 'lpic1-102-1-1', title: 'Festplattenaufteilung konzipieren' },
@@ -29,7 +28,7 @@ export const lpic1_101_topics = [
   {
     id: 3,
     title: '103. GNU- und UNIX-Befehle',
-    icon: Terminal,
+    icon: '⌨️',
     description: 'Die Kommandozeile, Filter, Pipes und Prozessmanagement beherrschen.',
     lessons: [
       { id: 'lpic1-103-1-1', title: 'Auf der Kommandozeile arbeiten' },
@@ -49,7 +48,7 @@ export const lpic1_101_topics = [
   {
     id: 4,
     title: '104. Geräte, Dateisysteme & FHS',
-    icon: Shield,
+    icon: '💾',
     description: 'Dateisysteme erstellen, mounten und Rechte verwalten.',
     lessons: [
       { id: 'lpic1-104-1-1', title: 'Partitionen und Dateisysteme anlegen' },

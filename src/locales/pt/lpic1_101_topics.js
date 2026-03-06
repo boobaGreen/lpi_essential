@@ -2,7 +2,7 @@ export const lpic1_101_topics = [
   {
     id: 1,
     title: '101. Arquitetura do Sistema',
-    icon: HardDrive,
+    icon: '🖥️',
     description: 'Hardware, inicialização do sistema e configuração de runlevels.',
     lessons: [
       { id: 'lpic1-101-1-1', title: 'Determinar e configurar as definições de hardware' },
@@ -13,7 +13,7 @@ export const lpic1_101_topics = [
   {
     id: 2,
     title: '102. Instalação e Gestão de Pacotes Linux',
-    icon: BookOpen,
+    icon: '📦',
     description: 'Layout do disco, gestores de boot e bibliotecas partilhadas.',
     lessons: [
       { id: 'lpic1-102-1-1', title: 'Preparar o layout do disco' },
@@ -27,7 +27,7 @@ export const lpic1_101_topics = [
   {
     id: 3,
     title: '103. Comandos GNU e UNIX',
-    icon: Terminal,
+    icon: '⌨️',
     description: 'A linha de comandos, filtros, pipes e gestão de processos.',
     lessons: [
       { id: 'lpic1-103-1-1', title: 'Trabalhar na linha de comandos' },
@@ -47,7 +47,7 @@ export const lpic1_101_topics = [
   {
     id: 4,
     title: '104. Dispositivos, Sistemas de Ficheiros FHS',
-    icon: Shield,
+    icon: '💾',
     description: 'Criar sistemas de ficheiros, montar partições e gerir permissões.',
     lessons: [
       { id: 'lpic1-104-1-1', title: 'Criar partições e sistemas de ficheiros' },
