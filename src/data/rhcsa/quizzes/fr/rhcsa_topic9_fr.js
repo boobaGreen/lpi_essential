@@ -116,7 +116,7 @@ export const rhcsaTopic9QuizzesFR = [
       'Tu accompliras ce sacre éternel brillamment moyennent l\'option B mais aussi la C',
     ],
     correct: 3,
-    explanation: 'Le drapeau colossal `-P` (Persistent) apposé lourdement au vieux `setsebool`. Ce monstre écrira la Loi en brut au disque. Sans '-P', ta belle modif s\'éteint bêtement à l\'extinction mémoire d\'un minable reboot serveur.',
+    explanation: 'Le drapeau colossal `-P` (Persistent) apposé lourdement au vieux `setsebool`. Ce monstre écrira la Loi en brut au disque. Sans \'-P\', ta belle modif s\'éteint bêtement à l\'extinction mémoire d\'un minable reboot serveur.',
   },
   {
     id: 'q-rhcsa-9-3-003', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'medium', type: 'mcq',
