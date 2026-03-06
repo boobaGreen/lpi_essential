@@ -23,22 +23,27 @@
 - [x] Completati i dati dei giochi (Memory, TrueFalse, FillGap, DragDrop, Terminal) in IT e EN
 - [x] Adeguata la pagina `ExamPage` al formato RHCSA (50 domande, 60min, punteggio max 300) con disclaimer esame pratico
 
+### Sessione 3 — 2026-03-06
+
+- [x] Completate le traduzioni dei 177 Quiz (MCQ) per RHCSA (Topics 1-10) in tutte le 7 lingue previste (ES, FR, DE, PT, RU, JA, ZH)
+- [x] Aggiornato l'export e `index.js` per includere tutti i quiz localizzati
+- [x] Piano di implementazione preparato per tradurre contenuti estesi e lezioni
+
 ---
 
-## 🔜 Da fare (Fase 1 - Completamento Content)
+## 🔜 Da fare (Fase 1 - Completamento Content Multilingua)
 
 ### Contenuto EN
 
-- [x] `src/locales/en/rhcsa_lessonContent.js` — Completare lezioni 4-10 (attualmente stub)
+- [x] `src/locales/en/rhcsa_lessonContent.js` — Completare lezioni 1-10 (completato in precedenza)
 - [x] Tradurre i 177 Quiz (MCQ) in Inglese
 
-### Contenuto Avanzato
+### Traduzioni Estese (Fase Attuale)
 
-- [x] Extended content IT ed EN: approfondimenti nei file `topicXExtended.js`
+Essendo il file `lessonContent.js` estremamente esteso (~1760 righe), la traduzione verrà affrontata iterativamente per ogni lingua:
 
-### Placeholder altre lingue (predisposizione)
-
-- [x] File `rhcsa_topics.js` e `rhcsa_gamesData.js` creati per DE/FR/ES/PT/RU/ZH (con fallback)
+1. Traduzione `rhcsa_extendedContent` (ES, FR, DE, PT, RU, JA, ZH)
+2. Traduzione iterativa di `rhcsa_lessonContent.js` per ogni singola lingua (ES -> FR -> DE -> PT -> RU -> JA -> ZH)
 
 ---
 

@@ -73,7 +73,7 @@ Per ogni topic (10):
 - `topics.js`: titolo, descrizione, icona, lezioni array
 - `lessonContent.js`: comic strip, keyPoints, terminal demo per ogni lezione
 - `extendedContent`: approfondimenti Deep Dive
-- Quiz: 20 domande per topic = 200 totali
+- Quiz: 20 domande per topic = 200 totali (177 effettivi, **già completati e tradotti in 8 lingue incluse ES, FR, DE, PT, RU, JA, ZH**)
 
 ---
 
@@ -111,12 +111,14 @@ Valutare integrazione v86 per lab selezionati:
 
 ---
 
-## Fase 4 — Altre Lingue 🔜
+## Fase 4 — Altre Lingue 🔜 (In corso)
 
-Aggiungere traduzioni per: `de`, `fr`, `es`, `pt`, `ru`, `zh`
+Aggiungere traduzioni per: `es`, `fr`, `de`, `pt`, `ru`, `ja`, `zh`
 
-- Struttura file già predisposta con placeholder
-- Stessa UI di LPI Essentials
+- [x] Struttura file già predisposta con placeholder
+- [x] Traduzione Quiz MCQ (177 per lingua) completata
+- [ ] Traduzione `rhcsa_extendedContent`
+- [ ] Traduzione iterativa `rhcsa_lessonContent.js` (file massiccio, ~1760 righe, si procederà lingua per lingua per non sovraccaricare il workflow)
 
 ---
 
