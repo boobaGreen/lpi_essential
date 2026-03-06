@@ -117,7 +117,7 @@ Seria mortífero base e um crime forçar a placa giratória crua procurar todas 
   'lpic1-102-1-4': {
     title: 'Debian e DPKG Packager',
     content: `
-Nas ramificações derivadas de base de Debian e Ubuntu, a magia base e arquitetura puríssima terminal reside nas caixas do estilo mágico do `.deb` e de todos eles local APT!
+Nas ramificações derivadas de base de Debian e Ubuntu, a magia base e arquitetura puríssima terminal reside nas caixas do estilo mágico do \`.deb\` e de todos eles local APT!
 
 ### DPKG (Guerreiro solitário offline Low-level base)
 \`dpkg\` está amarrado puramente a arquivos em estado solitário de armazenamento que tenhamos feito o sacode de uma PEN USB Base no sistema: NADA descarrega pela nuvem!

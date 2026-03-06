@@ -366,7 +366,8 @@ export const topic3Extended = {
           [
             "-le",
             "Afficher uniquement les noms de fichiers",
-            "grep -rl \"mot de passe\" /etc/"
+            "grep -rl \"mot de passe\" /etc/",
+            "grep -rl \"mot de passe\" \"/etc/\""
           ],
           [
             "-w",
