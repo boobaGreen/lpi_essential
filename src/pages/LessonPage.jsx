@@ -8,7 +8,83 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, CheckCircle, BookOpen, Sparkles } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
+function MarkdownRenderer({ content, topicColor }) {
+  if (!content) return null
+
+  const renderFormattedText = (text) => {
+    const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g)
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i} style={{ color: 'var(--color-text-primary)' }}>{part.slice(2, -2)}</strong>
+      }
+      if (part.startsWith('`') && part.endsWith('`')) {
+        return <code key={i} style={{ 
+          background: 'rgba(255,255,255,0.1)', 
+          padding: '2px 4px', 
+          borderRadius: '4px',
+          fontFamily: 'monospace',
+          fontSize: '0.9em'
+        }}>{part.slice(1, -1)}</code>
+      }
+      return part
+    })
+  }
+
+  const blocks = content.split(/\n\n+/)
+
+  return (
+    <div className="markdown-content" style={{ color: 'var(--color-text-secondary)', lineHeight: 1.8 }}>
+      {blocks.map((block, i) => {
+        const trimmed = block.trim()
+        if (!trimmed) return null
+
+        if (trimmed.startsWith('### ')) {
+          return <h3 key={i} style={{ color: topicColor, marginTop: '24px', marginBottom: '12px', fontSize: '1.2rem', fontWeight: 700 }}>{trimmed.replace('### ', '')}</h3>
+        }
+        if (trimmed.startsWith('## ')) {
+          return <h2 key={i} style={{ color: topicColor, marginTop: '28px', marginBottom: '16px', fontSize: '1.4rem', fontWeight: 800 }}>{trimmed.replace('## ', '')}</h2>
+        }
+
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+          const items = trimmed.split('\n').filter(l => l.trim()).map(line => line.replace(/^[-*]\s+/, ''))
+          return (
+            <ul key={i} style={{ paddingLeft: '20px', margin: '14px 0', listStyleType: 'disc' }}>
+              {items.map((item, j) => (
+                <li key={j} style={{ marginBottom: '8px' }}>
+                  {renderFormattedText(item)}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+
+        if (trimmed.startsWith('```')) {
+          const lines = trimmed.split('\n')
+          const code = lines.slice(1, lines[lines.length - 1].startsWith('```') ? -1 : undefined).join('\n')
+          return (
+            <pre key={i} style={{ 
+              background: '#0d1117', 
+              padding: '16px', 
+              borderRadius: '10px', 
+              overflowX: 'auto', 
+              border: '1px solid var(--color-border)',
+              margin: '18px 0',
+              fontFamily: "'Fira Code', 'Cascadia Code', monospace",
+              fontSize: '0.85rem'
+            }}>
+              <code>{code}</code>
+            </pre>
+          )
+        }
+
+        return <p key={i} style={{ marginBottom: '16px' }}>{renderFormattedText(trimmed)}</p>
+      })}
+    </div>
+  )
+}
+
 function ComicStrip({ comic }) {
+  if (!comic || !comic.title) return null
   return (
     <div className="glass-card" style={{ padding: '28px', marginBottom: '24px' }}>
       <h3 className="font-bold" style={{ fontSize: '1.15rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -39,6 +115,7 @@ function ComicStrip({ comic }) {
 }
 
 function KeyPoints({ points, topicColor }) {
+  if (!points || !Array.isArray(points)) return null
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px', marginBottom: '24px' }}>
       {points.map((point, i) => (
@@ -66,6 +143,7 @@ function KeyPoints({ points, topicColor }) {
 }
 
 function TerminalDemo({ terminal, t }) {
+  if (!terminal || !terminal.prompt) return null
   return (
     <div className="terminal-box" style={{ marginBottom: '24px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '10px', borderBottom: '1px solid #30363d' }}>
@@ -175,19 +253,30 @@ export default function LessonPage() {
       </motion.div>
 
       {/* Content */}
-      {content ? (
-        <div>
-          <ComicStrip comic={content.comic} />
-          <KeyPoints points={content.keyPoints} topicColor={topicColor} />
-          <TerminalDemo terminal={content.terminal} t={t} />
-        </div>
-      ) : (
-        <div className="glass-card" style={{ padding: '40px', textAlign: 'center' }}>
-          <BookOpen size={48} style={{ margin: '0 auto 16px', color: 'var(--color-text-muted)' }} />
-          <h3 className="font-bold" style={{ fontSize: '1.1rem', marginBottom: '8px' }}>{t('contentArriving')}</h3>
-          <p style={{ color: 'var(--color-text-muted)' }}>{t('contentArrivingDesc')}</p>
-        </div>
-      )}
+      <div className="lesson-content">
+        {typeof content === 'string' ? (
+          <div className="glass-card" style={{ padding: '32px' }}>
+            <MarkdownRenderer content={content} topicColor={topicColor} />
+          </div>
+        ) : content ? (
+          <div>
+            <ComicStrip comic={content.comic} />
+            <KeyPoints points={content.keyPoints} topicColor={topicColor} />
+            <TerminalDemo terminal={content.terminal} t={t} />
+            {content.content && typeof content.content === 'string' && (
+              <div className="glass-card" style={{ padding: '32px', marginTop: '24px' }}>
+                <MarkdownRenderer content={content.content} topicColor={topicColor} />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="glass-card" style={{ padding: '40px', textAlign: 'center' }}>
+            <BookOpen size={48} style={{ margin: '0 auto 16px', color: 'var(--color-text-muted)' }} />
+            <h3 className="font-bold" style={{ fontSize: '1.1rem', marginBottom: '8px' }}>{t('contentArriving')}</h3>
+            <p style={{ color: 'var(--color-text-muted)' }}>{t('contentArrivingDesc')}</p>
+          </div>
+        )}
+      </div>
 
       {/* Extended Content */}
       {extendedContent[lessonId] && (

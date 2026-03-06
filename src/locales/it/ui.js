@@ -125,4 +125,19 @@ export const ui = {
   minutes: "Minuti",
   rhcsaPracticalWarning: "⚠️ Esame Pratico — Simulazione Teorica",
   rhcsaPracticalDesc: "L'esame reale RHCSA EX200 è 100% pratico su VM Linux (210 minuti). Questa simulazione testa solo la conoscenza teorica dei comandi per aiutarti a prepararti.",
+  // Course Picker
+  coursePickerSubtitle: "Scegli la certificazione che vuoi preparare",
+  availableCourses: "Certificazioni Disponibili",
+  // Course Names
+  'course_name_lpi-010': "LPI Linux Essentials",
+  'course_name_lpic1-101': "LPIC-1 Exam 101",
+  'course_name_lpic1-102': "LPIC-1 Exam 102",
+  'course_name_lpic-2': "LPIC-2",
+  'course_name_rhcsa': "RHCSA",
+  // Course Descriptions
+  'course_desc_lpi-010': "Fondamentali di Linux: FOSS, file system, comandi base, sicurezza.",
+  'course_desc_lpic1-101': "Architettura di sistema, pacchetti, comandi GNU/Unix, filesystem e FHS.",
+  'course_desc_lpic1-102': "Shell scripting, interfacce, database SQL, networking, sicurezza.",
+  'course_desc_lpic-2': "Linux avanzato: kernel, storage, networking avanzato, server.",
+  'course_desc_rhcsa': "Red Hat Certified System Administrator: storage, rete, SELinux, container.",
 }

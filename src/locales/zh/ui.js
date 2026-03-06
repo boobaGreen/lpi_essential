@@ -125,4 +125,19 @@ export const ui = {
   minutes: "分钟",
   rhcsaPracticalWarning: "⚠️ 实践考试 — 理论模拟",
   rhcsaPracticalDesc: "真正的 RHCSA EX200 考试是在 Linux 虚拟机上进行的 100% 实践考试 (210 分钟)。此模拟仅测试命令的理论知识，以帮助您做好准备。",
+  // Course Picker
+  coursePickerSubtitle: "选择您想要准备的认证",
+  availableCourses: "可用认证",
+  // Course Names
+  'course_name_lpi-010': "LPI Linux Essentials",
+  'course_name_lpic1-101': "LPIC-1 Exam 101",
+  'course_name_lpic1-102': "LPIC-1 Exam 102",
+  'course_name_lpic-2': "LPIC-2",
+  'course_name_rhcsa': "RHCSA",
+  // Course Descriptions
+  'course_desc_lpi-010': "Linux 基础：FOSS、文件系统、基本命令、安全。",
+  'course_desc_lpic1-101': "系统架构、软件包、GNU/Unix 命令、文件系统和 FHS。",
+  'course_desc_lpic1-102': "Shell 脚本编写、界面、SQL 数据库、网络、安全。",
+  'course_desc_lpic-2': "高级 Linux：内核、存储、高级网络、服务器。",
+  'course_desc_rhcsa': "红帽认证系统管理员：存储、网络、SELinux、容器。",
 }

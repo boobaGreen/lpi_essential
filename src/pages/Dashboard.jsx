@@ -150,7 +150,7 @@ export default function Dashboard() {
         animate={{ opacity: 1, y: 0 }}
       >
         <h1 className="font-black" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '12px' }}>
-          <span className="gradient-text">{currentCourse?.name || 'LinuxQuest'}</span> {currentCourse?.icon || '🐧'}
+          <span className="gradient-text">{t(`course_name_${currentCourse?.id}`) || currentCourse?.name || 'LinuxQuest'}</span> {currentCourse?.icon || '🐧'}
         </h1>
         <p className="text-[var(--color-text-secondary)]" style={{ fontSize: '1.125rem', maxWidth: '640px', margin: '0 auto' }}>
           {t('welcomeBack')}

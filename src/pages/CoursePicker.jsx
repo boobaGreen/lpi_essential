@@ -7,6 +7,7 @@ import { COURSES_LIST } from '../data/courses.js'
 import { Lock, ChevronRight, Trophy, BookOpen, Zap } from 'lucide-react'
 
 function CourseCard({ course, index, onSelect }) {
+  const { t } = useLanguage()
   const { allProgress } = useGame()
   const cp = allProgress?.[course.id]
   const done = cp?.completedLessons?.length ?? 0
@@ -83,14 +84,14 @@ function CourseCard({ course, index, onSelect }) {
             fontWeight: 800, fontSize: '1.1rem', margin: '2px 0 6px',
             color: course.available ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
           }}>
-            {course.name}
+            {t(`course_name_${course.id}`) || course.name}
           </h2>
 
           <p style={{
             fontSize: '0.84rem', color: 'var(--color-text-muted)', lineHeight: 1.5,
             margin: '0 0 14px',
           }}>
-            {course.description}
+            {t(`course_desc_${course.id}`) || course.description}
           </p>
 
           {/* Tags */}
@@ -156,7 +157,7 @@ export default function CoursePicker() {
           <span className="gradient-text">LinuxQuest</span>
         </h1>
         <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.05rem', maxWidth: '500px', margin: '0 auto' }}>
-          {t('coursePickerSubtitle') || 'Scegli la certificazione che vuoi preparare'}
+          {t('coursePickerSubtitle')}
         </p>
 
         {/* Global stats pill */}
@@ -189,7 +190,7 @@ export default function CoursePicker() {
       {/* Course list */}
       <div>
         <h2 style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--color-text-muted)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-          {t('availableCourses') || 'Certificazioni disponibili'}
+          {t('availableCourses')}
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {COURSES_LIST.map((course, i) => (

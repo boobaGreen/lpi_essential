@@ -125,4 +125,19 @@ export const ui = {
   minutes: "Минуты",
   rhcsaPracticalWarning: "⚠️ Практический экзамен — Теоретическая симуляция",
   rhcsaPracticalDesc: "Реальный экзамен RHCSA EX200 на 100% практический (210 минут на виртуальных машинах Linux). Эта симуляция проверяет только теоретические знания команд, чтобы помочь вам подготовиться.",
+  // Course Picker
+  coursePickerSubtitle: "Выберите сертификацию, к которой хотите подготовиться",
+  availableCourses: "Доступные Сертификации",
+  // Course Names
+  'course_name_lpi-010': "LPI Linux Essentials",
+  'course_name_lpic1-101': "LPIC-1 Exam 101",
+  'course_name_lpic1-102': "LPIC-1 Exam 102",
+  'course_name_lpic-2': "LPIC-2",
+  'course_name_rhcsa': "RHCSA",
+  // Course Descriptions
+  'course_desc_lpi-010': "Основы Linux: FOSS, файловая система, базовые команды, безопасность.",
+  'course_desc_lpic1-101': "Архитектура системы, пакеты, команды GNU/Unix, файловая система и FHS.",
+  'course_desc_lpic1-102': "Shell-скриптинг, интерфейсы, базы данных SQL, сети, безопасность.",
+  'course_desc_lpic-2': "Продвинутый Linux: ядро, хранилище, продвинутые сети, серверы.",
+  'course_desc_rhcsa': "Red Hat Certified System Administrator: хранилище, сеть, SELinux, контейнеры.",
 }
