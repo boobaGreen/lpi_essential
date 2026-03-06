@@ -1,0 +1,161 @@
+// RHCSA Quiz — Topic 8: Users and Groups (Português) — 15 questions
+
+export const rhcsaTopic8QuizzesPT = [
+  // ─── Users ───
+  {
+    id: 'q-rhcsa-8-1-001', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Qual martelada forja do absolutamente zero o dev "mario", cravando-lhe paralelamente de brinde o chassi duma pasta casulo /home/mario e injetando logo de cara sua mamadeira padrão de leitura como sendo /bin/bash ?',
+    options: [
+      'useradd mario',
+      'useradd -m -s /bin/bash mario',
+      'adduser mario --shell bash',
+      'usermod -m -s /bin/bash mario',
+    ],
+    correct: 1,
+    explanation: 'A cartilha Sysadmin abençoa o comando `useradd`: A flag `-m` (make home) garava ferrenha a cova do home, e o `-s` endossa o path do binário de shell para uso padrão. Em Rhel o default já cava isso sutilmente puxando perfís do conf /etc/default/useradd.',
+  },
+  {
+    id: 'q-rhcsa-8-1-002', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'A porta está sem trinco. Qual comando evoca o chassi cego para cravar interativamente as batidas no teclado amarrando cegamente uma nova senha forte pra trancar o pobre user recém parido "mario"?',
+    options: ['usermod -p mario', 'passwd mario', 'chpasswd mario', 'shadow mario'],
+    correct: 1,
+    explanation: 'O comando interactivo em tela preta `passwd <NomeDoPeão>` puxará os prompts invisíveis textuais cegos. Dica: Apenas O Soberano root logado detem o poder cego pra invocar trocas em contas alheias, peões simples usam `passwd` vazio pra trocar de sigo mesmos.',
+  },
+  {
+    id: 'q-rhcsa-8-1-003', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Magia Oculta: Crie uma entidade fantasma servil (service account)! Cujo invólucro jamais possuirá tralha de `/home/` nem teto pra morar, e será severanamente castrada e banida do sacrifício de poder logar e olhar pro teclado terminal do server vivo!',
+    options: [
+      'useradd -r -s /sbin/nologin service',
+      'useradd -M -s /sbin/nologin service',
+      'useradd --no-home --system service',
+      'O entrelaçamento d\'arte conjulgada nestas sentenças tanto em A quanto ressoam exatas na B abatem essa aberração ao alvo idênctico!',
+    ],
+    correct: 3,
+    explanation: 'Arquitetos mesclam: flag `-r` (System accoint atrela a ele as deidades do range de uids baixos<1000). A marreta opcional `-M` arranca pela raiz as bençãos da pasta /home default. E a mordaça final `-s /sbin/nologin` prega seus lábios mortos no shell obsoleto nulo renegando logins fáticos interativos do pobre coitado gárgula de daemon db_user.',
+  },
+  {
+    id: 'q-rhcsa-8-1-004', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'O dev "mario" rodou comando rm -rf não autorizado. O RH exigiu o corte rápido. Como banir temporaria, imediata e cegamente a validade dos acessos deste estúpido bloqueando-o vivo d\'entrar logando com a senha d\'ele hoje à tarde na baía de rodo e de supetão sem destruir o pobre homem?',
+    options: [
+      'usermod -L mario',
+      'passwd -l mario',
+      'usermod -s /sbin/nologin mario',
+      'Trindade esmagadora de eficácia atômica. O leque unificado abraça e consagra glórias punitivas em todas estas 3 estacas fatais!',
+    ],
+    correct: 3,
+    explanation: 'A punção de estrita trava da senha (-L ou -l : Lock) apõe bruscamente o maldíto flag gótico ! (Exclamaçaõ) antes do hash gravado no arquivo das sombras shadow, empedilhando matematicamente o bypass. A sacaneada em C castra e empedra a boca do shell negando entrada. Caminhos múltiplos em linux geram mortes variadas!',
+  },
+  {
+    id: 'q-rhcsa-8-1-005', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Politica rigorosa bancária! Obrige atádo e talhado á lenha no chassi do "mario" que, sob guillotina de castração, a longevidade máx de sua estúpida senha expira compulsoriamente cravada e seca em "90 Dias" do calendário Linux!',
+    options: [
+      'passwd -x 90 mario',
+      'chage -M 90 mario',
+      'usermod --max-age 90 mario',
+      'Magias irrestritas conjulgadas de formas exatas preclamam-se e validam as letras de ouro em A e B',
+    ],
+    correct: 3,
+    explanation: 'Para reger a entropia decaída temporal das idades, o artíficie clássico do Unix chora pelo uso do `chage` atrelado no param `-M` (Max days limit). Entretanto o velho barbudo sacana atalho do utiliticom veloz `passwd -x` alcança cirugicamente o idêntico crivo em seu rastro.',
+  },
+  {
+    id: 'q-rhcsa-8-1-006', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Separe o Joio do Cativeiro Mágico. Respectivamente e exatamamente ditados na cronologia pura desta faticida. Quais túmulos albergam os crípticos metadados brutos informativos legóveis da tralha dos users E em qual calabouço das trevas repousam as nefastas saladas hashes embaralhadas cegas e obscuras do abismo de suas senhas cifradas no SO?',
+    options: [
+      '/etc/passwd e /etc/shadow',
+      '/etc/users e /etc/passwords',
+      '/etc/shadow e /etc/passwd',
+      '/etc/passwd e /etc/group',
+    ],
+    correct: 0,
+    explanation: 'Sempre as bases públicas lidas e abertas por todos (World-Readable) como metadados/UIDs repousam cruas despidas no `/etc/passwd`. Já as medonhas maculadas strings de hashes MD5/SHA que validam engates de log ins obscrutizam e jazem exiladas pesadas unicamente alcançadas e arrastáveis pelo Root encrustadas dentro das dobras negras do `/etc/shadow`.',
+  },
+  {
+    id: 'q-rhcsa-8-1-007', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Você se perdeu nos abismos da shell atual. Qual soco rápido em CLI esparrama cru e sem filtro todo organograma do qual gangue exata de GRUPOS englobam conjulganod  agora neste instante teu usuário q bate teclados ai?',
+    options: ['whoami', 'id', 'groups', 'Ambas exultações de rezas brabas conjulgam nas matrizes de fecho B e C'],
+    correct: 3,
+    explanation: 'A estampa nua atómica do `id` entrega os IDs brutões numéricos GID UID colados nos textuais. Mas se só anseias os nomes limpos na estampa sem tralhas atire pro alto um singelo e seco `groups`.',
+  },
+  // ─── Groups and sudo ───
+  {
+    id: 'q-rhcsa-8-2-001', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Você ama o mario. Coroe de antemão e amarre em apenso suplementar agregando-o carinhosamente para atuar dentro dos domínios da gangue poderosa da máfia "wheel" (Sudoers).',
+    options: [
+      'usermod -G wheel mario',
+      'usermod -aG wheel mario',
+      'groupadd wheel mario',
+      'gpasswd -a mario wheel',
+    ],
+    correct: 1,
+    explanation: 'Cuidado mortal de provas: Fazer um `-G` solitário exclui e extirpa brutalmente e amargas o coitado do mario das outras gangues, jogando ele solitáio pra debaixo da roda. Nunca esqueça o apensador "Append": `-aG`.',
+  },
+  {
+    id: 'q-rhcsa-8-2-002', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Em feudos de domínios RHEL9. Sentar entre as esguias teias e amarras sombrias abraçadas dentro da mítica gangue suja "wheel" te engrandece majestosamente o direito vitalício infame para?',
+    options: [
+      'Acessarem o telão cego dos computadores alocados perante os consoles brutos das maquinas via VGA nas bioses',
+      'Invocar divindades escuras pra empunhar peripécias mágicas, cospindo ordens soberanas como Root atavés da muleta conjulgacional de sudo',
+      'Tocar textualmente nas configs brasi de editores sem sudo perms atadas na alocadas en vi root',
+      'Caminhar invispiveis rasgando buracos en /root',
+    ],
+    correct: 1,
+    explanation: 'De fábrica embalada nos preceitos RHEL CentOS, As amarras atadas e conjungadas na constituição base chumbada do papiro /etc/sudoers prega d\'antemão que todos e exatamentes reles mortais ali encrustrados no grupo %wheel gozarão d\'alçadas esmagadoras e infalivéis de invocarem glórias imperiais via Sudo!',
+  },
+  {
+    id: 'q-rhcsa-8-2-003', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'O Mario chora que perde a mão digitando senhas por Sudo em bash script. Amarre uma profecia diabólica cravando e aliviando a carga do dev pra que ao evocar ordens aburdas brutais empoderadas do sudoers o Mario desdenhe das guardas e suba aos céus isentamente solto NÚ E LIVRE (NOPASSWD)!?',
+    options: [
+      'Entalhe abrigada mente no arcano do pai /etc/sudoers: mario ALL=(ALL) NOPASSWD:ALL',
+      'Crie cravando exilio obscuro largado no ninho d\'cobras espartanas en /etc/sudoers.d/mario: mario ALL=(ALL) NOPASSWD:ALL',
+      'usermod -G sudo mario',
+      'Amplas ramificações cospidas tanto en A rementendo á B espelham veritáveis caminhos críveis en execuções mágicas perfeiras.',
+    ],
+    correct: 3,
+    explanation: 'Bater no papiro bruto pai `/etc/sudoers` é lei base, todavia fincar um scriptinho solto en `/etc/sudoers.d/nome-qualquer` é a maestria suja Sysadmin imaculada limpa: Pois se atualizar a base rpm d\'sudoers, teu arquivo ali filho num folder separado jamáis choca colidindo cagando em defaults dos merges OS de repositorios alheios perigosos da rootbase.',
+  },
+  {
+    id: 'q-rhcsa-8-2-004', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Tua mão cega escurregou editando o Sudoers no VI! Fim de Jogo! Ninguém mais logra SUDO e travaste todo o time Root! Evite a condenação do enforcamento público perante aos C-Levels, Que feitiço exato abre o portal blindando em cheque o texto antes de o salvar vivo incólume no abismo perigoso do `sudoers` do servidor?',
+    options: ['vi /etc/sudoers', 'visudo', 'sudo edit /etc/sudoers', 'nano /etc/sudoers'],
+    correct: 1,
+    explanation: 'O deus protetor `visudo` evoca instâncias vi amarrando correntes. Ao clamar :wq ele compila à vera numa check de syntax gramatical rústica cega pra ver se o amaldiçoado Sysadmin não digitou virgula onde seria ponto. Salvaguardando a máquina de quebrar total do Sudo! Se violar e errar ele berra erro na sua fuça vetando a glória maldita da escrita no chassi.',
+  },
+  {
+    id: 'q-rhcsa-8-2-005', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Instancie das cinzas secas absolutas um grupo místico batizado cravado e estampado em "developers", amarrando forçosamente o colar numérico e amaldiçoando à ele o GID imperial fixo "1500" na guela no mesmo bote da cli!',
+    options: [
+      'groupadd -g 1500 developers',
+      'groupadd developers --gid 1500',
+      'addgroup -g 1500 developers',
+      'groupmod -g 1500 developers',
+    ],
+    correct: 0,
+    explanation: 'A alvenaria basílar engloba o criador `groupadd`. A flag atreladora `-g 1500` conjuga imperiosamente o Group ID na raiz, banindo a criatividade lixa aleatória de gids sequenciais vazados pelo SO. A opçao groupmod atamanca um grupo já velho pré-existente.',
+  },
+  {
+    id: 'q-rhcsa-8-1-008', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Malabarismo atômico cego: Conjure de uma pancada fatal o "mario" amarrado ao pesadelo críptico do maldito UID "1500", criando paralelamente de supetão as paredes ocas do túmulo caseiro /home/mario e injetando de enfeite uma plaquinha estapafúrdia atachada ao peito do caixão contendo o letreiro luminoso balela GECOS: "Mario Rossi" tudo d\'uma tacada so!',
+    options: [
+      'useradd -u 1500 -c "Mario Rossi" -m mario',
+      'useradd -i 1500 -d "Mario Rossi" mario',
+      'useradd -U 1500 --comment "Mario Rossi" mario',
+      'adduser mario -u 1500',
+    ],
+    correct: 0,
+    explanation: 'Invoque sem dó o canivete múltiplo utilitário: `-u` UID, `-c` Comment/GECOS para frescuras textuais comletas dos homes nomes longos (Comment), e pise firme arrastado em `-m` garantindo o home. Cuidado imenso com o feio atalho enganoso `-d`, esta lixa atrelaria um "Diretório Físico Customizado" e não comments textuais.',
+  },
+  {
+    id: 'q-rhcsa-8-2-006', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Em que encarnação astrológica abismal das datas linux as pragas e maldições da Expiração atômica abaterão varrendo e calcinando ao oblívio nulo trancafiado a validade do caixão passowrd do coitado do "mario"? Examine e liste o extrato temporal disto!',
+    options: ['chage -l mario', 'passwd -S mario', 'cat /etc/shadow | grep mario', 'Exatamente todos os atalhos e premissos englobados na íntegra ali espremem de supetão dítames conjulgados absolutos revelando o fatídico dia obscuro da condenação dele.'],
+    correct: 3,
+    explanation: 'O `chage -l` evoca a poesia formatada pra gerência legível em formato data temporal das expirações de forma gloriosa ao estétia humana. Todavia o `-S` lança letreiro curto codificado brutal. O cat Shadow é o pedreiro amador tirando onda nas entranhas extraindo e contabilizando nas unhas via calc math em cima de DiasEpoch a data esmigalhada nas crases ali!',
+  },
+  {
+    id: 'q-rhcsa-8-1-009', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Chegou demissão do Mario. Mande-o varrido pro espaço e apage absolutamente TODO seu legado asqueiro, torrando impiedoso e varrendo fisicanmete até as entranhas pastas cumbucas do maldito lá do `/home/mario` deixando terra infértil arrasada do zero total onde ele ousou antes ali pisar com seu login antigo OS afora?!',
+    options: ['userdel mario', 'userdel -r mario', 'deluser mario --remove-home', 'usermod -d /dev/null mario'],
+    correct: 1,
+    explanation: 'Deletador puro avulso e seco de user não move um peixe fedido das lixeiras /home dele (userdel puro). O trator apocaliptico varre a cúpula com o `-r` (Recursive). Removendo das gavetas da memoria e derretendo as rochas das paredes ocal físicas do Home Dir Mail Spool deixando nada do coitado vivo na carcaça atraz de sua lenda pifia no OS.',
+  },
+]
