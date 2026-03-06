@@ -1,354 +1,151 @@
+// LPIC-1 102 Lesson Content — Italian
+// Contenuto lezioni per tutte le 20+ lezioni dell'esame 102
+
 export const lpic1_102_lessonContent = {
-  // --- TOPIC 105: SHELLS AND SHELL SCRIPTING ---
-  '105.1': {
+  // ──── Topic 105: Shell e Shell Scripting ────
+  'lpic1-102-105-1': {
     title: "Personalizzare l'Ambiente Shell",
-    content: `
-Personalizzare l'ambiente shell permette di ottimizzare il flusso di lavoro. I file di configurazione principali sono caricati all'avvio della shell.
-
-### File di Configurazione (Bash)
-- **/etc/profile**: Configurazione globale per tutti gli utenti (login shell).
-- **/etc/bash.bashrc**: Configurazione globale (non-login interactive shell).
-- **~/.bash_profile**, **~/.bash_login**, **~/.profile**: Configurazioni specifiche per l'utente (login shell). Bash cerca questi file in ordine e carica il primo che trova.
-- **~/.bashrc**: Il file più usato per alias e variabili personali (non-login interactive shell).
-- **~/.bash_logout**: Eseguito alla chiusura della sessione di login.
-
-### Variabili d'Ambiente e Alias
-- **export**: Rende una variabile disponibile ai processi figli.
-- **PATH**: Definisce le directory dove la shell cerca gli eseguibili.
-- **alias**: Crea scorciatoie per comandi complessi (es. \`alias ll='ls -la'\`).
-- **function**: Permette di definire sequenze di comandi riutilizzabili con parametri.
-
-### Skeleton Directory
-- **/etc/skel/**: Contiene i file di default che vengono copiati nella home dei nuovi utenti al momento della creazione (es. \`.bashrc\`, \`.profile\`).
-    `
+    comic: {
+      title: 'La Tua Casa Digitale 🏠',
+      panels: [
+        { emoji: '🎒', text: 'File di config: /etc/profile è per tutti, ~/.bashrc è il tuo zaino personale.' },
+        { emoji: '🗺️', text: 'PATH: La mappa della shell. Se non è in lista, la shell non lo trova!' },
+        { emoji: '🔦', text: 'Alias: ll=\'ls -la\'. Non scrivere chilometri di codice, usa le scorciatoie.' },
+        { emoji: '📦', text: '/etc/skel: Il kit di pronto soccorso. I nuovi utenti ricevono questi file base.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'File di Configurazione', items: ['/etc/profile — Globale (Login)', '~/.bashrc — Personale (Interattivo)', '/etc/skel/ — Modello per i nuovi utenti'] },
+      { title: 'Variabili d\'Ambiente', items: ['export — Passa variabili ai figli', 'PATH — Dove cercare i programmi', 'env / printenv — Elenca variabili'] },
+    ],
+    terminal: { 
+      prompt: '$ alias ll=\'ls -la\'\n$ echo $PATH', 
+      output: 'alias ll=\'ls -la\'\n/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' 
+    },
   },
-  '105.2': {
-    title: "Personalizzare o Scrivere Script Semplici",
-    content: `
-Lo shell scripting automatizza attività ripetitive.
 
-### Struttura di uno Script
-- **Shebang (#!)**: La prima riga indica l'interprete (es. \`#!/bin/bash\`).
-- **Permessi**: Lo script deve essere eseguibile (\`chmod +x script.sh\`).
-
-### Costrutti Fondamentali
-- **Variabili**: Assegnazione senza spazi (\`VAR="valore"\`), accesso con \`$\` (\`$VAR\`).
-- **Argomenti**: \`$1, $2, ...\` sono i parametri passati allo script; \`$#\` è il numero di argomenti.
-- **Test e Condizioni**: \`if [ condizione ]; then ... fi\`.
-- **Cicli**: \`for\`, \`while\`, \`until\`.
-- **Sostituzione di comando**: \`$(comando)\` o \` \`comando\` \` per catturare l'output.
-
-### Operatori Logici
-- **&&**: Esegue il secondo comando solo se il primo ha successo (exit code 0).
-- **||**: Esegue il secondo comando solo se il primo fallisce.
-    `
+  'lpic1-102-105-2': {
+    title: "Scrivere Script Semplici",
+    comic: {
+      title: 'Il Robot di Bash 🤖',
+      panels: [
+        { emoji: '📜', text: 'Shebang: #!/bin/bash. Dice al kernel: "Ehi, usa Bash per questo!"' },
+        { emoji: '🏃', text: 'Chmod +x: Senza il permesso di esecuzione, il tuo script è solo un sasso.' },
+        { emoji: '🔀', text: 'If/Then/Else: Il cervello dello script. Prende decisioni basate su test.' },
+        { emoji: '🔄', text: 'Loop (For/While): Ripeti un compito 100 volte senza stancarti.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Struttura', items: ['#!/bin/bash — Lo Shebang', 'chmod +x script.sh — Fondamentale', 'exit [0-255] — Status d\'uscita (0 = OK)'] },
+      { title: 'Cicli e Test', items: ['test [ condition ] — Verifica condizioni', 'while / for — Strutture iterative', 'read — Legge input dall\'utente'] },
+    ],
+    terminal: { 
+      prompt: '$ cat hello.sh\n#!/bin/bash\necho "Ciao $USER"', 
+      output: 'Ciao root' 
+    },
   },
-  // --- TOPIC 106: USER INTERFACES AND DESKTOPS ---
-  '106.1': {
+
+  // ──── Topic 106: Interfacce Utente e Desktop ────
+  'lpic1-102-106-1': {
     title: "Installare e Configurare X11",
-    content: `
-X Window System (X11) è il framework di base per le interfacce grafiche su Linux.
-
-### Architettura X11
-- **X Server**: Gestisce l'hardware (display, mouse, tastiera).
-- **X Client**: L'applicazione grafica (es. un browser).
-- **Protocollo di Rete**: X11 è network-transparent (il client può girare su un host diverso dal server).
-
-### Configurazione
-- **/etc/X11/xorg.conf**: File di configurazione storico (ora spesso automatico).
-- **/etc/X11/xorg.conf.d/**: Directory per configurazioni modulari moderne.
-- **Xdmx**: Permette di unire più display in uno solo.
-- **Wayland**: Il successore moderno di X11, più sicuro e semplice, ma meno orientato alla rete nativa.
-
-### Utility
-- **xdpyinfo**: Mostra informazioni sul server X corrente.
-- **xhost**: Controlla quali utenti/host possono accedere al server X.
-- **DISPLAY**: Variabile d'ambiente che indica dove inviare l'output grafico (es. \`localhost:0.0\`).
-    `
+    comic: {
+      title: 'Dipingere lo Schermo 🖼️',
+      panels: [
+        { emoji: '🏛️', text: 'X11 (X Window System) è l\'architettura classica per la grafica in Linux.' },
+        { emoji: '🔌', text: 'Architettura Client-Server: l\'app grafica può girare su un altro computer!' },
+        { emoji: '🏗️', text: 'Wayland: Il successore moderno, più semplice, fluido e sicuro.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Componenti', items: ['X Server — Gestisce hardware (video, mouse)', 'X Client — L\'app grafica stessa', 'Window Manager — Gestisce i bordi delle finestre'] },
+      { title: 'Configurazione', items: ['/etc/X11/xorg.conf — File storico (spesso automatico)', 'xdpyinfo — Info sul server X attivo', 'xhost — Gestisce i permessi d\'accesso'] },
+    ],
+    terminal: { 
+      prompt: '$ xdpyinfo | grep dimensions\n$ xset q', 
+      output: 'dimensions:    1920x1080 pixels (508x285 millimeters)\nKeyboard Control:\n  auto repeat:  on    key click percent:  0' 
+    },
   },
-  '106.2': {
-    title: "Desktop Grafici",
-    content: `
-I Desktop Environment (DE) forniscono un'esperienza utente completa.
 
-### Componenti comuni
-- **Window Manager (WM)**: Gestisce il posizionamento e i bordi delle finestre (es. Mutter, KWin, Openbox).
-- **Display Manager (DM)**: Gestisce il login grafico (es. GDM, SDDM, LightDM).
+  'lpic1-102-106-2': { title: "Desktop Grafici", terminal: { prompt: '$ echo $XDG_CURRENT_DESKTOP', output: 'GNOME' } },
+  'lpic1-102-106-3': { title: "Accessibilità", terminal: { prompt: '$ orca --setup', output: '[Menu istruzioni per screen reader]' } },
 
-### Desktop Popolari
-- **GNOME**: Moderno, focalizzato sulla semplicità. Usa GTK.
-- **KDE Plasma**: Altamente personalizzabile. Usa Qt.
-- **XFCE / LXQt**: Leggeri, ideali per hardware datato.
-
-### Remote Desktop
-- **VNC (Virtual Network Computing)**: Protocollo per desktop remoto multipiattaforma.
-- **SPICE**: Protocollo usato spesso in ambienti di virtualizzazione (KVM).
-- **Xrdp**: Implementazione open source di RDP (Remote Desktop Protocol).
-    `
+  // ──── Topic 107: Compiti Amministrativi ────
+  'lpic1-102-107-1': {
+    title: "Gestire Utenti, Gruppi e File di Sistema",
+    comic: {
+      title: 'Chi è il Capo? 👔',
+      panels: [
+        { emoji: '👑', text: 'Root (UID 0) è il re: può fare tutto, anche distruggere il sistema.' },
+        { emoji: '🆔', text: '/etc/passwd: L\'anagrafe di Linux. Qui ogni utente ha un suo ID unico.' },
+        { emoji: '👥', text: 'I Gruppi permettono di condividere file tra colleghi senza aprire tutto a tutti.' },
+        { emoji: '🔐', text: '/etc/shadow: La cassaforte che contiene le password criptate.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'File Chiave', items: ['/etc/passwd — Dati utente (shell, home, UID)', '/etc/group — Dati gruppo (membri)', '/etc/shadow — Password criptate e scadenza'] },
+      { title: 'Comandi Utente', items: ['useradd / usermod / userdel — Gestione utente', 'id — Mostra UID e GID attuali', 'chage — Gestisce la scadenza password'] },
+      { title: 'Comandi Gruppo', items: ['groupadd / groupdel — Gestione gruppi', 'groups — Mostra i gruppi di un utente'] },
+    ],
+    terminal: { 
+      prompt: '$ id\n$ grep root /etc/passwd', 
+      output: 'uid=0(root) gid=0(root) gruppi=0(root)\nroot:x:0:0:root:/root:/bin/bash' 
+    },
   },
-  '106.3': {
-    title: "Accessibilità",
-    content: `
-Linux offre strumenti per rendere il sistema utilizzabile da persone con disabilità.
 
-### Tecnologie Assistive
-- **Lettori di Schermo**: Orca (per GNOME).
-- **Ingranditori/Lenti**: Screen Magnifier.
-- **Tastiere a Schermo**: GOK, Onboard.
+  'lpic1-102-107-2': { title: "Automazione (Cron e Timer)", terminal: { prompt: '$ crontab -l', output: '0 5 * * * /backup.sh' } },
+  'lpic1-102-107-3': { title: "Localizzazione", terminal: { prompt: '$ locale', output: 'LANG=it_IT.UTF-8' } },
 
-### Temi e Contrasto
-- Supporto per temi ad alto contrasto e caratteri grandi.
-- **Sticky Keys**: Permette di premere i tasti modificatori (Shift, Ctrl) in sequenza invece che simultaneamente.
-- **Slow Keys**: Il tasto deve essere premuto per un certo tempo prima di essere accettato.
-- **Bounce Keys**: Ignora pressioni rapide ripetute dello stesso tasto.
-    `
+  // ──── Topic 108: Servizi di Sistema Essenziali ────
+  'lpic1-102-108-1': { title: "Sincronizzare l'Orario (NTP)", terminal: { prompt: '$ chronyc sources', output: 'MS Name/IP address ...' } },
+  'lpic1-102-108-2': { title: "Logging (Rsyslog e Journald)", terminal: { prompt: '$ journalctl -u ssh', output: 'Accepted password...' } },
+  'lpic1-102-108-3': { title: "Mail MTA (Postfix/Sendmail)", terminal: { prompt: '$ mailq', output: 'Mail queue is empty' } },
+  'lpic1-102-108-4': { title: "Gestione Stampanti (CUPS)", terminal: { prompt: '$ lpstat -p', output: 'printer PDF is idle.' } },
+
+  // ──── Topic 109: Fondamenti di Rete ────
+  'lpic1-102-109-1': {
+    title: "Protocolli Internet (TCP/IP)",
+    comic: {
+      title: 'La Lingua del Web 🌐',
+      panels: [
+        { emoji: '📬', text: 'IP: L\'indirizzo di casa tua. Senza questo, i pacchetti si perdono.' },
+        { emoji: '🏷️', text: 'Porte: Il citofono. Porta 80 per il web, 22 per SSH.' },
+        { emoji: '📦', text: 'TCP: Consegna garantita. Se un pezzo cade, lo richiede.' },
+        { emoji: '🚀', text: 'UDP: Spara e dimentica. Ideale per video e giochi.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Stack IP', items: ['IPv4 — 32 bit (es. 192.168.1.1)', 'IPv6 — 128 bit (es. 2001:db8::1)', 'Maschera di Rete — Divide Rete da Host'] },
+      { title: 'Protocolli', items: ['TCP — Affidabile, orientato alla connessione', 'UDP — Veloce, senza garanzia', 'ICMP — Diagnostica (es. Ping)'] },
+      { title: 'Porte Comuni', items: ['22 (SSH), 25 (SMTP), 53 (DNS), 80/443 (HTTP/S)'] },
+    ],
+    terminal: { prompt: '$ ping -c 3 google.it', output: '64 bytes from ... time=15ms' },
   },
-  // --- TOPIC 107: ADMINISTRATIVE TASKS ---
-  '107.1': {
-    title: "Gestire Account Utenti e Gruppi",
-    content: `
-La gestione degli utenti è fondamentale per la sicurezza e l'organizzazione del sistema.
 
-### File Utenti e Gruppi
-- **/etc/passwd**: Contiene informazioni sugli account utenti (UID, GID, home, shell).
-- **/etc/group**: Contiene informazioni sui gruppi e i loro membri.
-- **/etc/shadow**: Memorizza gli hash delle password e le informazioni sulla scadenza (leggibile solo da root).
-- **/etc/gshadow**: Versione sicura per le password dei gruppi.
+  'lpic1-102-109-2': { title: "Configurazione di Rete", terminal: { prompt: '$ ip addr show', output: 'eth0: 192.168.1.10/24' } },
+  'lpic1-102-109-3': { title: "Risoluzione Problemi di Rete", terminal: { prompt: '$ traceroute google.it', output: '1  192.168.1.1 ...' } },
+  'lpic1-102-109-4': { title: "Configurazioni DNS", terminal: { prompt: '$ host google.com', output: 'google.com has address...' } },
 
-### Comandi di Gestione
-- **useradd / userdel / usermod**: Crea, elimina o modifica utenti.
-- **groupadd / groupdel / groupmod**: Gestisce i gruppi.
-- **passwd**: Cambia la password dell'utente.
-- **chage**: Gestisce i parametri di invecchiamento della password (es. \`chage -M 90 utente\`).
-- **id**: Mostra UID e GID dell'utente corrente o specificato.
-    `
+  // ──── Topic 110: Sicurezza ────
+  'lpic1-102-110-1': {
+    title: "Compiti di Sicurezza",
+    comic: {
+      title: 'Le Mura della Fortezza 🏰',
+      panels: [
+        { emoji: '🗝️', text: 'SUID: Un file che corre con i poteri del proprietario. Potente ma rischioso!' },
+        { emoji: '⛓️', text: 'Limiti di Risorsa: Evita che un utente blocchi tutto il server (DoS).' },
+        { emoji: '🕵️', text: 'Audit: Controlla sempre chi ha i permessi di scrittura nelle cartelle critiche.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Permessi Speciali', items: ['SUID (4000) — Esegue come owner', 'SGID (2000) — Esegue come gruppo', 'Sticky Bit (1000) — Solo owner può eliminare'] },
+      { title: 'Limiti', items: ['/etc/security/limits.conf — Configura ulimit', 'ulimit -a — Mostra limiti attuali'] },
+    ],
+    terminal: { 
+      prompt: '$ ls -l /usr/bin/passwd\n$ ulimit -u', 
+      output: '-rwsr-xr-x 1 root root ...\n63428' 
+    },
   },
-  '107.2': {
-    title: "Automazione (Cron e Systemd Timers)",
-    content: `
-L'automazione permette di eseguire script a orari prestabiliti.
 
-### Cron
-- **crontab -e**: Edita la tabella cron dell'utente.
-- **Formato crontab**: \`min ora giorno mese g_sett comando\`.
-- **/etc/cron.allow** e **/etc/cron.deny**: Controllano chi può usare cron.
-
-### Systemd Timers
-- Alternativa moderna a cron, integrata con systemd.
-- Richiede due file: un file **.service** (cosa eseguire) e un file **.timer** (quando eseguirlo).
-- **systemctl list-timers**: Mostra i timer attivi nel sistema.
-
-### At
-- **at**: Esegue un comando una sola volta in futuro (es. \`at 14:00 tomorrow\`).
-- **atq**: Visualizza la coda dei job in attesa.
-- **atrm**: Rimuove un job dalla coda.
-    `
-  },
-  '107.3': {
-    title: "Localizzazione e Internazionalizzazione",
-    content: `
-Configurare il sistema per diverse lingue e fusi orari.
-
-### Variabili Locale
-- **LANG**: Variabile principale per la lingua (es. \`it_IT.UTF-8\`).
-- **LC_ALL**: Sovrascrive tutte le altre impostazioni di locale.
-- **locale**: Comando per visualizzare le impostazioni correnti.
-
-### Fuso Orario (Timezone)
-- **/etc/timezone**: Indica il fuso orario corrente.
-- **/etc/localtime**: Link simbolico al file del fuso orario in \`/usr/share/zoneinfo/\`.
-- **timedatectl**: Strumento moderno per gestire ora, data e fuso orario.
-    `
-  },
-  // --- TOPIC 108: ESSENTIAL SYSTEM SERVICES ---
-  '108.1': {
-    title: "Mantenere il Tempo di Sistema",
-    content: `
-Il tempo preciso è essenziale per i log, la sicurezza (certificati) e i file system di rete.
-
-### Orologi
-- **System Clock**: Gestito dal kernel (Software).
-- **Hardware Clock (RTC)**: Orologio su chip alimentato a batteria (Hardware).
-- **hwclock**: Query e settaggio dell'orologio hardware.
-
-### Network Time Protocol (NTP)
-- **NTP**: Protocollo per sincronizzare l'ora via rete.
-- **ntpd**: Demone NTP tradizionale.
-- **chrony**: Alternativa moderna e veloce, ottima per sistemi spesso offline.
-- **timedatectl set-ntp true**: Abilita la sincronizzazione automatica tramite systemd-timesyncd.
-    `
-  },
-  '108.2': {
-    title: "Logging di Sistema",
-    content: `
-I log permettono di monitorare lo stato del sistema e risolvere problemi.
-
-### Syslog
-- **rsyslog**: Implementazione comune di syslog.
-- **/etc/rsyslog.conf**: File di configurazione.
-- **/var/log/**: Directory contenente i file di log (es: \`messages\`, \`auth.log\`, \`syslog\`).
-- **logrotate**: Utility per ruotare, comprimere e rimuovere i vecchi log per risparmiare spazio.
-
-### Systemd Journal
-- **journald**: Raccoglie i log in formato binario (indicizzato, veloce).
-- **journalctl**: Comando per leggere i log.
-- **journalctl -u service**: Log di un servizio specifico.
-- **journalctl -p err**: Mostra solo errori (priority).
-- **/etc/systemd/journald.conf**: Configurazione della persistenza.
-    `
-  },
-  '108.3': {
-    title: "Fondamenti MTA (E-mail)",
-    content: `
-Linux usa i Mail Transfer Agent (MTA) per inviare notifiche e messaggi tra utenti o processi.
-
-### MTA Comuni
-- **Postfix**: Moderno, sicuro e facile da configurare.
-- **Sendmail**: Lo standard storico, configurazione complessa (m4).
-- **Exim**: MTA di default su Debian, flessibile.
-
-### Comandi e File
-- **mailq**: Visualizza la coda dei messaggi in uscita.
-- **newaliases**: Rigenera il database degli alias in \`/etc/aliases\`.
-- **~/.forward**: Permette all'utente di inoltrare le proprie e-mail.
-- **SMTP**: Protocollo usato per il trasferimento (Porta 25).
-    `
-  },
-  '108.4': {
-    title: "Gestire Stampanti e Stampa",
-    content: `
-Il sistema di stampa standard su Linux è CUPS.
-
-### CUPS (Common Unix Printing System)
-- **Interfaccia Web**: Gestibile via browser su \`localhost:631\`.
-- **/etc/cups/**: Directory di configurazione.
-
-### Comandi di Stampa (Line Printer)
-- **lp**: Invia un file alla stampante.
-- **lpq**: Visualizza lo stato della coda di stampa.
-- **lprm**: Rimuove un lavoro dalla coda.
-- **lpc**: Controllo amministrativo delle stampanti.
-    `
-  },
-  // --- TOPIC 109: NETWORKING FUNDAMENTALS ---
-  '109.1': {
-    title: "Fondamenti dei Protocolli Internet",
-    content: `
-Capire come i dati viaggiano sulla rete tramite il protocollo TCP/IP.
-
-### Indirizzamento IP
-- **IPv4**: Indirizzi a 32 bit (es. \`192.168.1.1\`). Divisi in classi (A, B, C) o gestiti tramite CIDR.
-- **IPv6**: Indirizzi a 128 bit (es. \`2001:db8::1\`), progettati per superare la carenza di indirizzi IPv4.
-- **Maschera di Sottorete (Subnet Mask)**: Determina quale parte dell'indirizzo identifica la rete e quale l'host.
-
-### Protocolli Comuni
-- **TCP**: Orientato alla connessione, garantisce la consegna (es. HTTP, SSH).
-- **UDP**: Non orientato alla connessione, veloce (es. DNS, Streaming).
-- **ICMP**: Usato per messaggi di controllo e diagnostica (es. ping).
-    `
-  },
-  '109.2': {
-    title: "Configurazione di Rete Persistente",
-    content: `
-Come rendere le impostazioni di rete permanenti dopo il riavvio.
-
-### Metodi di Configurazione
-- **NetworkManager**: Lo standard sulle distribuzioni desktop (usa \`nmcli\` e \`nmtui\`).
-- **Netplan**: Usato su Ubuntu/Debian moderne (configurazione in YAML).
-- **/etc/network/interfaces**: Metodo tradizionale Debian (ifupdown).
-- **Scripts ifcfg**: Metodo tradizionale Red Hat/CentOS (\`/etc/sysconfig/network-scripts/\`).
-
-### Comandi
-- **ifup / ifdown**: Attiva o disattiva un'interfaccia basata sulla configurazione.
-- **ip addr**: Mostra gli indirizzi assegnati (moderno).
-- **ifconfig**: Mostra interfacce (deprecato).
-    `
-  },
-  '109.3': {
-    title: "Risoluzione Problemi di Rete",
-    content: `
-Strumenti per diagnosticare connettività e servizi.
-
-### Diagnostica Base
-- **ping**: Verifica la raggiungibilità di un host via ICMP.
-- **traceroute**: Mostra il percorso dei pacchetti verso la destinazione.
-- **mtr**: Combina ping e traceroute per un'analisi real-time.
-
-### Stato delle Porte e Connessioni
-- **netstat**: Mostra connessioni, tabelle di routing, statistiche (deprecato).
-- **ss**: Sostituto moderno e veloce di netstat.
-- **lsof -i**: Mostra i file di rete aperti (e i processi associati).
-- **dig / host**: Interroga i server DNS per risolvere nomi di dominio.
-    `
-  },
-  '109.4': {
-    title: "Configurazione DNS Client",
-    content: `
-Il DNS traduce nomi (google.com) in indirizzi IP.
-
-### File Chiave
-- **/etc/resolv.conf**: Specifica i server DNS (nameserver) e i domini di ricerca. Spesso gestito da \`systemd-resolved\`.
-- **/etc/hosts**: Database locale statico per mappare nomi a IP (priorità sul DNS).
-- **/etc/nsswitch.conf**: Definisce l'ordine di ricerca per i nomi (es. \`hosts: files dns\`).
-
-### Comandi DNS
-- **getent hosts [nome]**: Interroga il database di sistema per un nome host.
-- **systemd-resolve --status**: Stato del risolutore moderno.
-    `
-  },
-  // --- TOPIC 110: SECURITY ---
-  '110.1': {
-    title: "Compiti di Amministrazione Sicurezza",
-    content: `
-La sicurezza del sistema richiede verifiche periodiche sui permessi e sugli accessi.
-
-### Permessi Speciali
-- **SUID (4xxx)**: Il file viene eseguito con i privilegi del proprietario (solitamente root).
-- **SGID (2xxx)**: Il file viene eseguito con i privilegi del gruppo.
-- **Sticky Bit (1xxx)**: Impedisce l'eliminazione di file agli utenti che non ne sono i proprietari (usato in \`/tmp\`).
-- **Trovare file SUID**: \`find / -perm /4000\`.
-
-### Gestione Accessi Privilegiati
-- **sudo**: Permette a utenti fidati di eseguire comandi come root.
-- **/etc/sudoers**: File di configurazione (modificabile tramite \`visudo\`).
-- **ulimit**: Limita l'uso delle risorse di sistema (es. memoria, numero di processi) per gli utenti.
-    `
-  },
-  '110.2': {
-    title: "Configurare la Sicurezza del Host",
-    content: `
-Ridurre la superficie di attacco disabilitando servizi non necessari e restringendo gli accessi.
-
-### Servizi e Porte
-- Identificare i servizi in ascolto con \`ss -tulpn\`.
-- Disabilitare i servizi inutilizzati: \`systemctl disable --now servizio\`.
-
-### Restrizioni di Rete
-- **TCP Wrappers**: Forniscono controllo d'accesso base tramite \`/etc/hosts.allow\` e \`/etc/hosts.deny\`.
-- **xinetd**: Un "super-servizio" che può gestire l'accesso e il logging per altri servizi meno sicuri.
-- **Shadow Passwords**: Assicurarsi che \`/etc/passwd\` usi shadow passwords (indicato da 'x').
-    `
-  },
-  '110.3': {
-    title: "Proteggere i Dati con la Cifratura",
-    content: `
-L'uso della crittografia protegge i dati durante la trasmissione e a riposo.
-
-### SSH (Secure Shell)
-- **/etc/ssh/sshd_config**: Configurazione del server SSH (es. \`PermitRootLogin no\`).
-- **ssh-keygen**: Genera coppie di chiavi (pubblica/privata).
-- **ssh-agent**: Gestisce le chiavi private in memoria per non dover digitare la passphrase ogni volta.
-
-### GnuPG (GPG)
-- Usato per cifrare file e firmare e-mail.
-- **gpg -c file**: Cifratura simmetrica.
-- **gpg --gen-key**: Genera una coppia di chiavi GPG.
-- **gpg --encrypt**: Cifra un file per un destinatario specifico usando la sua chiave pubblica.
-    `
-  }
-};
-
-
-
-
-
+  'lpic1-102-110-2': { title: "Sicurezza dell'Host", terminal: { prompt: '$ ss -lnt', output: 'LISTEN 0 128 0.0.0.0:22' } },
+  'lpic1-102-110-3': { title: "Crittografia (SSH / GPG)", terminal: { prompt: '$ ssh-keygen', output: 'Generating public/private rsa key pair.' } },
+}

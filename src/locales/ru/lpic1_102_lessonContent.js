@@ -1,101 +1,73 @@
-export const lpic1_102_lessonContent = {
-  // --- TOPIC 105: SHELLS AND SHELL SCRIPTING ---
-  '105.1': {
-    title: "Настройка среды оболочки",
-    content: `
-Настройка среды оболочки позволяет оптимизировать рабочий процесс. Конфигурационные файлы загружаются при запуске оболочки.
+// LPIC-1 102 Lesson Content — Russian
+// Содержание всех 20+ уроков экзамена 102
 
-### Конфигурационные файлы (Bash)
-- **/etc/profile**: Глобальная конфигурация (login shell).
-- **/etc/bash.bashrc**: Глобальная конфигурация (interactive non-login shell).
-- **~/.bash_profile**, **~/.profile**: Пользовательские настройки.
-- **~/.bashrc**: Наиболее часто используемый файл для алиасов и личных переменных.
-
-### Переменные окружения и Алиасы
-- **export**: Делает переменную доступной для дочерних процессов.
-- **PATH**: Список каталогов, в которых оболочка ищет исполняемые файлы.
-- **alias**: Создает сокращения для длинных команд (\`alias ll='ls -la'\`).
-
-### Каталог Skeleton
-- **/etc/skel/**: Содержит стандартные файлы, копируемые в домашний каталог новых пользователей.
-    `
-  },
-  '105.2': {
-    title: "Настройка и написание простых скриптов",
-    content: `
-Написание скриптов автоматизирует повторяющиеся задачи.
-
-### Структура скрипта
-- **Shebang (#!)**: Первая строка указывает интерпретатор (напр., \`#!/bin/bash\`).
-- **Права доступа**: Скрипт должен быть исполняемым (\`chmod +x script.sh\`).
-
-### Логические операторы
-- **&&**: Выполняет вторую команду только при успехе первой.
-- **||**: Выполняет вторую команду только при неудаче первой.
-    `
+export const lpic1_102_lessonContent_ru = {
+  // ──── Topic 105: Оболочки и написание скриптов ────
+  'lpic1-102-105-1': {
+    title: "Настройка окружения оболочки",
+    comic: {
+      title: 'Ваш цифровой дом 🏠',
+      panels: [
+        { emoji: '🎒', text: 'Конфиг-файлы: /etc/profile для всех, ~/.bashrc — ваш личный рюкзак.' },
+        { emoji: '🗺️', text: 'PATH: Карта оболочки. Если команды нет в списке, оболочка её не найдет!' },
+        { emoji: '🔦', text: 'Alias: ll=\'ls -la\'. Не пишите метры кода, используйте сокращения.' },
+        { emoji: '📦', text: '/etc/skel: Аптечка первой помощи. Новые пользователи получают эти базовые файлы.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Конфигурационные файлы', items: ['/etc/profile — Глобальный (Login)', '~/.bashrc — Личный (Interactive)', '/etc/skel/ — Шаблон для новых пользователей'] },
+      { title: 'Переменные окружения', items: ['export — Передает переменные дочерним процессам', 'PATH — Где искать программы', 'env / printenv — Список переменных'] },
+    ],
+    terminal: { 
+      prompt: '$ alias ll=\'ls -la\'\n$ echo $PATH', 
+      output: 'alias ll=\'ls -la\'\n/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' 
+    },
   },
 
-  // --- TOPIC 106 ---
-  '106.1': {
-    title: "Установка и настройка X11",
-    content: `
-X Window System (X11) — это базовый фреймворк для графических интерфейсов в Linux.
-
-### Архитектура X11
-- **X Server**: Управляет оборудованием (экран, мышь, клавиатура).
-- **X Client**: Графическое приложение.
-- **Wayland**: Современный преемник X11, более простой и безопасный.
-
-### Утилиты
-- **xdpyinfo**: Информация об X-сервере.
-- **DISPLAY**: Переменная, указывающая, куда выводить графику.
-    `
+  'lpic1-102-105-2': {
+    title: "Написание простых скриптов",
+    comic: {
+      title: 'Робот Bash 🤖',
+      panels: [
+        { emoji: '📜', text: 'Shebang: #!/bin/bash. Говорит ядру: "Эй, используй Bash для этого!"' },
+        { emoji: '🏃', text: 'Chmod +x: Без прав на выполнение ваш скрипт — просто камень.' },
+        { emoji: '🔀', text: 'If/Then/Else: Мозг скрипта. Принимает решения на основе тестов.' },
+        { emoji: '🔄', text: 'Циклы (For/While): Повторяйте задачу 100 раз не уставая.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Структура', items: ['#!/bin/bash — Шебанг', 'chmod +x script.sh — Важно', 'exit [0-255] — Статус выхода (0 = OK)'] },
+    ],
+    terminal: { 
+      prompt: '$ cat hello.sh\n#!/bin/bash\necho "Привет, $USER"', 
+      output: 'Привет, root' 
+    },
   },
 
-  // --- TOPIC 107 ---
-  '107.1': {
-    title: "Управление учетными записями пользователей и группами",
-    content: `
-- **/etc/passwd**: Информация об аккаунтах.
-- **/etc/shadow**: Хеши паролей (доступ только для root).
-- **id**: Показывает UID и GID.
-- **useradd / usermod / userdel**: Управление пользователями.
-    `
-  },
+  // ──── Topic 106: Пользовательские интерфейсы и рабочие столы ────
+  'lpic1-102-106-1': { title: "Установка и настройка X11", terminal: { prompt: '$ xdpyinfo | grep dimensions', output: 'dimensions:    1920x1080 pixels' } },
+  'lpic1-102-106-2': { title: "Рабочие столы", terminal: { prompt: '$ echo $XDG_CURRENT_DESKTOP', output: 'GNOME' } },
+  'lpic1-102-106-3': { title: "Специальные возможности", terminal: { prompt: '$ orca --setup', output: '[Меню чтения с экрана]' } },
 
-  // --- TOPIC 108 ---
-  '108.1': {
-    title: "Поддержание системного времени",
-    content: `
-- **hwclock**: Управление аппаратными часами (RTC).
-- **NTP**: Протокол синхронизации времени по сети.
-    `
-  },
+  // ──── Topic 107: Административные задачи ────
+  'lpic1-102-107-1': { title: "Управление учетными записями", terminal: { prompt: '$ id\n$ grep root /etc/passwd', output: 'uid=0(root) gid=0(root) groups=0(root)' } },
+  'lpic1-102-107-2': { title: "Автоматизация (Cron и Таймеры)", terminal: { prompt: '$ crontab -l', output: '0 5 * * * /backup.sh' } },
+  'lpic1-102-107-3': { title: "Локализация", terminal: { prompt: '$ locale', output: 'LANG=ru_RU.UTF-8' } },
 
-  // --- TOPIC 109 ---
-  '109.1': {
-    title: "Основы сетевых технологий",
-    content: `
-- **IPv4 / IPv6**: Сетевая адресация.
-- **TCP / UDP**: Протоколы транспортного уровня.
-    `
-  },
-  '109.2': {
-    title: "Постоянная настройка сети",
-    content: `
-- **NetworkManager**: nmcli/nmtui.
-- **Netplan**: Настройка через YAML (Ubuntu).
-- **ip addr**: Просмотр IP-адресов.
-    `
-  },
+  // ──── Topic 108: Основные системные службы ────
+  'lpic1-102-108-1': { title: "Синхронизация времени (NTP)", terminal: { prompt: '$ chronyc sources', output: 'MS Name/IP address ...' } },
+  'lpic1-102-108-2': { title: "Логирование (Rsyslog и Journald)", terminal: { prompt: '$ journalctl -u ssh', output: 'Accepted password...' } },
+  'lpic1-102-108-3': { title: "Почта MTA (Postfix/Sendmail)", terminal: { prompt: '$ mailq', output: 'Очередь почты пуста' } },
+  'lpic1-102-108-4': { title: "Печать (CUPS)", terminal: { prompt: '$ lpstat -p', output: 'принтер PDF свободен.' } },
 
-  // --- TOPIC 110 ---
-  '110.1': {
-    title: "Администрирование безопасности",
-    content: `
-- **SUID/SGID**: Специальные права доступа.
-- **Sticky Bit**: Защита от удаления в /tmp.
-- **sudo**: Выполнение команд с правами root.
-    `
-  }
-};
+  // ──── Topic 109: Основы сетевых технологий ────
+  'lpic1-102-109-1': { title: "Интернет-протоколы (TCP/IP)", keyPoints: [{ title: 'Стек', items: ['IPv4/IPv6 — Адреса', 'TCP/UDP — Транспорт', 'ICMP — Диагностика'] }] },
+  'lpic1-102-109-2': { title: "Настройка сети", terminal: { prompt: '$ ip addr show', output: 'eth0: 192.168.1.10/24' } },
+  'lpic1-102-109-3': { title: "Устранение сетевых проблем", terminal: { prompt: '$ ping -c 3 8.8.8.8', output: '64 bytes from 8.8.8.8...' } },
+  'lpic1-102-109-4': { title: "Настройка DNS", terminal: { prompt: '$ host google.com', output: 'google.com has address...' } },
+
+  // ──── Topic 110: Безопасность ────
+  'lpic1-102-110-1': { title: "Задачи безопасности", terminal: { prompt: '$ sudo find / -perm /4000', output: '/usr/bin/passwd' } },
+  'lpic1-102-110-2': { title: "Безопасность хоста", terminal: { prompt: '$ ss -lnt', output: 'LISTEN 0 128 0.0.0.0:22' } },
+  'lpic1-102-110-3': { title: "Шифрование (SSH / GPG)", terminal: { prompt: '$ ssh-keygen', output: 'Generating public/private rsa key pair.' } },
+}

@@ -5,177 +5,271 @@ export const lpic1_101_lessonContent = {
   // ──── Topic 1: Architettura di Sistema ────
   'lpic1-101-1-1': {
     title: 'Hardware e Periferiche',
-    content: `
-# 🖥️ Hardware e Periferiche Linux
-
-## Obiettivo 101.1 — Determinare e Configurare le Impostazioni dell'Hardware
-
-### BIOS vs UEFI
-Il **BIOS** (Basic Input/Output System) è il firmware legacy che inizializza l'hardware. **UEFI** (Unified Extensible Firmware Interface) è il suo successore moderno con supporto GPT, Secure Boot e interfaccia grafica.
-
-### Le Directory Virtuali del Kernel
-
-#### /proc — Process Filesystem
-Filesystem virtuale che espone informazioni dal kernel:
-- \`/proc/cpuinfo\` — Informazioni sulla CPU
-- \`/proc/meminfo\` — Informazioni sulla memoria
-- \`/proc/partitions\` — Partizioni rilevate
-- \`/proc/modules\` — Moduli del kernel caricati
-- \`/proc/cmdline\` — Parametri di boot del kernel
-- \`/proc/interrupts\` — IRQ in uso
-
-#### /sys — Sysfs
-Espone la gerarchia dei dispositivi e driver del kernel. Permette la configurazione diretta di parametri hardware.
-
-#### /dev — Device Files
-Contiene i file dispositivo creati da **udev**:
-- \`/dev/sda\` — Primo disco SCSI/SATA/USB
-- \`/dev/tty\` — Terminale
-- \`/dev/null\` — "Black hole" per scartare dati
-
-### Comandi Essenziali
-| Comando | Descrizione |
-|---|---|
-| \`lspci\` | Elenca tutti i dispositivi PCI |
-| \`lsusb\` | Elenca tutti i dispositivi USB |
-| \`lsmod\` | Mostra i moduli caricati |
-| \`modprobe modulo\` | Carica un modulo con dipendenze |
-| \`modprobe -r modulo\` | Rimuove un modulo |
-| \`modinfo modulo\` | Informazioni sul modulo |
-| \`lsblk\` | Elenca dispositivi a blocchi |
-
-### Gestione Moduli del Kernel
-Il kernel Linux è modulare. I driver possono essere caricati/scaricati senza riavviare.
-- Configurazione permanente: \`/etc/modules-load.d/\`
-- Opzioni modulo: \`/etc/modprobe.d/\`
-    `,
+    comic: {
+      title: 'Linux e l\'Hardware: Un Matrimonio Perfetto 🤝',
+      panels: [
+        { emoji: '⚙️', text: 'Al boot, il kernel scansiona il bus PCI e USB per trovare ogni componente.' },
+        { emoji: '📁', text: 'Tutto è un file! Le info hardware appaiono in /proc e /sys come file di testo.' },
+        { emoji: '🔌', text: 'udev crea i nodi in /dev (es. /dev/sda) per permetterci di usare i dischi.' },
+        { emoji: '🛠️', text: 'lspci e lsusb sono i tuoi spettroscopi per vedere cosa c\'è sotto il cofano!' },
+      ]
+    },
+    keyPoints: [
+      { title: 'FS Virtuali', items: ['/proc — Info dinamiche (cpuinfo, meminfo)', '/sys — Struttura bus e driver', '/dev — File speciali dei dispositivi'] },
+      { title: 'Strumenti PCI/USB', items: ['lspci — Elenca dispositivi PCI/PCIe', 'lsusb — Elenca periferiche USB', 'lsblk — Vista ad albero dei blocchi (dischi)'] },
+      { title: 'Kernel Modules', items: ['lsmod — Lista driver caricati', 'modprobe — Carica/rimuove moduli + dipendenze', 'modinfo — Dettagli tecnici di un driver'] },
+    ],
+    terminal: { 
+      prompt: '$ lspci | grep -i vga\n$ cat /proc/cpuinfo | grep "model name" | head -1', 
+      output: '00:02.0 VGA compatible controller: Intel Corporation...\nmodel name : Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz' 
+    },
   },
+
   'lpic1-101-1-2': {
     title: 'Processo di Boot',
-    content: `
-# ⚡ Processo di Boot Linux
-
-## Obiettivo 101.2 — Avviare il Sistema
-
-### Le 4 Fasi del Boot
-1. **Firmware (BIOS/UEFI)** — POST (Power-On Self-Test), inizializza hardware, cerca bootloader
-2. **Bootloader (GRUB2)** — Presenta menu, carica kernel e initramfs in memoria
-3. **Kernel** — Decomprime, inizializza driver, monta initramfs, avvia init
-4. **init/systemd (PID 1)** — Avvia servizi, raggiunge il target predefinito
-
-### GRUB2 — GRand Unified Bootloader
-Il bootloader standard. Configurazione:
-- \`/boot/grub/grub.cfg\` — File generato (non modificare direttamente)
-- \`/etc/default/grub\` — Impostazioni personalizzabili
-- \`/etc/grub.d/\` — Script per generare il menu
-
-### initramfs
-Archivio temporaneo caricato in RAM con driver e script per montare il vero root filesystem.
-- Rigenerazione: \`update-initramfs -u\` (Debian) o \`dracut\` (RHEL)
-
-### MBR vs GPT
-| Caratteristica | MBR | GPT |
-|---|---|---|
-| Max partizioni | 4 primarie | 128 |
-| Max dimensione | 2 TB | 8 ZiB |
-| Tabella backup | No | Sì |
-| Boot mode | BIOS | UEFI |
-
-### Log del Boot
-- \`dmesg\` — Ring buffer del kernel
-- \`journalctl -b\` — Log del boot corrente (systemd)
-    `,
+    comic: {
+      title: 'Dall\'accensione al Desktop ⚡',
+      panels: [
+        { emoji: '🏁', text: 'BIOS/UEFI: Esegue il POST e cerca il bootloader nel MBR o nella partizione ESP.' },
+        { emoji: '🐧', text: 'GRUB2: Il vigile urbano che carica il Kernel e l\'initramfs in memoria.' },
+        { emoji: '🧠', text: 'Kernel: Inizializza l\'hardware e monta il root filesystem (/) finale.' },
+        { emoji: '🚀', text: 'Systemd: Il primo processo (PID 1) che avvia tutti i servizi del sistema.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Fasi Boot', items: ['Firmware → Bootloader → Kernel → Init', 'dmesg — Legge i messaggi del kernel al boot', 'journalctl -b — Log dell\'ultimo avvio'] },
+      { title: 'GRUB2', items: ['/etc/default/grub — Configurazione utente', 'grub-mkconfig — Genera il file finale', 'grub-install — Scrive il bootloader sul disco'] },
+      { title: 'Initramfs', items: ['Filesystem temporaneo in RAM', 'Contiene i driver per montare il vero disco /', 'update-initramfs — Rigenera l\'immagine'] },
+    ],
+    terminal: { 
+      prompt: '$ dmesg | grep -i "error"\n$ systemd-analyze', 
+      output: '[ 0.123] pci 0000:00:01.0: can\'t claim BAR 1...\nStartup finished in 1.2s (kernel) + 3.5s (userspace) = 4.7s' 
+    },
   },
+
   'lpic1-101-1-3': {
     title: 'Runlevel e Target systemd',
-    content: `
-# 🎯 Runlevel e Target systemd
-
-## Obiettivo 101.3 — Modificare i Runlevel / Target di Avvio
-
-### Runlevel SysVinit vs Target systemd
-| Runlevel | Target | Descrizione |
-|---|---|---|
-| 0 | poweroff.target | Spegnimento |
-| 1 | rescue.target | Single user (manutenzione) |
-| 2 | multi-user.target | Multi-utente (Debian) |
-| 3 | multi-user.target | Multi-utente testo |
-| 5 | graphical.target | Multi-utente GUI |
-| 6 | reboot.target | Riavvio |
-
-### Comandi Target systemd
-| Comando | Azione |
-|---|---|
-| \`systemctl get-default\` | Mostra il target predefinito |
-| \`systemctl set-default multi-user.target\` | Imposta il default |
-| \`systemctl isolate rescue.target\` | Cambia target al volo |
-
-### Spegnimento e Riavvio
-- \`shutdown -h now\` — Spegne immediatamente
-- \`shutdown -r now\` oppure \`reboot\` — Riavvia
-- \`shutdown -r +10 "messaggio"\` — Riavvio tra 10 min
-- \`shutdown -c\` — Annulla shutdown programmato
-- \`poweroff\` — Spegne
-- \`wall "messaggio"\` — Invia messaggio a tutti gli utenti
-
-### emergency.target vs rescue.target
-- **emergency**: solo / in read-only, nessun servizio, shell minima
-- **rescue**: servizi base attivi, filesystem montati, più funzionalità
-    `,
+    comic: {
+      title: 'Scegli la tua Modalità di Lavoro 🚦',
+      panels: [
+        { emoji: '🖥️', text: 'Runlevel 3 (multi-user): Solo testo, ideale per i server.' },
+        { emoji: '🎨', text: 'Runlevel 5 (graphical): La scrivania completa per l\'utente desktop.' },
+        { emoji: '🔧', text: 'Runlevel 1 (rescue): Modalità manutenzione per riparare il sistema.' },
+        { emoji: '⏹️', text: 'Runlevel 0 e 6: I segnali di fine viaggio... o di ripartenza!' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Target systemd', items: ['multi-user.target — Modalità testuale', 'graphical.target — Interfaccia grafica', 'rescue.target — Single user mode'] },
+      { title: 'Gestione Stato', items: ['systemctl get-default — Vedi il default', 'systemctl set-default — Cambia il boot default', 'systemctl isolate — Cambia stato al volo'] },
+      { title: 'Comandi Admin', items: ['wall — Messaggio a tutti gli utenti', 'shutdown -h +10 — Spegnimento programmato', 'reboot — Riavvio immediato'] },
+    ],
+    terminal: { 
+      prompt: '$ systemctl get-default\n$ sudo systemctl isolate multi-user.target', 
+      output: 'graphical.target\nPolicyKit daemon disconnected...' 
+    },
   },
 
   // ──── Topic 2: Installazione e Gestione Pacchetti ────
-  'lpic1-102-1-1': {
+  'lpic1-101-2-1': {
     title: 'Layout del Disco Rigido',
-    content: `
-# 💾 Layout del Disco Rigido
-
-## Obiettivo 102.1 — Progettare il Layout del Disco
-
-### Partizioni Essenziali
-- **/** (root) — Filesystem principale, contiene tutto
-- **/boot** (250-512 MB) — Kernel, initramfs, GRUB
-- **/home** — Dati degli utenti (consigliata separata)
-- **swap** — Memoria virtuale (1-2x RAM)
-- **/var** — Log, spool, database (opzionale separata)
-
-### LVM — Logical Volume Manager
-LVM permette di gestire storage flessibilmente: ridimensionare partizioni, creare snapshot.
-- **PV** (Physical Volume) → **VG** (Volume Group) → **LV** (Logical Volume)
-
-### Regole Pratiche
-- Separare /home: reinstallazione OS senza perdita dati
-- Separare /var: i log non riempiono /
-- swap ≥ RAM se serve ibernazione
-- ESP per UEFI: 100-500 MB FAT32 su /boot/efi
-    `,
+    comic: {
+      title: 'Disegnare la Casa di Linux 🏗️',
+      panels: [
+        { emoji: '📐', text: 'Partizionare significa dividere il disco fisico in stanze logiche indipendenti.' },
+        { emoji: '🏠', text: '/home separata? Ottima idea! Reinstalli Linux senza perdere i tuoi file.' },
+        { emoji: '⚡', text: 'Swap: La stanza di riserva quando la RAM è piena. Meglio averla su SSD!' },
+        { emoji: '🔗', text: 'LVM (Logical Volume Manager): Come pareti mobili, puoi ingrandire le stanze al volo.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Standard FHS', items: ['/boot — Kernel e bootloader (250-512MB)', '/bin e /sbin — Eseguibili di base', '/etc — Solo file di configurazione', '/var — Log, database e code di stampa'] },
+      { title: 'Partizionamento', items: ['MBR — Vecchio standard, max 4 partizioni primarie', 'GPT — Moderno, 128 partizioni, supporta dischi > 2TB', 'ESP — Partizione EFI obbligatoria per UEFI'] },
+      { title: 'LVM', items: ['PV (Physical Volume) — Il disco fisico', 'VG (Volume Group) — Unione di più dischi', 'LV (Logical Volume) — La partizione flessibile'] },
+    ],
+    terminal: { 
+      prompt: '$ lsblk\n$ df -h /', 
+      output: 'sda      8:0    0 238.5G  0 disk\n└─sda1   8:1    0   238G  0 part /\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/sda1       234G   42G  180G  19% /' 
+    },
   },
-  'lpic1-102-1-2': { title: 'Boot Manager (GRUB2)', content: `# 🔧 GRUB2\n\n## Obiettivo 102.2\n\nGRUB2 è il bootloader standard. Comandi chiave:\n- \`grub-install /dev/sda\` — Installa GRUB nel MBR/ESP\n- \`grub-mkconfig -o /boot/grub/grub.cfg\` — Rigenera config\n- \`update-grub\` — Wrapper Debian\n\nConfigurazione: /etc/default/grub (GRUB_TIMEOUT, GRUB_CMDLINE_LINUX)\n\nScript in /etc/grub.d/ generano le voci del menu.` },
-  'lpic1-102-1-3': { title: 'Librerie Condivise', content: `# 🔗 Librerie Condivise\n\n## Obiettivo 102.3\n\nFile .so caricati a runtime e condivisi tra processi.\n\n- \`ldd /usr/bin/ls\` — Mostra dipendenze\n- \`ldconfig\` — Aggiorna cache /etc/ld.so.cache\n- \`LD_LIBRARY_PATH\` — Directory aggiuntive\n- /etc/ld.so.conf — Configurazione directory` },
-  'lpic1-102-1-4': { title: 'Pacchetti Debian (dpkg/apt)', content: `# 📦 Gestione Pacchetti Debian\n\n## Obiettivo 102.4\n\n| Comando | Peso | Azione |\n|---|---|---|\n| dpkg -i pkg.deb | basso | Installa locale |\n| dpkg -S /path | basso | Trova pacchetto proprietario |\n| apt update | alto | Aggiorna lista pacchetti |\n| apt install pkg | alto | Installa con dipendenze |\n| apt purge pkg | alto | Rimuove con config |\n\nRepo: /etc/apt/sources.list` },
-  'lpic1-102-1-5': { title: 'Pacchetti RPM e YUM/DNF', content: `# 📦 Gestione Pacchetti RPM\n\n## Obiettivo 102.5\n\n| Comando | Azione |\n|---|---|\n| rpm -i pkg.rpm | Installa locale |\n| rpm -qa | Lista tutti i pacchetti |\n| rpm -qf /file | Trova pacchetto |\n| dnf install pkg | Installa da repo |\n| dnf provides */file | Trova chi fornisce |\n| zypper install pkg | SUSE |\n\nRepo: /etc/yum.repos.d/` },
-  'lpic1-102-1-6': { title: 'Virtualizzazione Linux', content: `# ☁️ Virtualizzazione\n\n## Obiettivo 102.6\n\n- **Tipo 1** (bare-metal): KVM, Xen, ESXi\n- **Tipo 2** (hosted): VirtualBox, VMware Workstation\n- **Container**: Docker, Podman — condividono kernel host\n- **Cloud**: IaaS (VM), PaaS (piattaforma), SaaS (app pronte)` },
+
+  'lpic1-101-2-2': {
+    title: 'Boot Manager (GRUB2)',
+    comic: {
+      title: 'GRUB2: Il Direttore d\'Orchestra 🎼',
+      panels: [
+        { emoji: '🎹', text: 'GRUB2 legge la sua partizione e ti mostra il menu di scelta del sistema.' },
+        { emoji: '📜', text: 'Non modificare /boot/grub/grub.cfg! È come uno spartito generato da un computer.' },
+        { emoji: '✍️', text: 'Cambia le impostazioni in /etc/default/grub e poi lancia update-grub.' },
+        { emoji: '🛠️', text: 'Puoi aggiungere opzioni al kernel per riparare il sistema in emergenza.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'File Chiave', items: ['/boot/grub/grub.cfg — Il file di config principale (automatico)', '/etc/default/grub — Opzioni timeout, kernel, grafica', '/etc/grub.d/ — Script che creano le voci del menu'] },
+      { title: 'Comandi', items: ['grub-install — Installa GRUB nel MBR o ESP', 'grub-mkconfig -o ... — Rigenera la configurazione', 'update-grub — Wrapper Debian per mkconfig'] },
+    ],
+    terminal: { 
+      prompt: '$ cat /etc/default/grub | grep TIMEOUT\n$ sudo update-grub', 
+      output: 'GRUB_TIMEOUT=5\nGenerating grub configuration file...\nFound linux image: /boot/vmlinuz-...' 
+    },
+  },
+
+  'lpic1-101-2-3': {
+    title: 'Librerie Condivise',
+    comic: {
+      title: 'Codice in Comune 🔗',
+      panels: [
+        { emoji: '📚', text: 'Le librerie .so sono libri in una biblioteca pubblica: molti programmi li usano.' },
+        { emoji: '🕵️', text: 'ldd è il detective: ti dice quali librerie mancano a un programma.' },
+        { emoji: '🏎️', text: 'ldconfig aggiorna la cache per far trovare le librerie istantaneamente.' },
+        { emoji: '🌍', text: 'LD_LIBRARY_PATH: Un sentiero extra per cercare librerie speciali.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Concetti', items: ['Static Linking — Codice incluso nell\'eseguibile (pesante)', 'Dynamic Linking — Codice caricato a runtime (.so)', 'ld.so — Il linker dinamico del sistema'] },
+      { title: 'Strumenti', items: ['ldd — Lista dipendenze di un binario', 'ldconfig — Aggiorna /etc/ld.so.cache', '/etc/ld.so.conf — Elenco directory delle librerie'] },
+    ],
+    terminal: { 
+      prompt: '$ ldd /bin/ls', 
+      output: 'linux-vdso.so.1 => (0x00007...) \nlibselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1\nlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6' 
+    },
+  },
+
+  'lpic1-101-2-4': {
+    title: 'Pacchetti Debian (dpkg/apt)',
+    comic: {
+      title: 'L\'Ecosistema Debian 📦',
+      panels: [
+        { emoji: '📦', text: 'I file .deb sono pacchetti compatti con dentro app e istruzioni.' },
+        { emoji: '🏗️', text: 'dpkg è the muratore: installa il singolo pacchetto ma non gestisce i vicini.' },
+        { emoji: '🛰️', text: 'apt è l\'architetto: scarica dai repository e risolve tutte le dipendenze.' },
+        { emoji: '📝', text: 'sources.list è la tua mappa dei magazzini online di software.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'dpkg (Basso Livello)', items: ['dpkg -i — Installa pacchetto locale', 'dpkg -r — Rimuove pacchetto', 'dpkg -L — Mostra file installati da un pkg', 'dpkg -S — Cerca a quale pacchetto appartiene un file'] },
+      { title: 'apt (Alto Livello)', items: ['apt update — Scarica liste nuovi pacchetti', 'apt upgrade — Installa versioni nuove', 'apt install — Installa risolvendo dipendenze', 'apt purge — Rimuove pacchetto e file di config'] },
+      { title: 'Repository', items: ['/etc/apt/sources.list — Sorgenti principali', '/etc/apt/sources.list.d/ — Repository extra'] },
+    ],
+    terminal: { 
+      prompt: '$ apt-cache search nmap\n$ sudo apt install nmap', 
+      output: 'nmap - The Network Mapper\nReading package lists... Done\nBuilding dependency tree... Done\n0 upgraded, 1 newly installed...' 
+    },
+  },
+
+  'lpic1-101-2-5': {
+    title: 'Pacchetti RPM e YUM/DNF',
+    comic: {
+      title: 'Il Mondo Fedora e Red Hat 🔴',
+      panels: [
+        { emoji: '📦', text: 'RPM (Red Hat Package Manager) è lo standard per file .rpm.' },
+        { emoji: '🤖', text: 'DNF è l\'evoluzione di YUM: intelligente, veloce e risolve ogni conflitto.' },
+        { emoji: '🔑', text: 'Ogni pacchetto è firmato con GPG per garantire che non sia stato manomesso.' },
+        { emoji: '🦎', text: 'Su openSUSE troverai Zypper, un cugino molto potente di DNF.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'rpm (Basso Livello)', items: ['rpm -i — Installa pacchetto', 'rpm -qa — Mostra tutti i pacchetti installati', 'rpm -qf — Cerca chi ha installato un file', 'rpm -V — Verifica integrità pacchetti'] },
+      { title: 'dnf (Alto Livello)', items: ['dnf install — Installa con dipendenze', 'dnf provides — Cerca pacchetto per comando/file', 'dnf repoquery — Info sui pacchetti nei repo', 'dnf history — Elenco azioni passate'] },
+    ],
+    terminal: { 
+      prompt: '$ rpm -qa | grep bash\n$ sudo dnf provides /bin/ls', 
+      output: 'bash-5.1.8-2.fc35.x86_64\ncoreutils-8.32-31.fc35.x86_64' 
+    },
+  },
+
+  'lpic1-101-2-6': {
+    title: 'Virtualizzazione Linux',
+    comic: {
+      title: 'Computer dentro Computer 💻',
+      panels: [
+        { emoji: '🧪', text: 'Macchine Virtuali: Un intero computer simulato con il suo BIOS e Kernel.' },
+        { emoji: '📦', text: 'Container (Docker): Più leggeri, usano il Kernel dell\'host per correre.' },
+        { emoji: '☁️', text: 'IaaS: Affitti l\'hardware vuoto. SaaS: Compri l\'account dell\'app già pronta.' },
+        { emoji: '🐧', text: 'KVM: Trasforma il tuo Linux in un potente Hypervisor di Classe 1.' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Tipi Virtualizzazione', items: ['Type 1 (Bare Metal) — KVM, Xen', 'Type 2 (Hosted) — VirtualBox, VMware', 'OS-Level (Containers) — Docker, LXC, Podman'] },
+      { title: 'Cloud Models', items: ['IaaS — Infrastructure (VM, Storage)', 'PaaS — Platform (DB, Web Server)', 'SaaS — Software (Gmail, Office 365)'] },
+      { title: 'Strumenti Cloud', items: ['Cloud-init — Configura istanze al primo boot', 'Virt-install — Crea VM da riga di comando', 'SSH Keys — Accesso standard nel cloud'] },
+    ],
+    terminal: { 
+      prompt: '$ kvm-ok\n$ lscpu | grep Virtualization', 
+      output: 'INFO: /dev/kvm exists\nKVM acceleration can be used\nVirtualization: VT-x' 
+    },
+  },
 
   // ──── Topic 3: Comandi GNU e Unix ────
-  'lpic1-103-1-1': { title: 'Command Line — Base', content: `# ⌨️ Linea di Comando — Base\n\n## Obiettivo 103.1\n\nBash è la shell standard. Comandi essenziali:\n- \`type cmd\` — builtin, alias o file?\n- \`which cmd\` — percorso dell'eseguibile\n- \`echo $PATH\` — directory di ricerca\n- \`uname -a\` — info sistema\n- Tab per autocompletamento` },
-  'lpic1-103-1-2': { title: 'Command Line — Variabili', content: `# ⌨️ Variabili e Quoting\n\n## Obiettivo 103.1 (cont.)\n\n- VAR=valore → variabile locale\n- export VAR → disponibile ai processi figli\n- env / printenv → lista variabili d'ambiente\n- 'singoli' → nessuna espansione\n- "doppi" → espande $VAR\n- history, !n, Ctrl+R → storico comandi` },
-  'lpic1-103-2-1': { title: 'Filtri di Testo', content: `# 📝 Filtri di Testo\n\n## Obiettivo 103.2\n\n| Filtro | Uso |\n|---|---|\n| cat | Mostra/concatena |\n| head/tail | Prime/ultime righe |\n| sort | Ordina righe |\n| uniq | Duplicati consecutivi |\n| wc | Conta righe/parole |\n| cut -d: -f1 | Estrae campi |\n| tr a-z A-Z | Traduce caratteri |\n| sed 's/a/b/g' | Sostituisce |\n| split | Divide in pezzi |` },
-  'lpic1-103-3-1': { title: 'Gestione File — Base', content: `# 📁 Gestione File — Base\n\n## Obiettivo 103.3\n\n- ls -la → lista dettagliata con nascosti\n- cp -r dir/ dest/ → copia directory\n- mv old new → sposta/rinomina\n- rm -r dir/ → cancella ricorsivamente\n- mkdir -p a/b/c → crea con parent\n- touch file → crea vuoto / aggiorna timestamp\n- file myfile → identifica tipo` },
-  'lpic1-103-3-2': { title: 'Gestione File — Avanzata', content: `# 📁 Gestione File — Avanzata\n\n## Obiettivo 103.3 (cont.)\n\n- Globbing: * (tutto), ? (un char), [abc] (set)\n- find /etc -name "*.conf" → cerca file\n- locate filename → cerca via database\n- updatedb → aggiorna database locate\n- tar -cvf arch.tar dir/ → crea archivio\n- tar -xvf arch.tar → estrae\n- tar -czvf arch.tar.gz dir/ → con gzip` },
-  'lpic1-103-4-1': { title: 'Redirect e Pipe — Base', content: `# 🔀 Redirect — Base\n\n## Obiettivo 103.4\n\n| Operatore | Significato |\n|---|---|\n| > | stdout → file (sovrascrive) |\n| >> | stdout → file (append) |\n| < | file → stdin |\n| 2> | stderr → file |\n| &> | stdout+stderr → file |\n| 2>&1 | stderr dove va stdout |` },
-  'lpic1-103-4-2': { title: 'Redirect e Pipe — Avanzati', content: `# 🔀 Pipe e Avanzati\n\n## Obiettivo 103.4 (cont.)\n\n- | → pipe: stdout → stdin\n- tee file → scrive su file E stdout\n- xargs → costruisce comandi da stdin\n- Here document: <<EOF ... EOF` },
-  'lpic1-103-5-1': { title: 'Processi — Base', content: `# ⚙️ Processi — Base\n\n## Obiettivo 103.5\n\n- ps aux → tutti i processi\n- top / htop → monitor real-time\n- kill PID → SIGTERM (15)\n- kill -9 PID → SIGKILL\n- killall nome → per nome\n- Ctrl+C → SIGINT (2)` },
-  'lpic1-103-5-2': { title: 'Processi — Job Control', content: `# ⚙️ Job Control\n\n## Obiettivo 103.5 (cont.)\n\n- comando & → background\n- Ctrl+Z → sospendi (SIGTSTP)\n- jobs → lista job\n- fg %N → foreground\n- bg %N → background\n- nohup cmd & → immune a SIGHUP\n- screen / tmux → sessioni persistenti` },
-  'lpic1-103-6-1': { title: 'Priorità dei Processi', content: `# 📊 Priorità Processi\n\n## Obiettivo 103.6\n\nNice value: -20 (max priorità) a +19 (min)\n\n- nice -n 10 cmd → avvia con bassa priorità\n- renice -n -5 -p PID → cambia priorità\n- Solo root può impostare valori negativi\n- In top: colonna NI = nice value` },
-  'lpic1-103-7-1': { title: 'Regex — Base', content: `# 🔍 Regular Expressions — Base\n\n## Obiettivo 103.7\n\n- grep pattern file → cerca pattern\n- . → qualsiasi carattere\n- * → zero o più del precedente\n- ^ → inizio riga\n- $ → fine riga\n- [a-z] → range di caratteri\n- grep -n → mostra numeri riga\n- grep -i → case-insensitive\n- grep -v → righe NON corrispondenti` },
-  'lpic1-103-7-2': { title: 'Regex — Estese', content: `# 🔍 Regex Estese (ERE)\n\n## Obiettivo 103.7 (cont.)\n\n- grep -E o egrep\n- + → uno o più\n- ? → zero o uno\n- | → alternanza (OR)\n- () → raggruppamento\n- {n,m} → ripetizioni\n\nEsempio: grep -E "error|warning" /var/log/syslog` },
-  'lpic1-103-8-1': { title: 'Editor vi/vim', content: `# ✏️ vi/vim\n\n## Obiettivo 103.8\n\nModalità: Normal → Insert (i) → Normal (Esc)\n\n| Comando | Azione |\n|---|---|\n| i | Insert mode |\n| Esc | Normal mode |\n| :wq | Salva e esci |\n| :q! | Esci senza salvare |\n| dd | Cancella riga |\n| yy | Copia riga |\n| p | Incolla |\n| u | Undo |\n| /pattern | Cerca avanti |\n| :s/old/new/g | Sostituisci |` },
+  'lpic1-101-3-1-1': {
+    title: 'Command Line — Base',
+    comic: {
+      title: 'Parlare con la Shell 🐚',
+      panels: [
+        { emoji: '⌨️', text: 'Scrivi un comando, premi Invio: la shell lo interpreta ed esegue l\'azione.' },
+        { emoji: '🌊', text: 'Bash (Bourne Again Shell) è l\'oceano in cui nuotano quasi tutti i sysadmin.' },
+        { emoji: '🔍', text: 'Il PATH è la mappa: se un comando non è lì, la shell non lo trova.' },
+        { emoji: '💡', text: 'L\'autocompletamento con Tab è il tuo miglior amico!' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Shell Basics', items: ['Bash — Shell predefinita standard POSIX', 'Tasti rapidi — Ctrl+U (cancella riga), Ctrl+C (interrompe)', 'History — Freccia su o comando history'] },
+      { title: 'Utility', items: ['type — Ti dice se un comando è builtin o un file', 'which — Mostra il percorso completo di un eseguibile', 'uname -a — Info generali sul sistema'] },
+    ],
+    terminal: { prompt: '$ type cd\n$ which ls', output: 'cd is a shell builtin\n/usr/bin/ls' },
+  },
 
-  // ──── Topic 4: Dispositivi, Filesystem e FHS ────
-  'lpic1-104-1-1': { title: 'Partizioni e Filesystem', content: `# 💿 Partizioni e Filesystem\n\n## Obiettivo 104.1\n\n- fdisk → partizionamento interattivo\n- gdisk → specifico GPT\n- parted → MBR+GPT, applica subito\n- mkfs.ext4 /dev/sda1 → formatta\n- mkfs.xfs /dev/sda1 → XFS\n- mkswap /dev/sda2 → crea swap\n- blkid → mostra UUID` },
-  'lpic1-104-2-1': { title: 'Integrità dei Filesystem', content: `# 🔧 Integrità Filesystem\n\n## Obiettivo 104.2\n\n- fsck /dev/sda1 → verifica (smontato!)\n- e2fsck → specifico ext\n- xfs_repair → specifico XFS\n- df -h → spazio filesystem\n- du -sh /dir → spazio directory\n- tune2fs → modifica parametri ext\n- dumpe2fs → dump dettagli ext` },
-  'lpic1-104-3-1': { title: 'Montaggio e Smontaggio', content: `# 📂 Montaggio Filesystem\n\n## Obiettivo 104.3\n\n- mount /dev/sda1 /mnt → monta\n- umount /mnt → smonta\n- mount -a → monta tutto da fstab\n- /etc/fstab → montaggio automatico\n\nFormato fstab:\nUUID=xxx  /home  ext4  defaults  0  2\n\nOpzioni: rw, ro, noexec, nosuid, nodev\nswap: swapon /dev/sda2, swapoff` },
-  'lpic1-104-5-1': { title: 'Permessi e Proprietà', content: `# 🔐 Permessi Linux\n\n## Obiettivo 104.5\n\n### Permessi Base\nrwx = read(4) write(2) execute(1)\n- chmod 755 file → rwxr-xr-x\n- chmod u+x file → aggiunge execute al proprietario\n- chown user:group file → cambia proprietario\n\n### Permessi Speciali\n| Bit | Ottale | File | Directory |\n|---|---|---|---|\n| SUID | 4000 | Esegue come owner | — |\n| SGID | 2000 | Esegue come group | Eredita group |\n| Sticky | 1000 | — | Solo owner cancella |\n\n### umask\numask 022 → file 644, dir 755` },
-  'lpic1-104-6-1': { title: 'Hard e Soft Link', content: `# 🔗 Link\n\n## Obiettivo 104.6\n\n### Hard Link\n- ln file hardlink → stesso inode\n- Non cross-filesystem, no directory\n- File valido finché almeno 1 link esiste\n\n### Symbolic Link\n- ln -s file symlink → punta al percorso\n- Cross-filesystem, anche directory\n- Broken se il target viene cancellato\n\n- ls -i → mostra inode\n- stat file → info dettagliate` },
-  'lpic1-104-7-1': { title: 'FHS e Posizione File', content: `# 🗂️ FHS — Filesystem Hierarchy Standard\n\n## Obiettivo 104.7\n\n| Dir | Contenuto |\n|---|---|\n| / | Root |\n| /bin | Comandi essenziali |\n| /sbin | Comandi di sistema |\n| /etc | Configurazione |\n| /home | Home utenti |\n| /root | Home di root |\n| /var | Dati variabili (log) |\n| /tmp | File temporanei |\n| /usr | Programmi/librerie |\n| /opt | Software opzionale |\n| /srv | Dati servizi |\n| /proc /sys | FS virtuali kernel |\n\nCerca file:\n- find, locate, updatedb\n- whereis, which, type` },
+  'lpic1-101-3-1-2': { title: 'Command Line — Variabili', keyPoints: [{ title: 'Definizione', items: ['LOCALE=valore — Visibile solo nella shell', 'export VAR — Visibile ai processi figli'] }], terminal: { prompt: '$ VAR=test\n$ echo $VAR', output: 'test' } },
+
+  'lpic1-101-3-2-1': { title: 'Filtri di Testo', terminal: { prompt: '$ cat file | sort | uniq -c', output: ' 3 riga1\n 1 riga2' } },
+
+  'lpic1-101-3-3-1': { title: 'Gestione File — Base', terminal: { prompt: '$ ls -l\n$ cp file.txt backup.txt', output: '-rw-r--r-- 1 user user ...' } },
+
+  'lpic1-101-3-3-2': { title: 'Gestione File — Avanzata', terminal: { prompt: '$ find . -name "*.txt"\n$ tar -czf backup.tar.gz folder/', output: './note.txt\n./todo.txt' } },
+
+  'lpic1-101-3-4-1': { title: 'Redirect e Pipe — Base', terminal: { prompt: '$ ls > lista.txt\n$ cat file | grep "test"', output: '...' } },
+
+  'lpic1-101-3-4-2': { title: 'Redirect e Pipe — Avanzati', terminal: { prompt: '$ ls | xargs rm\n$ echo "hi" | tee file.txt', output: '...' } },
+
+  'lpic1-101-3-5-1': { title: 'Processi — Base', terminal: { prompt: '$ ps aux | head', output: 'USER PID %CPU %MEM ...' } },
+
+  'lpic1-101-3-5-2': { title: 'Processi — Job Control', terminal: { prompt: '$ sleep 100 &\n$ jobs', output: '[1]+ Running ...' } },
+
+  'lpic1-101-3-6-1': { title: 'Priorità dei Processi', terminal: { prompt: '$ nice -n 10 cmd\n$ renice +5 -p 1234', output: '...' } },
+
+  'lpic1-101-3-7-1': { title: 'Regex — Base', terminal: { prompt: '$ grep "^root" /etc/passwd', output: 'root:x:0...' } },
+
+  'lpic1-101-3-7-2': { title: 'Regex — Estese', terminal: { prompt: '$ grep -E "a|b" file.txt', output: '...' } },
+
+  'lpic1-101-3-8-1': { title: 'Editor vi/vim', terminal: { prompt: 'vi file.txt\n:wq', output: '[Salva ed esce]' } },
+
+  // ──── Topic 4: Dispositivi, Filesystem Linux e Standard FHS ────
+  'lpic1-101-4-1-1': {
+    title: 'Partizioni e Filesystem',
+    comic: {
+      title: 'Preparare il Terreno 🌱',
+      panels: [
+        { emoji: '🚜', text: 'Fdisk / Gdisk: Definisci i confini del tuo disco rigido (MBR/GPT).' },
+        { emoji: '🏗️', text: 'Mkfs: Formatta la "terra" creata con un filesystem (ext4, xfs, btrfs).' },
+        { emoji: '🧼', text: 'Swap: Crea la partizione di servizio (mkswap) e attivala (swapon).' },
+      ]
+    },
+    keyPoints: [
+      { title: 'Tools Partizioni', items: ['fdisk — Gestione MBR legacy', 'gdisk — Gestione GPT moderna', 'parted — Scriptabile, supporta MBR e GPT'] },
+      { title: 'Creazione FS', items: ['mkfs.ext4 — Crea filesystem standard Linux', 'mkfs.xfs — Ideale per file grandi', 'mkswap — Formatta una partizione come Swap'] },
+    ],
+    terminal: { 
+      prompt: '$ sudo fdisk -l /dev/sda\n$ sudo mkfs.ext4 /dev/sda2', 
+      output: 'Disk /dev/sda: 20 GiB...\nCreating filesystem with 5242880 4k blocks...' 
+    },
+  },
+
+  'lpic1-101-4-2-1': { title: 'Integrità dei Filesystem', terminal: { prompt: '$ df -h\n$ du -sh /var/log', output: '/dev/sda1 20G 14G 75%\n245M /var/log' } },
+
+  'lpic1-101-4-3-1': { title: 'Montaggio e Smontaggio', terminal: { prompt: '$ mount /dev/sdb1 /mnt\n$ cat /etc/fstab', output: '...' } },
+
+  'lpic1-101-4-5-1': { title: 'Permessi e Proprietà', terminal: { prompt: '$ ls -l\n$ chmod 755 script.sh', output: '-rwxr-xr-x 1 user user ...' } },
+
+  'lpic1-101-4-6-1': { title: 'Hard e Soft Link', terminal: { prompt: '$ ln -s original link\n$ ls -l link', output: 'lrwxrwxrwx ... link -> original' } },
+
+  'lpic1-101-4-7-1': { title: 'FHS e Posizione File', terminal: { prompt: '$ ls -d /etc /var /usr', output: '/etc /var /usr' } },
 }

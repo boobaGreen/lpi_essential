@@ -4,8 +4,8 @@ export const lpic1_102_topics = [
     title: "105: Shells e Shell Scripting",
     icon: "🐚",
     lessons: [
-      { id: '105.1', title: "Personalizar o Ambiente da Shell" },
-      { id: '105.2', title: "Personalizar ou Escrever Scripts Simples" }
+      { id: 'lpic1-102-105-1', title: "Personalizar o Ambiente da Shell" },
+      { id: 'lpic1-102-105-2', title: "Personalizar ou Escrever Scripts Simples" }
     ]
   },
   {
@@ -13,9 +13,9 @@ export const lpic1_102_topics = [
     title: "106: Interfaces de Usuário e Desktops",
     icon: "🖥️",
     lessons: [
-      { id: '106.1', title: "Instalar e Configurar X11" },
-      { id: '106.2', title: "Desktops Gráficos" },
-      { id: '106.3', title: "Acessibilidade" }
+      { id: 'lpic1-102-106-1', title: "Instalar e Configurar X11" },
+      { id: 'lpic1-102-106-2', title: "Desktops Gráficos" },
+      { id: 'lpic1-102-106-3', title: "Acessibilidade" }
     ]
   },
   {
@@ -23,9 +23,9 @@ export const lpic1_102_topics = [
     title: "107: Tarefas Administrativas",
     icon: "🛠️",
     lessons: [
-      { id: '107.1', title: "Gerenciar Contas de Usuários e Grupos" },
-      { id: '107.2', title: "Automação (Cron e Systemd Timers)" },
-      { id: '107.3', title: "Localização e Internacionalização" }
+      { id: 'lpic1-102-107-1', title: "Gerenciar Contas de Usuários e Grupos" },
+      { id: 'lpic1-102-107-2', title: "Automação (Cron e Systemd Timers)" },
+      { id: 'lpic1-102-107-3', title: "Localização e Internacionalização" }
     ]
   },
   {
@@ -33,10 +33,10 @@ export const lpic1_102_topics = [
     title: "108: Serviços Essenciais do Sistema",
     icon: "⚙️",
     lessons: [
-      { id: '108.1', title: "Manter a Hora do Sistema" },
-      { id: '108.2', title: "Registro do Sistema (Logging)" },
-      { id: '108.3', title: "Básicos de MTA (E-mail)" },
-      { id: '108.4', title: "Gerenciar Impressoras e Impressão" }
+      { id: 'lpic1-102-108-1', title: "Manter a Hora do Sistema" },
+      { id: 'lpic1-102-108-2', title: "Registro do Sistema (Logging)" },
+      { id: 'lpic1-102-108-3', title: "Básicos de MTA (E-mail)" },
+      { id: 'lpic1-102-108-4', title: "Gerenciar Impressoras e Impressão" }
     ]
   },
   {
@@ -44,10 +44,10 @@ export const lpic1_102_topics = [
     title: "109: Fundamentos de Rede",
     icon: "🌐",
     lessons: [
-      { id: '109.1', title: "Fundamentos dos Protocolos de Internet" },
-      { id: '109.2', title: "Configuração de Rede Persistente" },
-      { id: '109.3', title: "Solução de Problemas de Rede" },
-      { id: '109.4', title: "Configurar DNS no Lado do Cliente" }
+      { id: 'lpic1-102-109-1', title: "Fundamentos dos Protocolos de Internet" },
+      { id: 'lpic1-102-109-2', title: "Configuração de Rede Persistente" },
+      { id: 'lpic1-102-109-3', title: "Solução de Problemas de Rede" },
+      { id: 'lpic1-102-109-4', title: "Configurar DNS no Lado do Cliente" }
     ]
   },
   {
@@ -55,9 +55,9 @@ export const lpic1_102_topics = [
     title: "110: Segurança",
     icon: "🔐",
     lessons: [
-      { id: '110.1', title: "Tarefas de Administração de Segurança" },
-      { id: '110.2', title: "Configurar Segurança do Host" },
-      { id: '110.3', title: "Segurança de Dados com Criptografia" }
+      { id: 'lpic1-102-110-1', title: "Tarefas de Administração de Segurança" },
+      { id: 'lpic1-102-110-2', title: "Configurar Segurança do Host" },
+      { id: 'lpic1-102-110-3', title: "Segurança de Dados com Criptografia" }
     ]
   }
 ];
