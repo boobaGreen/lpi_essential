@@ -134,7 +134,7 @@ Il n’a "aucune Intelligence Artificiel de résolution", Aucunes vues Internet 
 - \`dpkg -S /usr/bin/cat\` : "Révèle le nom de famille (Search) du package origine originel qui possède mon fichier 'cat '??". 
 
 ### Aptitudes Réseau (APT Avancés H-Level )
-Intelligence Cloud connectée, s'alimentant depuis les listes web de sources mondiales "**`/etc/apt/sources.list`**".
+Intelligence Cloud connectée, s'alimentant depuis les listes web de sources mondiales "**\`/etc/apt/sources.list\`**".
 - \`apt update\` : S'en va relire les listes Web des sources lointaines Cloud pour régénérer que "l'INDEX METADATA " catalogue locaux sans AUCUN d'installation en dures de logiciels .
 - \`apt upgrade\` : "Compare! Y'a des packages majeurs de version supérieures cloud vis-à-vis mes locaux d'ordinateur !  -> remplace tout!".
 - \`apt install apache\` : Traque, dresse une équations logique de dépendances . Télécharge 400mo d'annexe nécessaire , pour enfin installé le coeur . 
