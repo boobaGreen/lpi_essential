@@ -16,7 +16,7 @@ Unter Linux wird Hardware durch virtuelle Dateisysteme repräsentiert, mit denen
 #### Hardware-Inspektionsbefehle:
 Anstatt Rohdaten zu lesen, nutzt man in der Praxis Abstraktionswerkzeuge:
 1. **\`lsusb\`**: Listet alle USB-Busse und die daran angeschlossenen Geräte auf. Verwendet die Datenbank \`/var/lib/usbutils/usb.ids\`.
-2. **\`lspci\`**: Zeigt alle PCI-Busse und -Komponenten. Mit `-v` (verbose) oder `-k` wird zusätzlich angezeigt, welches Kernelmodul das Gerät steuert.
+2. **\`lspci\`**: Zeigt alle PCI-Busse und -Komponenten. Mit \`-v\` (verbose) oder \`-k\` wird zusätzlich angezeigt, welches Kernelmodul das Gerät steuert.
 3. **\`lsmod\`** (List Modules): Zeigt an, welche Kernelmodule (Treiber) aktuell geladen sind (liest \`/proc/modules\`).
 
 #### Kernelmodule (Treiber) verwalten
