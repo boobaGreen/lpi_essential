@@ -25,6 +25,27 @@ export const memoryGameData = [
   { command: 'at', description: 'Esecuzione singola posticipata' },
   { command: 'LC_ALL', description: 'Sovrascrive tutte le locali' },
   { command: 'timedatectl', description: 'Gestione ora e fuso orario' },
+  // Topic 108
+  { command: 'hwclock', description: 'Gestione orologio hardware RTC' },
+  { command: 'chrony', description: 'Sincronizzazione ora (NTP)' },
+  { command: 'journalctl', description: 'Lettura log di systemd' },
+  { command: 'logrotate', description: 'Rotazione automatica dei log' },
+  { command: 'Postfix/Exim', description: 'Esempi di MTA (Mail)' },
+  { command: 'CUPS', description: 'Sistema di stampa Linux' },
+  // Topic 109
+  { command: 'ip addr', description: 'Visualizza indirizzi IP' },
+  { command: 'nmcli', description: 'Configurazione rete CLI' },
+  { command: 'ping', description: 'Verifica connettività host' },
+  { command: 'traceroute', description: 'Traccia hop verso destinazione' },
+  { command: 'dig', description: 'Query DNS' },
+  { command: '/etc/hosts', description: 'Mapping IP-Nome locale' },
+  // Topic 110
+  { command: 'SUID/SGID', description: 'Permessi speciali esecuzione' },
+  { command: 'Sticky Bit', description: 'Protezione eliminazione file' },
+  { command: 'visudo', description: 'Modifica sicura di /etc/sudoers' },
+  { command: 'ss -tulpn', description: 'Mostra servizi in ascolto' },
+  { command: 'ssh-keygen', description: 'Generazione chiavi SSH' },
+  { command: 'gpg -c', description: 'Cifratura simmetrica file' },
 ];
 
 export const trueFalseData = [
@@ -40,6 +61,18 @@ export const trueFalseData = [
   { text: '/etc/passwd contiene le password criptate.', answer: false, explanation: 'Falso! Sono in /etc/shadow. In passwd c\'è solo una "x".', difficulty: 1 },
   { text: 'In crontab, il primo campo rappresenta le ore.', answer: false, explanation: 'Falso! Il primo campo sono i minuti.', difficulty: 1 },
   { text: 'Il comando atq mostra i job in attesa di esecuzione.', answer: true, explanation: 'Vero! "atq" sta per "at queue".', difficulty: 2 },
+  // Topic 108
+  { text: 'CUPS è accessibile via web sulla porta 631.', answer: true, explanation: 'Vero! È lo standard per CUPS.', difficulty: 1 },
+  { text: 'journalctl permette di leggere log in formato binario.', answer: true, explanation: 'Vero! Il journal di systemd è binario per performance.', difficulty: 1 },
+  { text: 'L\'MTA Sendmail è semplice da configurare manualmente.', answer: false, explanation: 'Falso! È noto per essere molto complesso (m4).', difficulty: 2 },
+  // Topic 109
+  { text: 'Il file /etc/hosts ha priorità sul DNS (default).', answer: true, explanation: 'Vero! Se un nome è in hosts, il sistema non interroga il DNS.', difficulty: 1 },
+  { text: 'UDP è un protocollo orientato alla connessione.', answer: false, explanation: 'Falso! TCP è orientato alla connessione, UDP no.', difficulty: 1 },
+  { text: 'netstat è considerato un comando deprecato.', answer: true, explanation: 'Vero! Viene sostituito da "ss" e "ip".', difficulty: 2 },
+  // Topic 110
+  { text: 'Il bit SUID permette di eseguire un file con i privilegi del proprietario.', answer: true, explanation: 'Vero! È usato per comandi come passwd.', difficulty: 1 },
+  { text: 'SSH usa la porta 22 di default.', answer: true, explanation: 'Vero! È lo standard per le connessioni sicure.', difficulty: 1 },
+  { text: 'visudo non controlla la sintassi del file sudoers.', answer: false, explanation: 'Falso! Lo scopo principale di visudo è proprio il controllo sintattico.', difficulty: 2 },
 ];
 
 export const terminalChallengeData = [
@@ -52,6 +85,15 @@ export const terminalChallengeData = [
   // Topic 107
   { id: 'tc-102-6', description: 'Mostra il tuo UID e i tuoi gruppi', prompt: 'id', expectedOutput: '', hint: 'Usa id', difficulty: 1 },
   { id: 'tc-102-7', description: 'Lista i timer attivi nel sistema', prompt: 'systemctl list-timers', expectedOutput: '', hint: 'Usa systemctl', difficulty: 2 },
+  // Topic 108
+  { id: 'tc-102-8', description: 'Segui i log di sistema in tempo reale', prompt: 'journalctl -f', expectedOutput: '', hint: 'Usa -f', difficulty: 1 },
+  { id: 'tc-102-9', description: 'Mostra la coda dei messaggi e-mail', prompt: 'mailq', expectedOutput: '', hint: 'Usa mailq', difficulty: 2 },
+  // Topic 109
+  { id: 'tc-102-10', description: 'Mostra gli indirizzi IP assegnati', prompt: 'ip addr', expectedOutput: '', hint: 'Usa ip addr', difficulty: 1 },
+  { id: 'tc-102-11', description: 'Risolvi l\'indirizzo IP di google.com', prompt: 'dig google.com', expectedOutput: '', hint: 'Usa dig', difficulty: 2 },
+  // Topic 110
+  { id: 'tc-102-12', description: 'Trova file con bit SUID nel sistema', prompt: 'find / -perm /4000', expectedOutput: '', hint: 'Usa find e -perm', difficulty: 3 },
+  { id: 'tc-102-13', description: 'Genera una nuova coppia di chiavi SSH', prompt: 'ssh-keygen', expectedOutput: '', hint: 'Usa ssh-keygen', difficulty: 1 },
 ];
 
 export const dragDropData = [
@@ -87,6 +129,39 @@ export const dragDropData = [
       { text: '/etc/group', matches: 'Group info' },
       { text: '/etc/localtime', matches: 'Timezone' },
     ],
+  },
+  {
+    id: 'dd-services-comps',
+    category: 'Servizi di Sistema',
+    question: 'Abbina il servizio al suo ambito:',
+    items: [
+      { text: 'chony/ntpd', matches: 'Time Sync' },
+      { text: 'Postfix/Sendmail', matches: 'E-mail (MTA)' },
+      { text: 'CUPS', matches: 'Printing' },
+      { text: 'rsyslog/journald', matches: 'Logging' },
+    ],
+  },
+  {
+    id: 'dd-network-tools',
+    category: 'Strumenti di Rete',
+    question: 'Abbina lo strumento al suo scopo:',
+    items: [
+      { text: 'ping', matches: 'Connettività base' },
+      { text: 'traceroute', matches: 'Analisi percorso' },
+      { text: 'dig/host', matches: 'Risoluzione DNS' },
+      { text: 'nsswitch.conf', matches: 'Ordine risoluzione' },
+    ],
+  },
+  {
+    id: 'dd-security-tools',
+    category: 'Sicurezza',
+    question: 'Abbina lo strumento alla sua funzione:',
+    items: [
+      { text: 'visudo', matches: 'Sudoers config' },
+      { text: 'ssh-agent', matches: 'Key management' },
+      { text: 'GPG', matches: 'File encryption' },
+      { text: 'ulimit', matches: 'Resource limits' },
+    ],
   }
 ];
 
@@ -100,6 +175,18 @@ export const fillGapData = [
   // Topic 107
   { prompt: 'Comando per editare crontab: crontab -_____', answer: 'e', hint: 'Stà per edit', difficulty: 1 },
   { prompt: 'Variabile locale principale: _____', answer: 'LANG', hint: 'Inizia con L', difficulty: 1 },
+  // Topic 108
+  { prompt: 'Comando stampa: _____ file.txt', answer: 'lp', hint: 'Inizia con l', difficulty: 1 },
+  { prompt: 'Demone log binari: systemd-_____', answer: 'journald', hint: 'Inizia con j', difficulty: 2 },
+  // Topic 109
+  { prompt: 'File server DNS: /etc/_____.conf', answer: 'resolv', hint: 'Risoluzione nomi', difficulty: 1 },
+  { prompt: 'Porta standard HTTP: _____', answer: '80', hint: 'Numero intero', difficulty: 1 },
+  // Topic 110
+  { prompt: 'Cifratura simmetrica: gpg -_____', answer: 'c', hint: 'Stà per crypt/symmetric', difficulty: 2 },
+  { prompt: 'Permesso speciale (4xxx): _____', answer: 'SUID', hint: 'Inizia con S', difficulty: 2 },
 ];
+
+
+
 
 
