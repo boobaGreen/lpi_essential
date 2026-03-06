@@ -1,15 +1,19 @@
 import { lpic1_102_topic1Quizzes } from './lpic1_102_topic1_it';
 import { lpic1_102_topic2Quizzes } from './lpic1_102_topic2_it';
+import { lpic1_102_topic3Quizzes } from './lpic1_102_topic3_it';
 
 export const quizzes_it = {
   1: lpic1_102_topic1Quizzes,
   2: lpic1_102_topic2Quizzes,
+  3: lpic1_102_topic3Quizzes,
 };
 
 export const allQuizzes_it = [
   ...lpic1_102_topic1Quizzes,
   ...lpic1_102_topic2Quizzes,
+  ...lpic1_102_topic3Quizzes,
 ];
+
 
 
 export const quizzes_en = { ...quizzes_it }; // Fallback

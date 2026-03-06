@@ -18,6 +18,13 @@ export const memoryGameData = [
   { command: 'KDE/GNOME', description: 'Esempi di Desktop Environment' },
   { command: 'Wayland', description: 'Successore moderno di X11' },
   { command: 'Orca', description: 'Lettore di schermo (Accessibilità)' },
+  // Topic 107
+  { command: '/etc/shadow', description: 'Password criptate e scadenze' },
+  { command: 'chage', description: 'Gestione invecchiamento password' },
+  { command: 'crontab -e', description: 'Modifica i job pianificati' },
+  { command: 'at', description: 'Esecuzione singola posticipata' },
+  { command: 'LC_ALL', description: 'Sovrascrive tutte le locali' },
+  { command: 'timedatectl', description: 'Gestione ora e fuso orario' },
 ];
 
 export const trueFalseData = [
@@ -29,6 +36,10 @@ export const trueFalseData = [
   { text: 'X11 è un protocollo "network transparent".', answer: true, explanation: 'Vero! Permette di eseguire app grafiche su rete.', difficulty: 1 },
   { text: 'Un Window Manager (WM) gestisce il login grafico.', answer: false, explanation: 'Falso! Il login è gestito dal Display Manager (DM).', difficulty: 1 },
   { text: 'Wayland è considerato più sicuro del vecchio protocollo X11.', answer: true, explanation: 'Vero! Ha un isolamento tra finestre migliore.', difficulty: 2 },
+  // Topic 107
+  { text: '/etc/passwd contiene le password criptate.', answer: false, explanation: 'Falso! Sono in /etc/shadow. In passwd c\'è solo una "x".', difficulty: 1 },
+  { text: 'In crontab, il primo campo rappresenta le ore.', answer: false, explanation: 'Falso! Il primo campo sono i minuti.', difficulty: 1 },
+  { text: 'Il comando atq mostra i job in attesa di esecuzione.', answer: true, explanation: 'Vero! "atq" sta per "at queue".', difficulty: 2 },
 ];
 
 export const terminalChallengeData = [
@@ -38,6 +49,9 @@ export const terminalChallengeData = [
   // Topic 106
   { id: 'tc-102-4', description: 'Mostra info sul server X corrente', prompt: 'xdpyinfo', expectedOutput: '', hint: 'Usa xdpyinfo', difficulty: 2 },
   { id: 'tc-102-5', description: 'Abilita accesso a ogni client (insicuro)', prompt: 'xhost +', expectedOutput: '', hint: 'Usa xhost +', difficulty: 3 },
+  // Topic 107
+  { id: 'tc-102-6', description: 'Mostra il tuo UID e i tuoi gruppi', prompt: 'id', expectedOutput: '', hint: 'Usa id', difficulty: 1 },
+  { id: 'tc-102-7', description: 'Lista i timer attivi nel sistema', prompt: 'systemctl list-timers', expectedOutput: '', hint: 'Usa systemctl', difficulty: 2 },
 ];
 
 export const dragDropData = [
@@ -62,6 +76,17 @@ export const dragDropData = [
       { text: 'Orca', matches: 'Accessibilità' },
       { text: 'Qt/GTK', matches: 'Toolkit GUI' },
     ],
+  },
+  {
+    id: 'dd-admin-files',
+    category: 'File Amministrativi',
+    question: 'Abbina il file al suo contenuto:',
+    items: [
+      { text: '/etc/shadow', matches: 'Password hash' },
+      { text: '/etc/passwd', matches: 'User info (UID)' },
+      { text: '/etc/group', matches: 'Group info' },
+      { text: '/etc/localtime', matches: 'Timezone' },
+    ],
   }
 ];
 
@@ -72,5 +97,9 @@ export const fillGapData = [
   // Topic 106
   { prompt: 'Variabile per output grafico: _____', answer: 'DISPLAY', hint: 'Inizia con D', difficulty: 1 },
   { prompt: 'Tool x accessibilità non vedenti: _____', answer: 'Orca', hint: 'Simile a una balena', difficulty: 2 },
+  // Topic 107
+  { prompt: 'Comando per editare crontab: crontab -_____', answer: 'e', hint: 'Stà per edit', difficulty: 1 },
+  { prompt: 'Variabile locale principale: _____', answer: 'LANG', hint: 'Inizia con L', difficulty: 1 },
 ];
+
 
