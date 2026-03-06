@@ -25,6 +25,30 @@ import { rhcsaTopic8QuizzesEN } from './en/rhcsa_topic8_en.js'
 import { rhcsaTopic9QuizzesEN } from './en/rhcsa_topic9_en.js'
 import { rhcsaTopic10QuizzesEN } from './en/rhcsa_topic10_en.js'
 
+// --- Spanish ---
+import { rhcsaTopic1QuizzesES } from './es/rhcsa_topic1_es.js'
+import { rhcsaTopic2QuizzesES } from './es/rhcsa_topic2_es.js'
+import { rhcsaTopic3QuizzesES } from './es/rhcsa_topic3_es.js'
+import { rhcsaTopic4QuizzesES } from './es/rhcsa_topic4_es.js'
+import { rhcsaTopic5QuizzesES } from './es/rhcsa_topic5_es.js'
+import { rhcsaTopic6QuizzesES } from './es/rhcsa_topic6_es.js'
+import { rhcsaTopic7QuizzesES } from './es/rhcsa_topic7_es.js'
+import { rhcsaTopic8QuizzesES } from './es/rhcsa_topic8_es.js'
+import { rhcsaTopic9QuizzesES } from './es/rhcsa_topic9_es.js'
+import { rhcsaTopic10QuizzesES } from './es/rhcsa_topic10_es.js'
+
+// --- French ---
+import { rhcsaTopic1QuizzesFR } from './fr/rhcsa_topic1_fr.js'
+import { rhcsaTopic2QuizzesFR } from './fr/rhcsa_topic2_fr.js'
+import { rhcsaTopic3QuizzesFR } from './fr/rhcsa_topic3_fr.js'
+import { rhcsaTopic4QuizzesFR } from './fr/rhcsa_topic4_fr.js'
+import { rhcsaTopic5QuizzesFR } from './fr/rhcsa_topic5_fr.js'
+import { rhcsaTopic6QuizzesFR } from './fr/rhcsa_topic6_fr.js'
+import { rhcsaTopic7QuizzesFR } from './fr/rhcsa_topic7_fr.js'
+import { rhcsaTopic8QuizzesFR } from './fr/rhcsa_topic8_fr.js'
+import { rhcsaTopic9QuizzesFR } from './fr/rhcsa_topic9_fr.js'
+import { rhcsaTopic10QuizzesFR } from './fr/rhcsa_topic10_fr.js'
+
 // --- Dictionaries By Topic ---
 export const rhcsaQuizzesByTopicIT = {
   1: rhcsaTopic1Quizzes,
@@ -50,6 +74,32 @@ export const rhcsaQuizzesByTopicEN = {
   8: rhcsaTopic8QuizzesEN,
   9: rhcsaTopic9QuizzesEN,
   10: rhcsaTopic10QuizzesEN,
+}
+
+export const rhcsaQuizzesByTopicES = {
+  1: rhcsaTopic1QuizzesES,
+  2: rhcsaTopic2QuizzesES,
+  3: rhcsaTopic3QuizzesES,
+  4: rhcsaTopic4QuizzesES,
+  5: rhcsaTopic5QuizzesES,
+  6: rhcsaTopic6QuizzesES,
+  7: rhcsaTopic7QuizzesES,
+  8: rhcsaTopic8QuizzesES,
+  9: rhcsaTopic9QuizzesES,
+  10: rhcsaTopic10QuizzesES,
+}
+
+export const rhcsaQuizzesByTopicFR = {
+  1: rhcsaTopic1QuizzesFR,
+  2: rhcsaTopic2QuizzesFR,
+  3: rhcsaTopic3QuizzesFR,
+  4: rhcsaTopic4QuizzesFR,
+  5: rhcsaTopic5QuizzesFR,
+  6: rhcsaTopic6QuizzesFR,
+  7: rhcsaTopic7QuizzesFR,
+  8: rhcsaTopic8QuizzesFR,
+  9: rhcsaTopic9QuizzesFR,
+  10: rhcsaTopic10QuizzesFR,
 }
 
 // --- All Quizzes Flat Arrays ---
@@ -79,13 +129,43 @@ export const allRhcsaQuizzesEN = [
   ...rhcsaTopic10QuizzesEN,
 ]
 
+export const allRhcsaQuizzesES = [
+  ...rhcsaTopic1QuizzesES,
+  ...rhcsaTopic2QuizzesES,
+  ...rhcsaTopic3QuizzesES,
+  ...rhcsaTopic4QuizzesES,
+  ...rhcsaTopic5QuizzesES,
+  ...rhcsaTopic6QuizzesES,
+  ...rhcsaTopic7QuizzesES,
+  ...rhcsaTopic8QuizzesES,
+  ...rhcsaTopic9QuizzesES,
+  ...rhcsaTopic10QuizzesES,
+]
+
+export const allRhcsaQuizzesFR = [
+  ...rhcsaTopic1QuizzesFR,
+  ...rhcsaTopic2QuizzesFR,
+  ...rhcsaTopic3QuizzesFR,
+  ...rhcsaTopic4QuizzesFR,
+  ...rhcsaTopic5QuizzesFR,
+  ...rhcsaTopic6QuizzesFR,
+  ...rhcsaTopic7QuizzesFR,
+  ...rhcsaTopic8QuizzesFR,
+  ...rhcsaTopic9QuizzesFR,
+  ...rhcsaTopic10QuizzesFR,
+]
+
 // --- Exports per locale ---
 export const rhcsaQuizzesDict = {
   it: rhcsaQuizzesByTopicIT,
   en: rhcsaQuizzesByTopicEN,
+  es: rhcsaQuizzesByTopicES,
+  fr: rhcsaQuizzesByTopicFR,
 }
 
 export const rhcsaAllQuizzesDict = {
   it: allRhcsaQuizzesIT,
   en: allRhcsaQuizzesEN,
+  es: allRhcsaQuizzesES,
+  fr: allRhcsaQuizzesFR,
 }

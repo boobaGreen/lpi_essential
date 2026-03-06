@@ -1,0 +1,161 @@
+// RHCSA Quiz — Topic 8: Users and Groups (French) — 15 questions
+
+export const rhcsaTopic8QuizzesFR = [
+  // ─── Users ───
+  {
+    id: 'q-rhcsa-8-1-001', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Quelle ligne de commande engendre correctement un humain "mario" avec son compte, son répertoire personnel /home par défaut en l\'armant du terminal bash ?',
+    options: [
+      'useradd mario',
+      'useradd -m -s /bin/bash mario',
+      'adduser mario --shell bash',
+      'usermod -m -s /bin/bash mario',
+    ],
+    correct: 1,
+    explanation: '`-m` force la création de son `home directory`, `-s` définit le `shell`. Note : Sur RedHat, un simple `useradd` implémente en général par défaut son home basé sur les profils `/etc/default/useradd`.',
+  },
+  {
+    id: 'q-rhcsa-8-1-002', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Mario existe mais n\'a pas de code d\'accès. Comment fixez-vous formellement le mot de passe initial du compte "mario" pour qu\'il puisse entrer ?',
+    options: ['usermod -p mario', 'passwd mario', 'chpasswd mario', 'shadow mario'],
+    correct: 1,
+    explanation: 'La commande `passwd <utilisateur>` déclenche l\'invite masquée interactif pour taper (deux fois) le sésame. Seul le root a le droit d\'exécuterpasswd pour autrui, un simple utilisateur le tapera à vide pour changer le sien.',
+  },
+  {
+    id: 'q-rhcsa-8-1-003', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'La mission: Bâtir un compte robotique furtif "service". Il ne réclame pas de /home et n\'aura pas le droit inhérent de taper au terminal à l\'aveugle (/sbin/nologin) car c\'est un daemon account.',
+    options: [
+      'useradd -r -s /sbin/nologin service',
+      'useradd -M -s /sbin/nologin service',
+      'useradd --no-home --system service',
+      'Aussi bien A que B feront le travail magiquement.',
+    ],
+    correct: 3,
+    explanation: '`-r` (compte système, donc un pauvre UID inférieur à 1000). `-M` l\'empêchera coûte que coûte de créer de /home inutile.',
+  },
+  {
+    id: 'q-rhcsa-8-1-004', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Mario a fauté. Comment verrouillez-vous formellement ET instantanément la faculté de ce "mario" à se connecter au système demain matin ?',
+    options: [
+      'usermod -L mario',
+      'passwd -l mario',
+      'usermod -s /sbin/nologin mario',
+      'Toutes accompliront un malheureux verrouillage absolu (usant de divers stratagèmes)',
+    ],
+    correct: 3,
+    explanation: 'Modifer l\'utilisateur avec `-L` (Lock account) ou via son mot de passe `-l` appose textuellement un point-d\'exclamation (!) redoutable devant le sel hashé de /etc/shadow. La lettre C bloque son outil terminal natif, les 3 marches !',
+  },
+  {
+    id: 'q-rhcsa-8-1-005', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'La politique sécuritaire exige pour "mario" l\'expiration inévitable de tous le mot de passe dans maximum 90 jours pleins.',
+    options: [
+      'passwd -x 90 mario',
+      'chage -M 90 mario',
+      'usermod --max-age 90 mario',
+      'Tant A que B honoreront cette temporalité',
+    ],
+    correct: 3,
+    explanation: 'L\'outil formel `chage` et de ses modificateurs `-M` (Max days) ou encore l\'injonction `passwd -x` ont tous les deux pouvoirs pour exiger la sénilité du hash.',
+  },
+  {
+    id: 'q-rhcsa-8-1-006', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Quels fichiers jumeaux détiennent respectivement : Les caractéristiques non cryptées visibles de tous (1) et le Hash aveugle inviolable des mots de passe inatteignable (2) ?',
+    options: [
+      '/etc/passwd et /etc/shadow',
+      '/etc/users et /etc/passwords',
+      '/etc/shadow et /etc/passwd',
+      '/etc/passwd et /etc/group',
+    ],
+    correct: 0,
+    explanation: '`/etc/passwd` garde en clair les attributs utilisateurs (chemin/UID). Le `/etc/shadow` dissimule farouchement les Passwords hachés et dates d\'échéance à l\'abri des yeux des mortels (Seulement root peut le lire).',
+  },
+  {
+    id: 'q-rhcsa-8-1-007', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Question existentielle sysadmin: Comment peux-tu lister crûment tous les groupes auxquels t\'appartient toi loggué présentement dans le terminal ?',
+    options: ['whoami', 'id', 'groups', 'Les propositions B et C éclairent tout sur ce problème'],
+    correct: 3,
+    explanation: 'L\'indispensable `id` déballe le UID, GID, ainsi que les groupements étendus entiers. `groups` se contente plus laconiquement d\'imprimer horizontalement les noms abstraits.',
+  },
+  // ─── Groups and sudo ───
+  {
+    id: 'q-rhcsa-8-2-001', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'L\'employé de base "mario" monte en grade ! Adjoignent-le sereinement en append vers le mythique groupe secondaire supplémental dit "wheel" sans briser ou perdre ses autres groupes annexes.',
+    options: [
+      'usermod -G wheel mario',
+      'usermod -aG wheel mario',
+      'groupadd wheel mario',
+      'gpasswd -a mario wheel',
+    ],
+    correct: 1,
+    explanation: 'L\'erreur d\'une vie ! Sans le sacro-saint `-a` (Append) un tragique `usermod -G` a le don mortel de supprimer tous les autres groupes rattachés à Mario en le poussant juste dans le "wheel". Le `a` est ton salut.',
+  },
+  {
+    id: 'q-rhcsa-8-2-002', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Sur un système natif à la sauce RedHat (RHEL9), que confère au fond ce légendaire groupe système baptisé "wheel" à l\'homme qui le rejoint ?',
+    options: [
+      'Accès irrévocable direct vers le shell de consôle physique /dev/tty1',
+      'Le pouvoir exécutif absolu à lancer toute commande foudroyante par le proxy du mot-magique `sudo`',
+      'L\'autorisation unique et ultime de modification du noyau',
+      'Un by-pass ouvrant un RW de droits dans tout répertoire home /home/*',
+    ],
+    correct: 1,
+    explanation: 'Historiquement, la roue directrice (wheel). Il est gravé formellement dans la marbre d\'une ligne dé-commentée par d\'usine d\'/etc/sudoers que %wheel détient les pleins pouvoirs `(ALL=(ALL) ALL)`.',
+  },
+  {
+    id: 'q-rhcsa-8-2-003', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Le cauchemar des audits de sécurité: Comment permettre lâchement à "mario" d\'exécuter chaque commandes admin illimitées par Sudo... MAIS aveuglement SANS le faire souffrir à jamais re-taper inlassablement son Password ?',
+    options: [
+      'Ajout pur sur /etc/sudoers: mario ALL=(ALL) NOPASSWD:ALL',
+      'Fichier déposé sur /etc/sudoers.d/mario: mario ALL=(ALL) NOPASSWD:ALL',
+      'usermod -G sudo mario',
+      'La A et la B agiront perfidement toutes les deux',
+    ],
+    correct: 3,
+    explanation: 'Si les deux chemins de configuration s\'appliqueront textuellement pour l\'incrustation de la terrible variable magique `NOPASSWD:ALL`, le chemin B (via le dot D directory `etc/sudoers.d/`) est largement préférable car pérenne et propre !',
+  },
+  {
+    id: 'q-rhcsa-8-2-004', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Quel est l\'outil terminal imposé solennellement pour éditer sans trembler le fichier crasse `/etc/sudoers` ?',
+    options: ['vi /etc/sudoers', 'visudo', 'sudo edit /etc/sudoers', 'nano /etc/sudoers'],
+    correct: 1,
+    explanation: 'La surcouche éditeur sécurisée `visudo`. Celle-ci teste drastiquement à la frappe si tu as manqué une virgule et invalidera un enregistrement raté de l\'humain te sauvant d\'un "lock auto-infligé out of root" du système de fichiers de sécurité !',
+  },
+  {
+    id: 'q-rhcsa-8-2-005', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Un nouveau bureau ouvre. Crée le rassemblement de groupe des "developpeurs", mais exige de ton poing qu\'il soit immatriculé avec GID figé dur numèro 1500 ?',
+    options: [
+      'groupadd -g 1500 developpeurs',
+      'groupadd developpeurs --gid 1500',
+      'addgroup -g 1500 developpeurs',
+      'groupmod -g 1500 developpeurs',
+    ],
+    correct: 0,
+    explanation: 'On se limite à `groupadd` et son fidèle acolyte terminal minimal `-g` pour tatouer volontairement l\'immatriculation statique (au delà du quota limite imposé de 1000 base).',
+  },
+  {
+    id: 'q-rhcsa-8-1-008', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Engendre Mario d\'un monstrueux coup terminal: ID immatriculè à 1500; Home directory ancré profond; avec champ "GECOS commentaire" stipulant en beauté `Mario Rossi`.',
+    options: [
+      'useradd -u 1500 -c "Mario Rossi" -m mario',
+      'useradd -i 1500 -d "Mario Rossi" mario',
+      'useradd -U 1500 --comment "Mario Rossi" mario',
+      'adduser mario -u 1500',
+    ],
+    correct: 0,
+    explanation: 'Inébranlable anatomie : `-u` pour imposer la série UID, `-c` (comment) pour l\'ancrage du sacro saint GECOS nominal, `-m` lui génère son logis, et l\'intitulé de fin l\'enregistre.',
+  },
+  {
+    id: 'q-rhcsa-8-2-006', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Dresse sous mes yeux toute l\'anatomie fatidique de péremption du mot de passe de Mario et la date cruelle ou l\'expiration mortellera son account ?',
+    options: ['chage -l mario', 'passwd -S mario', 'cat /etc/shadow | grep mario', 'Chacune des trois voies crachera un bout d\'information vitale'],
+    correct: 3,
+    explanation: 'Elles répondront toutes à l\'intendance. Un simple `-l` (liste list) apposé au commande roi chronocrate "Chage" est par contre la lecture de loin la plus "humainement lisible" du lot.',
+  },
+  {
+    id: 'q-rhcsa-8-1-009', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'C\'est l\'heure du licenciement pour mario. Il est temps d\'enterrer son existence (supprimer Mario) ainsi que raser totalement la parcelle locale complète et l\'arborescence de son /home/ ?',
+    options: ['userdel mario', 'userdel -r mario', 'deluser mario --remove-home', 'usermod -d /dev/null mario'],
+    correct: 1,
+    explanation: 'Si vous faites un banal `userdel`, il part. Mais la carcasse funeste de son /home et spools mail trôneront orphelin à vie polluant tous le storage local. Seul la purge massive `-r` (recursive clean mail) anéanti la dépouille intégrale de la source au sol.',
+  },
+]
