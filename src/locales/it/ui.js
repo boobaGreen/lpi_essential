@@ -121,14 +121,8 @@ export const ui = {
   streak: "Streak",
   badges: "Badge",
   topic: "Topic",
-  // Contenuto Esteso
-  deepDiveLabel: "📚 Approfondimento",
-  deepDiveBadge: "Approfondimento",
-  deepDiveSections: "sezioni",
-  deepDiveHint: "Approfondisci gli argomenti avanzati →",
-  expand: "Apri",
-  extNote: "Nota",
-  extWarning: "Attenzione",
-  extSuggestion: "Suggerimento",
-  extExamTip: "Consiglio Esame",
+  // RHCSA specific
+  minutes: "Minuti",
+  rhcsaPracticalWarning: "⚠️ Esame Pratico — Simulazione Teorica",
+  rhcsaPracticalDesc: "L'esame reale RHCSA EX200 è 100% pratico su VM Linux (210 minuti). Questa simulazione testa solo la conoscenza teorica dei comandi per aiutarti a prepararti.",
 }

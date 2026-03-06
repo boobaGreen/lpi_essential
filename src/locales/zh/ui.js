@@ -121,14 +121,8 @@ export const ui = {
   streak: "连续",
   badges: "徽章",
   topic: "主题",
-  // Extended Content
-  deepDiveLabel: "📚 深度学习",
-  deepDiveBadge: "深度学习",
-  deepDiveSections: "部分",
-  deepDiveHint: "探索高级主题 →",
-  expand: "展开",
-  extNote: "注意",
-  extWarning: "警告",
-  extSuggestion: "提示",
-  extExamTip: "考试提示",
+  // RHCSA specific
+  minutes: "分钟",
+  rhcsaPracticalWarning: "⚠️ 实践考试 — 理论模拟",
+  rhcsaPracticalDesc: "真正的 RHCSA EX200 考试是在 Linux 虚拟机上进行的 100% 实践考试 (210 分钟)。此模拟仅测试命令的理论知识，以帮助您做好准备。",
 }

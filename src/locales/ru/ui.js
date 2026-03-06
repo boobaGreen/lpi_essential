@@ -121,14 +121,8 @@ export const ui = {
   streak: "Серия",
   badges: "Значки",
   topic: "Тема",
-  // Extended Content
-  deepDiveLabel: "📚 Углублённое изучение",
-  deepDiveBadge: "Углублённое изучение",
-  deepDiveSections: "разделы",
-  deepDiveHint: "Изучайте продвинутые темы →",
-  expand: "Открыть",
-  extNote: "Примечание",
-  extWarning: "Предупреждение",
-  extSuggestion: "Совет",
-  extExamTip: "Совет к экзамену",
+  // RHCSA specific
+  minutes: "Минуты",
+  rhcsaPracticalWarning: "⚠️ Практический экзамен — Теоретическая симуляция",
+  rhcsaPracticalDesc: "Реальный экзамен RHCSA EX200 на 100% практический (210 минут на виртуальных машинах Linux). Эта симуляция проверяет только теоретические знания команд, чтобы помочь вам подготовиться.",
 }

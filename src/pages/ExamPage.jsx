@@ -274,11 +274,11 @@ export default function ExamPage() {
             </div>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
               <div className="font-black text-[var(--color-neon-orange)]" style={{ fontSize: '2rem' }}>{examConfig.timeMinutes}</div>
-              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>Minuti</div>
+              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>{t('minutes')}</div>
             </div>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
               <div className="font-black text-[var(--color-neon-green)]" style={{ fontSize: '2rem' }}>{examConfig.passingScore}</div>
-              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>Min /{examConfig.maxScore}</div>
+              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>{t('minScore') || 'Min'} /{examConfig.maxScore}</div>
             </div>
           </div>
         </div>
@@ -287,9 +287,9 @@ export default function ExamPage() {
           <div className="glass-card flex items-start" style={{ padding: '20px', gap: '12px', borderColor: 'rgba(239, 68, 68, 0.4)', background: 'rgba(239,68,68,0.06)' }}>
             <AlertTriangle size={20} className="text-[var(--color-error)] shrink-0" style={{ marginTop: '2px' }} />
             <div>
-              <p className="font-bold" style={{ fontSize: '0.875rem', color: 'var(--color-error)' }}>⚠️ Esame Pratico — Simulazione Teorica</p>
+              <p className="font-bold" style={{ fontSize: '0.875rem', color: 'var(--color-error)' }}>{t('rhcsaPracticalWarning')}</p>
               <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem', marginTop: '4px' }}>
-                L&apos;esame reale RHCSA EX200 è <strong>100% pratico su VM Linux</strong> (210 minuti). Questa simulazione testa solo la conoscenza teorica dei comandi per aiutarti a prepararti.
+                {t('rhcsaPracticalDesc')}
               </p>
             </div>
           </div>
