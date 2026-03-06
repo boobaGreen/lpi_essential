@@ -1,6 +1,6 @@
 export const lpic1_101_topics = [
   {
-    id: 'lpic1-101-1',
+    id: 1,
     title: '101. Arquitetura do Sistema',
     icon: HardDrive,
     description: 'Hardware, inicialização do sistema e configuração de runlevels.',
@@ -11,7 +11,7 @@ export const lpic1_101_topics = [
     ]
   },
   {
-    id: 'lpic1-101-2',
+    id: 2,
     title: '102. Instalação e Gestão de Pacotes Linux',
     icon: BookOpen,
     description: 'Layout do disco, gestores de boot e bibliotecas partilhadas.',
@@ -25,7 +25,7 @@ export const lpic1_101_topics = [
     ]
   },
   {
-    id: 'lpic1-101-3',
+    id: 3,
     title: '103. Comandos GNU e UNIX',
     icon: Terminal,
     description: 'A linha de comandos, filtros, pipes e gestão de processos.',
@@ -45,7 +45,7 @@ export const lpic1_101_topics = [
     ]
   },
   {
-    id: 'lpic1-101-4',
+    id: 4,
     title: '104. Dispositivos, Sistemas de Ficheiros FHS',
     icon: Shield,
     description: 'Criar sistemas de ficheiros, montar partições e gerir permissões.',

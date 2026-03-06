@@ -46,8 +46,9 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
   const { topics } = useTopics()
   const isRhcsa = courseId === 'rhcsa'
   const isLpic1 = courseId === 'lpic1-101'
-  const maxScore = isRhcsa ? 300 : (isLpic1 ? 800 : 800)
-  const passingScore = isRhcsa ? 210 : (isLpic1 ? 500 : 500)
+  const isLpic2 = courseId === 'lpic1-102'
+  const maxScore = isRhcsa ? 300 : ((isLpic1 || isLpic2) ? 800 : 800)
+  const passingScore = isRhcsa ? 210 : ((isLpic1 || isLpic2) ? 500 : 500)
   const scaledScore = Math.round((score / questions.length) * maxScore)
   const passed = scaledScore >= passingScore
   const percentage = Math.round((score / questions.length) * 100)
@@ -74,6 +75,7 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
     3: 'var(--color-neon-purple)',
     4: 'var(--color-neon-orange)',
     5: 'var(--color-neon-pink)',
+    6: 'var(--color-neon-yellow)',
   }
 
   return (
@@ -169,6 +171,7 @@ export default function ExamPage() {
   // ─── Configurazione per corso ────────────────────────────
   const isRhcsa = courseId === 'rhcsa'
   const isLpic1 = courseId === 'lpic1-101'
+  const isLpic1_102 = courseId === 'lpic1-102'
 
   let examConfig
   if (isRhcsa) {
@@ -183,6 +186,15 @@ export default function ExamPage() {
   } else if (isLpic1) {
     examConfig = {
       name: 'LPIC-1 Exam 101 (101-500)',
+      questions: 60,
+      timeMinutes: 90,
+      passingScore: 500,
+      maxScore: 800,
+      disclaimer: null,
+    }
+  } else if (isLpic1_102) {
+    examConfig = {
+      name: 'LPIC-1 Exam 102 (102-500)',
       questions: 60,
       timeMinutes: 90,
       passingScore: 500,
@@ -479,4 +491,5 @@ const topicColorMap = {
   3: 'var(--color-neon-purple)',
   4: 'var(--color-neon-orange)',
   5: 'var(--color-neon-pink)',
+  6: 'var(--color-neon-yellow)',
 }

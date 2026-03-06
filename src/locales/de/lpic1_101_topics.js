@@ -2,7 +2,7 @@ import { BookOpen, HardDrive, Terminal, Shield } from 'lucide-react'
 
 export const lpic1_101_topics = [
   {
-    id: 'lpic1-101-1',
+    id: 1,
     title: '101. Systemarchitektur',
     icon: HardDrive,
     description: 'Hardware, Systemstart und Runlevels konfigurieren.',
@@ -13,7 +13,7 @@ export const lpic1_101_topics = [
     ]
   },
   {
-    id: 'lpic1-101-2',
+    id: 2,
     title: '102. Linux-Installation & Paketverwaltung',
     icon: BookOpen,
     description: 'Festplattenlayout, Bootmanager und Shared Libraries verwalten.',
@@ -27,7 +27,7 @@ export const lpic1_101_topics = [
     ]
   },
   {
-    id: 'lpic1-101-3',
+    id: 3,
     title: '103. GNU- und UNIX-Befehle',
     icon: Terminal,
     description: 'Die Kommandozeile, Filter, Pipes und Prozessmanagement beherrschen.',
@@ -47,7 +47,7 @@ export const lpic1_101_topics = [
     ]
   },
   {
-    id: 'lpic1-101-4',
+    id: 4,
     title: '104. Geräte, Dateisysteme & FHS',
     icon: Shield,
     description: 'Dateisysteme erstellen, mounten und Rechte verwalten.',
