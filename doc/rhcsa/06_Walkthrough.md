@@ -29,12 +29,12 @@
 
 ### Contenuto EN
 
-- [ ] `src/locales/en/rhcsa_lessonContent.js` — Completare lezioni 4-10 (attualmente stub)
-- [ ] Tradurre i 177 Quiz (MCQ) in Inglese
+- [x] `src/locales/en/rhcsa_lessonContent.js` — Completare lezioni 4-10 (attualmente stub)
+- [x] Tradurre i 177 Quiz (MCQ) in Inglese
 
 ### Contenuto Avanzato
 
-- [ ] Extended content IT ed EN: approfondimenti nei file `topicXExtended.js`
+- [x] Extended content IT ed EN: approfondimenti nei file `topicXExtended.js`
 
 ### Placeholder altre lingue (predisposizione)
 

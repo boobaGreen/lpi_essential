@@ -32,7 +32,8 @@ import { rhcsaTopics as rhcsaTopicsRU } from '../locales/ru/rhcsa_topics.js'
 import { rhcsaTopics as rhcsaTopicsZH } from '../locales/zh/rhcsa_topics.js'
 import { rhcsaLessonContent as rhcsaLessonContentIT } from '../locales/it/rhcsa_lessonContent.js'
 import { rhcsaLessonContent as rhcsaLessonContentEN } from '../locales/en/rhcsa_lessonContent.js'
-import { allRhcsaQuizzes, rhcsaQuizzesByTopic } from '../data/rhcsa/quizzes/index.js'
+import { rhcsaQuizzesDict, rhcsaAllQuizzesDict } from '../data/rhcsa/quizzes/index.js'
+import { rhcsaExtendedContentDict } from '../data/rhcsa/extendedContent/index.js'
 
 // ─── Dizionari LPI ──────────────────────────────────────────────────────────
 const lessonContentDict = {
@@ -69,7 +70,11 @@ export function useTopics() {
   // ─── RHCSA ────────────────────────────────────────────────────────────────
   if (currentCourseId === 'rhcsa') {
     const topics = getRhcsaTopics(currentLang)
-    const lessonContent = rhcsaLessonContentDict[currentLang] ?? rhcsaLessonContentDict['it']
+    const lessonContent = rhcsaLessonContentDict[currentLang] ?? rhcsaLessonContentDict['en'] ?? rhcsaLessonContentDict['it']
+    
+    // Fallback a EN se non c'è quiz trans, e in fine a IT
+    const quizzesByTopic = rhcsaQuizzesDict[currentLang] ?? rhcsaQuizzesDict['en'] ?? rhcsaQuizzesDict['it']
+    const allQuizzes = rhcsaAllQuizzesDict[currentLang] ?? rhcsaAllQuizzesDict['en'] ?? rhcsaAllQuizzesDict['it']
 
     const getTopic = (id) => topics.find(t => t.id === Number(id))
     const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
@@ -81,9 +86,9 @@ export function useTopics() {
       getLesson,
       getTotalLessons,
       lessonContent,
-      quizzesByTopic: rhcsaQuizzesByTopic,
-      allQuizzes: allRhcsaQuizzes,
-      extendedContent: {},   // TODO: extended content RHCSA
+      quizzesByTopic,
+      allQuizzes,
+      extendedContent: rhcsaExtendedContentDict[currentLang] ?? rhcsaExtendedContentDict['en'] ?? rhcsaExtendedContentDict['it'] ?? {},
     }
   }
 

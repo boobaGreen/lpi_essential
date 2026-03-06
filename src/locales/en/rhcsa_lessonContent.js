@@ -597,32 +597,1169 @@ export const rhcsaLessonContent = {
     },
   },
 
-  // ─── TOPICS 4-10: Placeholder — same as IT ─────────────
-  // (Topics 4-10 lesson content — abbreviated stubs for EN)
-  // Full content follows the same structure as Italian
+  // ─── TOPIC 4: Local Storage — LVM ─────────────────────
+  'rhcsa-4-1': {
+    comic: {
+      title: '💾 GPT Partitions',
+      panels: [
+        { emoji: '🖥️', text: '`lsblk` — shows all block devices with tree structure and mount points.' },
+        { emoji: '🔍', text: '`blkid` — shows UUID, LABEL, and filesystem type of each partition.' },
+        { emoji: '⚒️', text: '`parted /dev/sdb` — interactive tool to create/modify GPT partitions (recommended on RHEL9).' },
+        { emoji: '📐', text: '`parted /dev/sdb mkpart primary xfs 1GiB 5GiB` — creates a partition from 1 to 5 GiB.' },
+        { emoji: '🔄', text: '`partprobe /dev/sdb` — updates the kernel on the new partition table without rebooting.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Storage exploration',
+        items: [
+          '`lsblk` — device tree with sizes and mounts',
+          '`lsblk -f` — adds UUID and filesystem type',
+          '`blkid` — UUID, LABEL, filesystem type',
+          '`fdisk -l` — list partitions (legacy, still used)',
+          '`df -h` — used/free space for mounted filesystems',
+        ],
+      },
+      {
+        title: 'parted — essential commands',
+        items: [
+          '`parted /dev/sdb print` — show partition table',
+          '`parted /dev/sdb mklabel gpt` — create GPT table',
+          '`parted /dev/sdb mkpart primary xfs 1GiB 5GiB`',
+          '`parted /dev/sdb rm 1` — remove partition 1',
+          '`parted /dev/sdb set 1 lvm on` — set LVM flag',
+        ],
+      },
+      {
+        title: 'LVM partition type',
+        items: [
+          'To use LVM, the partition must have "Linux LVM" type',
+          'With parted: `set N lvm on` after mkpart',
+          'With fdisk: type `8e` (Linux LVM)',
+          'Then run partprobe to update the kernel',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ lsblk -f /dev/sdb',
+      output: 'NAME   FSTYPE LABEL UUID                                 MOUNTPOINT\nsdb\n├─sdb1 xfs          a1b2c3d4-...                          /data\n└─sdb2 LVM2_m       e5f6g7h8-...                          ',
+    },
+  },
 
-  'rhcsa-4-1': { comic: { title: '💾 GPT Partitions', panels: [ { emoji: '🖥️', text: '`lsblk` — shows all block devices with tree structure and mount points.' }, { emoji: '⚒️', text: '`parted /dev/sdb mkpart primary xfs 1GiB 5GiB` — creates a partition from 1 to 5 GiB.' }, { emoji: '🔄', text: '`partprobe /dev/sdb` — updates kernel on new partition table without reboot.' } ] }, keyPoints: [ { title: 'Storage exploration', items: ['`lsblk` — device tree with sizes and mounts', '`lsblk -f` — adds UUID and filesystem type', '`blkid` — UUID, LABEL, filesystem type', '`fdisk -l` — list partitions', '`df -h` — used/free space for mounted filesystems'] }, { title: 'parted — essential commands', items: ['`parted /dev/sdb print` — show partition table', '`parted /dev/sdb mklabel gpt` — create GPT table', '`parted /dev/sdb mkpart primary xfs 1GiB 5GiB`', '`parted /dev/sdb rm 1` — remove partition 1', '`parted /dev/sdb set 1 lvm on` — LVM flag'] } ], terminal: { prompt: '$ lsblk -f /dev/sdb', output: 'NAME   FSTYPE LABEL UUID                                 MOUNTPOINT\nsdb\n├─sdb1 xfs          a1b2c3d4-...                          /data' } },
-  'rhcsa-4-2': { comic: { title: '🏗️ LVM — Physical and Volume Groups', panels: [ { emoji: '1️⃣', text: '`pvcreate /dev/sdb1` — initializes the partition as an LVM Physical Volume.' }, { emoji: '2️⃣', text: '`vgcreate datavg /dev/sdb1` — creates a Volume Group from the PV.' }, { emoji: '🔑', text: 'Order is ALWAYS: PV → VG → LV. Never skip a step!' } ] }, keyPoints: [ { title: 'Physical Volume (PV)', items: ['`pvcreate /dev/sdb1` — init PV', '`pvdisplay` — detailed info', '`pvs` — compact summary', '`pvremove /dev/sdb1` — remove metadata'] }, { title: 'Volume Group (VG)', items: ['`vgcreate myvg /dev/sdb1 /dev/sdc1` — create VG', '`vgextend myvg /dev/sdd1` — add PV to VG', '`vgdisplay` — detailed info', '`vgs` — compact summary'] } ], terminal: { prompt: '$ vgdisplay datavg', output: '  --- Volume group ---\n  VG Name               datavg\n  VG Size               <10.00 GiB\n  PE Size               4.00 MiB\n  Free  PE / Size       2559 / <10.00 GiB' } },
-  'rhcsa-4-3': { comic: { title: '📦 LVM — Logical Volumes', panels: [ { emoji: '3️⃣', text: '`lvcreate -L 2G -n datalv datavg` — creates a 2GiB LV in VG datavg.' }, { emoji: '📈', text: '`lvextend -L +1G -r /dev/datavg/datalv` — extends LV AND filesystem (-r = auto resize).' } ] }, keyPoints: [ { title: 'lvcreate options', items: ['`-L 2G` — absolute size', '`-l 100%FREE` — use all free space in VG', '`-n name` — Logical Volume name', 'Device: `/dev/VGname/LVname`'] }, { title: 'Complete LVM workflow', items: ['1. `pvcreate /dev/sdb1`', '2. `vgcreate myvg /dev/sdb1`', '3. `lvcreate -L 3G -n mylv myvg`', '4. `mkfs.xfs /dev/myvg/mylv`', '5. `mkdir /mydata && mount /dev/myvg/mylv /mydata`', '6. Add to `/etc/fstab`'] } ], terminal: { prompt: '$ lvcreate -L 3G -n datalv datavg', output: '  Logical volume "datalv" created.' } },
-  'rhcsa-4-4': { comic: { title: '📌 Mount, fstab and Swap', panels: [ { emoji: '🔑', text: '`blkid` finds the UUID. Use UUID in fstab — it never changes!' }, { emoji: '📝', text: 'fstab format: `UUID=xxx /mountpoint fstype options dump pass`.' }, { emoji: '✅', text: '`mount -a` tests all fstab entries. No errors = configuration is correct.' } ] }, keyPoints: [ { title: 'fstab — format and options', items: ['Fields: device mountpoint fstype options dump pass', '`defaults` = rw,suid,dev,exec,auto,nouser,async', '`nofail` — ignore errors at boot', '`_netdev` — wait for network (NFS/CIFS)'] }, { title: 'Swap setup', items: ['`mkswap /dev/sdb2` — format as swap', '`swapon /dev/sdb2` — activate immediately', 'In fstab: `UUID=xxx none swap defaults 0 0`', '`swapon --show` — show active swap'] } ], terminal: { prompt: '$ swapon --show', output: 'NAME      TYPE SIZE USED PRIO\n/dev/sdb2 partition   2G   0B   -2' } },
-  'rhcsa-5-1': { comic: { title: '📁 ext4 and XFS', panels: [ { emoji: '🔵', text: '`mkfs.ext4 /dev/sdb1` — ext4 filesystem. `mkfs.xfs /dev/sdb1` — XFS (RHEL9 default).' }, { emoji: '📈', text: 'ext4 can shrink. XFS can only grow! `resize2fs` for ext4, `xfs_growfs /mount` for XFS.' } ] }, keyPoints: [ { title: 'Filesystem creation', items: ['`mkfs.ext4 -L "label" /dev/sdb1`', '`mkfs.xfs -L "label" /dev/sdb1`', 'Device must NOT be mounted during mkfs!'] }, { title: 'Repair', items: ['ALWAYS unmount before repair!', '`e2fsck -f /dev/sdb1` — force check ext4', '`xfs_repair /dev/sdb1` — repair XFS'] } ], terminal: { prompt: '$ xfs_info /data', output: 'meta-data=/dev/sdb1  isize=512    agcount=4\ndata     =            bsize=4096   blocks=2621440' } },
-  'rhcsa-5-2': { comic: { title: '🔐 LUKS Encryption', panels: [ { emoji: '🔒', text: '`cryptsetup luksFormat /dev/sdc1` — format with LUKS encryption.' }, { emoji: '🔓', text: '`cryptsetup open /dev/sdc1 myvol` — open container as `/dev/mapper/myvol`.' } ] }, keyPoints: [ { title: 'LUKS step-by-step', items: ['1. `cryptsetup luksFormat /dev/sdc1`', '2. `cryptsetup open /dev/sdc1 name`', '3. `mkfs.xfs /dev/mapper/name`', '4. `mount /dev/mapper/name /secure`', '5. Add /etc/crypttab and /etc/fstab'] } ], terminal: { prompt: '$ cryptsetup status myvol', output: '/dev/mapper/myvol is active.\n  type:   LUKS2\n  cipher: aes-xts-plain64' } },
-  'rhcsa-5-3': { comic: { title: '🌐 NFS, CIFS and autofs', panels: [ { emoji: '📡', text: '`mount -t nfs server:/export /mountpoint` — manually mount an NFS share.' }, { emoji: '🤖', text: 'autofs mounts on-demand: configure /etc/auto.master and map files.' } ] }, keyPoints: [ { title: 'NFS client', items: ['`dnf install nfs-utils`', '`showmount -e server` — list available exports', '`mount -t nfs server:/data /mnt`'] }, { title: 'autofs', items: ['`dnf install autofs` → `systemctl enable --now autofs`', '/etc/auto.master: `/misc /etc/auto.misc`', 'Auto-unmounts after inactivity'] } ], terminal: { prompt: '$ showmount -e nfsserver', output: 'Export list for nfsserver:\n/data/shared  192.168.1.0/24' } },
-  'rhcsa-5-4': { comic: { title: '🔑 ACLs and Advanced Permissions', panels: [ { emoji: '📋', text: '`getfacl file` — show extended ACLs. `+` in `ls -l` means the file has ACLs.' }, { emoji: '➕', text: '`setfacl -m u:mario:rw file` — add rw permissions for user mario.' } ] }, keyPoints: [ { title: 'setfacl main options', items: ['`-m user:name:perm` — modify/add user ACL', '`-m group:name:perm` — group ACL', '`-x user:name` — remove user ACL', '`-b` — remove ALL ACLs', '`-m d:user:name:perm` — default ACL'] }, { title: 'Special permissions', items: ['**setUID** (4): run as file owner (`chmod u+s`)', '**setGID** (2): on dir inherits group (`chmod g+s`)', '**sticky bit** (1): only owner can delete files (`chmod +t`)'] } ], terminal: { prompt: '$ getfacl /project/file.txt', output: '# file: project/file.txt\nuser::rw-\nuser:mario:rw-\ngroup::r--\nmask::rw-' } },
-  'rhcsa-6-1': { comic: { title: '📦 Package Management with dnf', panels: [ { emoji: '⬇️', text: '`dnf install httpd` — installs httpd and its dependencies automatically.' }, { emoji: '❓', text: '`dnf provides /usr/bin/vim` — find which package provides a file or command.' } ] }, keyPoints: [ { title: 'Essential dnf commands', items: ['`dnf install package` — install', '`dnf remove package` — remove', '`dnf update` — update all', '`dnf search word` — search names and descriptions', '`dnf provides /path/file` — who owns the file'] }, { title: 'Repository management', items: ['Files in `/etc/yum.repos.d/`', '`dnf repolist` — list enabled repos', '`dnf repolist all` — all including disabled'] } ], terminal: { prompt: '$ dnf provides */semanage', output: 'policycoreutils-python-utils-3.4-1.el9.noarch : SELinux policy core python utilities' } },
-  'rhcsa-6-2': { comic: { title: '⚙️ rpm — Query and Verify', panels: [ { emoji: '🔍', text: '`rpm -qa` — list ALL installed packages. `rpm -qi name` — detailed info.' }, { emoji: '🔗', text: '`rpm -qf /usr/bin/ls` — which package installed this file?' } ] }, keyPoints: [ { title: 'rpm query (-q)', items: ['`rpm -qa` — all installed packages', '`rpm -qi name` — package info', '`rpm -ql name` — package files', '`rpm -qf /path/file` — owning package', '`rpm -qR name` — required dependencies'] }, { title: 'Verification', items: ['`rpm -V name` — verify file integrity', '`rpm -Va` — verify all packages', 'S=size, M=permissions, c=modified config'] } ], terminal: { prompt: '$ rpm -qf /usr/bin/passwd', output: 'passwd-0.80-12.el9.x86_64' } },
-  'rhcsa-6-3': { comic: { title: '🥾 GRUB2 and Kernel', panels: [ { emoji: '📝', text: 'GRUB2 config is modified in `/etc/default/grub` (NOT grub.cfg directly).' }, { emoji: '🔄', text: '`grub2-mkconfig -o /boot/grub2/grub.cfg` — regenerate grub.cfg after changes.' } ] }, keyPoints: [ { title: '/etc/default/grub', items: ['`GRUB_TIMEOUT=5` — menu timeout in seconds', '`GRUB_DEFAULT=saved` — remember last selection', '`GRUB_CMDLINE_LINUX="..."` — default kernel params'] }, { title: 'Kernel management', items: ['`uname -r` — current running kernel', '`dnf install kernel` — install new kernel', '`grubby --default-kernel` — default kernel'] } ], terminal: { prompt: '$ grub2-mkconfig -o /boot/grub2/grub.cfg', output: 'Generating grub configuration file ...\nFound linux image: /boot/vmlinuz-5.14.0-362.el9.x86_64\ndone' } },
-  'rhcsa-7-1': { comic: { title: '🌐 nmcli and Network Configuration', panels: [ { emoji: '📋', text: '`nmcli connection show` — list all connections. `nmcli device status` — device status.' }, { emoji: '🖥️', text: '`hostnamectl set-hostname server.example.com` — set hostname permanently.' } ] }, keyPoints: [ { title: 'nmcli — connections', items: ['`nmcli con show` — list connections', '`nmcli con mod ens3 ipv4.method manual` — static IP', '`nmcli con mod ens3 ipv4.addresses 192.168.1.100/24`', '`nmcli con mod ens3 ipv4.gateway 192.168.1.1`', '`nmcli con up ens3` — activate'] }, { title: 'Hostname and DNS', items: ['`hostnamectl set-hostname name.domain`', '`/etc/hosts` — local IP-hostname mapping', '`/etc/resolv.conf` — nameserver, search domain'] } ], terminal: { prompt: '$ nmcli con show ens3 | grep ipv4', output: 'ipv4.method:     manual\nipv4.addresses:  192.168.1.100/24' } },
-  'rhcsa-7-2': { comic: { title: '🔥 firewalld', panels: [ { emoji: '🚪', text: '`firewall-cmd --add-service=http --permanent` — open port 80. Then `--reload`.' }, { emoji: '⚡', text: 'Without `--permanent` the rule is temporary (lost on reboot or --reload).' } ] }, keyPoints: [ { title: 'Services and ports', items: ['`--add-service=name` — open by service name', '`--add-port=8443/tcp` — specific port', '`--permanent` — make rule persistent', '`--reload` — apply permanent rules'] }, { title: 'Zones', items: ['`--get-active-zones` — zones with assigned interfaces', '`--get-default-zone` — default zone', '`--set-default-zone=internal`'] } ], terminal: { prompt: '$ firewall-cmd --zone=public --list-all', output: 'public (active)\n  services: cockpit dhcpv6-client http https ssh\n  ports: 8080/tcp' } },
-  'rhcsa-7-3': { comic: { title: '🔐 SSH and File Transfer', panels: [ { emoji: '🔑', text: '`ssh-keygen -t ed25519` — generate SSH key pair. Saved in `~/.ssh/id_ed25519`.' }, { emoji: '📤', text: '`ssh-copy-id mario@server` — copy public key to server.' } ] }, keyPoints: [ { title: 'SSH key authentication', items: ['`ssh-keygen -t ed25519` — generate keys', 'Private key: `~/.ssh/id_ed25519` (chmod 600!)', '`ssh-copy-id user@host` — install public key'] }, { title: 'scp and rsync', items: ['`scp file user@host:/path` — copy single file', '`rsync -av /src/ user@host:/dst/` — incremental sync', '`rsync --delete` — remove files not in source'] } ], terminal: { prompt: '$ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""', output: 'Generating public/private ed25519 key pair.\nYour identification has been saved in /home/mario/.ssh/id_ed25519' } },
-  'rhcsa-8-1': { comic: { title: '👤 User Management', panels: [ { emoji: '➕', text: '`useradd -m -s /bin/bash mario` — create user mario with home and bash shell.' }, { emoji: '✏️', text: '`usermod -aG wheel mario` — add mario to wheel group (sudo). The -a flag is CRITICAL!' } ] }, keyPoints: [ { title: 'useradd options', items: ['`-m` — create home directory', '`-s /bin/bash` — default shell', '`-u 1500` — specific UID', '`-G grp1,grp2` — supplementary groups'] }, { title: 'chage — password expiry', items: ['`chage -l mario` — show expiry info', '`chage -M 90 mario` — max password days', '`chage -W 14 mario` — warning days'] } ], terminal: { prompt: '$ useradd -m -u 1500 -s /bin/bash mario && passwd mario', output: 'passwd: all authentication tokens updated successfully.' } },
-  'rhcsa-8-2': { comic: { title: '👥 Groups and sudo', panels: [ { emoji: '🏗️', text: '`groupadd -g 1500 developers` — create group with specific GID.' }, { emoji: '⚠️', text: 'WARNING: `usermod -G developers mario` (without -a) REMOVES other groups!' } ] }, keyPoints: [ { title: 'Group management', items: ['`groupadd -g 1500 name` — create group', '`gpasswd -a mario group` — add user', '`gpasswd -d mario group` — remove user', '`id mario` — UID, GID and groups'] }, { title: 'sudo and sudoers', items: ['`visudo` — safe editor for /etc/sudoers', '`mario ALL=(ALL) ALL` — full sudo', '`mario ALL=(ALL) NOPASSWD:ALL` — no password', '`%wheel ALL=(ALL) ALL` — all wheel users'] } ], terminal: { prompt: '$ id mario', output: 'uid=1500(mario) gid=1500(mario) groups=1500(mario),1500(developers)' } },
-  'rhcsa-9-1': { comic: { title: '🔐 SELinux Modes', panels: [ { emoji: '🟢', text: 'Enforcing = SELinux active and blocks violations. Default mode on RHEL.' }, { emoji: '🟡', text: 'Permissive = SELinux logs violations but does NOT block. Great for debugging.' }, { emoji: '🔴', text: 'Disabled = SELinux off. Not recommended in production. Requires reboot to change.' } ] }, keyPoints: [ { title: 'SELinux mode control', items: ['`getenforce` — Enforcing / Permissive / Disabled', '`sestatus` — full SELinux info', '`setenforce 1` — enforcing (temporary)', '`setenforce 0` — permissive (temporary, for debug)', '`/etc/selinux/config` — permanent config'] }, { title: 'SELinux logging', items: ['`/var/log/audit/audit.log` — main log (AVC denials)', '`ausearch -m AVC` — search AVC in audit log', '`sealert -a /var/log/audit/audit.log` — guided analysis'] } ], terminal: { prompt: '$ sestatus', output: 'SELinux status:   enabled\nLoaded policy:    targeted\nCurrent mode:     enforcing' } },
-  'rhcsa-9-2': { comic: { title: '🏷️ File and Process Contexts', panels: [ { emoji: '👁️', text: '`ls -Z /var/www/html` — shows SELinux context: user:role:type:level.' }, { emoji: '🔄', text: '`restorecon -Rv /var/www/html` — restore default contexts (persistent, recommended).' } ] }, keyPoints: [ { title: 'Viewing contexts', items: ['`ls -Z file` — file context', '`ps -eZ | grep httpd` — process context', 'Format: user:role:type:sensitivity_level', 'The type (e.g. httpd_sys_content_t) is most important'] }, { title: 'Correct workflow for new paths', items: ['1. `semanage fcontext -a -t httpd_sys_content_t "/data/web(/.*)?"` — add rule', '2. `restorecon -Rv /data/web` — apply to existing files', '3. Verify: `ls -Z /data/web`'] } ], terminal: { prompt: '$ ls -Z /var/www/html/index.html', output: 'system_u:object_r:httpd_sys_content_t:s0 /var/www/html/index.html' } },
-  'rhcsa-9-3': { comic: { title: '🔘 SELinux Booleans and Ports', panels: [ { emoji: '🎛️', text: '`getsebool -a` — list all booleans. `getsebool httpd_can_network_connect` — specific state.' }, { emoji: '🔄', text: '`setsebool -P httpd_can_network_connect on` — enable permanently (-P = persistent).' }, { emoji: '➕', text: '`semanage port -a -t http_port_t -p tcp 8443` — add port 8443 for httpd.' } ] }, keyPoints: [ { title: 'SELinux booleans', items: ['`getsebool -a` — all booleans', '`setsebool nome on` — enable (temporary)', '`setsebool -P nome on` — enable permanently', 'Common: httpd_can_network_connect, ftpd_anon_write'] }, { title: 'SELinux port management', items: ['`semanage port -l` — all port-type assignments', '`semanage port -a -t type -p tcp PORT` — add port', 'Required if service uses non-standard port'] } ], terminal: { prompt: '$ semanage port -l | grep http_port_t', output: 'http_port_t     tcp    80, 81, 443, 488, 8008, 8009, 8443, 9000' } },
-  'rhcsa-10-1': { comic: { title: '🐋 Podman Basics', panels: [ { emoji: '📥', text: '`podman pull ubi9` — pull UBI9 image (Red Hat Universal Base Image).' }, { emoji: '▶️', text: '`podman run -it ubi9 /bin/bash` — launch interactive container with bash.' }, { emoji: '🗑️', text: '`podman rm mycontainer` — remove stopped container. `podman rmi image` — remove image.' } ] }, keyPoints: [ { title: 'Fundamental Podman commands', items: ['`podman pull image:tag` — pull image', '`podman run [options] image [cmd]` — create and start', '`podman ps` / `podman ps -a` — list containers', '`podman exec -it container bash` — shell in container'] }, { title: 'Podman vs Docker differences', items: ['Podman is **daemonless** — no root socket', 'Supports **rootless** containers for security', 'Compatible with Docker CLI (same syntax)', 'On RHEL9: Podman is the recommended tool'] } ], terminal: { prompt: '$ podman run -d --name webserver -p 8080:80 nginx:latest', output: 'abc123def456789...' } },
-  'rhcsa-10-2': { comic: { title: '🗂️ Registry and Images', panels: [ { emoji: '🔍', text: '`podman search nginx` — search images in configured registries.' }, { emoji: '📤', text: '`podman push registry.example.com/myapp:v1.0` — upload image to registry.' } ] }, keyPoints: [ { title: 'Image management', items: ['`podman images` — list local images', '`podman tag src:tag dest:tag` — retag image', '`podman rmi image` — remove local image', '`podman image prune` — remove unused images'] }, { title: 'Registry and authentication', items: ['`podman login registry.redhat.io` — login to registry', 'Credentials in `~/.config/containers/auth.json`', 'Registries configured in `/etc/containers/registries.conf`'] } ], terminal: { prompt: '$ podman search --filter=is-official nginx | head -3', output: 'NAME                   DESCRIPTION                    STARS  OFFICIAL\ndocker.io/library/nginx  Official build of Nginx.       18000  [OK]' } },
-  'rhcsa-10-3': { comic: { title: '📋 Containerfile (Dockerfile)', panels: [ { emoji: '🏗️', text: '`FROM ubi9` — first mandatory instruction: base image to start from.' }, { emoji: '🔨', text: '`podman build -t myhttpd:1.0 .` — builds the image from the current directory.' } ] }, keyPoints: [ { title: 'Containerfile instructions', items: ['`FROM image:tag` — base image (first instruction)', '`RUN command` — execute during build (creates layer)', '`COPY src dest` — copy local files into image', '`ENV VAR=value` — environment variable', '`EXPOSE port` — document port (does not open!)', '`CMD ["cmd", "arg"]` — default command (overridable)'] }, { title: 'Build best practices', items: ['Combine RUN into single layer: `RUN cmd1 && cmd2`', 'Cleanup in same RUN: `... && dnf clean all`', 'Use official base images (ubi9 for RHEL)'] } ], terminal: { prompt: '$ cat Containerfile', output: 'FROM ubi9\nRUN dnf install -y httpd && dnf clean all\nCOPY index.html /var/www/html/\nEXPOSE 80\nCMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]' } },
-  'rhcsa-10-4': { comic: { title: '💾 Volumes and Container Networking', panels: [ { emoji: '🔗', text: '`-v /host/dir:/container/dir` — bind mount: container accesses host files.' }, { emoji: '🔐', text: 'With SELinux: `-v /data:/data:z` (shared) or `:Z` (exclusive). CRITICAL on RHEL!' } ] }, keyPoints: [ { title: 'Volumes and bind mounts', items: ['`-v /host:/container` — bind mount', '`-v /host:/container:ro` — read-only', '`-v /host:/container:z` — SELinux shared label', '`-v /host:/container:Z` — SELinux private label', '`podman volume create myvol` — Podman volume'] }, { title: 'Container persistence (systemd)', items: ['`podman generate systemd --name container --files`', 'Creates unit file to manage container as service', 'Copy to `~/.config/systemd/user/` (rootless)', '`loginctl enable-linger username` — start without login'] } ], terminal: { prompt: '$ podman run -d --name webapp -p 8080:80 -v /var/www/html:/usr/share/nginx/html:Z nginx', output: 'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345678' } },
+  'rhcsa-4-2': {
+    comic: {
+      title: '🏗️ LVM — Physical and Volume Groups',
+      panels: [
+        { emoji: '1️⃣', text: '`pvcreate /dev/sdb1` — initializes the partition as an LVM Physical Volume.' },
+        { emoji: '2️⃣', text: '`vgcreate datavg /dev/sdb1` — creates a Volume Group using the PV.' },
+        { emoji: '➕', text: '`vgextend datavg /dev/sdc1` — adds an existing PV to the VG to increase space.' },
+        { emoji: '📊', text: '`pvdisplay` / `vgdisplay` — shows detailed info about PVs and VGs.' },
+        { emoji: '🔑', text: 'The order is ALWAYS: PV → VG → LV. Never skip a step!' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Physical Volume (PV)',
+        items: [
+          '`pvcreate /dev/sdb1` — initialize PV',
+          '`pvdisplay` — detailed info for all PVs',
+          '`pvs` — compact PV summary',
+          '`pvremove /dev/sdb1` — remove PV metadata',
+          '`pvmove /dev/sdb1` — move data to other PVs',
+        ],
+      },
+      {
+        title: 'Volume Group (VG)',
+        items: [
+          '`vgcreate myvg /dev/sdb1 /dev/sdc1` — create VG',
+          '`vgextend myvg /dev/sdd1` — add PV to existing VG',
+          '`vgreduce myvg /dev/sdd1` — remove PV from VG',
+          '`vgdisplay` — detailed VG info',
+          '`vgs` — compact VG summary',
+        ],
+      },
+      {
+        title: 'Sizes and PE',
+        items: [
+          'PE = Physical Extent (LVM base unit, default 4MiB)',
+          '`vgcreate -s 8M myvg /dev/sdb1` — custom PE size',
+          '`vgdisplay` shows PE Free and PE Size',
+          'Max size of an LV = PE Free of the VG',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ pvcreate /dev/sdb1 && vgcreate datavg /dev/sdb1 && vgdisplay datavg',
+      output: '  Physical volume "/dev/sdb1" successfully created.\n  Volume group "datavg" successfully created\n  --- Volume group ---\n  VG Name               datavg\n  VG Size               <10.00 GiB\n  PE Size               4.00 MiB\n  Free  PE / Size       2559 / <10.00 GiB',
+    },
+  },
+
+  'rhcsa-4-3': {
+    comic: {
+      title: '📦 LVM — Logical Volumes',
+      panels: [
+        { emoji: '3️⃣', text: '`lvcreate -L 2G -n datalv datavg` — creates a 2GiB LV in VG datavg.' },
+        { emoji: '📁', text: '`mkfs.xfs /dev/datavg/datalv` — formats the LV. Then `mount ...`.' },
+        { emoji: '📈', text: '`lvextend -L +1G -r /dev/datavg/datalv` — extends LV AND filesystem (-r = auto resize).' },
+        { emoji: '🔍', text: 'XFS: `xfs_growfs /data` (requires mount point). ext4: `resize2fs /dev/datavg/datalv`.' },
+        { emoji: '📊', text: '`lvdisplay` or `lvs` — displays all Logical Volumes and their properties.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'lvcreate options',
+        items: [
+          '`-L 2G` — absolute size (GiB, MiB)',
+          '`-l 100%FREE` — use all free space in the VG',
+          '`-l 512` — 512 Physical Extents',
+          '`-n name` — Logical Volume name',
+          'Resulting device: `/dev/VGname/LVname`',
+        ],
+      },
+      {
+        title: 'LV + filesystem extension',
+        items: [
+          '`lvextend -L +1G /dev/vg/lv` — LV only (no fs)',
+          '`lvextend -L +1G -r /dev/vg/lv` — LV + filesystem',
+          'XFS: `xfs_growfs /mountpoint` (MUST be mounted)',
+          'ext4: `resize2fs /dev/vg/lv`',
+          '`lvresize -L 5G -r /dev/vg/lv` — resize to 5G',
+        ],
+      },
+      {
+        title: 'Complete LVM workflow',
+        items: [
+          '1. `pvcreate /dev/sdb1`',
+          '2. `vgcreate myvg /dev/sdb1`',
+          '3. `lvcreate -L 3G -n mylv myvg`',
+          '4. `mkfs.xfs /dev/myvg/mylv`',
+          '5. `mkdir /mydata && mount /dev/myvg/mylv /mydata`',
+          '6. Add to `/etc/fstab` for persistence',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ lvcreate -L 3G -n datalv datavg && mkfs.xfs /dev/datavg/datalv',
+      output: '  Logical volume "datalv" created.\nmeta-data=/dev/datavg/datalv     isize=512    agcount=4\ndata     =                       bsize=4096   blocks=786432\nnaming   =version 2              bsize=4096   ascii-ci=0\nlog      =internal log           bsize=4096   blocks=2560',
+    },
+  },
+
+  'rhcsa-4-4': {
+    comic: {
+      title: '📌 Mount, fstab and Swap',
+      panels: [
+        { emoji: '🔑', text: '`blkid` finds the UUID. Use UUID in fstab instead of /dev/sdb1 — UUID never changes!' },
+        { emoji: '📝', text: 'fstab format: `UUID=xxx /mountpoint fstype options dump pass`.' },
+        { emoji: '✅', text: '`mount -a` tests all fstab entries. If no error, config is correct.' },
+        { emoji: '💫', text: 'Swap: `mkswap /dev/sdb2` → format. `swapon /dev/sdb2` → activate. Then add to fstab.' },
+        { emoji: '📊', text: '`swapon --show` and `free -h` show available and used swap.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'fstab — format and options',
+        items: [
+          'Fields: device mountpoint fstype options dump pass',
+          '`defaults` = rw,suid,dev,exec,auto,nouser,async',
+          '`nofail` — ignore errors at boot',
+          '`_netdev` — wait for network (NFS/CIFS)',
+          '`x-systemd.automount` — on-demand auto-mount',
+          'dump=0 (no backup), pass=0 (no fsck)',
+        ],
+      },
+      {
+        title: 'Swap setup',
+        items: [
+          '`mkswap /dev/sdb2` — format as swap',
+          '`swapon /dev/sdb2` — activate immediately',
+          '`swapoff /dev/sdb2` — deactivate',
+          'In fstab: `UUID=xxx none swap defaults 0 0`',
+          '`swapon --show` — show active swap',
+        ],
+      },
+      {
+        title: 'fstab verification and debug',
+        items: [
+          '`mount -a` — mount everything in fstab (test)',
+          '`mount -t xfs` — mount only xfs filesystems',
+          '`umount /mountpoint` — unmount',
+          '`umount -l /mountpoint` — lazy unmount',
+          '`findmnt` — view all active mounts',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ blkid /dev/datavg/datalv',
+      output: '/dev/datavg/datalv: UUID="a1b2c3d4-e5f6-7890-abcd-efghij123456" TYPE="xfs"',
+    },
+  },
+
+  // ─── TOPIC 5: File Systems ──────────────────────────────
+  'rhcsa-5-1': {
+    comic: {
+      title: '📁 ext4 and XFS',
+      panels: [
+        { emoji: '🔵', text: '`mkfs.ext4 /dev/sdb1` — ext4 file system. `mkfs.xfs /dev/sdb1` — XFS file system (RHEL9 default).' },
+        { emoji: '🔧', text: '`tune2fs -l /dev/sdb1` — shows ext4 params. `xfs_info /mountpoint` — shows XFS params.' },
+        { emoji: '🔨', text: '`e2fsck /dev/sdb1` — check and repair ext4 (NOT mounted). `xfs_repair /dev/sdb1` — for XFS.' },
+        { emoji: '📈', text: 'ext4 can shrink. XFS can only grow! `resize2fs` for ext4, `xfs_growfs /mount` for XFS.' },
+        { emoji: '💡', text: 'XFS is optimized for large files and high concurrency. ext4 is more versatile for general use.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Filesystem creation',
+        items: [
+          '`mkfs.ext4 -L "datalabel" /dev/sdb1`',
+          '`mkfs.xfs -L "xfslabel" /dev/sdb1`',
+          '`mkfs -t ext4 /dev/sdb1` (equivalent)',
+          '`-L label` — assign filesystem label',
+          'The device must NOT be mounted during mkfs!',
+        ],
+      },
+      {
+        title: 'Filesystem info',
+        items: [
+          '`tune2fs -l /dev/sdb1` — ext4 metadata',
+          '`xfs_info /mountpoint` — XFS metadata (requires mount)',
+          '`dumpe2fs /dev/sdb1` — highly detailed ext4 info',
+          '`df -Th` — filesystem type + space',
+          '`stat /file` — inode, permissions, timestamp',
+        ],
+      },
+      {
+        title: 'Filesystem repair',
+        items: [
+          'ALWAYS unmount before repairing!',
+          '`e2fsck -f /dev/sdb1` — force ext4 check',
+          '`xfs_repair /dev/sdb1` — repair XFS',
+          '`fsck /dev/sdb1` — generic (calls correct tool)',
+          'Emergency: `xfs_repair -L /dev/sdb` (destroys journal)',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ xfs_info /data',
+      output: 'meta-data=/dev/sdb1  isize=512    agcount=4, agsize=655360 blks\n         =            sectsz=512   attr=2, projid32bit=1\ndata     =            bsize=4096   blocks=2621440, imaxpct=25\nnaming   =version 2  bsize=4096   ascii-ci=0, ftype=1\nlog      =internal   bsize=4096   blocks=2560, version=2',
+    },
+  },
+
+  'rhcsa-5-2': {
+    comic: {
+      title: '🔐 LUKS Encryption',
+      panels: [
+        { emoji: '🔒', text: '`cryptsetup luksFormat /dev/sdc1` — formats with LUKS encryption. Enter passphrase.' },
+        { emoji: '🔓', text: '`cryptsetup open /dev/sdc1 myvol` — opens the container. Device: `/dev/mapper/myvol`.' },
+        { emoji: '💻', text: '`mkfs.ext4 /dev/mapper/myvol` — then `mount /dev/mapper/myvol /secure`.' },
+        { emoji: '📝', text: 'For automatic mount at boot: `/etc/crypttab` (device name passphrase) + `/etc/fstab`.' },
+        { emoji: '🔑', text: '`cryptsetup luksAddKey /dev/sdc1` — adds a keyfile to bypass password at boot.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'LUKS setup step-by-step',
+        items: [
+          '1. `cryptsetup luksFormat /dev/sdc1` (interactive)',
+          '2. `cryptsetup open /dev/sdc1 volname`',
+          '3. `mkfs.xfs /dev/mapper/volname`',
+          '4. `mount /dev/mapper/volname /secure`',
+          '5. Add to /etc/crypttab and /etc/fstab for persistence',
+        ],
+      },
+      {
+        title: '/etc/crypttab format',
+        items: [
+          'Format: `name device password options`',
+          '`myvol /dev/sdc1 none` — asks for password at boot',
+          '`myvol /dev/sdc1 /root/keyfile` — uses keyfile',
+          '`myvol UUID=xxx none luks` — uses UUID',
+          'After crypttab: `/etc/fstab` mounts `/dev/mapper/myvol`',
+        ],
+      },
+      {
+        title: 'LUKS management',
+        items: [
+          '`cryptsetup status myvol` — container status',
+          '`cryptsetup luksAddKey /dev/sdc1` — adds key',
+          '`cryptsetup luksRemoveKey /dev/sdc1` — removes key',
+          '`cryptsetup luksClose myvol` — closes container',
+          '`cryptsetup luksDump /dev/sdc1` — header info',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ cryptsetup status myvol',
+      output: '/dev/mapper/myvol is active and is in use.\n  type:    LUKS2\n  cipher:  aes-xts-plain64\n  keysize: 512 bits\n  device:  /dev/sdc1\n  offset:  32768 sectors',
+    },
+  },
+
+  'rhcsa-5-3': {
+    comic: {
+      title: '🌐 NFS, CIFS and autofs',
+      panels: [
+        { emoji: '📡', text: '`mount -t nfs server:/export /mountpoint` — manually mounts an NFS share.' },
+        { emoji: '🪟', text: '`mount -t cifs //server/share /mountpoint -o user=u,password=p` — Windows/Samba share.' },
+        { emoji: '⚙️', text: 'For permanent NFS mount in fstab: `server:/export /mp nfs defaults 0 0`.' },
+        { emoji: '🤖', text: 'autofs mounts on-demand: `/etc/auto.master` → `/misc /etc/auto.misc` → `cd server:/cdrom`.' },
+        { emoji: '📦', text: 'Install: `nfs-utils` for NFS, `cifs-utils` for CIFS/Samba.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'NFS client',
+        items: [
+          '`dnf install nfs-utils` — install NFS client',
+          '`showmount -e server` — list available exports',
+          '`mount -t nfs 192.168.1.10:/data /mnt/data`',
+          '`mount -t nfs4 server:/data /mnt` — forces NFSv4',
+          'fstab: `server:/data /mnt nfs defaults,_netdev 0 0`',
+        ],
+      },
+      {
+        title: 'CIFS/Samba client',
+        items: [
+          '`dnf install cifs-utils` — install CIFS client',
+          '`mount -t cifs //srv/share /mnt -o user=u,pass=p`',
+          'fstab: `//srv/share /mnt cifs credentials=/etc/creds 0 0`',
+          'Credentials file: `username=u\\npassword=p`',
+          '`chmod 600 /etc/creds` — protect the file!',
+        ],
+      },
+      {
+        title: 'autofs',
+        items: [
+          '`dnf install autofs` → `systemctl enable --now autofs`',
+          '/etc/auto.master: `/misc /etc/auto.misc`',
+          '/etc/auto.misc: `nfs server:/export` (mounts to /misc/nfs)',
+          'Automatically unmounts after inactivity',
+          '`automount -f -v` — debug autofs',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ showmount -e nfsserver',
+      output: 'Export list for nfsserver:\n/data/shared  192.168.1.0/24\n/home         *',
+    },
+  },
+
+  'rhcsa-5-4': {
+    comic: {
+      title: '🔑 ACLs and Advanced Permissions',
+      panels: [
+        { emoji: '📋', text: '`getfacl file` — shows extended ACLs. The + in `ls -l` indicates the file has ACLs.' },
+        { emoji: '➕', text: '`setfacl -m u:mario:rw file` — adds rw permissions for user mario on the file.' },
+        { emoji: '👥', text: '`setfacl -m g:developers:rx /project` — permissions to the developers group.' },
+        { emoji: '🔄', text: '`setfacl -m d:u:mario:rw /dir` — default ACL: new files will inherit them.' },
+        { emoji: '🏷️', text: 'setGID on directory: `chmod g+s /shared` — new files inherit the group.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'setfacl — main options',
+        items: [
+          '`-m user:name:perm` — modify/add user ACL',
+          '`-m group:name:perm` — group ACL',
+          '`-m other::perm` — others ACL',
+          '`-x user:name` — remove user ACL',
+          '`-b` — remove ALL ACLs',
+          '`-R` — recursive on directory',
+          '`-m d:user:name:perm` — default ACL',
+        ],
+      },
+      {
+        title: 'getfacl and ACL mask',
+        items: [
+          '`getfacl /path` — shows all ACLs',
+          'The `mask` limits the maximum permissions for user/group',
+          '`setfacl -m mask::rx /dir` — sets the mask',
+          '`ls -l` shows `+` if extended ACLs are present',
+          '`cp --preserve=all` preserves ACLs',
+        ],
+      },
+      {
+        title: 'Special permissions',
+        items: [
+          '**setUID** (4): execute as file owner (`chmod u+s`)',
+          '**setGID** (2): execute as owner group, on dir inherits group (`chmod g+s`)',
+          '**sticky bit** (1): only owner can delete files in /dir (`chmod +t`)',
+          '`chmod 2775 /shared` — setGID + rwxrwxr-x',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ setfacl -m u:mario:rw /project/file.txt && getfacl /project/file.txt',
+      output: '# file: project/file.txt\n# owner: root\n# group: root\nuser::rw-\nuser:mario:rw-\ngroup::r--\nmask::rw-\nother::r--',
+    },
+  },
+
+  // ─── TOPIC 6: System Maintenance ────────────────────────
+  'rhcsa-6-1': {
+    comic: {
+      title: '📦 Package Management with dnf',
+      panels: [
+        { emoji: '⬇️', text: '`dnf install httpd` — installs the httpd package and its dependencies automatically.' },
+        { emoji: '🔍', text: '`dnf search keyword` — searches packages. `dnf info name` — details about a package.' },
+        { emoji: '🔄', text: '`dnf update` — updates all packages. `dnf update name` — updates a specific one.' },
+        { emoji: '❓', text: '`dnf provides /usr/bin/vim` — finds which package provides a file or command.' },
+        { emoji: '📁', text: 'Repositories in `/etc/yum.repos.d/*.repo`. `dnf repolist` — lists active repos.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Essential dnf commands',
+        items: [
+          '`dnf install package` — install',
+          '`dnf remove package` — remove (not dependencies)',
+          '`dnf update` — update all',
+          '`dnf search word` — search names and descriptions',
+          '`dnf info package` — version, repo, size',
+          '`dnf list installed` — installed packages',
+          '`dnf provides /path/file` — who owns the file',
+        ],
+      },
+      {
+        title: 'Repository management',
+        items: [
+          '.repo files in `/etc/yum.repos.d/`',
+          '`dnf repolist` — list enabled repos',
+          '`dnf repolist all` — all including disabled',
+          '`dnf config-manager --enable <repo>` — enable repo',
+          '`dnf --disablerepo="*" --enablerepo=local install pkg`',
+        ],
+      },
+      {
+        title: 'Groups and history',
+        items: [
+          '`dnf group list` — list available groups',
+          '`dnf group install "Development Tools"`',
+          '`dnf history` — transaction history',
+          '`dnf history undo <id>` — undo a transaction',
+          '`dnf download package` — download RPM without installing',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ dnf provides */semanage',
+      output: 'policycoreutils-python-utils-3.4-1.el9.noarch : SELinux policy core python utilities\nRepo        : baseos',
+    },
+  },
+
+  'rhcsa-6-2': {
+    comic: {
+      title: '⚙️ rpm — Query and Verify',
+      panels: [
+        { emoji: '🔍', text: '`rpm -qa` — lists ALL installed packages. `rpm -qi name` — detailed info.' },
+        { emoji: '📄', text: '`rpm -ql name` — lists the files included in the installed package.' },
+        { emoji: '🔗', text: '`rpm -qf /usr/bin/ls` — which package installed this file?' },
+        { emoji: '✅', text: '`rpm -V name` — verify integrity: checks if files have been modified.' },
+        { emoji: '📦', text: '`rpm -ivh package.rpm` — install locally. `-i`=install, `-v`=verbose, `-h`=progress.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'rpm query (-q)',
+        items: [
+          '`rpm -qa` — all installed packages',
+          '`rpm -qi name` — package info',
+          '`rpm -ql name` — package files (list)',
+          '`rpm -qf /path/file` — owning package (file)',
+          '`rpm -qd name` — only documentation files',
+          '`rpm -qc name` — only configuration files',
+          '`rpm -qR name` — required dependencies',
+        ],
+      },
+      {
+        title: 'Verify and local install',
+        items: [
+          '`rpm -V name` — verify file integrity',
+          '`rpm -Va` — verify all packages',
+          'Output: S=size, M=permissions, c=modified config',
+          '`rpm -ivh file.rpm` — install local RPM',
+          '`rpm --nodeps -ivh file.rpm` — ignore dependencies',
+          '`rpm -e name` — remove package',
+        ],
+      },
+      {
+        title: 'Query uninstalled .rpm files',
+        items: [
+          '`rpm -qpi file.rpm` — info on RPM file',
+          '`rpm -qpl file.rpm` — list files in RPM',
+          'Useful to inspect an RPM before installing it',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ rpm -qf /usr/bin/passwd',
+      output: 'passwd-0.80-12.el9.x86_64',
+    },
+  },
+
+  'rhcsa-6-3': {
+    comic: {
+      title: '🥾 GRUB2 and Kernel',
+      panels: [
+        { emoji: '📝', text: 'GRUB2 configuration is modified in `/etc/default/grub` (NOT in grub.cfg directly).' },
+        { emoji: '🔄', text: '`grub2-mkconfig -o /boot/grub2/grub.cfg` — regenerates grub.cfg after changes.' },
+        { emoji: '⏱️', text: '`GRUB_TIMEOUT=5` — boot menu timeout. `GRUB_DEFAULT=0` — default entry.' },
+        { emoji: '🔢', text: '`dnf update kernel-*` — updates the kernel. The old kernel remains as fallback.' },
+        { emoji: '🎯', text: '`grubby --default-kernel` — shows the default kernel. `grubby --set-default` — changes it.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: '/etc/default/grub',
+        items: [
+          '`GRUB_TIMEOUT=5` — menu time in seconds',
+          '`GRUB_DEFAULT=saved` — remember last selection',
+          '`GRUB_CMDLINE_LINUX="..."` — default kernel parameters',
+          'After edits: regenerate grub.cfg with grub2-mkconfig',
+          'UEFI: `/boot/efi/EFI/redhat/grub.cfg`',
+        ],
+      },
+      {
+        title: 'Kernel management',
+        items: [
+          '`rpm -qa kernel*` — installed kernels',
+          '`uname -r` — current running kernel',
+          '`dnf install kernel` — install new kernel',
+          '`grubby --default-kernel` — default kernel',
+          '`grubby --set-default /boot/vmlinuz-xxx`',
+          'Old kernels: `dnf remove kernel-old`',
+        ],
+      },
+      {
+        title: '/etc/grub.d/ scripts',
+        items: [
+          'Scripts in /etc/grub.d/ generate grub.cfg',
+          '10_linux — generates entries for Linux kernels',
+          '40_custom — custom entries (editable)',
+          'Do NOT edit grub.cfg directly!',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ grub2-mkconfig -o /boot/grub2/grub.cfg',
+      output: 'Generating grub configuration file ...\nFound linux image: /boot/vmlinuz-5.14.0-362.el9.x86_64\nFound initrd image: /boot/initramfs-5.14.0-362.el9.x86_64.img\ndone',
+    },
+  },
+
+  // ─── TOPIC 7: Basic Networking ───────────────────────────
+  'rhcsa-7-1': {
+    comic: {
+      title: '🌐 nmcli and Network Configuration',
+      panels: [
+        { emoji: '📋', text: '`nmcli connection show` — lists all connections. `nmcli device status` — device status.' },
+        { emoji: '🔧', text: '`nmcli con mod ens3 ipv4.addresses 192.168.1.100/24` — sets static IP on a connection.' },
+        { emoji: '🔄', text: '`nmcli con up ens3` — applies changes. `nmcli con down ens3` — deactivates.' },
+        { emoji: '🖥️', text: '`hostnamectl set-hostname server.example.com` — sets the hostname permanently.' },
+        { emoji: '📁', text: '`/etc/hosts` — local resolution. `/etc/resolv.conf` — DNS servers.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'nmcli — connections',
+        items: [
+          '`nmcli con show` — list connections',
+          '`nmcli con show ens3` — connection details',
+          '`nmcli con add type ethernet ifname ens3` — create new',
+          '`nmcli con mod ens3 ipv4.method manual` — static IP',
+          '`nmcli con mod ens3 ipv4.gateway 192.168.1.1`',
+          '`nmcli con mod ens3 ipv4.dns "8.8.8.8 8.8.4.4"`',
+        ],
+      },
+      {
+        title: 'ip — modern commands',
+        items: [
+          '`ip addr show` — IP addresses of all interfaces',
+          '`ip addr add 10.0.0.5/24 dev eth0` — adds IP (temporary)',
+          '`ip route show` — routing table',
+          '`ip link set eth0 up/down` — activate/deactivate',
+          '`ss -tlnp` — listening TCP ports with processes',
+        ],
+      },
+      {
+        title: 'Hostname and DNS',
+        items: [
+          '`hostnamectl` — shows full hostname info',
+          '`hostnamectl set-hostname name.domain`',
+          '`/etc/hosts` — local IP-to-hostname mapping',
+          '`/etc/resolv.conf` — nameservers, search domain',
+          '`/etc/nsswitch.conf` — name resolution order',
+          '`dig +short hostname` — DNS resolution test',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ nmcli con show ens3 | grep ipv4',
+      output: 'ipv4.method:                            manual\nipv4.addresses:                         192.168.1.100/24\nipv4.gateway:                           192.168.1.1\nipv4.dns:                               8.8.8.8,8.8.4.4',
+    },
+  },
+
+  'rhcsa-7-2': {
+    comic: {
+      title: '🔥 firewalld',
+      panels: [
+        { emoji: '🏠', text: 'firewalld uses zones: "public" is the default. Every interface is assigned to a zone.' },
+        { emoji: '🚪', text: '`firewall-cmd --add-service=http --permanent` — opens port 80. Then `--reload`.' },
+        { emoji: '🔢', text: '`firewall-cmd --add-port=8080/tcp --permanent` — opens a specific port.' },
+        { emoji: '📋', text: '`firewall-cmd --list-all` — shows everything configured in the current zone.' },
+        { emoji: '⚡', text: 'Without `--permanent` the rule is only temporary (lost on reboot or --reload).' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Service and port management',
+        items: [
+          '`--add-service=name` — opens by known service name',
+          '`--remove-service=name` — closes service',
+          '`--add-port=8443/tcp` — specific port',
+          '`--remove-port=8443/tcp` — removes port',
+          '`--permanent` — makes the rule persistent',
+          '`--reload` — applies permanent rules',
+        ],
+      },
+      {
+        title: 'Zones and interfaces',
+        items: [
+          '`--list-all-zones` — all zones',
+          '`--get-active-zones` — zones with assigned interfaces',
+          '`--zone=internal --add-interface=eth1 --permanent`',
+          '`--get-default-zone` — default zone',
+          '`--set-default-zone=internal`',
+        ],
+      },
+      {
+        title: 'Rich rules and masquerade',
+        items: [
+          '`--add-masquerade` — enables NAT/masquerade',
+          '`--add-rich-rule="rule family=ipv4 source address=10.0.0.0/8 accept"`',
+          '`--query-service=ssh` — check if service is open',
+          'Services defined in: `/usr/lib/firewalld/services/`',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ firewall-cmd --zone=public --list-all',
+      output: 'public (active)\n  target: default\n  interfaces: ens3\n  services: cockpit dhcpv6-client http https ssh\n  ports: 8080/tcp\n  masquerade: no',
+    },
+  },
+
+  'rhcsa-7-3': {
+    comic: {
+      title: '🔐 SSH and File Transfer',
+      panels: [
+        { emoji: '🔑', text: '`ssh-keygen -t ed25519` — generates SSH key pair. Saves in `~/.ssh/id_ed25519`.' },
+        { emoji: '📤', text: '`ssh-copy-id mario@server` — copies public key to server (adds to authorized_keys).' },
+        { emoji: '🔒', text: 'In `/etc/ssh/sshd_config`: `PasswordAuthentication no` to force keys only.' },
+        { emoji: '📁', text: '`scp -r /dir user@server:/dest` — recursive copy. `rsync -av /src/ server:/dst/` — incremental.' },
+        { emoji: '🔧', text: '`~/.ssh/config` — configure SSH host aliases for faster connections.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'SSH key authentication',
+        items: [
+          '`ssh-keygen -t ed25519 -C "comment"` — generates keys',
+          'Private key: `~/.ssh/id_ed25519` (chmod 600!)',
+          'Public key: `~/.ssh/id_ed25519.pub`',
+          '`ssh-copy-id -i ~/.ssh/id_ed25519.pub user@host`',
+          'authorized_keys on server: `~/.ssh/authorized_keys` (chmod 600)',
+          '.ssh folder on server: chmod 700!',
+        ],
+      },
+      {
+        title: 'scp and rsync',
+        items: [
+          '`scp file user@host:/path` — copy single file',
+          '`scp -r /dir user@host:/path` — copy directory',
+          '`rsync -av /src/ user@host:/dst/` — incremental sync',
+          '`rsync -avz` — adds compression',
+          '`rsync --delete` — removes files not present in source',
+          '`sftp user@host` — interactive SFTP session',
+        ],
+      },
+      {
+        title: '/etc/ssh/sshd_config',
+        items: [
+          '`PasswordAuthentication no` — disables password login',
+          '`PermitRootLogin no` — disables direct root login',
+          '`AllowUsers mario admin` — user whitelist',
+          '`Port 22` — SSH port (change for security)',
+          'After edits: `systemctl restart sshd`',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""',
+      output: 'Generating public/private ed25519 key pair.\nYour identification has been saved in /home/mario/.ssh/id_ed25519\nYour public key has been saved in /home/mario/.ssh/id_ed25519.pub\nThe key fingerprint is:\nSHA256:abc123... mario@localhost',
+    },
+  },
+
+  // ─── TOPIC 8: Users and Groups ───────────────────────────
+  'rhcsa-8-1': {
+    comic: {
+      title: '👤 User Management',
+      panels: [
+        { emoji: '➕', text: '`useradd -m -s /bin/bash mario` — creates user mario with home and bash shell.' },
+        { emoji: '🔑', text: '`passwd mario` — sets the password. Only root can change other users\' passwords.' },
+        { emoji: '✏️', text: '`usermod -aG wheel mario` — adds mario to wheel group (sudo). The -a is CRUCIAL!' },
+        { emoji: '⏰', text: '`chage -M 90 mario` — password expires every 90 days. `-l mario` shows expiry info.' },
+        { emoji: '🗑️', text: '`userdel -r mario` — deletes user AND their home. Without -r home remains.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'useradd options',
+        items: [
+          '`-m` — create home directory',
+          '`-s /bin/bash` — default shell',
+          '`-u 1500` — specific UID',
+          '`-g groupname` — primary group',
+          '`-G grp1,grp2` — supplementary groups',
+          '`-c "First Last"` — GECOS comment',
+          '`-r` — system account (UID < 1000)',
+          '`-M` — do NOT create home directory',
+        ],
+      },
+      {
+        title: 'usermod and userdel',
+        items: [
+          '`usermod -aG wheel mario` — add to group',
+          '`usermod -s /sbin/nologin mario` — block shell',
+          '`usermod -L mario` — lock account (! in shadow)',
+          '`usermod -U mario` — unlock account',
+          '`userdel mario` — remove user (not home)',
+          '`userdel -r mario` — remove user + home',
+        ],
+      },
+      {
+        title: 'chage — password expiry',
+        items: [
+          '`chage -l mario` — show expiry info',
+          '`chage -M 90 mario` — max password days',
+          '`chage -m 7 mario` — min days between changes',
+          '`chage -W 14 mario` — warning expiry (days)',
+          '`chage -E 2024-12-31 mario` — account expiration',
+          '`passwd -x 90 mario` — equivalent to chage -M',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ useradd -m -u 1500 -s /bin/bash -c "Mario Rossi" mario && passwd mario',
+      output: 'Changing password for user mario.\nNew password:\nRetype new password:\npasswd: all authentication tokens updated successfully.',
+    },
+  },
+
+  'rhcsa-8-2': {
+    comic: {
+      title: '👥 Groups and sudo',
+      panels: [
+        { emoji: '🏗️', text: '`groupadd -g 1500 developers` — creates group with specific GID.' },
+        { emoji: '👤', text: '`usermod -aG developers mario` — adds mario to group (supplementary).' },
+        { emoji: '⚠️', text: 'WARNING: `usermod -G developers mario` (without -a) REMOVES other groups!' },
+        { emoji: '🔐', text: '`visudo` — opens /etc/sudoers securely with syntax validation.' },
+        { emoji: '📁', text: 'Files in `/etc/sudoers.d/` — modifications without touching main file (best practice).' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Group management',
+        items: [
+          '`groupadd -g 1500 name` — create group',
+          '`groupmod -n new-name` — rename group',
+          '`groupdel name` — delete group',
+          '`gpasswd -a mario developers` — add user',
+          '`gpasswd -d mario developers` — remove user',
+          '`id mario` — UID, GID and groups of mario',
+          '`groups mario` — only group names',
+        ],
+      },
+      {
+        title: 'sudo and sudoers',
+        items: [
+          '`visudo` — safe editor for /etc/sudoers',
+          'Format: `WHO HOST=(AS_WHO) COMMAND`',
+          '`mario ALL=(ALL) ALL` — full sudo with password',
+          '`mario ALL=(ALL) NOPASSWD:ALL` — without password',
+          '`%wheel ALL=(ALL) ALL` — all users in wheel group',
+          '`mario ALL=(ALL) /usr/bin/systemctl` — only systemctl',
+        ],
+      },
+      {
+        title: '/etc/sudoers.d/',
+        items: [
+          'Create files in /etc/sudoers.d/ instead of editing sudoers',
+          '`echo "mario ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/mario`',
+          '`chmod 440 /etc/sudoers.d/mario` — correct permissions',
+          'Automatically included via #includedir',
+          '`visudo -c` — validates sudoers syntax',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ groupadd -g 1500 developers && usermod -aG developers mario && id mario',
+      output: 'uid=1500(mario) gid=1500(mario) groups=1500(mario),1500(developers)',
+    },
+  },
+
+  // ─── TOPIC 9: SELinux and Security ───────────────────────
+  'rhcsa-9-1': {
+    comic: {
+      title: '🔐 SELinux Modes',
+      panels: [
+        { emoji: '🟢', text: 'Enforcing = SELinux is active and blocks violations. Default mode on RHEL.' },
+        { emoji: '🟡', text: 'Permissive = SELinux logs violations but does NOT block. Great for debugging.' },
+        { emoji: '🔴', text: 'Disabled = SELinux is off. Not recommended in production. Requires reboot to change.' },
+        { emoji: '⚡', text: '`setenforce 0/1` — switch between enforcing/permissive WITHOUT reboot (temporary).' },
+        { emoji: '📝', text: 'Permanent config: `SELINUX=enforcing` in `/etc/selinux/config`.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'SELinux mode control',
+        items: [
+          '`getenforce` — Enforcing / Permissive / Disabled',
+          '`sestatus` — full info on SELinux',
+          '`setenforce 1` — enforcing (temporary)',
+          '`setenforce 0` — permissive (temporary, for debug)',
+          '`/etc/selinux/config` — permanent configuration',
+          'Switching from/to disabled requires reboot + autorelabel',
+        ],
+      },
+      {
+        title: 'Policy types on RHEL',
+        items: [
+          '**targeted** — RHEL default: protects specific daemons',
+          '**mls** — Multi-Level Security (high security)',
+          '**minimum** — minimal policy',
+          '`SELINUXTYPE=targeted` in /etc/selinux/config',
+          '`semanage` and `restorecon` require policy-targeted',
+        ],
+      },
+      {
+        title: 'Essential SELinux logging',
+        items: [
+          '`/var/log/audit/audit.log` — main log (AVC denials)',
+          '`journalctl | grep AVC` — denials in journal',
+          '`ausearch -m AVC` — search AVC in audit log',
+          '`sealert -a /var/log/audit/audit.log` — guided analysis',
+          'Install: `dnf install setroubleshoot-server`',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ sestatus',
+      output: 'SELinux status:                 enabled\nSELinuxfs mount:                /sys/fs/selinux\nSELinux mount point:            /sys/fs/selinux\nLoaded policy name:             targeted\nCurrent mode:                   enforcing\nMode from config file:          enforcing\nPolicy MLS status:              enabled\nPolicy deny_unknown status:     allowed',
+    },
+  },
+
+  'rhcsa-9-2': {
+    comic: {
+      title: '🏷️ File and Process Contexts',
+      panels: [
+        { emoji: '👁️', text: '`ls -Z /var/www/html` — shows SELinux context: user:role:type:level.' },
+        { emoji: '🔄', text: '`restorecon -Rv /var/www/html` — restores default contexts (PERSISTENT and recommended).' },
+        { emoji: '🎯', text: '`semanage fcontext -a -t httpd_sys_content_t "/web(/.*)?"` — adds permanent rule.' },
+        { emoji: '⚡', text: '`chcon -t httpd_sys_content_t /web/file.html` — changes context temporarily (lost with restorecon).' },
+        { emoji: '📊', text: 'mv keeps the old context; cp creates with destination context. Use restorecon after mv!' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Viewing contexts',
+        items: [
+          '`ls -Z file` — file context',
+          '`ls -Zd /directory` — directory context',
+          '`ps -eZ | grep httpd` — process context',
+          '`id -Z` — current user context',
+          'Format: user:role:type:sensitivity_level',
+          'The type (e.g. httpd_sys_content_t) is the most critical field',
+        ],
+      },
+      {
+        title: 'Modifying contexts',
+        items: [
+          '`restorecon /path` — restores default context',
+          '`restorecon -Rv /path` — recursive and verbose',
+          '`chcon -t type /file` — changes temporarily',
+          '`semanage fcontext -a -t type "/path(/.*)?"` — permanent rule',
+          'Always use: semanage fcontext + restorecon (NOT just chcon)',
+        ],
+      },
+      {
+        title: 'Correct workflow for new paths',
+        items: [
+          '1. `semanage fcontext -a -t httpd_sys_content_t "/data/web(/.*)?"` — add rule',
+          '2. `restorecon -Rv /data/web` — apply to existing files',
+          '3. Verify: `ls -Z /data/web`',
+          'This way rules survive reboot and future restorecon',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ ls -Z /var/www/html/index.html',
+      output: 'system_u:object_r:httpd_sys_content_t:s0 /var/www/html/index.html',
+    },
+  },
+
+  'rhcsa-9-3': {
+    comic: {
+      title: '🔘 SELinux Booleans and Ports',
+      panels: [
+        { emoji: '🎛️', text: '`getsebool -a` — list all booleans. `getsebool httpd_can_network_connect` — specific state.' },
+        { emoji: '🔄', text: '`setsebool -P httpd_can_network_connect on` — enables permanently (-P = persistent).' },
+        { emoji: '🔌', text: '`semanage port -l | grep http` — shows ports assigned to http_port_t type.' },
+        { emoji: '➕', text: '`semanage port -a -t http_port_t -p tcp 8443` — adds port 8443 for httpd.' },
+        { emoji: '🔍', text: '`semanage boolean -l | grep httpd` — booleans related to httpd with description.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'SELinux Booleans',
+        items: [
+          '`getsebool -a` — all booleans',
+          '`getsebool name` — a boolean\'s state',
+          '`setsebool name on` — enable (temporary)',
+          '`setsebool -P name on` — enable permanently',
+          '`semanage boolean -m --on name` — permanent alternative',
+          'Common booleans: httpd_can_network_connect, ftpd_anon_write, samba_enable_home_dirs',
+        ],
+      },
+      {
+        title: 'SELinux port management',
+        items: [
+          '`semanage port -l` — all port-type assignments',
+          '`semanage port -a -t type -p tcp PORT` — adds port',
+          '`semanage port -d -t type -p tcp PORT` — removes port',
+          '`semanage port -m -t type -p tcp PORT` — modifies port',
+          'Required if a service uses a non-standard port',
+        ],
+      },
+      {
+        title: 'Complete SELinux debug',
+        items: [
+          '1. `setenforce 0` — permissive for diagnostics',
+          '2. Check `/var/log/audit/audit.log` for AVC',
+          '3. `sealert -a /var/log/audit/audit.log`',
+          '4. Apply fix (boolean, context, port)',
+          '5. `setenforce 1` — return enforcing',
+          '6. Verify the service works',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ semanage port -l | grep http_port_t',
+      output: 'http_port_t     tcp    80, 81, 443, 488, 8008, 8009, 8443, 9000',
+    },
+  },
+
+  // ─── TOPIC 10: Containers with Podman ────────────────────
+  'rhcsa-10-1': {
+    comic: {
+      title: '🐋 Podman Basics',
+      panels: [
+        { emoji: '📥', text: '`podman pull ubi9` — downloads the UBI9 image (Red Hat Universal Base Image).' },
+        { emoji: '▶️', text: '`podman run -it ubi9 /bin/bash` — launches interactive container with bash shell.' },
+        { emoji: '🔍', text: '`podman ps` — running containers. `podman ps -a` — all, including stopped ones.' },
+        { emoji: '⚡', text: '`podman exec mycontainer ls /etc` — executes command in an already running container.' },
+        { emoji: '🗑️', text: '`podman rm mycontainer` — deletes stopped container. `podman rmi image` — deletes image.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Fundamental Podman commands',
+        items: [
+          '`podman pull image:tag` — downloads image',
+          '`podman run [options] image [cmd]` — creates and starts',
+          '`podman ps` / `podman ps -a` — list containers',
+          '`podman images` — list local images',
+          '`podman exec -it container bash` — shell in container',
+          '`podman stop/start/restart container`',
+          '`podman rm container` / `podman rmi image`',
+        ],
+      },
+      {
+        title: 'Essential run options',
+        items: [
+          '`-d` — detached (background)',
+          '`-it` — interactive + pseudo-TTY',
+          '`--name mycontainer` — custom name',
+          '`-p 8080:80` — maps port host:container',
+          '`-v /host/path:/container/path` — bind mount',
+          '`-e VAR=value` — environment variable',
+          '`--rm` — remove container when stopped',
+        ],
+      },
+      {
+        title: 'Podman vs Docker differences',
+        items: [
+          'Podman is **daemonless** — no root socket',
+          'Supports **rootless** containers for security',
+          'Compatible with Docker CLI (same syntax)',
+          '`podman generate systemd` — generates unit file',
+          'On RHEL9: Podman is the recommended tool',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ podman run -d --name webserver -p 8080:80 nginx:latest',
+      output: 'Trying to pull docker.io/library/nginx:latest...\nGetting image source signatures\n...Done\nabc123def456789...',
+    },
+  },
+
+  'rhcsa-10-2': {
+    comic: {
+      title: '🗂️ Registries and Images',
+      panels: [
+        { emoji: '🔍', text: '`podman search nginx` — searches images in configured registries.' },
+        { emoji: '🔐', text: '`podman login registry.redhat.io` — private registry auth. Saves token locally.' },
+        { emoji: '🏷️', text: '`podman tag myapp:latest registry.example.com/myapp:v1.0` — assigns tag for push.' },
+        { emoji: '📤', text: '`podman push registry.example.com/myapp:v1.0` — uploads image to registry.' },
+        { emoji: '🔍', text: '`skopeo inspect docker://registry.redhat.io/ubi9` — image info without downloading.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Image management',
+        items: [
+          '`podman images` — list local images',
+          '`podman image inspect name` — detailed metadata',
+          '`podman image history name` — image layers',
+          '`podman tag source:tag dest:tag` — rename/add tag',
+          '`podman rmi image` — removes local image',
+          '`podman image prune` — removes unused images',
+        ],
+      },
+      {
+        title: 'Registry and authentication',
+        items: [
+          '`podman login registry.redhat.io` — registry login',
+          '`podman logout registry.redhat.io` — logout',
+          'Credentials in `~/.config/containers/auth.json`',
+          'Configured registries: `/etc/containers/registries.conf`',
+          '"short-name" rule: `ubi9` → searches in configured registries',
+        ],
+      },
+      {
+        title: 'Push/pull workflow',
+        items: [
+          '1. `podman login registry.example.com`',
+          '2. `podman build -t myapp:1.0 .`',
+          '3. `podman tag myapp:1.0 registry.example.com/team/myapp:1.0`',
+          '4. `podman push registry.example.com/team/myapp:1.0`',
+          '`skopeo copy` — copy between registries without download',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ podman search --filter=is-official nginx | head -3',
+      output: 'NAME                   DESCRIPTION                    STARS  OFFICIAL\ndocker.io/library/nginx  Official build of Nginx.       18000  [OK]\nquay.io/nginx/nginx-ingress  NGINX and F5 Ingress...       100',
+    },
+  },
+
+  'rhcsa-10-3': {
+    comic: {
+      title: '📋 Containerfile (Dockerfile)',
+      panels: [
+        { emoji: '🏗️', text: '`FROM ubi9` — first mandatory instruction: base image to start from.' },
+        { emoji: '⚙️', text: '`RUN dnf install -y httpd && dnf clean all` — executes commands during build.' },
+        { emoji: '📄', text: '`COPY index.html /var/www/html/` — copies local files into image. COPY is preferred to ADD.' },
+        { emoji: '🚪', text: '`EXPOSE 80` — documents the port. `CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]` — default cmd.' },
+        { emoji: '🔨', text: '`podman build -t myhttpd:1.0 .` — builds the image from the current directory.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Containerfile instructions',
+        items: [
+          '`FROM image:tag` — base image (first instruction)',
+          '`RUN command` — executes during build (creates layer)',
+          '`COPY src dest` — copies local files into the image',
+          '`ADD src dest` — like COPY + URL + auto-extract tar',
+          '`ENV VAR=value` — environment variable',
+          '`EXPOSE port` — documents port (does not open it!)',
+          '`CMD ["cmd", "arg"]` — default command (overridable)',
+          '`ENTRYPOINT ["cmd"]` — fixed entry point',
+        ],
+      },
+      {
+        title: 'COPY vs ADD vs ENTRYPOINT vs CMD',
+        items: [
+          'COPY: local files/dirs only (recommended)',
+          'ADD: adds URL and auto-extracts .tar (use only if needed)',
+          'ENTRYPOINT: always executed, not easily overridden',
+          'CMD: default arguments (overridable with podman run args)',
+          'Combo: ENTRYPOINT=["/app"] + CMD=["--help"]',
+        ],
+      },
+      {
+        title: 'Build best practices',
+        items: [
+          'Combine RUN into a single layer: `RUN cmd1 && cmd2`',
+          'Cleanup in the same RUN: `... && dnf clean all`',
+          'Use .dockerignore to exclude unnecessary files',
+          'Use official base images (ubi9 for RHEL)',
+          '`podman build --no-cache -t app:1.0 .` — clean build',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ cat Containerfile',
+      output: 'FROM ubi9\nRUN dnf install -y httpd && dnf clean all\nCOPY index.html /var/www/html/\nEXPOSE 80\nCMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]',
+    },
+  },
+
+  'rhcsa-10-4': {
+    comic: {
+      title: '💾 Volumes and Container Networking',
+      panels: [
+        { emoji: '🔗', text: '`-v /host/dir:/container/dir` — bind mount: the container accesses host files.' },
+        { emoji: '🔐', text: 'With SELinux: `-v /data:/data:z` (shared) or `:Z` (exclusive use). CRITICAL on RHEL!' },
+        { emoji: '🔌', text: '`-p 8080:80` — maps host port 8080 to container port 80.' },
+        { emoji: '📦', text: '`podman volume create mydata` — volume managed by Podman (more portable than bind mount).' },
+        { emoji: '🌐', text: 'Containers in the same pod communicate via localhost. `--network host` uses host network.' },
+      ],
+    },
+    keyPoints: [
+      {
+        title: 'Volumes and bind mount',
+        items: [
+          '`-v /host:/container` — bind mount',
+          '`-v /host:/container:ro` — read-only',
+          '`-v /host:/container:z` — SELinux shared label',
+          '`-v /host:/container:Z` — SELinux private label',
+          '`podman volume create myvol` — Podman volume',
+          '`-v myvol:/container/path` — use Podman volume',
+          '`podman volume ls` / `podman volume rm`',
+        ],
+      },
+      {
+        title: 'Port mapping and networking',
+        items: [
+          '`-p HOST_PORT:CONTAINER_PORT` — maps port',
+          '`-p 0.0.0.0:8080:80` — specific host interface',
+          '`--network host` — shares host network',
+          '`--network bridge` — bridge network (default)',
+          '`-p 8080:80/udp` — for UDP protocol',
+          '`podman port container` — shows active mappings',
+        ],
+      },
+      {
+        title: 'Container persistence (systemd)',
+        items: [
+          '`podman generate systemd --name container --files`',
+          'Creates unit file to manage container as a service',
+          'Copy to `~/.config/systemd/user/` (rootless)',
+          '`systemctl --user enable --now container-name`',
+          '`loginctl enable-linger username` — start without login',
+        ],
+      },
+    ],
+    terminal: {
+      prompt: '$ podman run -d --name webapp -p 8080:80 -v /var/www/html:/usr/share/nginx/html:Z nginx',
+      output: 'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345678',
+    },
+  },
 
 }
+
