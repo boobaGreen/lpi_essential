@@ -1,82 +1,92 @@
 export const lpic2_quiz_pool = [
-  {
-    id: 'lpic2-1',
-    topicId: 1,
-    question: 'Which command provides a real-time, dynamic view of the running system and processes, particularly emphasizing CPU and memory usage?',
-    options: ['free', 'top', 'uptime', 'vmstat'],
-    answer: 1,
-    explanation: 'The `top` command provides a dynamic real-time view of a running system.'
-  },
-  {
-    id: 'lpic2-2',
-    topicId: 1,
-    question: 'Which of the following commands would you use to view detailed I/O statistics for block devices?',
-    options: ['vmstat', 'iostat', 'netstat', 'mpstat'],
-    answer: 1,
-    explanation: 'iostat command is used for monitoring system input/output device loading.'
-  },
-  {
-    id: 'lpic2-3',
-    topicId: 1,
-    question: 'You want to collect and visualize system performance trends over several months. Which tool is best suited for this?',
-    options: ['top', 'ss', 'Collectd/MRTG/Cacti', 'tcpdump'],
-    answer: 2,
-    explanation: 'Collectd, MRTG, and Cacti are standard monitoring tools designed to gather data over time and generate graphs for capacity planning.'
-  },
-  {
-    id: 'lpic2-4',
-    topicId: 2,
-    question: 'Where do the default compiled kernel modules reside in the filesystem?',
-    options: ['/boot/modules/', '/lib/modules/$(uname -r)/', '/etc/kernel/', '/var/lib/modules/'],
-    answer: 1,
-    explanation: 'Kernel modules are stored in `/lib/modules/` under a directory matching the specific kernel release version.'
-  },
-  {
-    id: 'lpic2-5',
-    topicId: 2,
-    question: 'Which make target is used to build a compressed kernel image in modern 2.6+ kernels?',
-    options: ['make zImage', 'make bzImage', 'make vmlinux', 'make install'],
-    answer: 1,
-    explanation: '`make bzImage` creates a compressed kernel image (big zImage) which handles kernels that exceed the old zImage size limitations.'
-  },
-  {
-    id: 'lpic2-6',
-    topicId: 2,
-    question: 'When configuring the kernel via source, which command provides a text-based, menu-driven interface?',
-    options: ['make config', 'make menuconfig', 'make xconfig', 'make defconfig'],
-    answer: 1,
-    explanation: '`make menuconfig` requires ncurses and provides a text-based menu interface for kernel configuration.'
-  },
-  {
-    id: 'lpic2-7',
-    topicId: 3,
-    question: 'In a traditional SysVinit system, which file dictates the default runlevel on boot?',
-    options: ['/etc/inittab', '/etc/runlevel', '/boot/grub/grub.cfg', '/etc/init.d/rcS'],
-    answer: 0,
-    explanation: 'The `/etc/inittab` file configures the init process and sets the `initdefault` runlevel.'
-  },
-  {
-    id: 'lpic2-8',
-    topicId: 4,
-    question: 'Which filesystem type relies heavily on extents and is the default for many modern RHEL-based distributions?',
-    options: ['ext4', 'xfs', 'btrfs', 'zfs'],
-    answer: 1,
-    explanation: 'XFS, developed originally by Silicon Graphics, is a highly scalable, high-performance file system and is the default in RHEL 7+.'
-  },
-  {
-    id: 'lpic2-9',
-    topicId: 5,
-    question: 'Which tool is used to monitor, assemble, and manage software RAID arrays in Linux?',
-    options: ['lvm', 'fdisk', 'mdadm', 'parted'],
-    answer: 2,
-    explanation: '`mdadm` stands for multiple device admin and is the standard utility for managing software RAID.'
-  },
-  {
-    id: 'lpic2-10',
-    topicId: 6,
-    question: 'Which command allows you to view the ARP cache (neighbor table) using the modern iproute2 suite?',
-    options: ['arp -n', 'ip neigh show', 'netstat -rn', 'route -n'],
-    answer: 1,
-    explanation: '`ip neigh show` (or simply `ip n`) replaces the old `arp` command for viewing and managing the ARP cache.'
-  }
+  // Topic 200: Capacity Planning
+  { id: 'lpic2-200-1', topicId: 1, question: 'Which command provides a real-time, dynamic view of the running system and processes, particularly emphasizing CPU and memory usage?', options: ['free', 'top', 'uptime', 'vmstat'], answer: 1, explanation: 'The `top` command provides a dynamic real-time view of a running system.' },
+  { id: 'lpic2-200-2', topicId: 1, question: 'Which of the following commands would you use to view detailed I/O statistics for block devices?', options: ['vmstat', 'iostat', 'netstat', 'mpstat'], answer: 1, explanation: 'iostat command is used for monitoring system input/output device loading.' },
+  { id: 'lpic2-200-3', topicId: 1, question: 'You want to collect and visualize system performance trends over several months. Which tool is best suited for this?', options: ['top', 'ss', 'Collectd/MRTG/Cacti', 'tcpdump'], answer: 2, explanation: 'Collectd, MRTG, and Cacti are standard monitoring tools designed to gather data over time and generate graphs for capacity planning.' },
+  { id: 'lpic2-200-4', topicId: 1, question: 'Which tool can you use to predict future capacity needs based on current trends?', options: ['mrtg', 'ping', 'fsck', 'ls'], answer: 0, explanation: 'MRTG (Multi Router Traffic Grapher) is used to monitor traffic and capacity over time.' },
+  { id: 'lpic2-200-5', topicId: 1, question: 'What does the `sar` command do?', options: ['Searches for files', 'System Activity Reporter', 'Saves archives', 'Stops all running processes'], answer: 1, explanation: 'sar (System Activity Reporter) is used to collect, report, or save system activity information.' },
+
+  // Topic 201: Linux Kernel
+  { id: 'lpic2-201-1', topicId: 2, question: 'Where do the default compiled kernel modules reside in the filesystem?', options: ['/boot/modules/', '/lib/modules/$(uname -r)/', '/etc/kernel/', '/var/lib/modules/'], answer: 1, explanation: 'Kernel modules are stored in `/lib/modules/` under a directory matching the specific kernel release version.' },
+  { id: 'lpic2-201-2', topicId: 2, question: 'Which make target is used to build a compressed kernel image in modern 2.6+ kernels?', options: ['make zImage', 'make bzImage', 'make vmlinux', 'make install'], answer: 1, explanation: '`make bzImage` creates a compressed kernel image (big zImage) which handles kernels that exceed the old zImage size limitations.' },
+  { id: 'lpic2-201-3', topicId: 2, question: 'When configuring the kernel via source, which command provides a text-based, menu-driven interface?', options: ['make config', 'make menuconfig', 'make xconfig', 'make defconfig'], answer: 1, explanation: '`make menuconfig` requires ncurses and provides a text-based menu interface for kernel configuration.' },
+  { id: 'lpic2-201-4', topicId: 2, question: 'Which tool is used to load a kernel module along with its dependencies?', options: ['insmod', 'modinfo', 'modprobe', 'rmmod'], answer: 2, explanation: 'modprobe intelligently adds or removes a module from the Linux kernel, handling dependencies.' },
+  { id: 'lpic2-201-5', topicId: 2, question: 'Which file contains the kernel symbols necessary for debugging?', options: ['vmlinux', 'System.map', 'bzImage', 'initrd'], answer: 1, explanation: 'System.map acts as a symbol table, mapping kernel symbol names to their memory addresses.' },
+
+  // Topic 202: System Startup
+  { id: 'lpic2-202-1', topicId: 3, question: 'In a traditional SysVinit system, which file dictates the default runlevel on boot?', options: ['/etc/inittab', '/etc/runlevel', '/boot/grub/grub.cfg', '/etc/init.d/rcS'], answer: 0, explanation: 'The `/etc/inittab` file configures the init process and sets the `initdefault` runlevel.' },
+  { id: 'lpic2-202-2', topicId: 3, question: 'Which command updates the GRUB 2 configuration file on Debian-based systems?', options: ['grub-install', 'grub2-mkconfig', 'update-grub', 'grub-setup'], answer: 2, explanation: '`update-grub` is a script in Debian/Ubuntu that wraps around grub-mkconfig.' },
+  { id: 'lpic2-202-3', topicId: 3, question: 'During a system recovery, you need to boot into single-user mode in systemd. Which target is used?', options: ['runlevel1.target', 'rescue.target', 'single.target', 'emergency.target'], answer: 1, explanation: '`rescue.target` is the systemd equivalent of single-user mode.' },
+  { id: 'lpic2-202-4', topicId: 3, question: 'Where is the main configuration file for GRUB 2 typically located?', options: ['/boot/grub/grub.conf', '/boot/grub2/grub2.cfg', '/boot/grub/grub.cfg', '/etc/grub.cfg'], answer: 2, explanation: 'The primary generated configuration file for GRUB 2 is `/boot/grub/grub.cfg`.' },
+  { id: 'lpic2-202-5', topicId: 3, question: 'Which parameter can you append to the kernel command line in GRUB to bypass the init system and open a root shell?', options: ['init=/bin/sh', 'single', 'rescue', 'bash'], answer: 0, explanation: 'Appending `init=/bin/sh` or `init=/bin/bash` mounts the root filesystem read-only and spawns a shell instead of starting systemd or SysVinit.' },
+
+  // Topic 203: Filesystem and Devices
+  { id: 'lpic2-203-1', topicId: 4, question: 'Which filesystem type relies heavily on extents and is the default for many modern RHEL-based distributions?', options: ['ext4', 'xfs', 'btrfs', 'zfs'], answer: 1, explanation: 'XFS is highly scalable and the default in RHEL 7+.' },
+  { id: 'lpic2-203-2', topicId: 4, question: 'Which command checks an ext4 filesystem for errors?', options: ['fsck.ext4', 'e2fsck', 'Both A and B', 'xfs_repair'], answer: 2, explanation: '`fsck.ext4` is usually a hardlink or wrapper to `e2fsck`.' },
+  { id: 'lpic2-203-3', topicId: 4, question: 'What is the purpose of the `/etc/fstab` file?', options: ['To configure the bootloader', 'To list filesystems that should be mounted automatically at boot', 'To store user passwords', 'To configure network interfaces'], answer: 1, explanation: 'fstab stands for file systems table and defines mounting rules.' },
+  { id: 'lpic2-203-4', topicId: 4, question: 'Which smartctl option displays the overall health assessment of a hard drive?', options: ['-a', '-H', '-i', '-t short'], answer: 1, explanation: '`smartctl -H /dev/sda` shows the SMART health status (PASSED or FAILED).' },
+  { id: 'lpic2-203-5', topicId: 4, question: 'How do you create an ISO image from a CD-ROM block device (/dev/cdrom)?', options: ['tar -cvf image.iso /dev/cdrom', 'dd if=/dev/cdrom of=image.iso', 'mkisofs -o image.iso /dev/cdrom', 'cp /dev/cdrom image.iso'], answer: 1, explanation: '`dd` is the standard tool for creating raw byte-for-byte copies of block devices, such as ripping an ISO.' },
+
+  // Topic 204: Advanced Storage
+  { id: 'lpic2-204-1', topicId: 5, question: 'Which tool is used to monitor, assemble, and manage software RAID arrays in Linux?', options: ['lvm', 'fdisk', 'mdadm', 'parted'], answer: 2, explanation: '`mdadm` stands for multiple device admin and is the standard utility for managing software RAID.' },
+  { id: 'lpic2-204-2', topicId: 5, question: 'Which RAID level provides mirroring with no striping?', options: ['RAID 0', 'RAID 1', 'RAID 5', 'RAID 10'], answer: 1, explanation: 'RAID 1 provides redundancy by cloning data identically across two or more drives.' },
+  { id: 'lpic2-204-3', topicId: 5, question: 'In LVM, which command is used to add a new physical hard drive to an existing Volume Group?', options: ['pvcreate', 'vgextend', 'lvextend', 'vgcreate'], answer: 1, explanation: '`vgextend groupname /dev/sdX` adds the initialized physical volume to the group.' },
+  { id: 'lpic2-204-4', topicId: 5, question: 'Which hdparm flag is used to measure the read speed of a hard drive?', options: ['-T', '-S', '-t', '-y'], answer: 2, explanation: '`hdparm -t` performs timed device reads, while `-T` performs timed cache reads.' },
+  { id: 'lpic2-204-5', topicId: 5, question: 'What is iSCSI primarily used for?', options: ['Internet browsing securely', 'Transmitting SCSI commands over IP networks', 'A replacement for NFS file sharing', 'Local hardware encryption'], answer: 1, explanation: 'iSCSI encapsulates SCSI control and data to enable block-level storage access over over IP networks (SANs).' },
+
+  // Topic 205: Network Configuration
+  { id: 'lpic2-205-1', topicId: 6, question: 'Which command allows you to view the ARP cache (neighbor table) using the modern iproute2 suite?', options: ['arp -n', 'ip neigh show', 'netstat -rn', 'route -n'], answer: 1, explanation: '`ip neigh show` (or simply `ip n`) replaces the old `arp` command.' },
+  { id: 'lpic2-205-2', topicId: 6, question: 'Which command displays the current routing table using iproute2?', options: ['route', 'ip route show', 'netstat -r', 'ifconfig'], answer: 1, explanation: '`ip route show` or `ip r` is the proper iproute2 standard.' },
+  { id: 'lpic2-205-3', topicId: 6, question: 'What does the `ping -c 4` command do?', options: ['Pings 4 different addresses', 'Sends exactly 4 ICMP echo request packets', 'Sets the packet size to 4 bytes', 'Waits 4 seconds between pings'], answer: 1, explanation: 'The `-c` flag stands for count, limiting ping to 4 packets.' },
+  { id: 'lpic2-205-4', topicId: 6, question: 'Which tool is considered the standard network protocol analyzer (CLI packet sniffer) in Linux?', options: ['wireshark', 'nmap', 'tcpdump', 'tracepath'], answer: 2, explanation: 'tcpdump captures and analyzes network traffic directly on the command line.' },
+  { id: 'lpic2-205-5', topicId: 6, question: 'What port does standard HTTPS operate on?', options: ['80', '21', '22', '443'], answer: 3, explanation: 'HTTPS (HTTP over TLS/SSL) uses port 443 by default.' },
+
+  // Topic 206: System Maintenance
+  { id: 'lpic2-206-1', topicId: 7, question: 'When compiling tarball source code natively, which order of commands is traditionally executed?', options: ['make > make install > ./configure', './configure > make > make install', 'make install > ./configure > make', 'untar > make install > ./configure'], answer: 1, explanation: 'You configure the build, compile it with make, and install the binaries with make install.' },
+  { id: 'lpic2-206-2', topicId: 7, question: 'Which tool syncs files remotely and locally efficiently by sending only the differences (deltas)?', options: ['cp', 'scp', 'ftp', 'rsync'], answer: 3, explanation: 'rsync is renowned for its delta-transfer algorithm, reducing the amount of data sent over the network.' },
+  { id: 'lpic2-206-3', topicId: 7, question: 'What does the `strace` command do?', options: ['Tracks system security vulnerabilities', 'Traces system calls and signals produced by a process', 'Optimizes disk storage', 'Monitors network strings'], answer: 1, explanation: 'strace intercepts and records the system calls which are called by a process.' },
+  { id: 'lpic2-206-4', topicId: 7, question: 'Which command lists all open files and the processes that opened them?', options: ['lsof', 'ps', 'top', 'find'], answer: 0, explanation: '`lsof` stands for "list open files".' },
+  { id: 'lpic2-206-5', topicId: 7, question: 'What is the standard tar flag for extracting a gzip-compressed archive?', options: ['-cvf', '-xvf', '-zxvf', '-jcvf'], answer: 2, explanation: '`-z` decompresses gzip, `-x` extracts, `-v` is verbose, and `-f` specifies the file.' },
+
+  // Topic 207: Domain Name Server
+  { id: 'lpic2-207-1', topicId: 8, question: 'In BIND, which DNS record type is used to map a hostname to an IPv4 address?', options: ['MX', 'CNAME', 'A', 'AAAA'], answer: 2, explanation: 'The A (Address) record maps a fully qualified domain name to an IPv4 address.' },
+  { id: 'lpic2-207-2', topicId: 8, question: 'Which BIND command-line tool verifies the syntax of a zone file?', options: ['named-checkconf', 'named-checkzone', 'dns-lint', 'dig'], answer: 1, explanation: '`named-checkzone` checks the syntax and integrity of a zone file before reloading BIND.' },
+  { id: 'lpic2-207-3', topicId: 8, question: 'What does an MX record do?', options: ['Maps IPs to hostnames', 'Provides Mail Exchange routing', 'Provides IPv6 addresses', 'Aliases one name to another'], answer: 1, explanation: 'MX records specify the mail servers responsible for accepting email messages on behalf of a domain.' },
+  { id: 'lpic2-207-4', topicId: 8, question: 'Which technology prevents DNS spoofing by cryptographically signing zone data?', options: ['DNS-Over-HTTPS (DoH)', 'TLS', 'DNSSEC', 'TSIG'], answer: 2, explanation: 'DNSSEC (Domain Name System Security Extensions) provides origin authentication and data integrity.' },
+  { id: 'lpic2-207-5', topicId: 8, question: 'Which file configures the primary behavior of the BIND `named` daemon?', options: ['/etc/bind/bind.conf', '/etc/named.conf', '/var/named/config', '/etc/resolv.conf'], answer: 1, explanation: 'The main configuration file is traditionally `/etc/named.conf` or `/etc/bind/named.conf` on Debian variants.' },
+
+  // Topic 208: Web Services
+  { id: 'lpic2-208-1', topicId: 9, question: 'In Apache HTTPD, which directive defines a separate website served from the same server based on the requested domain name?', options: ['<Directory>', '<ServerHost>', '<VirtualHost>', '<Website>'], answer: 2, explanation: '<VirtualHost> allows multiple domains (like site1.com and site2.com) to run on a single IP.' },
+  { id: 'lpic2-208-2', topicId: 9, question: 'Nginx is heavily known for its ability to function as what?', options: ['A DNS server', 'A Reverse Proxy and Load Balancer', 'A purely internal file server', 'A kernel module'], answer: 1, explanation: 'Nginx excels at proxying web requests, load balancing, and serving static content efficiently.' },
+  { id: 'lpic2-208-3', topicId: 9, question: 'Squid is primarily used as a...', options: ['SMTP Relay', 'Caching Web Proxy', 'Database Engine', 'Filesystem Manager'], answer: 1, explanation: 'Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more.' },
+  { id: 'lpic2-208-4', topicId: 9, question: 'Which Apache module is required to establish a secure SSL/TLS connection?', options: ['mod_rewrite', 'mod_security', 'mod_ssl', 'mod_proxy'], answer: 2, explanation: '`mod_ssl` provides strong cryptography for the Apache web server via SSL and TLS.' },
+  { id: 'lpic2-208-5', topicId: 9, question: 'What port does a Squid proxy listen to by default?', options: ['80', '443', '3128', '8080'], answer: 2, explanation: 'Squid defaults to port 3128 for handling incoming proxy requests.' },
+
+  // Topic 209: File Sharing
+  { id: 'lpic2-209-1', topicId: 10, question: 'Which suite is required to share files from a Linux server to native Windows clients natively?', options: ['NFS', 'Samba', 'FTP', 'SSHFS'], answer: 1, explanation: 'Samba provides file and print services compatible with the SMB/CIFS protocol used by Windows.' },
+  { id: 'lpic2-209-2', topicId: 10, question: 'Where is the main configuration file for Samba located?', options: ['/etc/smb/smb.conf', '/etc/samba/smb.conf', '/usr/local/samba.cfg', '/var/lib/samba/config'], answer: 1, explanation: '`/etc/samba/smb.conf` stores the workgroup, share definitions, and security policies.' },
+  { id: 'lpic2-209-3', topicId: 10, question: 'Which file defines the directories to be shared by an NFS server?', options: ['/etc/exports', '/etc/nfs.conf', '/etc/fstab', '/etc/samba/smb.conf'], answer: 0, explanation: 'The `/etc/exports` file dictates which local directories are exported to which remote NFS clients.' },
+  { id: 'lpic2-209-4', topicId: 10, question: 'What command forces the NFS server to re-read the /etc/exports file without restarting?', options: ['nfs-update', 'systemctl reload nfs', 'exportfs -a / -r', 'mount -a'], answer: 2, explanation: '`exportfs -arv` re-exports all directories by reading the modified /etc/exports file.' },
+  { id: 'lpic2-209-5', topicId: 10, question: 'Which command adds a user to the Samba password database?', options: ['smbpasswd -a', 'useradd', 'passwd', 'pdbedit -n'], answer: 0, explanation: '`smbpasswd -a username` adds a Linux user to the Samba database.' },
+
+  // Topic 210: Network Client Management
+  { id: 'lpic2-210-1', topicId: 11, question: 'Which protocol dynamically assigns IP addresses to network clients?', options: ['DNS', 'DHCP', 'ARP', 'ICMP'], answer: 1, explanation: 'DHCP (Dynamic Host Configuration Protocol) leases IPs and network settings to clients.' },
+  { id: 'lpic2-210-2', topicId: 11, question: 'What is the purpose of PAM (Pluggable Authentication Modules)?', options: ['It manages software packages', 'It dynamically authenticates users across various services seamlessly', 'It routes packets', 'It encrypts hard drives'], answer: 1, explanation: 'PAM allows system administrators to set authentication policies without recompiling programs.' },
+  { id: 'lpic2-210-3', topicId: 11, question: 'What does LDAP stand for?', options: ['Linux Directory Authentication Protocol', 'Lightweight Directory Access Protocol', 'Local Domain Access Process', 'Large Data Authentication Platform'], answer: 1, explanation: 'LDAP is used for directory lookups and centralized authentication.' },
+  { id: 'lpic2-210-4', topicId: 11, question: 'In OpenVPN, what is a TUN device?', options: ['A hardware router', 'A routed IP tunnel virtual interface', 'A bridged Ethernet virtual interface', 'An encryption key'], answer: 1, explanation: 'TUN operates at OSI Layer 3 (IP routing), whereas TAP operates at Layer 2 (Ethernet frames).' },
+  { id: 'lpic2-210-5', topicId: 11, question: 'Which port does OpenVPN use by default?', options: ['1194 UDP', '22 TCP', '443 TCP', '53 UDP'], answer: 0, explanation: 'OpenVPN officially defaults to port 1194 on UDP.' },
+
+  // Topic 211: E-Mail Services
+  { id: 'lpic2-211-1', topicId: 12, question: 'Which protocol is used by Mail Transfer Agents (MTAs) like Postfix to send mail between servers?', options: ['POP3', 'IMAP', 'SMTP', 'SNMP'], answer: 2, explanation: 'SMTP (Simple Mail Transfer Protocol) is responsible for routing and sending emails.' },
+  { id: 'lpic2-211-2', topicId: 12, question: 'What is the main configuration file for Postfix?', options: ['/etc/postfix/master.cf', '/etc/postfix/main.cf', '/etc/mail/sendmail.cf', '/var/spool/postfix/config'], answer: 1, explanation: '`main.cf` contains the global parameters for the Postfix MTA.' },
+  { id: 'lpic2-211-3', topicId: 12, question: 'Which daemon is widely used for providing IMAP and POP3 access to mailboxes?', options: ['Postfix', 'Dovecot', 'Procmail', 'SpamAssassin'], answer: 1, explanation: 'Dovecot is a secure IMAP and POP3 server designed primarily for Linux systems.' },
+  { id: 'lpic2-211-4', topicId: 12, question: 'What is the function of Procmail or Sieve?', options: ['Sending mail over the Internet', 'Filtering, sorting, and delivering incoming mail to local folders', 'Authenticating users via LDAP', 'Hosting DNS MX records'], answer: 1, explanation: 'They are Mail Delivery Agents (MDAs) used to apply rules (like moving spam) during final delivery to a mailbox.' },
+  { id: 'lpic2-211-5', topicId: 12, question: 'What command in Postfix processes the /etc/aliases file after modification?', options: ['makemap', 'newaliases', 'postmap', 'systemctl reload postfix'], answer: 1, explanation: '`newaliases` reconstructs the alias database consumed by Postfix.' },
+
+  // Topic 212: System Security
+  { id: 'lpic2-212-1', topicId: 13, question: 'Which iptables table is used strictly for Network Address Translation (NAT) rules?', options: ['filter', 'mangle', 'nat', 'raw'], answer: 2, explanation: 'The `nat` table is consulted when a packet that creates a new connection is encountered, and is used to alter source/destination IPs.' },
+  { id: 'lpic2-212-2', topicId: 13, question: 'What tool actively monitors log files for malicious activity (like SSH brute force) and automatically updates firewall rules to ban the IP?', options: ['Snort', 'Fail2ban', 'Nmap', 'OpenVAS'], answer: 1, explanation: 'Fail2ban scans logs and bans IPs that show the malicious signs -- effectively reducing brute-force success rates.' },
+  { id: 'lpic2-212-3', topicId: 13, question: 'Which command is used to map open ports and discover services running on a remote host?', options: ['tcpdump', 'wireshark', 'nmap', 'ping'], answer: 2, explanation: 'Nmap (Network Mapper) is a security scanner used to discover hosts and services on a computer network.' },
+  { id: 'lpic2-212-4', topicId: 13, question: 'What is OpenVAS?', options: ['A firewall interface', 'A vulnerability scanner framework', 'A VPN protocol', 'An open-source anti-virus'], answer: 1, explanation: 'OpenVAS (Open Vulnerability Assessment System) is a comprehensive vulnerability scanner.' },
+  { id: 'lpic2-212-5', topicId: 13, question: 'Which iptables command sets the default action for the INPUT chain to DROP?', options: ['iptables -A INPUT -j DROP', 'iptables -P INPUT DROP', 'iptables -I INPUT DROP', 'iptables -D INPUT DROP'], answer: 1, explanation: '`-P` sets the Policy for the given chain. Setting it to DROP blocks all incoming traffic not explicitly allowed.' }
 ]

@@ -1,14 +1,14 @@
 export const lpic2_lessonContent = {
   // Topic 200
   'lpic2-200-1': {
-    title: 'Measure Resource Usage',
+    title: 'Ressourcennutzung messen',
     content: `
-### Measuring Resource Usage
-LPIC-2 covers advanced system administration. Topic 200 starts with capacity planning.
+### Messung der Systemressourcennutzung
+LPIC-2 deckt erweiterte Aspekte der Systemadministration ab. Thema 200 beginnt mit der Kapazitätsplanung.
 - **CPU**: \`mpstat\`, \`top\`, \`uptime\`
-- **Memory**: \`free\`, \`vmstat\`
-- **Disk I/O**: \`iostat\`, \`iotop\`
-- **Network**: \`iftop\`, \`netstat\`, \`ss\`
+- **Arbeitsspeicher (RAM)**: \`free\`, \`vmstat\`
+- **Festplatten-I/O**: \`iostat\`, \`iotop\`
+- **Netzwerk**: \`iftop\`, \`netstat\`, \`ss\`
     `,
   },
 }

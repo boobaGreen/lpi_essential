@@ -1,82 +1,92 @@
 export const lpic2_quiz_pool = [
-  {
-    id: 'lpic2-1',
-    topicId: 1,
-    question: 'Quale comando fornisce una vista dinamica e in tempo reale del sistema e dei processi in esecuzione, evidenziando le risorse di CPU e memoria?',
-    options: ['free', 'top', 'uptime', 'vmstat'],
-    answer: 1,
-    explanation: 'Il comando `top` è classicamente usato per visualizzare un ranking in tempo reale dei processi e del carico del sistema.'
-  },
-  {
-    id: 'lpic2-2',
-    topicId: 1,
-    question: 'Quale dei seguenti comandi utilizzeresti per visualizzare statistiche di I/O dettagliate per i dispositivi a blocchi?',
-    options: ['vmstat', 'iostat', 'netstat', 'mpstat'],
-    answer: 1,
-    explanation: 'Il comando `iostat` (fornito dal pacchetto sysstat) specializza il monitoraggio sui caricamenti input/output dei dischi.'
-  },
-  {
-    id: 'lpic2-3',
-    topicId: 1,
-    question: 'Vuoi collezionare e visualizzare l\'andamento delle performance del server nell\'arco di diversi mesi. Quale set di tool è il più adatto?',
-    options: ['top', 'ss', 'Collectd/MRTG/Cacti', 'tcpdump'],
-    answer: 2,
-    explanation: 'Questi strumenti sono progettati specificamente per raccogliere dati nel tempo e generare grafici (Spesso con RRDtool) utili nel capacity planning.'
-  },
-  {
-    id: 'lpic2-4',
-    topicId: 2,
-    question: 'Dove risiedono di default i moduli del kernel compilati all\'interno del filesystem?',
-    options: ['/boot/modules/', '/lib/modules/$(uname -r)/', '/etc/kernel/', '/var/lib/modules/'],
-    answer: 1,
-    explanation: 'I moduli del kernel sono sempre archiviati sotto `/lib/modules/` all\'interno di una direcotry con lo stesso nome della release del kernel.'
-  },
-  {
-    id: 'lpic2-5',
-    topicId: 2,
-    question: 'Quale target di make viene utilizzato per generare l\'immagine compressa del kernel nei kernel moderni?',
-    options: ['make zImage', 'make bzImage', 'make vmlinux', 'make install'],
-    answer: 1,
-    explanation: '`make bzImage` (big zImage) è il comando standard che supera i vecchi limiti di memoria visti con zImage.'
-  },
-  {
-    id: 'lpic2-6',
-    topicId: 2,
-    question: 'Durante la configurazione del kernel da sorgente, quale comando fornisce una interfaccia a menu testuale basata su ncurses?',
-    options: ['make config', 'make menuconfig', 'make xconfig', 'make defconfig'],
-    answer: 1,
-    explanation: '`make menuconfig` offre un utile menu scorrevole all\'interno del terminale, molto più rapido rispetto alla serie di domande sequenziali di make config.'
-  },
-  {
-    id: 'lpic2-7',
-    topicId: 3,
-    question: 'In un sistema basato tradizionalmente su SysVinit, quale file stabilisce il runlevel predefinito all\'avvio?',
-    options: ['/etc/inittab', '/etc/runlevel', '/boot/grub/grub.cfg', '/etc/init.d/rcS'],
-    answer: 0,
-    explanation: 'La riga `id:3:initdefault:` nel file `/etc/inittab` definisce in che runlevel posizionarsi al boot.'
-  },
-  {
-    id: 'lpic2-8',
-    topicId: 4,
-    question: 'Quale tipologia di filesystem fa un grande affidamento sugli extents ed è diventato il default nelle distribuzioni moderne basate su RHEL?',
-    options: ['ext4', 'xfs', 'btrfs', 'zfs'],
-    answer: 1,
-    explanation: 'XFS è un filesystem journaled a 64 bit famoso per l\'incredibile scalabilità ed è stato promosso come default in CentOS/RHEL dal ramo 7.'
-  },
-  {
-    id: 'lpic2-9',
-    topicId: 5,
-    question: 'Quale comando è principe nella gestione e creazione degli array Software RAID in Linux?',
-    options: ['lvm', 'fdisk', 'mdadm', 'parted'],
-    answer: 2,
-    explanation: '`mdadm` sta per Multiple Device Administrator e rimpiazza in toto i vecchi raidtools per operare con dischi logici /dev/mdX.'
-  },
-  {
-    id: 'lpic2-10',
-    topicId: 6,
-    question: 'Quale combinazione di comandi permete di visualizzare la cache ARP (tabella dei vicini di rete) tramite la suite moderna iproute2?',
-    options: ['arp -n', 'ip neigh show', 'netstat -rn', 'route -n'],
-    answer: 1,
-    explanation: 'Sebbene `arp` funzioni ancora, il comando corretto e standard in iproute2 è `ip neigh(bor) show`.'
-  }
+  // Topic 200: Capacity Planning
+  { id: 'lpic2-200-1', topicId: 1, question: 'Quale comando fornisce una vista dinamica e in tempo reale del sistema e dei processi in esecuzione, evidenziando le risorse di CPU e memoria?', options: ['free', 'top', 'uptime', 'vmstat'], answer: 1, explanation: 'Il comando `top` fornisce una vista in tempo reale dei processi.' },
+  { id: 'lpic2-200-2', topicId: 1, question: 'Quale comando utilizzeresti per visualizzare statistiche di I/O dettagliate per i dispositivi a blocchi?', options: ['vmstat', 'iostat', 'netstat', 'mpstat'], answer: 1, explanation: 'Il comando `iostat` monitora il caricamento dei dispositivi di input/output.' },
+  { id: 'lpic2-200-3', topicId: 1, question: 'Vuoi collezionare e visualizzare l\'andamento delle performance di sistema nell\'arco di mesi. Quale set di tool è il più adatto?', options: ['top', 'ss', 'Collectd/MRTG/Cacti', 'tcpdump'], answer: 2, explanation: 'Strumenti come Collectd, MRTG e Cacti raccolgono dati storici per graficarli (es. RRDtool).' },
+  { id: 'lpic2-200-4', topicId: 1, question: 'A cosa serve principalmente il tool MRTG?', options: ['Monitorare il traffico di rete e la capacità nel tempo', 'Terminare i processi bloccanti', 'Formattare dischi di rete', 'Fare audit dei log'], answer: 0, explanation: 'MRTG (Multi Router Traffic Grapher) serve storicamente per graphare il carico di rete e le performance.' },
+  { id: 'lpic2-200-5', topicId: 1, question: 'Qual è lo scopo del comando `sar`?', options: ['Cercare file su disco', 'System Activity Reporter, per collezionare log sulle risorse', 'Salvare archivi di backup', 'Creare script di shell'], answer: 1, explanation: '`sar` (da sysstat) viene impiegato per raccogliere, riportare o salvare report delle attività hardware.' },
+
+  // Topic 201: Linux Kernel
+  { id: 'lpic2-201-1', topicId: 2, question: 'Dove risiedono di default i moduli compilati del kernel all\'interno del filesystem?', options: ['/boot/modules/', '/lib/modules/$(uname -r)/', '/etc/kernel/', '/var/lib/modules/'], answer: 1, explanation: 'I moduli sono posizionati sotto `/lib/modules/` identificati con l\'output di uname -r.' },
+  { id: 'lpic2-201-2', topicId: 2, question: 'Quale target della direttiva "make" si usa per creare un\'immagine compressa del kernel (> 2.6)?', options: ['make zImage', 'make bzImage', 'make vmlinux', 'make install'], answer: 1, explanation: '`make bzImage` crea un "big zImage" superando i limiti fisiologici di architettura della vecchia zImage.' },
+  { id: 'lpic2-201-3', topicId: 2, question: 'Nella compilazione del kernel da zero, quale comando avvia l\'interfaccia testuale a menu basata su ncurses?', options: ['make config', 'make menuconfig', 'make xconfig', 'make defconfig'], answer: 1, explanation: '`make menuconfig` offre il menu a console classico ncurses.' },
+  { id: 'lpic2-201-4', topicId: 2, question: 'Quale comando è preferibile per caricare un modulo a runtime includendo automaticamente le sue dipendenze?', options: ['insmod', 'modinfo', 'modprobe', 'rmmod'], answer: 2, explanation: '`modprobe` usa la mappa di moduli per caricare anche eventuali prerequisiti.' },
+  { id: 'lpic2-201-5', topicId: 2, question: 'Quale file funziona da mappa dei simboli per localizzare l\'allocamento in memoria del kernel da debugarlo?', options: ['vmlinux', 'System.map', 'bzImage', 'initrd'], answer: 1, explanation: 'Il file `System.map` contiene la tabella di riferimento dei simboli e relativi indirizzi esadecimali.' },
+
+  // Topic 202: System Startup
+  { id: 'lpic2-202-1', topicId: 3, question: 'Sotto il vecchio SysVinit, quale file definisce il runlevel predefinito al boot?', options: ['/etc/inittab', '/etc/runlevel', '/boot/grub/grub.cfg', '/etc/init.d/rcS'], answer: 0, explanation: 'Il record "id:X:initdefault" viene eletto da `/etc/inittab`.' },
+  { id: 'lpic2-202-2', topicId: 3, question: 'In distribuzione Debian, quale utility wrap aggiorna il file grub.cfg in base alle nuove configurazioni?', options: ['grub-install', 'grub2-mkconfig', 'update-grub', 'grub-setup'], answer: 2, explanation: 'Debian/Ubuntu forniscono lo script wrap `update-grub`.' },
+  { id: 'lpic2-202-3', topicId: 3, question: 'Dovendo eseguire un recovery, quale target di systemd equivale parzialmente alla "single-user mode"?', options: ['runlevel1.target', 'rescue.target', 'single.target', 'emergency.target'], answer: 1, explanation: 'Il `rescue.target` di systemd espone una shell d\'emergenza isolata limitata localmente.' },
+  { id: 'lpic2-202-4', topicId: 3, question: 'Qual è il percorso tipico in cui viene archiviato il file di configurazione finale generato per GRUB 2?', options: ['/boot/grub/grub.conf', '/boot/grub2/grub2.cfg', '/boot/grub/grub.cfg', '/etc/grub.cfg'], answer: 2, explanation: 'Di default GRUB 2 scrive i propri menu in `/boot/grub/grub.cfg` (o grub2/ a seconda della distro).' },
+  { id: 'lpic2-202-5', topicId: 3, question: 'Come si bypassa il sistema init ufficiale tramite il bootloader per ottenere immediatamente i privilegi di root raw?', options: ['init=/bin/sh', 'single', 'rescue', 'bash'], answer: 0, explanation: 'Fornendo `init=/bin/sh` al kernel la macchina apre direttamente una shell senza eseguire service manager.' },
+
+  // Topic 203: Filesystem and Devices
+  { id: 'lpic2-203-1', topicId: 4, question: 'Quale file system basato pesantemente sugli extent è diventato il default nella famiglia Red Hat Enterprise 7 e successivi?', options: ['ext4', 'xfs', 'btrfs', 'zfs'], answer: 1, explanation: 'XFS, ideato storicamente da SGI, è lo standard in RHEL a causa dell\'immensa scalabilità e velocità I/O.' },
+  { id: 'lpic2-203-2', topicId: 4, question: 'Qual è il tool di base per controllare e riparare errori correnti in una partizione ext4?', options: ['fsck.ext4', 'e2fsck', 'Entrambi A e B', 'xfs_repair'], answer: 2, explanation: 'Sia `fsck.ext4` che `fsck.ext3` sono generalmente link logici al programma natio `e2fsck`.' },
+  { id: 'lpic2-203-3', topicId: 4, question: 'Che direttive troviamo all\'interno del file `/etc/fstab`?', options: ['Le opzioni del bootloader', 'La tabella dei file system statici da montare al boot', 'Le credenziali LDAP', 'Le interfacce di rete fisse'], answer: 1, explanation: '`fstab` elenca tutti i filesystem e relativi point of mount per configurarli automaticamente all\'acensione.' },
+  { id: 'lpic2-203-4', topicId: 4, question: 'Con smartctl, come mostri all\'istante lo "stato di salute generale" (PASSED/FAILED)?', options: ['-a', '-H', '-i', '-t short'], answer: 1, explanation: 'Il flag `-H` di smartctl genera rapidamente un esito generale di Health basato sul logging S.M.A.R.T. interno.' },
+  { id: 'lpic2-203-5', topicId: 4, question: 'Come si clona l\'intero contenuto del CD-ROM dentro un file ISO?', options: ['tar -cvf image.iso /dev/cdrom', 'dd if=/dev/cdrom of=image.iso', 'mkisofs -o image.iso /dev/cdrom', 'cp /dev/cdrom image.iso'], answer: 1, explanation: 'Il comando `dd` copia blocchi di dati alla perfezione; `if=` significa "input file" ed `of=` "output file".' },
+
+  // Topic 204: Advanced Storage
+  { id: 'lpic2-204-1', topicId: 5, question: 'Quale tool viene impiegato per plasmare gestire ed emettere report degli array RAID Software Linux?', options: ['lvm', 'fdisk', 'mdadm', 'parted'], answer: 2, explanation: '`mdadm` sta per "multiple device admin" per unificare i vecchi strumenti in formato software natio.' },
+  { id: 'lpic2-204-2', topicId: 5, question: 'Qual è il livello RAID che esegue esclusivamente data mirroring puro, garantendo duplicazione fisica senza striping?', options: ['RAID 0', 'RAID 1', 'RAID 5', 'RAID 10'], answer: 1, explanation: 'Il livello 1 è puramente dedicato al mirror fault-tolerance in scala 1 a 1.' },
+  { id: 'lpic2-204-3', topicId: 5, question: 'In Logica LVM, quale comando estende un "Volume Group" con un disco neo inizializzato?', options: ['pvcreate', 'vgextend', 'lvextend', 'vgcreate'], answer: 1, explanation: '`vgextend [nomeGruppo] [device]` accoda fisicamente il nuovo disco all\'interno della cassa virtuale (VG).' },
+  { id: 'lpic2-204-4', topicId: 5, question: 'Che parametro usa hdparm per compiere una statistica della velocità di lettura dal magnetico / flash disk aggirando il buffering della pagecache?', options: ['-T', '-S', '-t', '-y'], answer: 2, explanation: 'Il parametro `-t` per "timing buffer-cache reads" indica il raw sequential speed hardware.' },
+  { id: 'lpic2-204-5', topicId: 5, question: 'Su cosa si basa un sistema iSCSI?', options: ['Crittografia end-to-end P2P', 'Incapsulare logiche SCSI puro mediante reti TCP/IP comuni', 'Sostituto open-source di SMB e NFS', 'Connettori hardware SAS su rame'], answer: 1, explanation: 'iSCSI emula veri blocchi di storage fisico scambiando comandi SCSI classici sopra i pacchetti IP della LAN.' },
+
+  // Topic 205: Network Configuration
+  { id: 'lpic2-205-1', topicId: 6, question: 'Quale alternativa moderna di comando sostituisce `arp -n` per esaminare la tabella dei vicini (cache L2)?', options: ['arp -n', 'ip neigh show', 'netstat -rn', 'route -n'], answer: 1, explanation: '`ip neigh show` esplora la tabella dei nodi adjacenti registrati dalla nuova architettura iproute2.' },
+  { id: 'lpic2-205-2', topicId: 6, question: 'Attraverso la suite moderna iproute2, come vedi l\'attuale routing table di tutti i default gateway?', options: ['route', 'ip route show', 'netstat -r', 'ifconfig'], answer: 1, explanation: '`ip r` o `ip route show` visualizza i percorsi definiti.' },
+  { id: 'lpic2-205-3', topicId: 6, question: 'Qual è il risultato dell\'opzione `-c 4` nel comando ping?', options: ['Fissa quattro host target', 'Invia quattro pacchetti ECHO_REQUEST e poi conclude', 'Aumenta a 4ms l\'intervallo', 'Fissa una porta specifica.'], answer: 1, explanation: 'Il Count limite (-c 4) ferma l\'iterazione di ping al momento raggiunto della limitazione specificata.' },
+  { id: 'lpic2-205-4', topicId: 6, question: 'Qual è lo strumento standard a riga di comando per catturare o eseguire sniffer pacchetti in rete per diagnosi?', options: ['wireshark', 'nmap', 'tcpdump', 'tracepath'], answer: 2, explanation: '`tcpdump` intercetta flussi di pacchetti in ingresso e in uscita.' },
+  { id: 'lpic2-205-5', topicId: 6, question: 'Su quale porta standard transita la crittografia HTTPS over SSL/TLS?', options: ['80', '21', '22', '443'], answer: 3, explanation: 'La connessione HTTP Secure si muove di default su porta standard assegnata 443 TCP.' },
+
+  // Topic 206: System Maintenance
+  { id: 'lpic2-206-1', topicId: 7, question: 'Qual è l\'ordine corretto e archetipo per compilare dal codice i tgz software C in un Linux vanilla?', options: ['make > make install > ./configure', './configure > make > make install', 'make install > ./configure > make', 'untar > make install > ./configure'], answer: 1, explanation: '1. Creare makefile via ./configure. 2. Compilare eseguibili con make. 3. Spostarli a sistema tramite make install.' },
+  { id: 'lpic2-206-2', topicId: 7, question: 'Quale tool trasferisce efficientemente la sincronia dei file, comparando la checksum e inviando i chunk modificati ("delta algorithms")?', options: ['cp', 'scp', 'ftp', 'rsync'], answer: 3, explanation: 'rsync è l\'eccellenza open source per le replicazioni intelligenti e incrementali.' },
+  { id: 'lpic2-206-3', topicId: 7, question: 'Cos\'è deputato a fare il comando `strace` su sistema?', options: ['Trovare stringhe nei file binari protetti', 'Tracciare le "system call" API del kernel richieste da un identificato programma', 'Creare lo swap virtuale', 'Testare la Rete'], answer: 1, explanation: '`strace` aggancia PID passati ed elenca tutti gli accessi in I/O intercedendo con le kernel syscalls in real time.' },
+  { id: 'lpic2-206-4', topicId: 7, question: 'Quale tool elenca minuziosamente tutti i file in uso momentaneamente dai demoni attivi del sistema?', options: ['lsof', 'ps', 'top', 'find'], answer: 0, explanation: '`lsof` = List Open Files. Fondamentale poichè tutto in Linux è gestito semanticamente come un file o handler socket.' },
+  { id: 'lpic2-206-5', topicId: 7, question: 'Nel comando tar standard, quale set di flag decomprime e ripristina all\'aperto un grosso archivio compresso `.tar.gz`?', options: ['-cvf', '-xvf', '-zxvf', '-jcvf'], answer: 2, explanation: 'x estrae, v mostra i log testuali file per file, z un-zippa lo standard gzip ed f specifica il path ad estrarne.' },
+
+  // Topic 207: Domain Name Server
+  { id: 'lpic2-207-1', topicId: 8, question: 'Tra i vari record in zona DNS (BIND), quale serve primariamente a tradurre un FQDN direttamente ad una stringa IPv4?', options: ['MX', 'CNAME', 'A', 'AAAA'], answer: 2, explanation: 'A Record (Address). Un eventuale AAAA punterebbe ai blocchi d\'indirizzi protocollo IPv6.' },
+  { id: 'lpic2-207-2', topicId: 8, question: 'Prima di ricaricare brutalmente una zona modificata in configurazione BIND, quale test formale ne scongiura stop rovinosi?', options: ['named-checkconf', 'named-checkzone', 'dns-lint', 'dig'], answer: 1, explanation: 'Il tool checkzone simula e parserizza la macro sintattica interna per validarne l\'accensione reale.' },
+  { id: 'lpic2-207-3', topicId: 8, question: 'Cosa assicura l\'utilità della designazione di un Record MX?', options: ['Ridirezionali nomi su medesimi alias', 'Designa le preferenze relative al Mail Exchange Server di rotta.', 'Indirizzi statici dei name server autoritativi', 'Dati informazionali liberi (TXT)'], answer: 1, explanation: 'L\'MX accusa gli internet route su quale macchina riversare localmente il flusso di posta via porta 25 o SMTPS.' },
+  { id: 'lpic2-207-4', topicId: 8, question: 'Per ovviare al DNS Spoofing, quale struttura dota le estensioni dei domini di firme cifrate e chiavi asimmetriche valide?', options: ['DNS-Over-HTTPS (DoH)', 'TLS', 'DNSSEC', 'TSIG'], answer: 2, explanation: 'Il protocollo esteso DNSSEC incorpora la gerarchia di firma digitale per le traduzioni d\'indirizzo del Web Internazionale.' },
+  { id: 'lpic2-207-5', topicId: 8, question: 'Dove incrociamo o modifichiamo di solito il file originario d\'istruzioni per istanziare BIND (named)?', options: ['/etc/bind/bind.conf', '/etc/named.conf', '/var/named/config', '/etc/resolv.conf'], answer: 1, explanation: 'Nella stragrande maggioranza Linux la entry di configurazione per DNS BIND giace in `/etc/named.conf`.' },
+
+  // Topic 208: Web Services
+  { id: 'lpic2-208-1', topicId: 9, question: 'Come chiami il blocco direttivo che un Server Apache alloca a più siti, ognuno discriminato in base al nome FQDN?', options: ['<Directory>', '<ServerHost>', '<VirtualHost>', '<Website>'], answer: 2, explanation: 'I blocchi VirtualHost permettono logicamente il mapping portando multi-domini sulla singola socket listener HTTP(s).' },
+  { id: 'lpic2-208-2', topicId: 9, question: 'Per cos\'è celebrato in primo piano il web server "Nginx" rispetto ai modelli originari precedenti?', options: ['Server di risoluzione dei nomi integrata pura', 'Celerità d\'Event-Driven ad alto carico su funzioni di Reverse-Proxy / Multi-Balancing', 'Ottimizzazione del server grafico natio locale x11', 'Linguaggio C natio e precompilato dentro il kernel'], answer: 1, explanation: 'Il Load-Balancing su Eventi limitando l\'esplosione dei task e thread su backend dinamici php/python ed espletando Proxy.' },
+  { id: 'lpic2-208-3', topicId: 9, question: 'Per natura ed heritage concettuale, cos\'è il daemon "Squid"?', options: ['Relay SMTP', 'Proxy Web ad alte performance per Caching', 'Engine SQL distribuito in clustering', 'Virtual manager di macchine virtuali KVM'], answer: 1, explanation: 'È un Caching web Proxy Proxy, ottimizzato storicamente con ACL a scopo intranet.' },
+  { id: 'lpic2-208-4', topicId: 9, question: 'Qual è il Modulo caricato all\'occorrente in Apache per instaurare e servire Tunnel Sicuri su protocollo SSL/TLS (HTTPS)?', options: ['mod_rewrite', 'mod_security', 'mod_ssl', 'mod_proxy'], answer: 2, explanation: 'Il `mod_ssl` offre il collegamento diretto a librerie libssl/openssl applicative per proteggere in cryptos stream HTTP.' },
+  { id: 'lpic2-208-5', topicId: 9, question: 'Su che TCP Port è impostato globalmente Squid proxy al suo rilascio vergine primario?', options: ['80', '443', '3128', '8080'], answer: 2, explanation: 'Il default preinstallato ascolta specificatamente ed in attesa sulla port 3128.' },
+
+  // Topic 209: File Sharing
+  { id: 'lpic2-209-1', topicId: 10, question: 'Il panorama Linux nativo per condividere o montare volumi direttamente fra un dominio Active Directory Microsoft o Workgroup MS si basa essenzialmente su:', options: ['NFS', 'Samba', 'FTP', 'SSHFS'], answer: 1, explanation: 'Samba ricrea lato GNU e Unix-Like i protocolli di livello utenza Windows come file Server CIFS e NetBIOS interconnesso.' },
+  { id: 'lpic2-209-2', topicId: 10, question: 'Il server daemon Samba prende disposizioni primarie ed ACL dai parametri dettati in quale locazione assoluta standard?', options: ['/etc/smb/smb.conf', '/etc/samba/smb.conf', '/usr/local/samba.cfg', '/var/lib/samba/config'], answer: 1, explanation: 'Punto d\'ingresso del Domain / Workgroup in `/etc/samba/smb.conf`.' },
+  { id: 'lpic2-209-3', topicId: 10, question: 'Nei Server NFS, la lista vera e propria dove stabiliamo chi vede una share e la mappa utenze è gestita dal file interno?', options: ['/etc/exports', '/etc/nfs.conf', '/etc/fstab', '/etc/samba/smb.conf'], answer: 0, explanation: 'Esempio sintassi `/etc/exports`:   /srv/share   192.168.1.0/24(rw,sync,no_root_squash)' },
+  { id: 'lpic2-209-4', topicId: 10, question: 'Per allineare e attivare l\'elenco del demone NFS ricaricandolo senza interrompere attivamente i client on-line quale comando avviamo in root?', options: ['nfs-update', 'systemctl reload nfs', 'exportfs -a / -r', 'mount -a'], answer: 2, explanation: '`exportfs -arv` ordina il parsing e push live delle regole ad-hoc esposte dal file .exports senza ricaricamento systemctl hard code.' },
+  { id: 'lpic2-209-5', topicId: 10, question: 'Il manager Samba possiede una directory file password separata dagli Shadow Users classici di un Linux. Se vogliamo aggiungervi l\'utente "Claudio", digitiamo: ', options: ['smbpasswd -a claudio', 'useradd claudio', 'passwd samba claudio', 'pdbedit -n claudio -new'], answer: 0, explanation: 'Aggiunge un nome UNIX regolarmente attivo ad uno con privilegi Samba tramite la utility smbpasswd -a' },
+
+  // Topic 210: Network Client Management
+  { id: 'lpic2-210-1', topicId: 11, question: 'Quale Daemon protocollo assegna e gestisce in leasing transitorio un blocco Indirizzi IPv4 ed IPv6 nel network globale per evitare duplicità di client host manuali?', options: ['DNS', 'DHCP', 'ARP', 'ICMP'], answer: 1, explanation: 'Il Dynamic Host Configuration definisce il Pool su scala enterprise in concessione affitto / lease ai computer.' },
+  { id: 'lpic2-210-2', topicId: 11, question: 'Nel contesto dei Moduli, perché PAM risulta essere ormai lo Standard unificato di tutto lo spazio utenza locale?', options: ['Raccoglie i pacchetti repo come Aptitude', 'Dona a demoni separati ed app una "scatola nera" pluginica standardizzata e dinamica prettamente per la Gestione Autenticazioni senza ricompilare tool originari.', 'Regola il livello fisico del link router network.', 'Cripta i Kernel log d\'avvio.'], answer: 1, explanation: 'Pluggable Authentication Modules isola il livello codice "sicurezza/cripto-pass/Token e Fingerprint" da quello del semplice Programma che la richiede per accessi.' },
+  { id: 'lpic2-210-3', topicId: 11, question: 'Se citi LDAP, storicamente per quale servizio essenziale viene inquadrato su reti promiscue moderne?', options: ['Rintraccio autenticazione utenze (Linux Directory LDAP)', 'Protocollo Directory Leggero d\'Autenticazione condivisa e Gestione Gerarchie Dati centralizzata.', 'Connessione tunnel layer due locale LAN.', 'Interfaccia e framework dati per gestire DataBase enormi Postgre. '], answer: 1, explanation: 'LDAP o Lightweight Directory Access Protocol innalza il dominio gerarchico delle policy / address books / gruppi di sicurezza trasversali ed univoci server.' },
+  { id: 'lpic2-210-4', topicId: 11, question: 'All\'interno delle interfacce TAP e TUN fornite nei protocolli OpenVPN in Linux, su quale frame logico OSI s\'interfaccia il modulo device `TUN` in via strettamente preferenziale?', options: ['Fisico Layer Zero e MacAddress bridge.', 'Incapsula il Layer 3, ovvero Indirizzamenti IP crittografati e instradati in routing senza il layer datalink del MAC frame Ethernet.', 'Un file proxy su porta applicativo OSI limitato all\'Header.', 'EsCLUSIVAMENTE lo stacking della VLAN trunk in L2 e MAC filter promiscuos'], answer: 1, explanation: 'I tunnel ip "tun" sono in layer 3 routing OSI.' },
+  { id: 'lpic2-210-5', topicId: 11, question: 'A quale protocollo socket e limitazione di Porta è assegnabile il demone base di OpenVPN se rilasciato natio in factory defaults configurazione UDP?', options: ['1194 UDP', '22 TCP', '443 TCP', '53 UDP'], answer: 0, explanation: 'Di design natio ed IANA allocato ufficiale è in 1194 per la trasmissione del client VPN. UDP prediletto alla scalabilità pacchetti.' },
+
+  // Topic 211: E-Mail Services
+  { id: 'lpic2-211-1', topicId: 12, question: 'A mezzo di quale Standard IETF i vari server mondiali MTA come Exim, Postfix e Sendmail interscambiano server-to-server il Payload o trasmettono in Relay in entrata le buste dell\'utenza esterna locale?', options: ['POP3', 'IMAP', 'SMTP', 'SNMP'], answer: 2, explanation: 'Simple Mail Transfer Protocol, RFC porta 25-587 o 465 (Secure) garantisce lo Standard Interscambio di busta envelope e Payload d\'intestazione eBody messaggi.' },
+  { id: 'lpic2-211-2', topicId: 12, question: 'Al cospetto del celebre MTA Postfix, la colonna portante dei settaggi operazionali di restrizione traffico, domini virtualizzati ecc. dimora di prassi nel file assoluto?', options: ['/etc/postfix/master.cf', '/etc/postfix/main.cf', '/etc/mail/sendmail.cf', '/var/spool/postfix/config'], answer: 1, explanation: 'Il `main.cf` è lo scoglio dominante. Master.cf descrive e manipola istanze daemon d\'ascolto multiple port side ecc.' },
+  { id: 'lpic2-211-3', topicId: 12, question: 'Oggi l\'offerta applicativa di Dovecot Server rimpiazzerà o complementerà quasi sempre il software MTA. Cosa permette di fruire alle cassette locali Mbox e Maildir per utenza lato Client / Telefonia in mobilità internet?', options: ['La conversione dei moduli DNS AntiSpam.', 'I servizi dedicati escluisivamente all\'apertura ed esplorazione sincrona delle mailbox protocollando nativamente protocolli IMAP ad alte prestazioni.', 'L\'archiviazione centralizzata Proxy dei messaggi persi per fail over.', 'La pulizia del codice crittografico Header dei protocolli SMTP Postfix.'], answer: 1, explanation: 'Dovecot Server è globalmente lo standard provider d\'Infrastrutture mail-retrieving in Pop3 - IMAP per la Lettura asincrona client / Server.' },
+  { id: 'lpic2-211-4', topicId: 12, question: 'Dei vari Delivery Agents storici per Linux (MDA), quale tra Procmail e Sieve ha una forte inclinazione e capacità integrata nel server di consegna finale?', options: ['Affinare l\'instradamento della spedizione mail bloccandola sulle ACL esterne DNS.', 'Filtrare a posteriori in inbox la Posta, e stabilire direttive come deviarla per categorie o applicarci marcature AntiSpam basandosi da espressioni al contenuto o header locali.', 'Creare archivi e Snapshot live del database ldap unito al kernel block.', 'Compilare un registro DNS pubblico e renderlo in ascolto IMAP aperto. '], answer: 1, explanation: 'I vari Procmail o Scripts "Sieve" operano un Filtro intelligente all\'ultimissimo passaggio dell\'imbustatazione nel Mailbox Dir finale, scremando ed instradandone lo smistamento tra Folders utente.' },
+  { id: 'lpic2-211-5', topicId: 12, question: 'Trovandoci sul modulo MTA Postfix e avendo ricreato alias nel classico file locale `/etc/aliases`, quale riga di processo rigenererà la Base di mapping binaria (Hash Map)?', options: ['makemap', 'newaliases', 'postmap', 'systemctl reload postfix'], answer: 1, explanation: 'Su derivati Postfix la dicitura storicamente compatibile in Sendmail Style passata al linker `newaliases` edita il binary map (.db).' },
+
+  // Topic 212: System Security
+  { id: 'lpic2-212-1', topicId: 13, question: 'Riferendosi al Packet Filtering Legacy base "iptables", quale Table integrata è circoscritta interamente per governare alterazioni NAT pre-routing o manipolare IP Privazioni Natter?', options: ['filter', 'mangle', 'nat', 'raw'], answer: 2, explanation: 'La Tabella logica nominata "nat". Iptables rintraccia ed elabora IP Routing Alterations SNAT / DNAT od in Masquerading interno a questa tab designata d\'isolamento.' },
+  { id: 'lpic2-212-2', topicId: 13, question: 'Dei vari Daemon Open Source ausiliari alla sicurezza moderna basati su Pattern Matching Python, quale rianalizzerà i report Log di sistema applicativi al volo ed avvierà Drop ed inibizioni in IP Tables di blocco attacchi ripetitivi e Brute-Force automatici Server esterni passanti come il Ddos su ssh o wordpress?', options: ['Snort / Suricata', 'Fail2ban', 'Nmap', 'OpenVAS/Nessus'], answer: 1, explanation: 'Lo Script Daemon Fail2Ban innalza il muro drop Iptables e Null Route verso l\'aggressore bannato provvisoriamente monitorandone le tracce e reiterazioni.' },
+  { id: 'lpic2-212-3', topicId: 13, question: 'Volendo testare come Ethical Hacker il set e Footprint delle versioni attive esposte e vulnerabili di un nostro potenziale Client o Server, il tool caposaldo per Network Mapping di Porte e Servizi?', options: ['tcpdump stream socket debug', 'wireshark analizer LAN', 'nmap portscan & versioning match', 'ping scan sweeping sweep'], answer: 2, explanation: 'L\'NMAP (Network Mapper). Permette a 360 Gradi la ricognizione profonda remota da terminale della Mappa Porte Esistenti a Livello Host o intera SubNet aziendale e test.' },
+  { id: 'lpic2-212-4', topicId: 13, question: 'Riferendoti a Piattaforme strutturate, che Cos\'è storicamente il set di Security Audit "OpenVAS"?', options: ['Una Shell per generare Firewall', 'Strumentazione Server ad-hoc open source finalizzata alla scoperta di falle generiche con un imponente database di Common Vulnerabilities aggiornabile (Vulnerabilty Manager). ', 'Un Server crittografico VPN parallelo OpenVpn', 'Motore applicabile a Desktop ad antivirus in Kernel natio Linux ed Unix.'], answer: 1, explanation: 'OpenVas forkoa dalle versioni iniziali di Nessus Scanner. Si prodiga di eseguire migliaia di Audit simultanei d\'iniezioni su apparati per testarne le gravità critiche e trarne report informativi su Patch Correttive.' },
+  { id: 'lpic2-212-5', topicId: 13, question: 'Specificatamente nel filtro rules base preistorico di iptables.. Quale costrutto cambia in positivo da "Accetta incondizionatamente tutto il network passante in INPUT in default policy" al "Scarta ed eclissa ogni cosa silenziando la macchina" ?', options: ['iptables -A INPUT -j DROP', 'iptables -P INPUT DROP', 'iptables -I INPUT DROP', 'iptables -D INPUT DROP'], answer: 1, explanation: 'L\'Argomento Policy "-P". Ristabilisce logicamente d\'Ufficio che la Base Linea comportamentale Firewall sia di base di DROP ed impone quindi di compilare eccezioni esplicite per aprire fessure applicative ed ingressi di Trust (Port forarding). ' }
 ]

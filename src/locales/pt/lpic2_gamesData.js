@@ -1,8 +1,8 @@
 export const lpic2_gamesData = [
   {
     id: 1,
-    text: 'The command `iostat` is typically provided by the `sysstat` package and shows CPU and I/O statistics.',
+    text: 'A diretiva CLI \`iostat\` é nativamente contida no kit instalável \`sysstat\` fornecendo as mensurações baseadas em processamento e blocos físicos de armazenamento lido/escrito.',
     isTrue: true,
-    explanation: 'Yes, iostat is part of sysstat and is an essential tool for measuring disk I/O performance.'
+    explanation: 'Correto. iostat é indiscutivelmente alheado e fornecido dentro dos pacotes do famoso "System Statistics" (sysstat) no LInux e em todo mundo Unix.'
   },
 ]

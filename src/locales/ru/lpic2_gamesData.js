@@ -1,8 +1,8 @@
 export const lpic2_gamesData = [
   {
     id: 1,
-    text: 'The command `iostat` is typically provided by the `sysstat` package and shows CPU and I/O statistics.',
+    text: 'Команда \`iostat\`, применяемая для сбора дисковой метрики ввода-вывода (IO) в режиме времени, является составной частью пакета \`sysstat\`.',
     isTrue: true,
-    explanation: 'Yes, iostat is part of sysstat and is an essential tool for measuring disk I/O performance.'
+    explanation: 'Верно. \`iostat\` исторически внедрен вместе с `sar` и `mpstat` в пакет sysstat.'
   },
 ]

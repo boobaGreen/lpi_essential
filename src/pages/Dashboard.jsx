@@ -119,14 +119,23 @@ export default function Dashboard() {
   const overallProgress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0
 
   const maxScore = courseId === 'rhcsa' ? 300 : 800
-  const examFallbackText = courseId === 'rhcsa' 
-    ? (currentLang === 'en' ? '50 questions • 60 minutes' : '50 domande • 60 minuti') 
-    : t('examSimFallback')
-    
-  const topicsTitleText = courseId === 'rhcsa'
-    ? (currentLang === 'en' ? 'The 10 Exam Topics' : 'I 10 Topic dell\'Esame')
-    : t('the5Topics')
-
+  let examFallbackText = t('examSimFallback')
+  
+  if (courseId === 'rhcsa') {
+    examFallbackText = currentLang === 'en' ? '50 questions • 60 minutes' : '50 domande • 60 minuti'
+  } else if (courseId === 'lpic-2') {
+    examFallbackText = currentLang === 'en' ? '60 questions • 90 min (Exam 201 & 202)' : '60 domande • 90 min (Esami 201 & 202)'
+  } else if (courseId === 'lpic1-101' || courseId === 'lpic1-102') {
+    examFallbackText = currentLang === 'en' ? '60 questions • 90 minutes' : '60 domande • 90 minuti'
+  }
+  let topicsTitleText = t('the5Topics')
+  if (courseId === 'rhcsa') {
+    topicsTitleText = currentLang === 'en' ? 'The 10 Exam Topics' : 'I 10 Topic dell\'Esame'
+  } else if (courseId === 'lpic-2') {
+    topicsTitleText = currentLang === 'en' ? 'The 13 Exam Topics' : 'I 13 Topic dell\'Esame'
+  } else if (courseId === 'lpic1-101' || courseId === 'lpic1-102') {
+    topicsTitleText = currentLang === 'en' ? 'The 6 Exam Topics' : 'I 6 Topic dell\'Esame'
+  }
   const bestExam = examAttempts.length > 0
     ? Math.max(...examAttempts.map(a => a.score))
     : null
