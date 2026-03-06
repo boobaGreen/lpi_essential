@@ -1,3 +1,195 @@
-﻿// RHCSA Games Data  de (placeholder)
-// Fallback to Italian (it) until translated
-export { memoryGameData, trueFalseData, fillGapData, dragDropData, terminalChallengeData } from '../it/rhcsa_gamesData.js'
+﻿export const memoryGameData = [
+  // Topic 1
+  { command: 'grep -r "pattern" /etc/', description: 'Sucht rekursiv nach einem Muster in /etc/' },
+  { command: 'tar -czvf archive.tar.gz /dir', description: 'Erstellt ein gzip-komprimiertes Archiv' },
+  { command: 'tar -xzvf archive.tar.gz', description: 'Extrahiert ein tar.gz-Archiv' },
+  { command: 'find / -name "*.conf" -type f', description: 'Findet alle .conf-Dateien im System' },
+  { command: 'chmod 755 file', description: 'rwxr-xr-x — Besitzer führt aus, andere lesen/ausführen' },
+  { command: 'chown mario:dev file', description: 'Ändert den Besitzer und die Gruppe einer Datei' },
+  { command: 'ln -s /real/src /symbolic/link', description: 'Erstellt einen symbolischen Link (Symlink)' },
+  { command: 'man -k "keyword"', description: 'Sucht nach einem Schlüsselwort in man-Pages' },
+  // Topic 2
+  { command: 'export VAR="value"', description: 'Macht eine Variable für Subprozesse verfügbar' },
+  { command: 'RESULT=$(command)', description: 'Fängt die Ausgabe eines Befehls in einer Variablen auf' },
+  { command: '[ -f "$FILE" ]', description: 'Prüft, ob die Variable auf eine existierende Datei zeigt' },
+  { command: '[ -d "$DIR" ]', description: 'Prüft, ob die Variable auf ein existierendes Verzeichnis zeigt' },
+  { command: '[ -z "$VAR" ]', description: 'Prüft, ob eine Zeichenfolge (String) leer ist' },
+  { command: 'for f in /etc/*.conf; do echo $f; done', description: 'Iteriert über alle .conf in /etc/' },
+  // Topic 3
+  { command: 'systemctl enable --now sshd', description: 'Aktiviert und startet sshd mit einem Befehl' },
+  { command: 'systemctl mask httpd', description: 'Verhindert den Start des httpd-Dienstes' },
+  { command: 'systemctl set-default multi-user.target', description: 'Setzt das Standard-Boot-Ziel (CLI)' },
+  { command: 'journalctl -u sshd -f', description: 'Verfolgt sshd-Dienstprotokolle in Echtzeit' },
+  { command: 'kill -9 PID', description: 'Sendet SIGKILL, um einen Prozess sofort zu beenden' },
+  { command: 'renice -n -5 -p PID', description: 'Ändert die Priorität eines laufenden Prozesses' },
+  // Topic 4
+  { command: 'pvcreate /dev/sdb1', description: 'Initialisiert eine Partition als LVM Physical Volume' },
+  { command: 'vgcreate datavg /dev/sdb1', description: 'Erstellt eine Volume Group aus einem PV' },
+  { command: 'lvcreate -L 2G -n datalv datavg', description: 'Erstellt ein Logical Volume mit 2GiB' },
+  { command: 'lvextend -L +1G -r /dev/vg/lv', description: 'Erweitert LV und passt die Dateisystemgröße an' },
+  { command: 'xfs_growfs /mountpoint', description: 'Erweitert ein eingehängtes XFS-Dateisystem' },
+  // Topic 5
+  { command: 'mkfs.xfs /dev/sdb1', description: 'Formatiert eine Partition mit dem XFS-Dateisystem' },
+  { command: 'cryptsetup luksFormat /dev/sdc1', description: 'Formatiert eine Partition mit LUKS-Verschlüsselung' },
+  { command: 'cryptsetup open /dev/sdc1 vault', description: 'Öffnet einen LUKS-Container als /dev/mapper/vault' },
+  { command: 'setfacl -m u:mario:rw file', description: 'Fügt ACL-Berechtigungen für den Benutzer mario hinzu' },
+  { command: 'getfacl file', description: 'Zeigt erweiterte ACL-Einträge einer Datei an' },
+  // Topic 6
+  { command: 'dnf install package', description: 'Installiert ein Paket mit allen Abhängigkeiten' },
+  { command: 'dnf provides /usr/bin/vim', description: 'Findet heraus, welches Paket eine Datei bereitstellt' },
+  { command: 'rpm -qf /usr/bin/passwd', description: 'Findet das Paket, dem eine installierte Datei gehört' },
+  { command: 'rpm -ql package', description: 'Listet alle Dateien auf, die in einem Paket enthalten sind' },
+  { command: 'grub2-mkconfig -o /boot/grub2/grub.cfg', description: 'Erstellt die GRUB2-Konfiguration neu' },
+  // Topic 7
+  { command: 'nmcli con mod ens3 ipv4.addresses 192.168.1.100/24', description: 'Setzt eine statische IP für eine Verbindung' },
+  { command: 'nmcli con up ens3', description: 'Aktiviert und wendet die Netzwerkkonfiguration an' },
+  { command: 'firewall-cmd --add-service=http --permanent', description: 'Öffnet dauerhaft den Port 80 in der Firewall' },
+  { command: 'firewall-cmd --reload', description: 'Wendet permanente Firewall-Regeln ohne Neustart an' },
+  { command: 'ssh-copy-id mario@server', description: 'Kopiert den öffentlichen SSH-Schlüssel auf den Server' },
+  // Topic 8
+  { command: 'useradd -m -s /bin/bash mario', description: 'Erstellt Benutzer mit Home-Verzeichnis und Bash-Shell' },
+  { command: 'usermod -aG wheel mario', description: 'Fügt mario der Gruppe wheel hinzu (sudo-Zugriff)' },
+  { command: 'chage -M 90 mario', description: 'Setzt den Ablauf des Passworts auf 90 Tage' },
+  { command: 'visudo', description: 'Sicheres Bearbeiten von /etc/sudoers mit Syntaxprüfung' },
+  { command: 'userdel -r mario', description: 'Löscht den Benutzer und sein Home-Verzeichnis' },
+  // Topic 9
+  { command: 'getenforce', description: 'Zeigt den aktuellen SELinux-Modus an' },
+  { command: 'setenforce 0', description: 'Schaltet SELinux in den permissiven Modus (vorübergehend)' },
+  { command: 'restorecon -Rv /path', description: 'Stellt standardmäßige SELinux-Kontexte rekursiv wieder her' },
+  { command: 'setsebool -P httpd_can_network_connect on', description: 'Aktiviert dauerhaft ein SELinux-Boolean' },
+  { command: 'semanage port -a -t http_port_t -p tcp 8443', description: 'Fügt den Port 8443 zum Typ http_port_t hinzu' },
+  // Topic 10
+  { command: 'podman run -d --name web -p 8080:80 nginx', description: 'Startet nginx Container im Hintergrund auf Port 8080' },
+  { command: 'podman exec -it container bash', description: 'Öffnet eine Bash-Shell in einem laufenden Container' },
+  { command: 'podman build -t myapp:1.0 .', description: 'Baut ein Image aus einem Containerfile im Verzeichnis' },
+]
+
+export const trueFalseData = [
+  // Nivel 1
+  { text: 'Das Standarddateisystem unter RHEL9 ist XFS.', answer: true, explanation: 'XFS ist seit RHEL7+ der Standard wegen seiner Skalierbarkeit.', difficulty: 1 },
+  { text: '"systemctl enable sshd" startet den Dienst sofort.', answer: false, explanation: 'enable konfiguriert den Autostart, --now startet ihn auch.', difficulty: 1 },
+  { text: 'Die Datei /etc/fstab steuert, welche Dateisysteme beim Booten eingehängt werden.', answer: true, explanation: 'systemd liest fstab beim Start.', difficulty: 1 },
+  { text: 'Ein nice-Wert von -20 bedeutet die höchste CPU-Priorität.', answer: true, explanation: '-20 ist die höchste, +19 ist die niedrigste Priorität.', difficulty: 1 },
+  { text: 'SIGKILL (9) kann von einem Prozess abgefangen und ignoriert werden.', answer: false, explanation: 'SIGKILL kann nie abgefangen werden. Der Prozess beendet sich sofort.', difficulty: 1 },
+  { text: '"pvcreate" erstellt ein Logical Volume.', answer: false, explanation: 'pvcreate initialisiert ein Physical Volume (PV). LV wird mit lvcreate erstellt.', difficulty: 1 },
+  { text: 'SELinux im Modus "permissive" blockiert Zugriffe.', answer: false, explanation: 'Nein, es protokolliert nur. "Enforcing" blockiert Zugriffe.', difficulty: 1 },
+  { text: 'Podman benötigt einen System-Daemon (Hintergrunddienst) wie Docker.', answer: false, explanation: 'Podman ist daemonless und kann rootless ausgeführt werden.', difficulty: 1 },
+  { text: '"restorecon" stellt die ursprünglichen SELinux-Kontexte wieder her.', answer: true, explanation: 'Es stellt die von semanage fcontext definierten Kontexte wieder her.', difficulty: 1 },
+  { text: 'Eine Dateisystem-UUID ändert sich bei jedem Neustart.', answer: false, explanation: 'Die UUID wird beim Formatieren vergeben und ist dauerhaft.', difficulty: 1 },
+  // Nivel 2
+  { text: '"lvextend -r" vergrößert automatisch auch das Dateisystem.', answer: true, explanation: 'Das -r (resize) Flag führt resize2fs oder xfs_growfs aus.', difficulty: 2 },
+  { text: '"firewall-cmd --add-port=8080/tcp" (ohne --permanent) überlebt einen Neustart.', answer: false, explanation: 'Ohne --permanent ist die Regel temporär und geht nach einem Reload/Reboot verloren.', difficulty: 2 },
+  { text: '"semanage fcontext" wendet den Kontext sofort auf die Dateien an.', answer: false, explanation: 'semanage aktualisiert nur die Datenbank. Du musst "restorecon" ausführen.', difficulty: 2 },
+  { text: '"usermod -G wheel mario" (ohne -a) behält marios bisherige Gruppen.', answer: false, explanation: '-G ohne -a ersetzt alle anderen Sekundärgruppen.', difficulty: 2 },
+  { text: 'XFS kann problemlos verkleinert (geschrumpft) werden.', answer: false, explanation: 'XFS kann NUR VERGRÖSSERT werden. Niemals verkleinert.', difficulty: 2 },
+  { text: 'Ein SELinux-Boolean-Wechsel ohne -P ist nach dem Neustart weg.', answer: true, explanation: 'Richtig, -P macht die Boolean-Änderung permanent.', difficulty: 2 },
+  { text: 'Das Podman-Tag ":z" bei Volumes erlaubt das Teilen mit anderen Containern.', answer: true, explanation: ':z = shareable SELinux Label. :Z = privat.', difficulty: 2 },
+  { text: '"journalctl -b" zeigt nur die Logs seit dem letzten Systemstart.', answer: true, explanation: '-b filtert die Journal-Informationen für den aktuellen Bootvorgang.', difficulty: 2 },
+  // Nivel 3
+  { text: 'Nach dem Zurücksetzen des Root-Passworts über rd.break ist "touch /.autorelabel" nötig.', answer: true, explanation: '/etc/shadow wurde ohne richtige SELinux-Umgebung verändert.', difficulty: 3 },
+  { text: 'Die Mount-Option "nosuid" verhindert das Ausführen aller Binärdateien.', answer: false, explanation: '"noexec" blockiert Binaries. "nosuid" ignoriert setuid-Rechte.', difficulty: 3 },
+  { text: 'In /etc/fstab bedeutet "pass=2", dass das Dateisystem nicht beim Booten überprüft wird.', answer: false, explanation: 'pass=0 bedeutet keine Prüfung. pass=2 bedeutet Prüfung nach dem Root-FS (pass=1).', difficulty: 3 },
+  { text: 'systemctl daemon-reload muss nach jeder Änderung an einer Service-Datei ausgeführt werden.', answer: true, explanation: 'systemd liest die Konfiguration aus dem Cache, nicht direkt von der Festplatte.', difficulty: 3 },
+  { text: '"semanage port -a" wirkt sofort, ohne Neustart oder zusätzliche Befehle.', answer: true, explanation: 'semanage wendet Port-Regeln direkt und dauerhaft auf die SELinux-Richtlinie an.', difficulty: 3 },
+  { text: '"mv" (verschieben) behält den ursprünglichen SELinux-Kontext der Datei bei.', answer: true, explanation: 'Deshalb muss man danach oft "restorecon" verwenden.', difficulty: 3 },
+  { text: '"rpm -V" listet alle Pakete mit fehlenden Abhängigkeiten auf.', answer: false, explanation: 'Es überprüft die Integrität (Prüfsumme, Rechte) der auf dem Dateisystem installierten Dateien.', difficulty: 3 },
+]
+
+export const fillGapData = [
+  // Difficulty 1
+  { prompt: 'systemctl _____ sshd', answer: 'enable --now', hint: 'aktiviert und startet den Dienst', difficulty: 1 },
+  { prompt: 'dnf _____ httpd', answer: 'install', hint: 'installiert das Paket', difficulty: 1 },
+  { prompt: 'useradd -m -s /bin/bash _____', answer: 'mario', hint: 'Benutzername', difficulty: 1 },
+  { prompt: 'pvcreate _____', answer: '/dev/sdb1', hint: 'Name der Partition', difficulty: 1 },
+  { prompt: 'getenforce', answer: 'getenforce', hint: 'zeigt den aktuellen SELinux-Modus', difficulty: 1 },
+  { prompt: 'firewall-cmd --add-service=http _____', answer: '--permanent', hint: 'macht die Regel dauerhaft', difficulty: 1 },
+  { prompt: 'podman _____ -it ubi9 /bin/bash', answer: 'run', hint: 'startet einen Container', difficulty: 1 },
+  { prompt: 'tar -czvf backup.tar.gz _____', answer: '/etc/ssh/', hint: 'Verzeichnis zum Sichern', difficulty: 1 },
+  { prompt: 'passwd _____', answer: 'mario', hint: 'setzt das Passwort für', difficulty: 1 },
+  { prompt: 'systemctl _____ httpd', answer: 'status', hint: 'überprüft den Systemstatus', difficulty: 1 },
+  // Difficulty 2
+  { prompt: 'vgcreate datavg _____', answer: '/dev/sdb1', hint: 'Physical Volume hinzufügen', difficulty: 2 },
+  { prompt: 'lvcreate _____ 2G -n datalv datavg', answer: '-L', hint: 'Flag für die Zielgröße', difficulty: 2 },
+  { prompt: 'lvextend -L +1G _____ /dev/datavg/datalv', answer: '-r', hint: 'erweitert auch das FS', difficulty: 2 },
+  { prompt: 'setenforce _____', answer: '0', hint: 'warnender Modus', difficulty: 2 },
+  { prompt: 'usermod _____ wheel mario', answer: '-aG', hint: 'fügt einer Gruppe an', difficulty: 2 },
+  { prompt: 'chage _____ 90 mario', answer: '-M', hint: 'Gültigkeitstage des Passworts', difficulty: 2 },
+  { prompt: 'firewall-cmd _____', answer: '--reload', hint: 'neuladen der Konfig', difficulty: 2 },
+  { prompt: 'ssh-keygen -t _____', answer: 'ed25519', hint: 'modernes Key-Format', difficulty: 2 },
+  { prompt: 'cryptsetup _____ /dev/sdc1', answer: 'luksFormat', hint: 'Festplatte verschlüsseln', difficulty: 2 },
+  { prompt: 'grub2-mkconfig -o _____', answer: '/boot/grub2/grub.cfg', hint: 'Pfad zur GRUB2-Konfig', difficulty: 2 },
+  // Difficulty 3
+  { prompt: 'semanage fcontext -a -t httpd_sys_content_t "_____"', answer: '/web(/.*)?', hint: 'Regex für alles im Ordner', difficulty: 3 },
+  { prompt: 'restorecon _____ /var/www/html', answer: '-Rv', hint: 'rekursiv und redselig', difficulty: 3 },
+  { prompt: 'setsebool _____ httpd_can_network_connect on', answer: '-P', hint: 'für immer geltend', difficulty: 3 },
+  { prompt: 'podman run -v /data:/data:_____ nginx', answer: 'Z', hint: 'exklusives SELinux Label', difficulty: 3 },
+  { prompt: 'systemctl _____ rescue.target', answer: 'isolate', hint: 'zu diesem Target wechseln', difficulty: 3 },
+  { prompt: 'mkfs._____ /dev/datavg/datalv', answer: 'xfs', hint: 'typisches RHEL FS', difficulty: 3 },
+  { prompt: 'semanage port -a -t http_port_t -p tcp _____', answer: '8443', hint: 'alternativer Webport', difficulty: 3 },
+  { prompt: 'journalctl -u sshd _____ "1 hour ago"', answer: '--since', hint: 'Zeitpunkt Filter', difficulty: 3 },
+  { prompt: 'rpm -_____ /usr/bin/passwd', answer: 'qf', hint: 'Suche des Packages aus File', difficulty: 3 },
+  { prompt: 'nmcli con mod ens3 ipv4.method _____', answer: 'manual', hint: 'nicht DHCP', difficulty: 3 },
+]
+
+export const dragDropData = [
+  {
+    id: 'dd-lvm-order',
+    category: 'Korrekte LVM-Reihenfolge',
+    question: 'Bringe die LVM-Befehle in die richtige Reihenfolge:',
+    items: [
+      { text: 'lvcreate -L 2G -n datalv datavg', order: 3 },
+      { text: 'mkfs.xfs /dev/datavg/datalv', order: 4 },
+      { text: 'pvcreate /dev/sdb1', order: 1 },
+      { text: 'vgcreate datavg /dev/sdb1', order: 2 },
+    ],
+  },
+  {
+    id: 'dd-selinux-modes',
+    category: 'SELinux-Modi',
+    question: 'Ordne das Verhalten dem SELinux-Modus zu:',
+    items: [
+      { text: 'Protokolliert UND blockiert Zugriffe', matches: 'Enforcing' },
+      { text: 'Protokolliert, aber blockiert nicht', matches: 'Permissive' },
+      { text: 'Deaktiviert das SELinux-Framework', matches: 'Disabled' },
+    ],
+  },
+  {
+    id: 'dd-systemd-match',
+    category: 'systemd Targets',
+    question: 'Ordne das Target dem äquivalenten Runlevel zu:',
+    items: [
+      { text: 'multi-user.target', matches: 'Runlevel 3 (CLI)' },
+      { text: 'graphical.target', matches: 'Runlevel 5 (GUI)' },
+      { text: 'rescue.target', matches: 'Runlevel 1 (Single user)' },
+    ],
+  },
+  {
+    id: 'dd-firewall-cmds',
+    category: 'Firewall-Regel-Typen',
+    question: 'Ordne die Befehle als temporär oder permanent ein:',
+    items: [
+      { text: 'firewall-cmd --add-service=http', category: 'Temporär' },
+      { text: 'firewall-cmd --add-service=http --permanent', category: 'Permanent' },
+      { text: 'firewall-cmd --add-port=8080/tcp', category: 'Temporär' },
+      { text: 'firewall-cmd --add-port=8080/tcp --permanent', category: 'Permanent' },
+    ],
+  },
+]
+
+export const terminalChallengeData = [
+  { id: 'tc-rhcsa-1', description: 'Bezieht den derzeitigen SELinux-Status ein', prompt: 'getenforce', expectedOutput: 'Enforcing', hint: 'Nutze getenforce', difficulty: 1 },
+  { id: 'tc-rhcsa-2', description: 'Standard Systemziel ansehen', prompt: 'systemctl get-default', expectedOutput: 'multi-user.target', hint: 'Nutze systemctl get-default', difficulty: 1 },
+  { id: 'tc-rhcsa-3', description: 'Zeigt Systemfestplatten an', prompt: 'lsblk', expectedOutput: 'NAME   MAJ:MIN RM  SIZE RO TYPE', hint: 'Nutze lsblk', difficulty: 1 },
+  { id: 'tc-rhcsa-4', description: 'Finde das Paket das /usr/bin/vim liefert', prompt: 'dnf provides */vim', expectedOutput: 'vim-enhanced', hint: 'Nutze dnf provides', difficulty: 2 },
+  { id: 'tc-rhcsa-5', description: 'Zu welchem Paket gehört die passwd-File', prompt: 'rpm -qf /usr/bin/passwd', expectedOutput: 'passwd-', hint: 'Nutze rpm -qf', difficulty: 1 },
+  { id: 'tc-rhcsa-6', description: 'Gelistete Web Ports', prompt: 'semanage port -l | grep http_port_t', expectedOutput: 'http_port_t', hint: 'Nutze semanage port -l', difficulty: 2 },
+  { id: 'tc-rhcsa-7', description: 'Prozess-ID (PID) von sshd', prompt: 'pgrep sshd', expectedOutput: '[0-9]+', hint: 'Nutze pgrep', difficulty: 1 },
+  { id: 'tc-rhcsa-8', description: 'Freiber Festplattenspeicher (Human Format)', prompt: 'df -Th', expectedOutput: 'Filesystem', hint: 'Nutze df -Th', difficulty: 1 },
+  { id: 'tc-rhcsa-9', description: 'Netzwerkverbindungen lesen', prompt: 'nmcli connection show', expectedOutput: 'NAME', hint: 'Nutze nmcli con show', difficulty: 2 },
+  { id: 'tc-rhcsa-10', description: 'Welche Container laufen?', prompt: 'podman ps', expectedOutput: 'CONTAINER', hint: 'Nutze podman ps', difficulty: 1 },
+  { id: 'tc-rhcsa-11', description: 'Webserver (httpd) Boolean checken', prompt: 'getsebool -a | grep httpd', expectedOutput: 'httpd_', hint: 'Nutze getsebool -a', difficulty: 2 },
+  { id: 'tc-rhcsa-12', description: 'Erstelle /test und prüfe SELinux Label', prompt: 'mkdir /test && ls -Zd /test', expectedOutput: 'default_t', hint: 'Nutze mkdir und ls -Zd', difficulty: 3 },
+  { id: 'tc-rhcsa-13', description: 'Alle Volume Groups im LVM', prompt: 'vgs', expectedOutput: 'VG', hint: 'Nutze vgs', difficulty: 2 },
+  { id: 'tc-rhcsa-14', description: '10 Zeilen Historie von sshd', prompt: 'journalctl -u sshd -n 10', expectedOutput: 'sshd', hint: 'Nutze journalctl', difficulty: 2 },
+  { id: 'tc-rhcsa-15', description: 'Firewall der public-Zone überprüfen', prompt: 'firewall-cmd --zone=public --list-all', expectedOutput: 'public', hint: 'Nutze firewall-cmd --zone', difficulty: 2 },
+]

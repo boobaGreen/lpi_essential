@@ -118,6 +118,15 @@ export default function Dashboard() {
   const completedCount = completedLessons.length
   const overallProgress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0
 
+  const maxScore = courseId === 'rhcsa' ? 300 : 800
+  const examFallbackText = courseId === 'rhcsa' 
+    ? (currentLang === 'en' ? '50 questions • 60 minutes' : '50 domande • 60 minuti') 
+    : t('examSimFallback')
+    
+  const topicsTitleText = courseId === 'rhcsa'
+    ? (currentLang === 'en' ? 'The 10 Exam Topics' : 'I 10 Topic dell\'Esame')
+    : t('the5Topics')
+
   const bestExam = examAttempts.length > 0
     ? Math.max(...examAttempts.map(a => a.score))
     : null
@@ -233,7 +242,7 @@ export default function Dashboard() {
             <div style={{ flex: 1 }}>
               <h3 className="font-bold text-[var(--color-text-primary)]">📝 {t('examSim')}</h3>
               <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem' }}>
-                {bestExam !== null ? t('examSimDesc').replace('{{score}}', bestExam) : t('examSimFallback')}
+                {bestExam !== null ? t('examSimDesc').replace('{{score}}', bestExam).replace('/800', `/${maxScore}`) : examFallbackText}
               </p>
             </div>
             <ChevronRight size={20} className="text-[var(--color-text-muted)]" />
@@ -245,7 +254,7 @@ export default function Dashboard() {
       <div>
         <h2 className="font-bold flex items-center" style={{ fontSize: '1.25rem', marginBottom: '24px', gap: '8px' }}>
           <Star size={20} className="text-[var(--color-neon-yellow)]" />
-          {t('the5Topics')}
+          {topicsTitleText}
         </h2>
         <div style={{ 
           display: 'grid', 

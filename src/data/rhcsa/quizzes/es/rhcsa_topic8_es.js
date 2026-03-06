@@ -1,0 +1,161 @@
+// RHCSA Quiz — Topic 8: Users and Groups (Spanish) — 15 questions
+
+export const rhcsaTopic8QuizzesES = [
+  // ─── Users ───
+  {
+    id: 'q-rhcsa-8-1-001', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '¿Qué comando usas para crear al nuevo usuario "mario" obligando a que se le asigne/cree un directorio home y defina a bash como su shell maestro?',
+    options: [
+      'useradd mario',
+      'useradd -m -s /bin/bash mario',
+      'adduser mario --shell bash',
+      'usermod -m -s /bin/bash mario',
+    ],
+    correct: 1,
+    explanation: '-m le teje la estructura home robando plantillas desde /etc/skel, mientras que -s (shell) enclava el acceso por /bin/bash. "usermod" es solo para modificar un usuario ya existente.',
+  },
+  {
+    id: 'q-rhcsa-8-1-002', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '¿Con qué herramienta interactiva vas a configurar o renovar de inmediato la clave secreta encriptada para el usuario "mario"?',
+    options: ['usermod -p mario', 'passwd mario', 'chpasswd mario', 'shadow mario'],
+    correct: 1,
+    explanation: '`passwd mario` levanta un prompt ciego para teclear seguro la nueva credencial. Cuidado: usermod -p es muy peligroso porque espera el texto ya cifrado (hash dict).',
+  },
+  {
+    id: 'q-rhcsa-8-1-003', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Vas a hospedar un demonio o base de datos. Piden que crees una cuenta de usuario pseudo-fantasma sin carpeta home y bloqueado para impedir logins interactivos. ¿Cómo te preparas?',
+    options: [
+      'useradd -r -s /sbin/nologin servicio',
+      'useradd -M -s /sbin/nologin servicio',
+      'useradd --no-home --system servicio',
+      'Las formas A y B lograrán lo pedido y son muy populares',
+    ],
+    correct: 3,
+    explanation: 'El flag `-r` (o --system) dicta a Linux que será una cuenta de sistema (con UID bajito como el 900) y por defecto NO creará home. También el -M fuerza puramente el "No crear home".',
+  },
+  {
+    id: 'q-rhcsa-8-1-004', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Si le detectaste actividad sospechosa, ¿cómo clavas a "mario" con un bloqueo de acceso (lock) repentino e instantáneo para su contraseña actual?',
+    options: [
+      'usermod -L mario',
+      'passwd -l mario',
+      'usermod -s /sbin/nologin mario',
+      'Absolutamente todas cortarán el paso de diferentes formas certeras',
+    ],
+    correct: 3,
+    explanation: 'Bloquear explícitamente se hace con las -L / -l (Lock) de usermod/passwd estampando un "!" al hash en archivo shadow. Y cambiarle el shell a /bin/false o /sbin/nologin es otra táctica de expulsión letal.',
+  },
+  {
+    id: 'q-rhcsa-8-1-005', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Te ordenan forzar una expiración legal y burocrática al password de "mario" topada en exactamente 90 días naturales.',
+    options: [
+      'passwd -x 90 mario',
+      'chage -M 90 mario',
+      'usermod --max-age 90 mario',
+      'La A y la B logran establecer esta misma caducidad',
+    ],
+    correct: 3,
+    explanation: '`chage -M` y `passwd -x` marcan la métrica de tiempo biológico máximo que el Hash actual es considerado válido por el sistema.',
+  },
+  {
+    id: 'q-rhcsa-8-1-006', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Estructuralmente el kernel divide el mundo de las cuentas en dos partes físicas, ¿dónde descansa respectivamente la meta-información textual social del usuario, y dónde la ristra inentendible de sus passwords cifrados en RHEL?',
+    options: [
+      '/etc/passwd y /etc/shadow',
+      '/etc/users y /etc/passwords',
+      '/etc/shadow y /etc/passwd',
+      '/etc/passwd y /etc/group',
+    ],
+    correct: 0,
+    explanation: '/etc/passwd es de lectura pública universal; detalla la ID y el shell y carpeta home. Para esconder los super Hashes secretos, Linux desprendió las claves al ultra-seguro /etc/shadow intocable para mortales.',
+  },
+  {
+    id: 'q-rhcsa-8-1-007', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Estás debuggeando y quieres imprimir rápido a que agrupaciones, cofradías secundarias y números de permisos globales GID / UID pertenece el mismo usuario con el que estás logueado ahora.',
+    options: ['whoami', 'id', 'groups', 'Las B y C listaran tus grupos'],
+    correct: 3,
+    explanation: '`id` expone a fondo UID, GID y la ráfaga global. La etiqueta `groups` tira la lista de apellidos de forma muy plana. `whoami` da apenas solo tú nombre a secas.',
+  },
+  // ─── Groups and sudo ───
+  {
+    id: 'q-rhcsa-8-2-001', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Te piden ascender jerárquicamente a "mario" uniéndolo pasivamente al selecto grupo admin llamado "wheel" para concederle magia root.',
+    options: [
+      'usermod -G wheel mario',
+      'usermod -aG wheel mario',
+      'groupadd wheel mario',
+      'gpasswd -a mario wheel',
+    ],
+    correct: 1,
+    explanation: 'OBLIGATORIO: `-a` (append) concatena la membresía a las viejas que ya tenías. Si dictas -G a secas borras a fuego lento absolutamente todos sus grupos suplementarios pasados dejando una estela de polvo atrás.',
+  },
+  {
+    id: 'q-rhcsa-8-2-002', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Particularmente dentro del mundo Red Hat (RHEL9 y CentOS), ¿para qué se inventó y usa oficialmente el mítico grupo "wheel"?',
+    options: [
+      'Para entrar al BIOS',
+      'Para ejecutar y enmascarar credenciales invocando poder real root gracias a la macro sudo',
+      'Permite leer los registros confidenciales de sistema',
+      'Sirve como puente de impresoras',
+    ],
+    correct: 1,
+    explanation: 'El archivo inmodificable global /etc/sudoers (si usas visudo) muestra la línea mágica: `%wheel ALL=(ALL) ALL`, delegando poder ejecutivo universal a este grupo especial.',
+  },
+  {
+    id: 'q-rhcsa-8-2-003', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Escribe la incrustación perfecta en crudo para la BBDD de SUDO, logrando explícitamente que mario tire comandos absolutos sudo sin que se le pregunte, requiera ni pida su condenado password a cada rato:',
+    options: [
+      'Añades a sudoers: mario ALL=(ALL) NOPASSWD:ALL',
+      'Opcionalmente y más limpio le creas fichero propio en /etc/sudoers.d/mario',
+      'usermod -G sudo mario',
+      'Las formas A y B son las arquitecturas estándar RHCSA para dictarlo',
+    ],
+    correct: 3,
+    explanation: 'Para obviar la contraseña la directiva base debe incluir religiosamente la etiqueta NOPASSWD:ALL delante del comodín ciego final ALL.',
+  },
+  {
+    id: 'q-rhcsa-8-2-004', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Jamás se manipula crudo con gedit ni editores triviales el santuario del fichero /etc/sudoers. ¿De qué comando-wrapper te debes rodear para evitar la hecatombe y no romper el PC por cometer un typo?',
+    options: ['vi /etc/sudoers', 'visudo', 'sudo edit /etc/sudoers', 'nano /etc/sudoers'],
+    correct: 1,
+    explanation: '`visudo` carga silenciosamente a vi, pero a la hora de querer guardar o matar pantalla evalúa en background estricta sintaxis y detendrá tu locura sin dañar el servidor si hiciste algo roto o ilegal.',
+  },
+  {
+    id: 'q-rhcsa-8-2-005', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Se fundó el área de ingeniería interna. Crea explícitamente la categoría de grupo colectivo "developers" forzándole y clavándole el GID arbitrario 1500 de entrada.',
+    options: [
+      'groupadd -g 1500 developers',
+      'groupadd developers --gid 1500',
+      'addgroup -g 1500 developers',
+      'groupmod -g 1500 developers',
+    ],
+    correct: 0,
+    explanation: '`groupadd` es el molde fundacional de nuevos grupos; pasándole -g impalas el identificador (Global-ID) sin peros.',
+  },
+  {
+    id: 'q-rhcsa-8-1-008', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: 'Te ordenan conjurar de forma exquisita de una tirada: "Créeme un usuario mario que de inmediato porte el UID 1500, creándole sus directorios y metiéndole en su label interno GECOS textual los alias Humanos completos ("Mario Rossi").',
+    options: [
+      'useradd -u 1500 -c "Mario Rossi" -m mario',
+      'useradd -i 1500 -d "Mario Rossi" mario',
+      'useradd -U 1500 --comment "Mario Rossi" mario',
+      'adduser mario -u 1500',
+    ],
+    correct: 0,
+    explanation: 'La ráfaga universal perfecta es: -u 1500 para encajarle su número de cuenta. -c (comment text label extendido). Y la obligatoria -m para que sí forje y monte sus carpetas vírgenes base.',
+  },
+  {
+    id: 'q-rhcsa-8-2-006', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: 'Deseas leer el historial cronológico y sentencias de cuándo el señor "mario" hizo su último cambio de llave, cuándo caduca, y cuando será baneado por fin.',
+    options: ['chage -l mario', 'passwd -S mario', 'grep mario /etc/shadow', 'TODAS exponen explícita o crípticamente exactamente esta realidad expuesta'],
+    correct: 3,
+    explanation: '`chage -l` dibuja el timeline maravillosamente ameno. `passwd -S` te lo comprime en fila simple de status. E irte al `/etc/shadow` te dará el infierno críptico base de días julianos cifrados crudos.',
+  },
+  {
+    id: 'q-rhcsa-8-1-009', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: 'Despidieron al señor mario. Debes purgar y borrar con furia toda su cuenta borrando del mapa a su vez la inmensa cantidad de megas de su viejo escritorio home.',
+    options: ['userdel mario', 'userdel -r mario', 'deluser mario --remove-home', 'usermod -d /dev/null mario'],
+    correct: 1,
+    explanation: 'En Linux, el asesino perfecto es `userdel` suplementado con la hiper bandera `-r` (Remove Recursivo total) de la vida privada (Home y sus correos spool viejos).',
+  },
+]
