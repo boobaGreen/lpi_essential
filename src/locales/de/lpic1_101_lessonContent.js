@@ -76,7 +76,7 @@ Administratoren müssen Partitionen planen, bevor sie blind ein System aufsetzen
 
 ### Wichtige Mount-Punkte (FHS)
 - \`/\` **(Root)**: Das Wurzelverzeichnis des Dateisystems.
-- \`/boot\`\`: Am Anfang der Platte, enthält GRUB und den Kernel. Bei UEFI zwingend eine eigene ESP (EFI System Partition, Format: VFAT).
+- \`/boot\`: Am Anfang der Platte, enthält GRUB und den Kernel. Bei UEFI zwingend eine eigene ESP (EFI System Partition, Format: VFAT).
 - \`/home\`\`: Benutzerverzeichnisse. Eine separate \`/home\`-Partition erlaubt Neuinstallationen des OS, ohne persönliche Daten zu verlieren!
 - \`/var\`\`: Variable Daten (Logs, Datenbanken, Mails). Auf Servern MUSS \`/var\` getrennt sein, damit wild wuchernde Logs nicht das Root-Dateisystem füllen und das OS abstürzen lassen.
 - **Swap**: Virtueller Arbeitsspeicher. Wird genutzt, wenn der physische RAM voll ist. Verhindert Out-of-Memory (OOM) Abstürze.
@@ -273,7 +273,7 @@ Häufig flutet der \`find\`-Befehl den Bildschirm mit "Permission denied"-Fehler
     content: `
 ### Die Pipe \`|\`
 Dies ist das Herzstück der UNIX-Kommandozeile.
-Das Zeichen \`|\` fängt die Ausgabe (`stdout`) des linken Befehls auf, druckt sie nicht auf den Monitor, sondern leitet sie wie durch ein Rohr **als Input für das nächste Programm** weiter!
+Das Zeichen \`|\` fängt die Ausgabe (\`stdout\`) des linken Befehls auf, druckt sie nicht auf den Monitor, sondern leitet sie wie durch ein Rohr **als Input für das nächste Programm** weiter!
 Beispiel: \`ls -l /etc | grep ".conf" | wc -l\`.
 
 ### Befehl: tee

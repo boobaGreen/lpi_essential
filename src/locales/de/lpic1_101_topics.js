@@ -1,6 +1,6 @@
 import { BookOpen, HardDrive, Terminal, Shield } from 'lucide-react'
 
-export const lpic1_101_topics_de = [
+export const lpic1_101_topics = [
   {
     id: 'lpic1-101-1',
     title: '101. Systemarchitektur',

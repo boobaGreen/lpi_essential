@@ -331,7 +331,7 @@ export const terminalChallengeData = [
   // TOPIC 2
   {
     id: 4,
-    description: "Régénérez logiquement le ficher global d'instruction humain final 'grub.cfg' car vous avez altéré '/etc/default/' hier soir! (Commande longue non raccourci dpkg /ubuntu de MK !). L'endroit output à sauver (flag "-o") et la cible standart '/boot/grub/grub.cfg'.",
+    description: "Régénérez logiquement le ficher global d'instruction humain final 'grub.cfg' car vous avez altéré '/etc/default/' hier soir! (Commande longue non raccourci dpkg /ubuntu de MK !). L'endroit output à sauver (flag \"-o\") et la cible standart '/boot/grub/grub.cfg'.",
     command: "grub-mkconfig -o /boot/grub/grub.cfg",
     expectedOutput: "Generating grub configuration file ...\nFound linux image: /boot/vmlinuz-5.15.0-generic\nFound initrd image: /boot/initrd.img-5.15.0-generic\ndone",
   },

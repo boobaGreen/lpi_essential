@@ -129,7 +129,8 @@ Quand un exécutable démarre, sa première mission matérielle ultra-rapide con
 La norme \`.deb\` englobe tout l'écosystème debian (Ubuntu, popOS, Kali, Mint).
 
 ### Le Niveau Bas et Primaire : DPKG
-Utilitaire robuste brut d'installation non connecté, traitant les requêtes strictes d'un package isolé local \`.deb\` téléchargé par une clée usb. **DPKG ne connait pas internet ni ne dépatouille les dépendances manquantes d'une arborescence et s'avortera net par erreur critique collatéral lors d'une impossibilité tierce bloquante de composants introuvables à votre PC local.**!
+Utilitaire robuste brut d'installation non connecté, traitant les requêtes strictes d'un package isolé local \`.deb\` téléchargé par une clée usb.
+*   DPKG ne connait pas internet ni ne dépatouille les dépendances manquantes d'une arborescence et s'avortera net par erreur critique collatéral lors d'une impossibilité tierce bloquante de composants introuvables à votre PC local.**!
 *   \`dpkg -i file.deb\` : (Install). Forcer manuellement exécution de fond locale binaire simple sur disque local.
 *   \`dpkg -r package\` : (Remove). Ôter un composant logiciel majeur sans éradiquer toutefois les configurations manuelles privées.
 *   \`dpkg -P package\` : (Purge). Effacement drastique absolu, désintégre et pulvérise les configurations manuelles de \`/etc\` attenante pour le laisser dans l'état natif pur.
@@ -237,13 +238,13 @@ Le flux "flux texte UNIX" (Standard text stream) régit tout l'écosystème .
 ### Le Classeur Principal : Opérations locales pures 
 Rappel indispensable de commande base de vie et morts fichier!
 *   **\`cp\` (Copie fichier / ou Dossiers Recursifs entier \`-r\`)**
-*   **\`mv\` (Move base \`origine\` \`nouveau\`)**: L'outil Linux Move agit de couteau suisse ! Bouger aux dossiers ou Muter un nom purement (Renommage base, puisqu'il n'existe pas de vrai \`rename\` absolu par usage unitaire pur en linux originels historiques!).
+*   **\`mv\` (Move base \`origine\` \`nouveau\`):** L'outil Linux Move agit de couteau suisse ! Bouger aux dossiers ou Muter un nom purement (Renommage base, puisqu'il n'existe pas de vrai \`rename\` absolu par usage unitaire pur en linux originels historiques!).
 *   **\`rm\`** : "\`-f\`" force par persistance destructives en outrepassant messages de sécurité à l'utilisateur (utiles en script background robots aveugles)  , "-i" l'exige base "oui ou non?" à la décision interactive!.
 
 ### Ciblages Textes Indexations Recherches Global ! "Find & Locate"
 L’ordinateur cherche dans deux états (Locate vs Find dynamiques):
-*   **\`locate\`**: Requête quasi lumineuse ultra-instantanée sur des milliards d'items, requérant sur ses "Bases M-locate DB" crées en cache mémoire cron (updatedb hebdomadaire/journalier)... si votre ficher vient d'arriver au FTP "y'a 2 heures", locate lui de base ignore son existence jusqu'à sa prochaine reconstruction de nuit cache !!
-*   **\`find / -name "backup.zip" -mtime -3 \`** : Brut, Lourd et physique HDD scan total global : Il plonge minutieusement ses "pattes logicielles virtuelles", racine / après répertoires dynamiquement sur l'instant "T" analysant (Nom, Date Modif -mtime jours depuis aujourd'hui base, permissions octales requises ou Propriétaires groupes !). Find trouve au prix CPU !
+*   \`locate\`: Requête quasi lumineuse ultra-instantanée sur des milliards d'items, requérant sur ses "Bases M-locate DB" crées en cache mémoire cron (updatedb hebdomadaire/journalier)... si votre ficher vient d'arriver au FTP "y'a 2 heures", locate lui de base ignore son existence jusqu'à sa prochaine reconstruction de nuit cache !!
+*   \`find / -name "backup.zip" -mtime -3 \` : Brut, Lourd et physique HDD scan total global : Il plonge minutieusement ses "pattes logicielles virtuelles", racine / après répertoires dynamiquement sur l'instant "T" analysant (Nom, Date Modif -mtime jours depuis aujourd'hui base, permissions octales requises ou Propriétaires groupes !). Find trouve au prix CPU !
 
 ### "TAR" le Bandeau Magnétique Archives
 \`tar\` concatène le tout (Tape Archive base). Tar se charge en ligne simple mais s'adjoint le zippage logiciel base "gzip / gunzip" ou "bz2 xz bzip" !!
@@ -265,7 +266,7 @@ Si on affiche un long test diagnostique complet l'écran : (ping serveur.lan). O
 *   **\`>>\` APPEND / Accumulation Concaténative** : "ping serveur.lan >> base_result.txt". 
 
 ### Redirections "2>" d'erreurs (Standard Error Out)
-Si on cible \`find / -name conf\`. Sont mélangés textes purs des 100 configurations trouvées ET textes massifs rouges de \`"Permission Denied"` de find d'accès interdits.
+Si on cible \`find / -name conf\`. Sont mélangés textes purs des 100 configurations trouvées ET textes massifs rouges de \`"Permission Denied"\` de find d'accès interdits.
 
 En agissant : \`find / -name conf 2> erreurs.log > resultats_propres.txt\`. (Ségrégation Absolue Pure). Tout le flux propre part canal "1 normal", et le flux d'ordure d'avertissement et crash ira sur son propre fichier log isolé et lisible sans bruits parasitaires.
 
@@ -297,7 +298,7 @@ Un utilitaire ne porte pour Unix Linux comme un "nom logique" mais est stricteme
 
 ### Le Pouvoir du SigTERM et SigKill : 'kill' & 'killall'
 1.  **\`kill PID\` ou  \`kill -15 PID (SIGTERM - Terminate Signal par Ordre de politesse)\`** : Envoie une sommation logiciel diplomate invitant l'application au crash maîtrisé de finir dignement son travail (Libérer doucement la RAM, nettoyer caches) qu'elle daigne s'obtempérer et s'éteindra en paix pour l'os Linux de base .
-2.  **\`kill -9 PID\` (SIGKILL Homicide Matériel Imparable)**: Quand un processus se fige, un zombie infini Kernel ou refuse obstinément, Sigterm pèche de sécurité logiques inefficients... SigKill ("-9") intervient ! Il ne dialogue aucunement avec le programme . Il intime de forces "L'ordre strict inconditionnel pur et direct du propre cœur noyau de couper le pont et fil de jus alloué mémoire à cette cellule, sans la moindre excuse, entraînant une amnésie globale immédiates violentes fatals d'arrêt final sans merci!".
+2.  **\`kill -9 PID\` (SIGKILL Homicide Matériel Imparable)** : Quand un processus se fige, un zombie infini Kernel ou refuse obstinément, Sigterm pèche de sécurité logiques inefficients... SigKill ("-9") intervient ! Il ne dialogue aucunement avec le programme . Il intime de forces "L'ordre strict inconditionnel pur et direct du propre cœur noyau de couper le pont et fil de jus alloué mémoire à cette cellule, sans la moindre excuse, entraînant une amnésie globale immédiates violentes fatals d'arrêt final sans merci!".
 3.  **\`killall nom_programme\`** : Une tronçonneuse logique pour Tuer d'un trait 20 sessions PIDs liées d'un seul bloc (ex: \`killall apache2\`).
     `,
   },

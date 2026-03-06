@@ -1,4 +1,4 @@
-export const lpic1_101_topics_pt = [
+export const lpic1_101_topics = [
   {
     id: 'lpic1-101-1',
     title: '101. Arquitetura do Sistema',
