@@ -41,6 +41,16 @@ import * as ptLpic1_102Data from '../locales/pt/lpic1_102_gamesData.js'
 import * as ruLpic1_102Data from '../locales/ru/lpic1_102_gamesData.js'
 import * as zhLpic1_102Data from '../locales/zh/lpic1_102_gamesData.js'
 
+// LPIC-2 game data
+import * as itLpic2Data from '../locales/it/lpic2_gamesData.js'
+import * as enLpic2Data from '../locales/en/lpic2_gamesData.js'
+import * as esLpic2Data from '../locales/es/lpic2_gamesData.js'
+import * as frLpic2Data from '../locales/fr/lpic2_gamesData.js'
+import * as deLpic2Data from '../locales/de/lpic2_gamesData.js'
+import * as ptLpic2Data from '../locales/pt/lpic2_gamesData.js'
+import * as ruLpic2Data from '../locales/ru/lpic2_gamesData.js'
+import * as zhLpic2Data from '../locales/zh/lpic2_gamesData.js'
+
 
 
 
@@ -77,9 +87,12 @@ const lpic1_102DataMap = {
   pt: ptLpic1_102Data,
   ru: ruLpic1_102Data,
   zh: zhLpic1_102Data,
-
 }
 
+const lpic2DataMap = {
+  it: itLpic2Data, en: enLpic2Data, es: esLpic2Data, fr: frLpic2Data,
+  de: deLpic2Data, pt: ptLpic2Data, ru: ruLpic2Data, zh: zhLpic2Data,
+}
 
 
 export function useGameData() {
@@ -92,8 +105,9 @@ export function useGameData() {
     map = lpic1_101DataMap
   } else if (courseId === 'lpic1-102') {
     map = lpic1_102DataMap
+  } else if (courseId === 'lpic-2') {
+    map = lpic2DataMap
   } else if (courseId === 'rhcsa') {
-
     map = rhcsaDataMap
   } else {
     map = lpiDataMap

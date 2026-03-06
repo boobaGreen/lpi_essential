@@ -53,8 +53,8 @@ export const COURSES = {
     code: '201-450 / 202-450',
     icon: '🚀',
     color: '#ff8c00',        // neon-orange
-    topicCount: 0,
-    available: false,
+    topicCount: 13,
+    available: true,
     description: 'Linux avanzato: kernel, storage, networking avanzato, server.',
     tags: ['Linux', 'Advanced', 'LPIC'],
   },

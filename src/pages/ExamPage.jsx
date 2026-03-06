@@ -172,6 +172,7 @@ export default function ExamPage() {
   const isRhcsa = courseId === 'rhcsa'
   const isLpic1 = courseId === 'lpic1-101'
   const isLpic1_102 = courseId === 'lpic1-102'
+  const isLpic2 = courseId === 'lpic-2'
 
   let examConfig
   if (isRhcsa) {
@@ -201,10 +202,20 @@ export default function ExamPage() {
       maxScore: 800,
       disclaimer: null,
     }
+  } else if (isLpic2) {
+    examConfig = {
+      name: 'LPIC-2 (201 & 202) Exam Sim',
+      questions: 60,
+      timeMinutes: 90,
+      passingScore: 500,
+      maxScore: 800,
+      disclaimer: null,
+    }
   } else {
     examConfig = {
       name: 'LPI Linux Essentials (010-160)',
       questions: 40,
+
       timeMinutes: 60,
       passingScore: 500,
       maxScore: 800,

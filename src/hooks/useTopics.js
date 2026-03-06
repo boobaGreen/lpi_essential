@@ -81,6 +81,27 @@ import { lpic1_102_lessonContent as lpic1_102_LessonContentZH } from '../locales
 import { quizzes_it as lpic1_102_quizzesIT, allQuizzes_it as lpic1_102_allQuizzesIT, quizzes_en as lpic1_102_quizzesEN, allQuizzes_en as lpic1_102_allQuizzesEN, quizzes_es as lpic1_102_quizzesES, allQuizzes_es as lpic1_102_allQuizzesES, quizzes_fr as lpic1_102_quizzesFR, allQuizzes_fr as lpic1_102_allQuizzesFR, quizzes_de as lpic1_102_quizzesDE, allQuizzes_de as lpic1_102_allQuizzesDE, quizzes_pt as lpic1_102_quizzesPT, allQuizzes_pt as lpic1_102_allQuizzesPT, quizzes_ru as lpic1_102_quizzesRU, allQuizzes_ru as lpic1_102_allQuizzesRU, quizzes_zh as lpic1_102_quizzesZH, allQuizzes_zh as lpic1_102_allQuizzesZH } from '../data/lpic1-102/quizzes/index.js'
 import { extendedContent as lpic1_102_extendedContent } from '../data/lpic1-102/extendedContent/index.js'
 
+// ─── LPIC-2 ──────────────────────────────────────────────────────────────────
+import { lpic2_topics as lpic2_TopicsIT } from '../locales/it/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsEN } from '../locales/en/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsES } from '../locales/es/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsFR } from '../locales/fr/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsDE } from '../locales/de/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsPT } from '../locales/pt/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsRU } from '../locales/ru/lpic2_topics.js'
+import { lpic2_topics as lpic2_TopicsZH } from '../locales/zh/lpic2_topics.js'
+
+import { lpic2_lessonContent as lpic2_LessonContentIT } from '../locales/it/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentEN } from '../locales/en/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentES } from '../locales/es/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentFR } from '../locales/fr/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentDE } from '../locales/de/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentPT } from '../locales/pt/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentRU } from '../locales/ru/lpic2_lessonContent.js'
+import { lpic2_lessonContent as lpic2_LessonContentZH } from '../locales/zh/lpic2_lessonContent.js'
+
+import { lpic2_quizzesDict, lpic2_allQuizzesDict } from '../data/lpic2/quizzes/index.js'
+import { lpic2_extendedContentDict } from '../data/lpic2/extendedContent/index.js'
 
 // ─── Dizionari LPI ──────────────────────────────────────────────────────────
 const lessonContentDict = {
@@ -153,6 +174,18 @@ const lpic1_102_allQuizzesDict = {
   it: lpic1_102_allQuizzesIT, en: lpic1_102_allQuizzesEN, es: lpic1_102_allQuizzesES,
   fr: lpic1_102_allQuizzesFR, de: lpic1_102_allQuizzesDE, pt: lpic1_102_allQuizzesPT,
   ru: lpic1_102_allQuizzesRU, zh: lpic1_102_allQuizzesZH
+}
+
+// ─── Dizionari LPIC-2 ────────────────────────────────────────────────────────
+const lpic2_TopicDict = { 
+  it: lpic2_TopicsIT, en: lpic2_TopicsEN, es: lpic2_TopicsES,
+  fr: lpic2_TopicsFR, de: lpic2_TopicsDE, pt: lpic2_TopicsPT,
+  ru: lpic2_TopicsRU, zh: lpic2_TopicsZH
+}
+const lpic2_LessonContentDict = { 
+  it: lpic2_LessonContentIT, en: lpic2_LessonContentEN, es: lpic2_LessonContentES,
+  fr: lpic2_LessonContentFR, de: lpic2_LessonContentDE, pt: lpic2_LessonContentPT,
+  ru: lpic2_LessonContentRU, zh: lpic2_LessonContentZH
 }
 
 
@@ -234,6 +267,29 @@ export function useTopics() {
       quizzesByTopic,
       allQuizzes,
       extendedContent: rhcsaExtendedContentDict[currentLang] ?? rhcsaExtendedContentDict['en'] ?? rhcsaExtendedContentDict['it'] ?? {},
+    }
+  }
+
+  // ─── LPIC-2 ────────────────────────────────────────────────────────────────
+  if (currentCourseId === 'lpic-2') {
+    const topics = lpic2_TopicDict[currentLang] ?? lpic2_TopicDict['en'] ?? lpic2_TopicDict['it']
+    const lessonContent = lpic2_LessonContentDict[currentLang] ?? lpic2_LessonContentDict['en'] ?? lpic2_LessonContentDict['it']
+    const quizzesByTopic = lpic2_quizzesDict[currentLang] ?? lpic2_quizzesDict['en'] ?? lpic2_quizzesDict['it']
+    const allQuizzes = lpic2_allQuizzesDict[currentLang] ?? lpic2_allQuizzesDict['en'] ?? lpic2_allQuizzesDict['it']
+
+    const getTopic = (id) => topics.find(t => t.id === Number(id))
+    const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
+    const getTotalLessons = () => topics.reduce((sum, t) => sum + t.lessons.length, 0)
+
+    return {
+      topics,
+      getTopic,
+      getLesson,
+      getTotalLessons,
+      lessonContent,
+      quizzesByTopic,
+      allQuizzes,
+      extendedContent: lpic2_extendedContentDict[currentLang] ?? lpic2_extendedContentDict['en'] ?? lpic2_extendedContentDict['it'] ?? {},
     }
   }
 
