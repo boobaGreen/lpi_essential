@@ -1,0 +1,161 @@
+// RHCSA Quiz — Topic 8: Users and Groups (简体中文) — 15 questions
+
+export const rhcsaTopic8QuizzesZH = [
+  // ─── Users ───
+  {
+    id: 'q-rhcsa-8-1-001', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '哪个命令能够创建一个名为 "mario" 的新用户，并同时显式地为他建立家目录并设定默认的 bash 解释器？',
+    options: [
+      'useradd mario',
+      'useradd -m -s /bin/bash mario',
+      'adduser mario --shell bash',
+      'usermod -m -s /bin/bash mario',
+    ],
+    correct: 1,
+    explanation: '`-m` 代表强制创建用户的 home 目录（从 `/etc/skel` 复制框架），`-s` 代表指定登录 Shell。注意：虽然在 RHEL 系统上单纯的 `useradd` 也会默认依照 `/etc/default/useradd` 的配置去创建家目录。',
+  },
+  {
+    id: 'q-rhcsa-8-1-002', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '以下哪个命令可以被管理员用来为刚刚建立的用户 "mario" 设置或更改登录密码？',
+    options: ['usermod -p mario', 'passwd mario', 'chpasswd mario', 'shadow mario'],
+    correct: 1,
+    explanation: '`passwd <用户名>` 是标准设密交互指令。请牢记：普通用户执行 `passwd` 只能改自己的密码且需旧密码验证，只有 Root 用户可以在其后加用户名去强行重置别人的密码。',
+  },
+  {
+    id: 'q-rhcsa-8-1-003', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: '如何创建一个纯粹用于拉起后台进程的“服务/系统账户”（比如叫 service），并且它“没有”家目录而且“被禁止登录”shell？',
+    options: [
+      'useradd -r -s /sbin/nologin service',
+      'useradd -M -s /sbin/nologin service',
+      'useradd --no-home --system service',
+      '选项 A 和 B 在各自的侧重上都正确有效',
+    ],
+    correct: 3,
+    explanation: '`-r` (system) 命令会在保留给系统服务的低 UID 范围内分配 ID。`-M` 明确指令不要创建家目录（系统账户默认本来就不创），而指定 Shell 为 `/sbin/nologin` 是防止被人类登录的关键安全壳。',
+  },
+  {
+    id: 'q-rhcsa-8-1-004', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: '要如果想紧急“锁定 (Lock)”用户 "mario" 的账户防止他通过密码登入系统，以下做法对的是？',
+    options: [
+      'usermod -L mario',
+      'passwd -l mario',
+      'usermod -s /sbin/nologin mario',
+      '以上所有方法都能在不同维度上起到拦截登录的作用',
+    ],
+    correct: 3,
+    explanation: '`usermod -L` 和 `passwd -l` 的本质都是在影子文件 `/etc/shadow` 的密码哈希值前面加一个叹号 `!` 使哈希失效导致无法比对。而直接改壳为 `nologin` 则是更高层面的控制（连证书免密都登不进）。',
+  },
+  {
+    id: 'q-rhcsa-8-1-005', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: '如何强行规定用户 "mario" 的登录密码的“最长有效期限”为 90 天（到期必须强制修改）？',
+    options: [
+      'passwd -x 90 mario',
+      'chage -M 90 mario',
+      'usermod --max-age 90 mario',
+      '选项 A 和 B 都正确',
+    ],
+    correct: 3,
+    explanation: '`chage -M <天数>`（Modify Maximum days）和 `passwd -x <天数>` （eXpiration）这两个命令均可以直接编辑影子文件设定密码必须变更的强制周期间隔。',
+  },
+  {
+    id: 'q-rhcsa-8-1-006', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: '在 Linux 结构中，“用户的基础名册信息”与“被不可逆哈希加密后的真实登录密码”分别分别存放在哪两个纯文本文件中？',
+    options: [
+      '/etc/passwd 以及 /etc/shadow',
+      '/etc/users 以及 /etc/passwords',
+      '/etc/shadow 以及 /etc/passwd',
+      '/etc/passwd 以及 /etc/group',
+    ],
+    correct: 0,
+    explanation: '`/etc/passwd` 保存基础信息（七段式，任何人无论权限都能读取以作映射）。出于安全考量，密码被单独剥离到了只有 Root 能读写的 `/etc/shadow` 里面（八段或九段式）。',
+  },
+  {
+    id: 'q-rhcsa-8-1-007', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '作为普通用户登入终端后，你应该运行哪个核心命令来检视“我自己到底归属在哪些群组里，拿着怎样的 UID 编号”？',
+    options: ['whoami', 'id', 'groups', '选项 B 和 C 都常用'],
+    correct: 3,
+    explanation: '`id` 是最全面且专业的基准命令（它不仅列出品名字符，还包括背后关键的数字 UID、GID 等列表）。`groups` 返回单纯的字符串清单。`whoami` 仅仅只能告诉你当前登的是谁。',
+  },
+  // ─── Groups and sudo ───
+  {
+    id: 'q-rhcsa-8-2-001', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '怎样将现有的普通用户 "mario" 追加加入被称为 "wheel" 的这个超级系统附加组里面（前提是不踢出他原先所属的其他组）？',
+    options: [
+      'usermod -G wheel mario',
+      'usermod -aG wheel mario',
+      'groupadd wheel mario',
+      'gpasswd -a mario wheel',
+    ],
+    correct: 1,
+    explanation: '必须千万当心：使用 `usermod` 修改附加群组时，必须带着 `-a` (append 追加) 与 `-G` 共用。如果漏了 `-a`，该指令会无情覆盖洗掉该用户曾经归属的所有附属组，酿成大祸！',
+  },
+  {
+    id: 'q-rhcsa-8-2-002', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '在默认的 RHEL 9 (红帽 9) 安装好之后，一旦一个账号被归入叫做 "wheel" 的用户组，这意味着他被自动赋权能够...？',
+    options: [
+      '独占并访问物理的机柜控制台串口',
+      '在命令前加上 `sudo` 临时提权以系统最高管理员 root 的身份执行所有的指令并且毫无阻碍',
+      '能够像 root 一样无需额外认证直接双击覆盖任意受保护的底层系统文件',
+      '能够随意进出系统里任何其他人员的 `/home` 隐私目录',
+    ],
+    correct: 1,
+    explanation: '因为由于预出厂设定，RedHat 的配置控制文 `/etc/sudoers` 内部有一行未曾被注销的白名单语句 `%wheel ALL=(ALL) ALL`。这就导致进入 wheel 组成为了获得管理员权柄的捷径。',
+  },
+  {
+    id: 'q-rhcsa-8-2-003', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: '如果为了自动化运维脚本拉起需要，你想给 "mario" 一个超强特例：“凡是他执行的任何 sudo 提权命令，系统都不要弹出来问密码直接放行通过”，正确的途径是？',
+    options: [
+      '在 /etc/sudoers 底部加入: mario ALL=(ALL) NOPASSWD:ALL',
+      '在子管控目录里写一个文件 /etc/sudoers.d/mario 然后写入: mario ALL=(ALL) NOPASSWD:ALL',
+      'usermod -G sudo mario',
+      '上面 A 和 B 的做法都是正确的，但红帽极力推荐采用模块化拆分的 B 做法',
+    ],
+    correct: 3,
+    explanation: '在提权架构的管理中，修改后缀的 `NOPASSWD:` 标签即是放行业务。虽然修改主配置档有效，但现代红帽最佳合规实践一直是去 `/etc/sudoers.d/` 投放外挂独立文段。',
+  },
+  {
+    id: 'q-rhcsa-8-2-004', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: '当你作为一个人类管理员打算去亲手改写 `/etc/sudoers` 这等生杀大权的机密文件时，绝对需要动用由系统保护提供的哪个原装命令，而不是随手乱用 `vim`？',
+    options: ['vi /etc/sudoers', 'visudo', 'sudo edit /etc/sudoers', 'nano /etc/sudoers'],
+    correct: 1,
+    explanation: '`visudo` 命令不但会自动拦截并在后台帮你上锁文件（防多人在同一时刻发生读写踩踏），更重要的是，在你试图保存退出那一刻，它会严格排查你的权限语法有无纰漏。如果有错它死活不让你保存破坏。',
+  },
+  {
+    id: 'q-rhcsa-8-2-005', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '怎么创建出一个团队专用的，且组 ID 号被明确强行指定为 `1500` 的新群组叫 "developers"？',
+    options: [
+      'groupadd -g 1500 developers',
+      'groupadd developers --gid 1500',
+      'addgroup -g 1500 developers',
+      'groupmod -g 1500 developers',
+    ],
+    correct: 0,
+    explanation: '新建组是 `groupadd`，而其后最关键的 `-g` (GID) 参数就是供你分配数字序列号。而 `groupmod` 是在你弄错之后，拿去修改既有架构的。',
+  },
+  {
+    id: 'q-rhcsa-8-1-008', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'hard', type: 'mcq',
+    question: '如果这是一道实操考试要求综合操作：“创建一个叫 mario 的账号；数字 UID 必须为 1500；带有强制的附加明文身份备注（Comment）解释他是『Mario Rossi』；并且确保家目录被正确挂载在 `/home/mario`”。最干脆利落的带参做法是？',
+    options: [
+      'useradd -u 1500 -c "Mario Rossi" -m mario',
+      'useradd -i 1500 -d "Mario Rossi" mario',
+      'useradd -U 1500 --comment "Mario Rossi" mario',
+      'adduser mario -u 1500',
+    ],
+    correct: 0,
+    explanation: '`useradd` 集大成：`-u` 设置强制 UID (User ID)；`-c` 填充 GECOS 备忘录注释字段（Comment）；`-m` 建家。注意 `-d` (Directory) 是让你直接写家目录存储路径用的并非用来写人名！',
+  },
+  {
+    id: 'q-rhcsa-8-2-006', lessonId: 'rhcsa-8-2', topicId: 8, difficulty: 'medium', type: 'mcq',
+    question: '公司进行安全审计盘点，要求你提供用户 "mario" 其密码还剩几天到过期以及他的账号会在公历哪一天被锁闭的全套生存状况报表，命令怎么敲？',
+    options: ['chage -l mario', 'passwd -S mario', 'cat /etc/shadow | grep mario', '以上工具都能从各自的颗粒度中获取这套信息'],
+    correct: 3,
+    explanation: '`chage -l <用户>` (List) 能打出一张极度美观易懂且涵盖一切时间戳的“生死簿报表”。`passwd -S` 回显的是简陋精炼的状态字符串。这些数据底层都挖自 `/etc/shadow` 的神秘时间位。',
+  },
+  {
+    id: 'q-rhcsa-8-1-009', lessonId: 'rhcsa-8-1', topicId: 8, difficulty: 'easy', type: 'mcq',
+    question: '某个叫做 "mario" 的员工离职交接完毕。要求他在该系统连带他的账户和他在 `/home/mario` 里存放的所有资料被连根销毁拔起。对应的操作是？',
+    options: ['userdel mario', 'userdel -r mario', 'deluser mario --remove-home', 'usermod -d /dev/null mario'],
+    correct: 1,
+    explanation: '`userdel` (User Delete)。切记务必带上 `-r` (Remove) 连坐拔除。如果是单纯的 `userdel mario`，系统在抹掉这号人登记的同时，其留在 `/home` 的那一坨文件还会原物保留变成系统幽灵垃圾（孤儿孤魂文件）。',
+  },
+]

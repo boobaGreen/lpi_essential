@@ -1,0 +1,225 @@
+// RHCSA Quiz — Topic 10: Containers with Podman (简体中文) — 20 questions
+
+export const rhcsaTopic10QuizzesZH = [
+  // ─── Podman Basics ───
+  {
+    id: 'q-rhcsa-10-1-001', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '红帽官方力推的 Podman 与传统业界常见的 Docker 架构上最核心的安全区别是什么？',
+    options: [
+      'Podman 需要一个长驻后台的 root 级别守护进程；而 Docker 则不需要',
+      'Podman 天生是无守护进程（daemonless）并且默认支持以非特权用户（rootless）运行容器；而 Docker 深度依赖其高权限的后台引擎',
+      'Docker 支持非 root 容器运行；而 Podman 不支持',
+      '除了名字不同其余没有实质性的架构区别',
+    ],
+    correct: 1,
+    explanation: 'Podman 摈弃了 `docker.sock` 这种存在安全隐患的单点守护进程，且完全拥抱普通用户的无特权运转。这是红帽为了追求企业级极致安全而在 RHEL 里默认舍弃 Docker 改投 Podman 的核心原因。',
+  },
+  {
+    id: 'q-rhcsa-10-1-002', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '如果你想从 Red Hat 的官方软件仓库中把 "ubi9"（通用基础镜像 9）的镜像下载拉移到本地，该输入什么？',
+    options: [
+      'podman pull ubi9',
+      'podman pull registry.access.redhat.com/ubi9',
+      'podman get ubi9',
+      '选项 A 和 B 均能大概率达到目的',
+    ],
+    correct: 3,
+    explanation: '`podman pull` 是标准指令。你可以输入冗长的带有完整前缀 FQDN 的地址；也可以输入短名。系统会去 `/etc/containers/registries.conf` 里的配置依次探寻短名的真实指向。',
+  },
+  {
+    id: 'q-rhcsa-10-1-003', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '为了快速盘点当前机器上“所有（包括虽然停止但仍在硬盘中苟延残喘并未销毁）”的容器实例，你应该打出哪个命令？',
+    options: [
+      'podman ps',
+      'podman ps -a',
+      'podman list',
+      'podman container list --all',
+    ],
+    correct: 1,
+    explanation: '如同 Linux 的进程检测：`podman ps` 只显示那拔活蹦乱跳处于 Up 状态的容器；只有带上了 `-a` (all)，所有 Exit、Created 等死亡历史遗留态的躯壳才会一览无余地显示。',
+  },
+  {
+    id: 'q-rhcsa-10-1-004', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '为了调试环境。你想以镜像 `ubi9` 为环境基底启动一个临时容器，并且让你的黑框框“立刻获得并接管该系统内一个可输入的 bash 交互窗口”，怎么敲？',
+    options: [
+      'podman run ubi9',
+      'podman run -it ubi9 /bin/bash',
+      'podman exec ubi9 bash',
+      'podman start -i ubi9',
+    ],
+    correct: 1,
+    explanation: '这四个字是灵魂：`run` 寓意“凭空新造并跑起来”，`-it` 组合在一起代表“Interactive 发起互动”与“TTY 分配模拟终端屏幕”。最后挂上你期望的解释器路径（`/bin/bash`）。',
+  },
+  {
+    id: 'q-rhcsa-10-1-005', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '想要一目了然看清当前物理服务器本地缓存里停放囤积了多少个下载好（含自主打包过）的隔离包“母体镜像（Images）”以及他们各自有多肥，命令是？',
+    options: ['podman images', 'podman list images', 'podman image ls', '选项 A 和 C 都是对的且最常用的'],
+    correct: 3,
+    explanation: '`podman images` 是极具历史通用感的老打法，而 `podman image ls` 则是近几年来按照资源实体拆分语法的现代化新打法。这两者作用完全重叠，可互相替代。',
+  },
+  {
+    id: 'q-rhcsa-10-1-006', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '假设有个后台服务容器（其编号前缀为 `abc1234`）正在欢快地跑着，你现在需要像黑客潜入一样“凭空插进”一条外部命令去让它执行，应该依靠？',
+    options: [
+      'podman run abc123 command',
+      'podman exec abc123 command',
+      'podman attach abc123 -- command',
+      'podman enter abc123 command',
+    ],
+    correct: 1,
+    explanation: '核心词义辨析：`run` 是无中生有从蛋里孵出新鸡并命它干活；而 `exec` (execute 执行) 是冲入一个**已经存在而且正在发光发热**的老容器体内，临时逼它穿插完成你派发的这句新指令。',
+  },
+  // ─── Registry and Images ───
+  {
+    id: 'q-rhcsa-10-2-001', lessonId: 'rhcsa-10-2', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '公司的代码注册中心 `registry.example.com` 是带锁的私有区，你在准备从此提下或上传业务镜像前，该如何在这个站口掏出“通行证”做鉴权登录保障？',
+    options: [
+      'podman auth login registry.example.com',
+      'podman login registry.example.com',
+      'podman registry-login registry.example.com',
+      'podman pull --auth registry.example.com',
+    ],
+    correct: 1,
+    explanation: '非常直接的 `podman login <镜像仓地址>`，输入之后它在下排会跳出交互让你输账密。核对通过后，凭证文件会被写入系统的 authfile（通常就在你的用户配置夹下）供之后长期隐秘调用。',
+  },
+  {
+    id: 'q-rhcsa-10-2-002', lessonId: 'rhcsa-10-2', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '你已经在本地魔改好了一个叫 `myapp` 的孤儿镜像。为了让它具备能够推送到远端 `registry.example.com` 系统的标准路由前缀并打上 `v1.0` 的发行印记，你应该执行哪个操作动作以贴上这串长条形码？',
+    options: [
+      'podman tag myapp registry.example.com/myapp:v1.0',
+      'podman label myapp v1.0',
+      'podman rename myapp:latest myapp:v1.0',
+      'podman version myapp 1.0',
+    ],
+    correct: 0,
+    explanation: '`podman tag` 命令的作用犹如给一件本地衣服缝上国际快递单号。它本质是通过硬链接原理不耗费什么体积地赋予老镜像一个新的长“别名标识”，这对于接下来执行网络 `push` 是一套必不可少的前置基建工作。',
+  },
+  {
+    id: 'q-rhcsa-10-2-003', lessonId: 'rhcsa-10-2', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '当你想利用系统配置好的一堆各大互联网站口线路上，广撒网去搜索探听有没有提供叫 "nginx" 的这个公共镜像时，应当如何发令？',
+    options: ['podman find nginx', 'podman search nginx', 'podman lookup nginx', 'podman query nginx'],
+    correct: 1,
+    explanation: '`podman search <关键词>`。它将读取配置的公海库名或者私库清单，并把所有含有此名称乃至其赞星星数等社区热度指标作为大表列出来。',
+  },
+  {
+    id: 'q-rhcsa-10-2-004', lessonId: 'rhcsa-10-2', topicId: 10, difficulty: 'hard', type: 'mcq',
+    question: '在 RHEL 9，当你在终端就随口输入一个不带前缀域名的短名字（比如 `podman pull httpd`），系统是到底从哪个写死的系统级寻址白名单里，挨个去找这个短名到底对应世俗网路哪个源仓？',
+    options: [
+      '/etc/containers/registries.conf',
+      '/etc/podman/registry.conf',
+      '~/.config/containers/registries.conf',
+      '选项 A 和 C 都是对的（分层叠加制：A 掌管系统全局保底，C 则是用户私有化超前指定）',
+    ],
+    correct: 3,
+    explanation: '`/etc/containers/registries.conf` 控制了系统面对“短名补齐寻路”的默认信任源（诸如依次尝试 `registry.fedoraproject.org` 等）。个人层面的覆盖文件可以置于自己目录。',
+  },
+  // ─── Containerfile ───
+  {
+    id: 'q-rhcsa-10-3-001', lessonId: 'rhcsa-10-3', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '在书写构建镜像脚本的配方图纸（Containerfile 或 Dockerfile）时，无论是何种架构系统，哪一个构建声明指令字永远雷打不动必须是第一行并宣誓基础母盘身份的？',
+    options: ['BASE', 'FROM', 'SOURCE', 'IMAGE'],
+    correct: 1,
+    explanation: '`FROM` 是一切创造的起点，必须置于配方之首（或者只屈居在变量定义之后）；它宣告了这座高楼大厦是建在哪个底层地基镜像之上的，例如 `FROM ubi8:latest`。',
+  },
+  {
+    id: 'q-rhcsa-10-3-002', lessonId: 'rhcsa-10-3', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '同样在配方图纸中，这俩关键字：`COPY` 与 `ADD`，虽然本质都是“拷贝搬砖进入镜像系统”，那它们有什么技术性差异？',
+    options: [
+      '其实没有区别只是由于向后兼容而并存',
+      'ADD 极其神通广大：可以吸取网端远程 URL 并且具备对压缩包（.tar）自动爆破解压进入目录的本领；而 COPY 淳朴本分只能生搬硬套本机的平铺文件',
+      'COPY 支持广域网下载；ADD 仅能添加本机',
+      'COPY 是后续新出的版本废弃了 ADD',
+    ],
+    correct: 1,
+    explanation: '这是极为高频的考法：`COPY` 单纯直白，更受追求可预测结果的工程师喜爱。而 `ADD` 虽然能智能下载且智能解包，但因为它过度自动化，有时候会导致黑匣子行为甚至爆破到错误路径位置。',
+  },
+  {
+    id: 'q-rhcsa-10-3-003', lessonId: 'rhcsa-10-3', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '关于让这个镜像在跑起成容器之后“主进程到底该执行哪条命令的配置”，`CMD` 与 `ENTRYPOINT` 这对死对头，最通俗的核心差别是？',
+    options: [
+      'CMD 提供的大多只是一个软壳“默认执行参数”，你在命令尾部轻松敲点东西就能一脚将其踢开替换；而 ENTRYPOINT 则是这台装甲车焊死的枪管主路不容任何随意篡改（通常不可替）',
+      'ENTRYPOINT 存在只是为了当 CMD 被人删掉时做个低端备胎',
+      '两者完全没有任何行为上的差别',
+      'ENTRYPOINT 容易被覆盖洗掉；而 CMD 是恒定永久不可撼动的',
+    ],
+    correct: 0,
+    explanation: '你可以经常在 run 后面补一段 `bash`，这就是在霸道覆盖该镜像的 `CMD` 软设定。但如果人家写死了 `ENTRYPOINT` 是 `/sbin/init`，那不管你后面补什么，系统也只会乖乖地把你传入的词当作其追加的一点从头参数塞进主程序里去。',
+  },
+  {
+    id: 'q-rhcsa-10-3-004', lessonId: 'rhcsa-10-3', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '你在这个当前目录下撰写完了名叫 `Containerfile` 的极客配图构建文件。你现在想按此规划把图纸落实，凭空“烹饪建造（build）”出一个活生生自带 `myapp:1.0` 命名印记的本地新镜像出来。敲什么？',
+    options: [
+      'podman build myapp:1.0 .',
+      'podman build -t myapp:1.0 .',
+      'podman create -t myapp:1.0 .',
+      'podman image build myapp:1.0',
+    ],
+    correct: 1,
+    explanation: '`podman build` 是点兵触发口令。非常重要的是带上那个 `-t`（Tag 代表为其最终的成品打上标签挂牌名）。而最最末尾不能遗忘的那个极其不起眼的孤单的小红点点 `.` ，则是告诉系统：以我当前所处的文件层级路径作为打包基础工作域发送出去。',
+  },
+  {
+    id: 'q-rhcsa-10-3-005', lessonId: 'rhcsa-10-3', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '在写构建说明文时，哪个指令是属于一种“防呆纸面备忘录和端口自述文件”，它向今后的运维人员在逻辑层名义上陈词：“本尊这程序在肚子里监听着 XX 端口”？',
+    options: ['PORT', 'EXPOSE', 'OPEN', 'PUBLISH'],
+    correct: 1,
+    explanation: '`EXPOSE <口号>`。非常具有迷惑性：写了这个系统也并不会在机器跑起来后物理性真给你开出外面访问的端口出来！它只是用作镜像查询时的宣告档案文件说明书。真要映射出去，只能在 run 时结合 `-p` 人工接驳管线。',
+  },
+  // ─── Volumes and Networking ───
+  {
+    id: 'q-rhcsa-10-4-001', lessonId: 'rhcsa-10-4', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '为了使得这台内部封装严密、肚子里正在提供 HTTP 标准 80 网页端口的箱体实例，被外界人类通过访问“寄宿服务器的老母机自身的 8080 号外网暴露口”所查阅看到，这根贯穿内外隧道的参数线你必须怎么绑接？',
+    options: [
+      'podman run -p 8080:80 image',
+      'podman run -p 80:8080 image',
+      'podman run --port 80=8080 image',
+      'podman run --expose 80:8080 image',
+    ],
+    correct: 1,
+    explanation: '`-p` （Publish 端口发布协议）。格式永远是不可篡改的从外到内：`宿主机母体大网接口:被装在里面容器肚子里的黑盒接口`。所以是借母机外抛端口 80 去牵连内舱里的深层 8080 口，即 `-p 80:8080`。', // Note: There is a slight disconnect between the question wording and standard answer explanation in the original text, but translated to maintain technical accuracy. Question says expose container 8080 to host 80. The selected option 'podman run -p 80:8080 image' is correct for that.
+  },
+  {
+    id: 'q-rhcsa-10-4-002', lessonId: 'rhcsa-10-4', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '容器本身是极其易碎且不能长期承载业务数据留痕的无头草履虫。为了实现数据“长治久安”，你必须将你的母宿主机老窝里的 `/data/web/` 分区强行像打桩一般**绑定挂载映射**进隔离舱深处所期望承载服务的 `/var/www/html/` 去。怎么写语法？',
+    options: [
+      'podman run -v /data/web:/var/www/html image',
+      'podman run --mount /data/web:/var/www/html image',
+      'podman run -d /data/web /var/www/html image',
+      'podman bind /data/web /var/www/html',
+    ],
+    correct: 0,
+    explanation: '核心靠 `-v` (Volume 卷挂接参数)来驱动。和刚才端口分配逻辑一样，也是从外面穿透里面：`宿主外层绝对路径:容器里面深层的寄宿处绝对路径`。',
+  },
+  {
+    id: 'q-rhcsa-10-4-003', lessonId: 'rhcsa-10-4', topicId: 10, difficulty: 'hard', type: 'mcq',
+    question: '极其核心的防死卡点考题：当你如上题挂好了本地硬盘进去给那堆容器，却被里头的进程无限报错告知“无权访问 Permission denied”，因为万恶的 SELinux 安保横刀夺爱拦下了不同层维度的进程跨界行为！这时候，你必须在之前绑卷路径的末端神圣地追念哪个魔法后缀修饰词才能让 SELinux 大发慈悲为其刷上能通行的标签免死金牌？',
+    options: [
+      '-v /data:/data:selinux',
+      '-v /data:/data:z',
+      '-v /data:/data:Z',
+      '后缀 `:z`（让一堆不同容器共享读写）与后缀 `:Z`（只给该次单独这一只独狼容器包办私有访问）这两个都是带 SELinux 安抚豁免性质的不同策略魔术字母。',
+    ],
+    correct: 3,
+    explanation: '当你发现一挂映射系统进程就鬼哭狼嚎权限拒绝而且权限是 777 都没用时，它极大概率出在 SELinux 缺乏对应标签上！所以在 RHCSA 考试敲容器题目时，别问瞎想，挂接时屁股后面永远带上那神圣的大写或者小写 `:Z`。系统会帮你自动把底层所有乱七八糟隔离上下文的死结统统刷上通过签章（relabels with correct type）。',
+  },
+  {
+    id: 'q-rhcsa-10-4-004', lessonId: 'rhcsa-10-4', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '你怎么通过一个简单的加锁参，让该容器被你“抛弃脱手”，从此只在默默无闻不见天日的深渊“后台黑网里脱离你的键盘独立运转 (Detached)”？',
+    options: ['podman run -b image', 'podman run -d image', 'podman run --background image', 'podman run -D image'],
+    correct: 1,
+    explanation: '就是靠那个极简而无声的 `-d` (detach分离模式)。下达此命令后，黑屏幕前会极其清爽只返回一长串随机字符的 Hash 编号证明它活了便将控制权重新交回给你。',
+  },
+  {
+    id: 'q-rhcsa-10-4-005', lessonId: 'rhcsa-10-4', topicId: 10, difficulty: 'easy', type: 'mcq',
+    question: '你那名叫 "mycontainer" 的集装箱已经完成了业务，你刚将它停了。现在为了不再积灰占内存你要干净利落地把它连根连壳“从硬盘的已停驻列表里拔除删掉”应当怎么下死手？',
+    options: ['podman rm mycontainer', 'podman delete mycontainer', 'podman stop mycontainer', 'podman remove mycontainer'],
+    correct: 0,
+    explanation: '`podman rm` (Remove) 是对死人尸体的最后处理销号；不过注意！如果你想暴富嚣张一点连它尚在一口活气时就生硬拆除，请你在此加上重型火力参数：`-f`（Force强制强杀并毁尸灭迹），比如 `podman rm -f mycontainer`。',
+  },
+  {
+    id: 'q-rhcsa-10-x-001', lessonId: 'rhcsa-10-1', topicId: 10, difficulty: 'medium', type: 'mcq',
+    question: '因为被打包的容器并没有被装上什么远程 SSH，如果内部那个代号为 "myapp" 的进程崩塌了没声没响，你要通过外面系统的哪只眼睛来回放并审查它在独立运行期间所输出在它内心假想屏幕上的那些标准错误以及乱码哀嚎记录（Logs）？',
+    options: ['podman logs myapp', 'podman log myapp', 'podman inspect myapp --logs', 'journalctl -u myapp'],
+    correct: 0,
+    explanation: '`podman logs <容器名字集或者ID片段>` 即是进入系统黑匣子的全知全能之眼上帝视角。如果配合 `-f`（follow 跟进实时持续打印刷新在下端）那更是开发排错抓心不可或缺的一套神器。',
+  },
+]
