@@ -1,0 +1,208 @@
+// RHCSA Quiz — Topic 9: SELinux and Security (Deutsch) — 20 questions
+
+export const rhcsaTopic9QuizzesDE = [
+  // ─── SELinux Modes ───
+  {
+    id: 'q-rhcsa-9-1-001', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'Mit welchem Kommando saugen Sie das aktuelle Radar-Lagebild ab, in welchem scharfen Modus (Enforcing/Permissive) SELinux momentan auf Ihrem System patrouilliert?',
+    options: ['selinux --status', 'getenforce', 'sestatus', 'Option B und C überliefern hier wertvolle Antworten'],
+    correct: 3,
+    explanation: '`getenforce` bellt nur das kurze Schlagwort (z.b "Enforcing"). Das majestätische `sestatus` offeriert detailreiche Blöcke über Kontexte, Policy-Typen und Booleans.',
+  },
+  {
+    id: 'q-rhcsa-9-1-002', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'Ein Befehl wird blockiert. Wie zwingen Sie SELinux SOFORT im laufenden Betrieb "weich" zu werden und als reiner "Mitleser" (Permissive) zu fungieren (geht beim Reboot verloren)?',
+    options: ['setenforce 0', 'setenforce permissive', 'selinux-permissive', 'service selinux permissive'],
+    correct: 0,
+    explanation: 'Die rohe Ziffer `-0-` via `setenforce 0` dämpft die aktive SELinux Engine ad-hoc runter in den reinen Logging-Mecker-Modus ohne etwas tatsächlich noch abzuwehren.',
+  },
+  {
+    id: 'q-rhcsa-9-1-003', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'An welchem geheimen Schrein (Datei) meißeln Sie den harten SELinux-Modus für alle kommenden Äonen und System-Reboots persistent ein?',
+    options: ['/etc/selinux/config', '/etc/sysconfig/selinux', '/etc/default/selinux', 'Dateipfad A und der Symlink B meinen absolut dasselbe'],
+    correct: 3,
+    explanation: 'Die ultimative Macht über den Boot-State von SELinux residiert alleinig in der Datei `/etc/selinux/config`.',
+  },
+  {
+    id: 'q-rhcsa-9-1-004', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Worin liegt eigentlich der fundamentale, elementare Kontrast zwischen "Enforcing" und "Permissive" in der Matrix von SELinux?',
+    options: [
+      'Beide blocken Angriffe rigoros; Enforcing schreibt aber dickere Logfiles.',
+      'Enforcing blockt Abweichungen hart ab und schreibt Mecker-Logs. Permissive hingegen ist ein Maulheld; er loggt Zensuren und Verstöße zwar kräftig in Audits mit, aber er greift NICHT blockierend ein!',
+      'Permissive blockt alles komplett, während Enforcing Ausnahmen akzeptiert.',
+      'Sie operieren schlicht in vollkommen anderen Network-Layern.',
+    ],
+    correct: 1,
+    explanation: 'Permissive ist DAS goldene Werkzeug zur Fehlersuche. Es lässt die Applikation laufen (blockiert nichts!) aber spamt Ihre Audit-Logs extrem voll mit dem, was er EIGENTLICH verboten HÄTTE ("would have denied").',
+  },
+  {
+    id: 'q-rhcsa-9-1-005', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'hard', type: 'mcq',
+    question: 'Totale Katastrophe: Ein Vorgänger hatte SELinux im config auf "disabled" (tot) gestellt. Sie schalten es wieder scharf. Was MÜSSEN Sie zwingend tun, bevor Sie den Server neubooten, sonst implodiert das OS bei der Anmeldung?',
+    options: [
+      'Stumpf einen Reboot vollziehen',
+      'touch /.autorelabel am C-Laufwerk ausführen und dann neubooten',
+      'Kurz setenforce 1 reinhämmern und neustarten',
+      'Das Basis-Paket "selinux-policy" mit DNF neu downloden',
+    ],
+    correct: 1,
+    explanation: 'Auf totgestellten Systemen akkumulieren Millionen Dateien völlig ohne SELinux-Zertifikat. `touch /.autorelabel` alarmiert den Bootloader, VOR dem Booten ALLE Milliarden Dateien auf der Kiste frisch gnadenlos durchzuetikettieren.',
+  },
+  // ─── File and Process Contexts ───
+  {
+    id: 'q-rhcsa-9-2-001', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'Ein normaler ls -l Befehl ist für SELinux blind. Mit welcher mächtigen Zusatz-Flagge zwingen Sie `ls`, Ihnen die kryptischen SELinux-Kontextetiketten der Datein (z.B unconfined_u...) vor die Füße zu werfen?',
+    options: ['ls -l', 'ls -Z', 'ls -S', 'ls --selinux'],
+    correct: 1,
+    explanation: 'Das `-Z` (Z-Security Context Flag) ist der alles-entscheidende Matrix-Schalter. Kombiniert man es mit -l, offenbart sich die Welt der U_Roles and Types.',
+  },
+  {
+    id: 'q-rhcsa-9-2-002', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Panik! Apache verweigert das Lesen Ihrer brandneuen "index.html" im Ordner `/var/www/html/`, weil Sie diese frisch aus Marios Home-Ordner rüberkopiert hatten (falscher Kontext geerbt!). Welche Voodoo-Taste repariert dieses Dilemma normgetreu instantan?',
+    options: [
+      'chcon -t httpd_sys_content_t /var/www/html/index.html',
+      'restorecon /var/www/html/index.html',
+      'semanage fcontext -r /var/www/html/file.html',
+      'setenforce httpd_sys_content_t',
+    ],
+    correct: 1,
+    explanation: 'Der Wundermacher `restorecon` wühlt im SELinux-Stammbaum, sieht dass alles in /html/ eigentlich Apache.Web.Zeug sein müsste, und bügelt den Fehler sanft und konform für alle Ewigkeit glatt.',
+  },
+  {
+    id: 'q-rhcsa-9-2-003', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Architektur-Verstoß: Sie legen Websites abseits in einem Alien-Ordner " `/custom/web/` " ab. Damit der Apache-Webserver dort NICHT geblockt wird, MÜSSEN Sie diesen wildfremden Ordner zwingend per SELinux Master-Regel brandmarken. Wie leiten Sie dies ein?',
+    options: [
+      'chcon -Rt httpd_sys_content_t /custom/web/',
+      'semanage fcontext -a -t httpd_sys_content_t "/custom/web(/.*)?"',
+      'setsebool httpd_read_custom_files on',
+      'setenforce httpd_sys_content_t /custom/web/',
+    ],
+    correct: 1,
+    explanation: 'Temporäres `chcon` überlebt den Reboot nicht! Wenn Sie tiefe fremde Pfade für Daemons (Dienste) heiligen, müssen Sie es dem SELinux Master-Gehirn beibringen mittels der `semanage fcontext -a (add)` Regular-Expression Formel.',
+  },
+  {
+    id: 'q-rhcsa-9-2-004', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'hard', type: 'mcq',
+    question: 'Wissen ist Macht: Sie haben just die mächtige Regel mit `semanage fcontext -a` in den Kernel betoniert. ABER die wirklichen Dateien in `/custom/web/` sind physisch JETZT IMMER NOCH falsch belabelt. Welchen Trigger feuern Sie?',
+    options: [
+      'semanage apply /path',
+      'restorecon -Rv /custom/web/',
+      'chcon -R --apply /path',
+      'sestatus --apply /path',
+    ],
+    correct: 1,
+    explanation: '`semanage` starrt nur Papier voll, es ändert keine der existierenden Atome auf der Platte. Erst der brachiale Ritt mit `restorecon (-R Rekursiv und v Verbose)` wälzt die neue Regel dann wirklich physikalisch über den Alien-Ordner rüber.',
+  },
+  {
+    id: 'q-rhcsa-9-2-005', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Was beim `ls` klappte, geht auch bei Daemons: Mit welch kleinem Flag im Kommando `ps` scannen Sie aus dem Stand, in welcher hochgeheimen Ziel-Domäne (Target Type) ein Prozess wie der Apache oder NGINX gerade operiert?',
+    options: ['ps -e', 'ps aux', 'ps -Z', 'ps --selinux'],
+    correct: 2,
+    explanation: '`ps -Z` spuckt neben der PID wunderschön das lange SELinux-Zertifikatsticket des Prozesses mit aus.',
+  },
+  // ─── Booleans and Ports ───
+  {
+    id: 'q-rhcsa-9-3-001', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'SELinux gleicht einem riesigen Schaltpult (ON/OFF). Mit welchem Radar-Sweep erblicken Sie die unendlich lange Tabelle abertausender SELinux-Schalter (Booleans)?',
+    options: ['semanage boolean -l', 'getsebool -a', 'setsebool --list', 'Befehle A und B bringen Licht ins Dunkel'],
+    correct: 3,
+    explanation: '`getsebool -a (all)` regnet alle hunderten Schalter auf Sie nieder. Die dicke Kuh `semanage boolean -l` tut dasselbe, liefert aber netterweise noch Default-Werte dazu.',
+  },
+  {
+    id: 'q-rhcsa-9-3-002', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'Der Apache Server schreit Tränen! Er darf keine Remoteverbindungen raussenden (Network_Connect). Sie möchten den Boolean "httpd_can_network_connect" jetzt auf ON drehen. Und zwar DAUERHAFT über Reboots hinweg!',
+    options: [
+      'setsebool httpd_can_network_connect on',
+      'setsebool -P httpd_can_network_connect on',
+      'semanage boolean -m --on httpd_can_network_connect',
+      'Lösungen B oder C zementieren dies unsterblich in die Platte',
+    ],
+    correct: 3,
+    explanation: 'Der elementare Switch `-P` im `setsebool` bewahrt die Änderung (Persistent) vor dem Tod des nächsten Reboots. Ohne "P" verfällt die Gnade in derselben Nacht.',
+  },
+  {
+    id: 'q-rhcsa-9-3-003', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Ketzerischer Mut: Sie haben Apache gezwungen auf Port 8443 anstatt Port 80 zu horchen. NGINX knallt beim Start gegen die SELinux Wand "Permission denied". Wie flickt man diese Lücke im SELinux Ports-Verständnis fachgerecht?',
+    options: [
+      'setsebool httpd_port 8443',
+      'semanage port -a -t http_port_t -p tcp 8443',
+      'firewall-cmd --add-port=8443/tcp',
+      'chcon -t http_port_t 8443',
+    ],
+    correct: 1,
+    explanation: 'SELinux ist verklemmt: Man muss Ports offiziell ins Whitelist-System einer Domain eintragen. Mit dem `semanage port -a` addieren Sie 8443 zum vertrauten Kreis des `http_port_t`.',
+  },
+  {
+    id: 'q-rhcsa-9-3-004', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Bevor man Ports blind hinzufügt, sollte man spicken was überhaupt erlaubt ist. Wie rastern Sie die SELinux-Schattenmatrix ab, um zu prüfen, welche Ports derzeit dem "http_port_t" überhaupt zugeordnet sind?',
+    options: [
+      'semanage port -l | grep http',
+      'getsebool -a | grep http',
+      'selinux port --list http',
+      'ss -tlnp | grep http',
+    ],
+    correct: 0,
+    explanation: '`semanage port -l` wirft alle hunderten Portbindungen ab, ein gepflegtes grep fischt Ihnen zielgenau die "http" Trophäen dort heraus.',
+  },
+  {
+    id: 'q-rhcsa-9-3-005', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'hard', type: 'mcq',
+    question: 'Detektiv-Arbeit an der Front! Ein kruder Dienst kippt mit puren "Permission Denied" Errors tot um. Wie diagnostiziert ein echter Sysadmin in RHCSA-Manier, OB es SELinux ist und WIE verdammt man es flickt?',
+    options: [
+      '1. Temporär "setenforce 0". Startet der Dienst jetzt? JA -> Schuldiger gefunden (SELinux).',
+      '2. Wühle dich ins Log unter /var/log/audit/audit.log und analysiere die fiesen "AVC" Denials.',
+      '3. Jage "sealert -a /var/log/audit/audit.log" drüber und lasse dir von SELinux in klartext Vorschlagen, welches boolean es gewesen sei.',
+      'Exakt ALLE DREI der oben genannten Schritte in purer Harmonie abarbeiten!',
+    ],
+    correct: 3,
+    explanation: 'Das ist der heilige Dreifaltigkeits-Workflow für SELinux Debugging. Setenforce0 beweist Täter, Audit.log enthüllt das Opfer, und sealert spuckt praktischerweise den Reparaturcode aus.',
+  },
+  // ─── Extra ───
+  {
+    id: 'q-rhcsa-9-x-001', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Das geniale Werkzeug "sealert" fehlt auf dem betagten Server. Wie heißt das magische Softwarepaket, mit dem uns RHEL diese unfassbar bequeme Troubleshoot-Übersetzungsmaschine schenkt?',
+    options: ['selinux-tools', 'setroubleshoot-server', 'seutility', 'audit-selinux'],
+    correct: 1,
+    explanation: 'Das lebensrettende Paket ist `setroubleshoot-server`. Installieren, und nie mehr kryptische AVC logs ohne KI-artige Klartext Hilfestellungen ertragen müssen.',
+  },
+  {
+    id: 'q-rhcsa-9-x-002', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Knacken wir den Code. Aus welchen 4 elementaren, durch Doppelpunkte (:) peinlichst getrennten Säulen besteht so ein klassischer "SELinux Kontext" wie system_u:object_r:httpd_sys_content_t:s0 eigentlich?',
+    options: [
+      'user:role:domain',
+      'user:role:type:level',
+      'domain:type:context',
+      'policy:user:role',
+    ],
+    correct: 1,
+    explanation: 'Der Anatomie-Aufbau ist unumstritten: USER (oft _u), ROLE (oft _r), TYPE (extrem wichtig, _t), und das Sicherheits LEVEL (zB s0).',
+  },
+  {
+    id: 'q-rhcsa-9-x-003', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'Ein Kollege flucht lautstark, irgendwas blockiert. Mit welch cleverem Skalpell lauschen Sie live "Echtzeit", wenn in den Katakomben wieder SELinux den Knüppel bei Dateizugriffen (AVC Denials) schwingt?',
+    options: [
+      'journalctl -f | grep AVC',
+      'tail -f /var/log/audit/audit.log | grep AVC',
+      'ausearch -m AVC',
+      'Egal welches, sie sind alle verheerend effektiv',
+    ],
+    correct: 3,
+    explanation: 'RHEL schreibt die Denials traditionell als "AVC denied"-Vermerke in den audit.log - aber auch an Systemd Journale. `ausearch` ist das feinste Raster-Werkzeug dafür.',
+  },
+  {
+    id: 'q-rhcsa-9-x-004', lessonId: 'rhcsa-9-3', topicId: 9, difficulty: 'hard', type: 'mcq',
+    question: 'Gefahr beim Kopieren! Ein stumpfes `cp File /neuer/Ordner` reißt Datein den ursprünglichen Kontext ab und klatscht ihnen den Kontext des Zielordners aufs Gesicht. Wie kopieren Sie eine Datei "absolut 1:1 identisch SELinux Erhalten"?',
+    options: ['cp file dest/', 'cp --preserve=context file dest/', 'cp -a file dest/', 'Befehlsvarianten B und das Archive C brillieren hier'],
+    correct: 3,
+    explanation: 'Nutzt man den Schalter `cp --preserve=context` (oder gnadenlos das Archive Flag `-a`), klebt die Datei am SELinux Klebeband fest, womit der Kontext strikt ans neue Zielufer gehievt wird.',
+  },
+  {
+    id: 'q-rhcsa-9-x-005', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'medium', type: 'mcq',
+    question: 'Die User toben! "Wir können keine Webseiten in unseren /home/~user Verzeichnissen hosten, Apache sagt Access Denied!" Welchen rettenden Boolean im SELinux Pult müssen Sie umlegen?',
+    options: [
+      'httpd_read_user_content',
+      'httpd_enable_homedirs',
+      'httpd_can_read_homes',
+      'httpd_use_homefiles',
+    ],
+    correct: 1,
+    explanation: 'Der unantastbare `httpd_enable_homedirs`. Flips den Schalter und Apache darf endlich jenseits der /var/www/ auch fröhlich in private Home-Stuben vordringen um Daten zu saugen.',
+  },
+]
