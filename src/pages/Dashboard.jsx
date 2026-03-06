@@ -110,7 +110,7 @@ export default function Dashboard() {
     xp, level, levelTitle, streak, completedLessons,
     completedQuizzes, badges, examAttempts, topicProgress
   } = useGame()
-  const { t } = useLanguage()
+  const { t, currentLang } = useLanguage()
   const { currentCourse } = useCourse()
   const { topics, getTotalLessons } = useTopics()
 
