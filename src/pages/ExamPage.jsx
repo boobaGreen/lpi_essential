@@ -44,9 +44,11 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
   const { t } = useLanguage()
   const { saveExamAttempt, addXP, earnBadge, examAttempts } = useGame()
   const { topics } = useTopics()
-  const maxScore = 800
+  const isRhcsa = courseId === 'rhcsa'
+  const maxScore = isRhcsa ? 300 : 800
+  const passingScore = isRhcsa ? 210 : 500
   const scaledScore = Math.round((score / questions.length) * maxScore)
-  const passed = scaledScore >= 500
+  const passed = scaledScore >= passingScore
   const percentage = Math.round((score / questions.length) * 100)
 
   // Per-topic breakdown
@@ -87,11 +89,11 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
           {passed ? '🎉 ' + t('passedTitle') : '📚 ' + t('notYetTitle')}
         </h2>
         <div className="font-black" style={{ fontSize: '3rem', color: passed ? 'var(--color-success)' : 'var(--color-error)' }}>
-          {scaledScore}/800
+          {scaledScore}/{maxScore}
         </div>
         <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '8px' }}>
           {score}/{questions.length} {t('correctAnswers')} ({percentage}%)
-          {passed ? ' — ' + t('minToPass1') + ' ✅' : ' — ' + t('minToPass2')}
+          {passed ? ' — ' + t('minToPass1') + ' ✅' : ` — Min: ${passingScore}/${maxScore}`}
         </p>
         <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem', marginTop: '4px' }}>
           {t('timeLabel')} {Math.floor(timeUsed / 60)}m {timeUsed % 60}s
@@ -162,20 +164,41 @@ export default function ExamPage() {
   const { courseId } = useParams()
   const { t } = useLanguage()
   const { topics, allQuizzes } = useTopics()
+
+  // ─── Configurazione per corso ────────────────────────────
+  const isRhcsa = courseId === 'rhcsa'
+  const examConfig = isRhcsa
+    ? {
+        name: 'RHCSA EX200',
+        questions: 50,
+        timeMinutes: 60,   // simulazione (vero = 210 min pratico)
+        passingScore: 210,  // RHCSA: 210/300 punti
+        maxScore: 300,
+        disclaimer: '⚠️ Simulazione teorica. L\'esame reale RHCSA è 100% pratico su VM (210 min).',
+      }
+    : {
+        name: 'LPI Linux Essentials (010-160)',
+        questions: 40,
+        timeMinutes: 60,
+        passingScore: 500,
+        maxScore: 800,
+        disclaimer: null,
+      }
+  const EXAM_TIME = examConfig.timeMinutes * 60
+
   const [mode, setMode] = useState('intro') // intro | exam | results
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [showResult, setShowResult] = useState(false)
   const [answers, setAnswers] = useState([])
-  const [timeLeft, setTimeLeft] = useState(60 * 60) // 60 minutes
+  const [timeLeft, setTimeLeft] = useState(EXAM_TIME)
   const [startTime, setStartTime] = useState(null)
   const timerRef = useRef(null)
-  const EXAM_TIME = 60 * 60
 
   const startExam = useCallback(() => {
     const shuffled = shuffleArray(allQuizzes)
-    const selected = shuffled.slice(0, Math.min(40, shuffled.length))
+    const selected = shuffled.slice(0, Math.min(examConfig.questions, shuffled.length))
     setQuestions(selected)
     setCurrentIndex(0)
     setSelectedAnswer(null)
@@ -184,7 +207,7 @@ export default function ExamPage() {
     setTimeLeft(EXAM_TIME)
     setStartTime(Date.now())
     setMode('exam')
-  }, [allQuizzes])
+  }, [allQuizzes, examConfig.questions, EXAM_TIME])
 
   useEffect(() => {
     if (mode === 'exam') {
@@ -239,26 +262,38 @@ export default function ExamPage() {
         <motion.div className="text-center" style={{ paddingTop: '32px', paddingBottom: '16px' }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <GraduationCap size={64} className="mx-auto text-[var(--color-neon-pink)]" style={{ marginBottom: '16px' }} />
           <h1 className="text-3xl font-black gradient-text">{t('examSim')}</h1>
-          <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '12px', fontSize: '1.125rem' }}>LPI Linux Essentials (010-160)</p>
+          <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '12px', fontSize: '1.125rem' }}>{examConfig.name}</p>
         </motion.div>
 
         <div className="glass-card" style={{ padding: '28px' }}>
           <h2 className="font-bold" style={{ fontSize: '1.25rem', marginBottom: '20px' }}>📋 {t('examRules')}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
-              <div className="font-black text-[var(--color-neon-blue)]" style={{ fontSize: '2rem' }}>40</div>
+              <div className="font-black text-[var(--color-neon-blue)]" style={{ fontSize: '2rem' }}>{examConfig.questions}</div>
               <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>{t('examQuestions')}</div>
             </div>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
-              <div className="font-black text-[var(--color-neon-orange)]" style={{ fontSize: '2rem' }}>60</div>
+              <div className="font-black text-[var(--color-neon-orange)]" style={{ fontSize: '2rem' }}>{examConfig.timeMinutes}</div>
               <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>Minuti</div>
             </div>
             <div className="text-center rounded-xl" style={{ padding: '20px', background: 'var(--color-bg-primary)' }}>
-              <div className="font-black text-[var(--color-neon-green)]" style={{ fontSize: '2rem' }}>500</div>
-              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>Punteggio min /800</div>
+              <div className="font-black text-[var(--color-neon-green)]" style={{ fontSize: '2rem' }}>{examConfig.passingScore}</div>
+              <div className="text-[var(--color-text-muted)]" style={{ fontSize: '0.75rem' }}>Min /{examConfig.maxScore}</div>
             </div>
           </div>
         </div>
+
+        {isRhcsa && (
+          <div className="glass-card flex items-start" style={{ padding: '20px', gap: '12px', borderColor: 'rgba(239, 68, 68, 0.4)', background: 'rgba(239,68,68,0.06)' }}>
+            <AlertTriangle size={20} className="text-[var(--color-error)] shrink-0" style={{ marginTop: '2px' }} />
+            <div>
+              <p className="font-bold" style={{ fontSize: '0.875rem', color: 'var(--color-error)' }}>⚠️ Esame Pratico — Simulazione Teorica</p>
+              <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem', marginTop: '4px' }}>
+                L&apos;esame reale RHCSA EX200 è <strong>100% pratico su VM Linux</strong> (210 minuti). Questa simulazione testa solo la conoscenza teorica dei comandi per aiutarti a prepararti.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="glass-card flex items-start" style={{ padding: '20px', gap: '12px', borderColor: 'rgba(234, 179, 8, 0.3)' }}>
           <AlertTriangle size={20} className="text-[var(--color-warning)] shrink-0" style={{ marginTop: '2px' }} />
