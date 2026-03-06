@@ -45,8 +45,9 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
   const { saveExamAttempt, addXP, earnBadge, examAttempts } = useGame()
   const { topics } = useTopics()
   const isRhcsa = courseId === 'rhcsa'
-  const maxScore = isRhcsa ? 300 : 800
-  const passingScore = isRhcsa ? 210 : 500
+  const isLpic1 = courseId === 'lpic1-101'
+  const maxScore = isRhcsa ? 300 : (isLpic1 ? 800 : 800)
+  const passingScore = isRhcsa ? 210 : (isLpic1 ? 500 : 500)
   const scaledScore = Math.round((score / questions.length) * maxScore)
   const passed = scaledScore >= passingScore
   const percentage = Math.round((score / questions.length) * 100)
@@ -167,23 +168,37 @@ export default function ExamPage() {
 
   // ─── Configurazione per corso ────────────────────────────
   const isRhcsa = courseId === 'rhcsa'
-  const examConfig = isRhcsa
-    ? {
-        name: 'RHCSA EX200',
-        questions: 50,
-        timeMinutes: 60,   // simulazione (vero = 210 min pratico)
-        passingScore: 210,  // RHCSA: 210/300 punti
-        maxScore: 300,
-        disclaimer: '⚠️ Simulazione teorica. L\'esame reale RHCSA è 100% pratico su VM (210 min).',
-      }
-    : {
-        name: 'LPI Linux Essentials (010-160)',
-        questions: 40,
-        timeMinutes: 60,
-        passingScore: 500,
-        maxScore: 800,
-        disclaimer: null,
-      }
+  const isLpic1 = courseId === 'lpic1-101'
+
+  let examConfig
+  if (isRhcsa) {
+    examConfig = {
+      name: 'RHCSA EX200',
+      questions: 50,
+      timeMinutes: 60,   // simulazione (vero = 210 min pratico)
+      passingScore: 210,  // RHCSA: 210/300 punti
+      maxScore: 300,
+      disclaimer: '⚠️ Simulazione teorica. L\'esame reale RHCSA è 100% pratico su VM (210 min).',
+    }
+  } else if (isLpic1) {
+    examConfig = {
+      name: 'LPIC-1 Exam 101 (101-500)',
+      questions: 60,
+      timeMinutes: 90,
+      passingScore: 500,
+      maxScore: 800,
+      disclaimer: null,
+    }
+  } else {
+    examConfig = {
+      name: 'LPI Linux Essentials (010-160)',
+      questions: 40,
+      timeMinutes: 60,
+      passingScore: 500,
+      maxScore: 800,
+      disclaimer: null,
+    }
+  }
   const EXAM_TIME = examConfig.timeMinutes * 60
 
   const [mode, setMode] = useState('intro') // intro | exam | results

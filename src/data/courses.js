@@ -25,16 +25,27 @@ export const COURSES = {
     tags: ['Linux', 'RHEL', 'SysAdmin', 'Red Hat', 'EX200'],
     disclaimer: 'practical-exam',   // flag: mostra disclaimer "esame pratico"
   },
-  'lpic-1': {
-    id: 'lpic-1',
-    name: 'LPIC-1',
-    code: '101-500 / 102-500',
+  'lpic1-101': {
+    id: 'lpic1-101',
+    name: 'LPIC-1 Exam 101',
+    code: '101-500',
     icon: '🛡️',
     color: '#a855f7',        // neon-purple
+    topicCount: 4,
+    available: true,
+    description: 'Architettura di sistema, pacchetti, comandi GNU/Unix, filesystem e FHS.',
+    tags: ['Linux', 'SysAdmin', 'LPIC', 'LPI'],
+  },
+  'lpic1-102': {
+    id: 'lpic1-102',
+    name: 'LPIC-1 Exam 102',
+    code: '102-500',
+    icon: '🔰',
+    color: '#06b6d4',        // neon-cyan
     topicCount: 0,
     available: false,
-    description: 'Amministrazione di sistema Linux: boot, pacchetti, rete, shell scripting.',
-    tags: ['Linux', 'SysAdmin', 'LPIC'],
+    description: 'Shell scripting, interfacce, database SQL, networking, sicurezza.',
+    tags: ['Linux', 'SysAdmin', 'LPIC', 'LPI'],
   },
   'lpic-2': {
     id: 'lpic-2',

@@ -21,6 +21,11 @@ import * as ptRhcsaData from '../locales/pt/rhcsa_gamesData.js'
 import * as ruRhcsaData from '../locales/ru/rhcsa_gamesData.js'
 import * as zhRhcsaData from '../locales/zh/rhcsa_gamesData.js'
 
+// LPIC-1 101 game data
+import * as itLpic1_101Data from '../locales/it/lpic1_101_gamesData.js'
+import * as enLpic1_101Data from '../locales/en/lpic1_101_gamesData.js'
+import * as esLpic1_101Data from '../locales/es/lpic1_101_gamesData.js'
+
 const lpiDataMap = {
   it: itData, en: enData, es: esData, de: deData,
   fr: frData, pt: ptData, ru: ruData, zh: zhData,
@@ -31,13 +36,25 @@ const rhcsaDataMap = {
   fr: frRhcsaData, pt: ptRhcsaData, ru: ruRhcsaData, zh: zhRhcsaData,
 }
 
+// LPIC-1 101: IT & EN base, altre lingue usano EN come fallback
+const lpic1_101DataMap = {
+  it: itLpic1_101Data, en: enLpic1_101Data, es: esLpic1_101Data, de: enLpic1_101Data,
+  fr: enLpic1_101Data, pt: enLpic1_101Data, ru: enLpic1_101Data, zh: enLpic1_101Data,
+}
+
 export function useGameData() {
   const { currentLang } = useLanguage()
   const params = useParams()
   const courseId = params?.courseId || 'linux-essentials'
 
-  const isRhcsa = courseId === 'rhcsa'
-  const map = isRhcsa ? rhcsaDataMap : lpiDataMap
+  let map
+  if (courseId === 'lpic1-101') {
+    map = lpic1_101DataMap
+  } else if (courseId === 'rhcsa') {
+    map = rhcsaDataMap
+  } else {
+    map = lpiDataMap
+  }
   const currentData = map[currentLang] || map.it
 
   return {
