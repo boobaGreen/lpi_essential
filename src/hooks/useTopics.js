@@ -32,6 +32,12 @@ import { rhcsaTopics as rhcsaTopicsRU } from '../locales/ru/rhcsa_topics.js'
 import { rhcsaTopics as rhcsaTopicsZH } from '../locales/zh/rhcsa_topics.js'
 import { rhcsaLessonContent as rhcsaLessonContentIT } from '../locales/it/rhcsa_lessonContent.js'
 import { rhcsaLessonContent as rhcsaLessonContentEN } from '../locales/en/rhcsa_lessonContent.js'
+import { rhcsaLessonContentES } from '../locales/es/rhcsa_lessonContent.js'
+import { rhcsaLessonContentFR } from '../locales/fr/rhcsa_lessonContent.js'
+import { rhcsaLessonContentDE } from '../locales/de/rhcsa_lessonContent.js'
+import { rhcsaLessonContentPT } from '../locales/pt/rhcsa_lessonContent.js'
+import { rhcsaLessonContentRU } from '../locales/ru/rhcsa_lessonContent.js'
+import { rhcsaLessonContentZH } from '../locales/zh/rhcsa_lessonContent.js'
 import { rhcsaQuizzesDict, rhcsaAllQuizzesDict } from '../data/rhcsa/quizzes/index.js'
 import { rhcsaExtendedContentDict } from '../data/rhcsa/extendedContent/index.js'
 
@@ -60,7 +66,12 @@ const getRhcsaTopics = (lang) =>
 const rhcsaLessonContentDict = {
   it: rhcsaLessonContentIT,
   en: rhcsaLessonContentEN,
-  // Altre lingue: fallback a EN — da tradurre in futuro
+  es: rhcsaLessonContentES,
+  fr: rhcsaLessonContentFR,
+  de: rhcsaLessonContentDE,
+  pt: rhcsaLessonContentPT,
+  ru: rhcsaLessonContentRU,
+  zh: rhcsaLessonContentZH,
 }
 
 export function useTopics() {

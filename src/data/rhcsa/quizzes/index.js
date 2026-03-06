@@ -99,29 +99,17 @@ export const rhcsaQuizzesByTopicIT = {
   10: rhcsaTopic10Quizzes,
 }
 
-// ─── JA Quizzes (1-10) ───
-import { rhcsaTopic1QuizzesJA } from './ja/rhcsa_topic1_ja'
-import { rhcsaTopic2QuizzesJA } from './ja/rhcsa_topic2_ja'
-import { rhcsaTopic3QuizzesJA } from './ja/rhcsa_topic3_ja'
-import { rhcsaTopic4QuizzesJA } from './ja/rhcsa_topic4_ja'
-import { rhcsaTopic5QuizzesJA } from './ja/rhcsa_topic5_ja'
-import { rhcsaTopic6QuizzesJA } from './ja/rhcsa_topic6_ja'
-import { rhcsaTopic7QuizzesJA } from './ja/rhcsa_topic7_ja'
-import { rhcsaTopic8QuizzesJA } from './ja/rhcsa_topic8_ja'
-import { rhcsaTopic9QuizzesJA } from './ja/rhcsa_topic9_ja'
-import { rhcsaTopic10QuizzesJA } from './ja/rhcsa_topic10_ja'
-
 // ─── ZH Quizzes (1-10) ───
-import { rhcsaTopic1QuizzesZH } from './zh/rhcsa_topic1_zh'
-import { rhcsaTopic2QuizzesZH } from './zh/rhcsa_topic2_zh'
-import { rhcsaTopic3QuizzesZH } from './zh/rhcsa_topic3_zh'
-import { rhcsaTopic4QuizzesZH } from './zh/rhcsa_topic4_zh'
-import { rhcsaTopic5QuizzesZH } from './zh/rhcsa_topic5_zh'
-import { rhcsaTopic6QuizzesZH } from './zh/rhcsa_topic6_zh'
-import { rhcsaTopic7QuizzesZH } from './zh/rhcsa_topic7_zh'
-import { rhcsaTopic8QuizzesZH } from './zh/rhcsa_topic8_zh'
-import { rhcsaTopic9QuizzesZH } from './zh/rhcsa_topic9_zh'
-import { rhcsaTopic10QuizzesZH } from './zh/rhcsa_topic10_zh'
+import { rhcsaTopic1QuizzesZH } from './zh/rhcsa_topic1_zh.js'
+import { rhcsaTopic2QuizzesZH } from './zh/rhcsa_topic2_zh.js'
+import { rhcsaTopic3QuizzesZH } from './zh/rhcsa_topic3_zh.js'
+import { rhcsaTopic4QuizzesZH } from './zh/rhcsa_topic4_zh.js'
+import { rhcsaTopic5QuizzesZH } from './zh/rhcsa_topic5_zh.js'
+import { rhcsaTopic6QuizzesZH } from './zh/rhcsa_topic6_zh.js'
+import { rhcsaTopic7QuizzesZH } from './zh/rhcsa_topic7_zh.js'
+import { rhcsaTopic8QuizzesZH } from './zh/rhcsa_topic8_zh.js'
+import { rhcsaTopic9QuizzesZH } from './zh/rhcsa_topic9_zh.js'
+import { rhcsaTopic10QuizzesZH } from './zh/rhcsa_topic10_zh.js'
 
 export const rhcsaQuizzesByTopicEN = {
   1: rhcsaTopic1QuizzesEN,
@@ -199,19 +187,6 @@ export const rhcsaQuizzesByTopicRU = {
   8: rhcsaTopic8QuizzesRU,
   9: rhcsaTopic9QuizzesRU,
   10: rhcsaTopic10QuizzesRU,
-}
-
-export const rhcsaQuizzesByTopicJA = {
-  1: rhcsaTopic1QuizzesJA,
-  2: rhcsaTopic2QuizzesJA,
-  3: rhcsaTopic3QuizzesJA,
-  4: rhcsaTopic4QuizzesJA,
-  5: rhcsaTopic5QuizzesJA,
-  6: rhcsaTopic6QuizzesJA,
-  7: rhcsaTopic7QuizzesJA,
-  8: rhcsaTopic8QuizzesJA,
-  9: rhcsaTopic9QuizzesJA,
-  10: rhcsaTopic10QuizzesJA,
 }
 
 export const rhcsaQuizzesByTopicZH = {
@@ -319,19 +294,6 @@ export const allRhcsaQuizzesRU = [
   ...rhcsaTopic10QuizzesRU,
 ]
 
-export const allRhcsaQuizzesJA = [
-  ...rhcsaTopic1QuizzesJA,
-  ...rhcsaTopic2QuizzesJA,
-  ...rhcsaTopic3QuizzesJA,
-  ...rhcsaTopic4QuizzesJA,
-  ...rhcsaTopic5QuizzesJA,
-  ...rhcsaTopic6QuizzesJA,
-  ...rhcsaTopic7QuizzesJA,
-  ...rhcsaTopic8QuizzesJA,
-  ...rhcsaTopic9QuizzesJA,
-  ...rhcsaTopic10QuizzesJA,
-]
-
 export const allRhcsaQuizzesZH = [
   ...rhcsaTopic1QuizzesZH,
   ...rhcsaTopic2QuizzesZH,
@@ -354,7 +316,6 @@ export const rhcsaQuizzesDict = {
   de: rhcsaQuizzesByTopicDE,
   pt: rhcsaQuizzesByTopicPT,
   ru: rhcsaQuizzesByTopicRU,
-  ja: rhcsaQuizzesByTopicJA,
   zh: rhcsaQuizzesByTopicZH,
 }
 
@@ -366,6 +327,5 @@ export const rhcsaAllQuizzesDict = {
   de: allRhcsaQuizzesDE,
   pt: allRhcsaQuizzesPT,
   ru: allRhcsaQuizzesRU,
-  ja: allRhcsaQuizzesJA,
   zh: allRhcsaQuizzesZH,
 }
