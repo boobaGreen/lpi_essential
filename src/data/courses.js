@@ -42,8 +42,8 @@ export const COURSES = {
     code: '102-500',
     icon: '🔰',
     color: '#06b6d4',        // neon-cyan
-    topicCount: 0,
-    available: false,
+    topicCount: 6,
+    available: true,
     description: 'Shell scripting, interfacce, database SQL, networking, sicurezza.',
     tags: ['Linux', 'SysAdmin', 'LPIC', 'LPI'],
   },

@@ -53,8 +53,20 @@ import { lpic1_101_topics as lpic1_101_TopicsZH } from '../locales/zh/lpic1_101_
 import { lpic1_101_lessonContent as lpic1_101_LessonContentIT } from '../locales/it/lpic1_101_lessonContent.js'
 import { lpic1_101_lessonContent as lpic1_101_LessonContentEN } from '../locales/en/lpic1_101_lessonContent.js'
 import { lpic1_101_lessonContent_es as lpic1_101_LessonContentES } from '../locales/es/lpic1_101_lessonContent.js'
+import { lpic1_101_lessonContent_fr as lpic1_101_LessonContentFR } from '../locales/fr/lpic1_101_lessonContent.js'
+import { lpic1_101_lessonContent_de as lpic1_101_LessonContentDE } from '../locales/de/lpic1_101_lessonContent.js'
+import { lpic1_101_lessonContent_pt as lpic1_101_LessonContentPT } from '../locales/pt/lpic1_101_lessonContent.js'
+import { lpic1_101_lessonContent_ru as lpic1_101_LessonContentRU } from '../locales/ru/lpic1_101_lessonContent.js'
+import { lpic1_101_lessonContent_zh as lpic1_101_LessonContentZH } from '../locales/zh/lpic1_101_lessonContent.js'
 import { lpic1_101_quizzesDict, lpic1_101_allQuizzesDict } from '../data/lpic1-101/quizzes/index.js'
 import { lpic1_101_extendedContentDict } from '../data/lpic1-101/extendedContent/index.js'
+
+// ─── LPIC-1 102 ──────────────────────────────────────────────────────────────
+import { lpic1_102_topics as lpic1_102_TopicsIT } from '../locales/it/lpic1_102_topics.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentIT } from '../locales/it/lpic1_102_lessonContent.js'
+import { quizzes_it as lpic1_102_quizzesIT, allQuizzes_it as lpic1_102_allQuizzesIT } from '../data/lpic1-102/quizzes/index.js'
+import { extendedContent as lpic1_102_extendedContent } from '../data/lpic1-102/extendedContent/index.js'
+
 
 // ─── Dizionari LPI ──────────────────────────────────────────────────────────
 const lessonContentDict = {
@@ -100,12 +112,19 @@ const lpic1_101_LessonContentDict = {
   it: lpic1_101_LessonContentIT,
   en: lpic1_101_LessonContentEN,
   es: lpic1_101_LessonContentES,
-  fr: lpic1_101_LessonContentEN,
-  de: lpic1_101_LessonContentEN,
-  pt: lpic1_101_LessonContentEN,
-  ru: lpic1_101_LessonContentEN,
-  zh: lpic1_101_LessonContentEN,
+  fr: lpic1_101_LessonContentFR,
+  de: lpic1_101_LessonContentDE,
+  pt: lpic1_101_LessonContentPT,
+  ru: lpic1_101_LessonContentRU,
+  zh: lpic1_101_LessonContentZH,
 }
+
+// ─── Dizionari LPIC-1 102 ────────────────────────────────────────────────────
+const lpic1_102_TopicDict = { it: lpic1_102_TopicsIT, en: lpic1_102_TopicsIT }
+const lpic1_102_LessonContentDict = { it: lpic1_102_LessonContentIT, en: lpic1_102_LessonContentIT }
+const lpic1_102_quizzesDict = { it: lpic1_102_quizzesIT, en: lpic1_102_quizzesIT }
+const lpic1_102_allQuizzesDict = { it: lpic1_102_allQuizzesIT, en: lpic1_102_allQuizzesIT }
+
 
 export function useTopics() {
   const { currentLang } = useLanguage()
@@ -131,6 +150,29 @@ export function useTopics() {
       quizzesByTopic,
       allQuizzes,
       extendedContent: lpic1_101_extendedContentDict[currentLang] ?? lpic1_101_extendedContentDict['it'] ?? {},
+    }
+  }
+
+  // ─── LPIC-1 102 ──────────────────────────────────────────────────────────
+  if (currentCourseId === 'lpic1-102') {
+    const topics = lpic1_102_TopicDict[currentLang] ?? lpic1_102_TopicDict['it']
+    const lessonContent = lpic1_102_LessonContentDict[currentLang] ?? lpic1_102_LessonContentDict['it']
+    const quizzesByTopic = lpic1_102_quizzesDict[currentLang] ?? lpic1_102_quizzesDict['it']
+    const allQuizzes = lpic1_102_allQuizzesDict[currentLang] ?? lpic1_102_allQuizzesDict['it']
+
+    const getTopic = (id) => topics.find(t => t.id === Number(id))
+    const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
+    const getTotalLessons = () => topics.reduce((sum, t) => sum + t.lessons.length, 0)
+
+    return {
+      topics,
+      getTopic,
+      getLesson,
+      getTotalLessons,
+      lessonContent,
+      quizzesByTopic,
+      allQuizzes,
+      extendedContent: lpic1_102_extendedContent[currentLang] ?? lpic1_102_extendedContent['it'] ?? {},
     }
   }
 

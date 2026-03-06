@@ -24,7 +24,16 @@ import * as zhRhcsaData from '../locales/zh/rhcsa_gamesData.js'
 // LPIC-1 101 game data
 import * as itLpic1_101Data from '../locales/it/lpic1_101_gamesData.js'
 import * as enLpic1_101Data from '../locales/en/lpic1_101_gamesData.js'
-import * as esLpic1_101Data from '../locales/es/lpic1_101_gamesData.js'
+import { terminalChallengeData as tC_es, memoryGameData as mG_es } from '../locales/es/lpic1_101_gamesData.js'
+import { terminalChallengeData as tC_fr, memoryGameData as mG_fr } from '../locales/fr/lpic1_101_gamesData.js'
+import { terminalChallengeData as tC_de, memoryGameData as mG_de } from '../locales/de/lpic1_101_gamesData.js'
+import { terminalChallengeData as tC_pt, memoryGameData as mG_pt } from '../locales/pt/lpic1_101_gamesData.js'
+import { terminalChallengeData as tC_ru, memoryGameData as mG_ru } from '../locales/ru/lpic1_101_gamesData.js'
+import { terminalChallengeData as tC_zh, memoryGameData as mG_zh } from '../locales/zh/lpic1_101_gamesData.js'
+
+// LPIC-1 102 game data
+import * as itLpic1_102Data from '../locales/it/lpic1_102_gamesData.js'
+
 
 const lpiDataMap = {
   it: itData, en: enData, es: esData, de: deData,
@@ -38,9 +47,18 @@ const rhcsaDataMap = {
 
 // LPIC-1 101: IT & EN base, altre lingue usano EN come fallback
 const lpic1_101DataMap = {
-  it: itLpic1_101Data, en: enLpic1_101Data, es: esLpic1_101Data, de: enLpic1_101Data,
-  fr: enLpic1_101Data, pt: enLpic1_101Data, ru: enLpic1_101Data, zh: enLpic1_101Data,
+  it: itLpic1_101Data, en: enLpic1_101Data, es: esLpic1_101Data, 
+  fr: frLpic1_101Data, de: { memoryGameData: mG_de, terminalChallengeData: tC_de },
+  pt: { memoryGameData: mG_pt, terminalChallengeData: tC_pt },
+  ru: { memoryGameData: mG_ru, terminalChallengeData: tC_ru },
+  zh: { memoryGameData: mG_zh, terminalChallengeData: tC_zh },
 }
+
+const lpic1_102DataMap = {
+  it: itLpic1_102Data,
+  en: itLpic1_102Data, // Fallback to IT for now
+}
+
 
 export function useGameData() {
   const { currentLang } = useLanguage()
@@ -50,7 +68,10 @@ export function useGameData() {
   let map
   if (courseId === 'lpic1-101') {
     map = lpic1_101DataMap
+  } else if (courseId === 'lpic1-102') {
+    map = lpic1_102DataMap
   } else if (courseId === 'rhcsa') {
+
     map = rhcsaDataMap
   } else {
     map = lpiDataMap
