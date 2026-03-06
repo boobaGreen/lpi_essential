@@ -33,6 +33,7 @@ import { terminalChallengeData as tC_zh, memoryGameData as mG_zh } from '../loca
 
 // LPIC-1 102 game data
 import * as itLpic1_102Data from '../locales/it/lpic1_102_gamesData.js'
+import * as enLpic1_102Data from '../locales/en/lpic1_102_gamesData.js'
 
 
 const lpiDataMap = {
@@ -47,8 +48,8 @@ const rhcsaDataMap = {
 
 // LPIC-1 101: IT & EN base, altre lingue usano EN come fallback
 const lpic1_101DataMap = {
-  it: itLpic1_101Data, en: enLpic1_101Data, es: esLpic1_101Data, 
-  fr: frLpic1_101Data, de: { memoryGameData: mG_de, terminalChallengeData: tC_de },
+  it: itLpic1_101Data, en: enLpic1_101Data, es: enLpic1_101Data, 
+  fr: enLpic1_101Data, de: { memoryGameData: mG_de, terminalChallengeData: tC_de },
   pt: { memoryGameData: mG_pt, terminalChallengeData: tC_pt },
   ru: { memoryGameData: mG_ru, terminalChallengeData: tC_ru },
   zh: { memoryGameData: mG_zh, terminalChallengeData: tC_zh },
@@ -56,7 +57,13 @@ const lpic1_101DataMap = {
 
 const lpic1_102DataMap = {
   it: itLpic1_102Data,
-  en: itLpic1_102Data, // Fallback to IT for now
+  en: enLpic1_102Data,
+  es: enLpic1_102Data,
+  fr: enLpic1_102Data,
+  de: enLpic1_102Data,
+  pt: enLpic1_102Data,
+  ru: enLpic1_102Data,
+  zh: enLpic1_102Data,
 }
 
 

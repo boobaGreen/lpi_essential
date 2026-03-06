@@ -63,8 +63,10 @@ import { lpic1_101_extendedContentDict } from '../data/lpic1-101/extendedContent
 
 // ─── LPIC-1 102 ──────────────────────────────────────────────────────────────
 import { lpic1_102_topics as lpic1_102_TopicsIT } from '../locales/it/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsEN } from '../locales/en/lpic1_102_topics.js'
 import { lpic1_102_lessonContent as lpic1_102_LessonContentIT } from '../locales/it/lpic1_102_lessonContent.js'
-import { quizzes_it as lpic1_102_quizzesIT, allQuizzes_it as lpic1_102_allQuizzesIT } from '../data/lpic1-102/quizzes/index.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentEN } from '../locales/en/lpic1_102_lessonContent.js'
+import { quizzes_it as lpic1_102_quizzesIT, allQuizzes_it as lpic1_102_allQuizzesIT, quizzes_en as lpic1_102_quizzesEN, allQuizzes_en as lpic1_102_allQuizzesEN } from '../data/lpic1-102/quizzes/index.js'
 import { extendedContent as lpic1_102_extendedContent } from '../data/lpic1-102/extendedContent/index.js'
 
 
@@ -120,10 +122,26 @@ const lpic1_101_LessonContentDict = {
 }
 
 // ─── Dizionari LPIC-1 102 ────────────────────────────────────────────────────
-const lpic1_102_TopicDict = { it: lpic1_102_TopicsIT, en: lpic1_102_TopicsIT }
-const lpic1_102_LessonContentDict = { it: lpic1_102_LessonContentIT, en: lpic1_102_LessonContentIT }
-const lpic1_102_quizzesDict = { it: lpic1_102_quizzesIT, en: lpic1_102_quizzesIT }
-const lpic1_102_allQuizzesDict = { it: lpic1_102_allQuizzesIT, en: lpic1_102_allQuizzesIT }
+const lpic1_102_TopicDict = { 
+  it: lpic1_102_TopicsIT, en: lpic1_102_TopicsEN, es: lpic1_102_TopicsEN,
+  fr: lpic1_102_TopicsEN, de: lpic1_102_TopicsEN, pt: lpic1_102_TopicsEN,
+  ru: lpic1_102_TopicsEN, zh: lpic1_102_TopicsEN
+}
+const lpic1_102_LessonContentDict = { 
+  it: lpic1_102_LessonContentIT, en: lpic1_102_LessonContentEN, es: lpic1_102_LessonContentEN,
+  fr: lpic1_102_LessonContentEN, de: lpic1_102_LessonContentEN, pt: lpic1_102_LessonContentEN,
+  ru: lpic1_102_LessonContentEN, zh: lpic1_102_LessonContentEN
+}
+const lpic1_102_quizzesDict = { 
+  it: lpic1_102_quizzesIT, en: lpic1_102_quizzesEN, es: lpic1_102_quizzesEN,
+  fr: lpic1_102_quizzesEN, de: lpic1_102_quizzesEN, pt: lpic1_102_quizzesEN,
+  ru: lpic1_102_quizzesEN, zh: lpic1_102_quizzesEN
+}
+const lpic1_102_allQuizzesDict = { 
+  it: lpic1_102_allQuizzesIT, en: lpic1_102_allQuizzesEN, es: lpic1_102_allQuizzesEN,
+  fr: lpic1_102_allQuizzesEN, de: lpic1_102_allQuizzesEN, pt: lpic1_102_allQuizzesEN,
+  ru: lpic1_102_allQuizzesEN, zh: lpic1_102_allQuizzesEN
+}
 
 
 export function useTopics() {
@@ -132,10 +150,10 @@ export function useTopics() {
 
   // ─── LPIC-1 101 ──────────────────────────────────────────────────────────
   if (currentCourseId === 'lpic1-101') {
-    const topics = lpic1_101_TopicDict[currentLang] ?? lpic1_101_TopicDict['it']
-    const lessonContent = lpic1_101_LessonContentDict[currentLang] ?? lpic1_101_LessonContentDict['it']
-    const quizzesByTopic = lpic1_101_quizzesDict[currentLang] ?? lpic1_101_quizzesDict['it']
-    const allQuizzes = lpic1_101_allQuizzesDict[currentLang] ?? lpic1_101_allQuizzesDict['it']
+    const topics = lpic1_101_TopicDict[currentLang] ?? lpic1_101_TopicDict['en'] ?? lpic1_101_TopicDict['it']
+    const lessonContent = lpic1_101_LessonContentDict[currentLang] ?? lpic1_101_LessonContentDict['en'] ?? lpic1_101_LessonContentDict['it']
+    const quizzesByTopic = lpic1_101_quizzesDict[currentLang] ?? lpic1_101_quizzesDict['en'] ?? lpic1_101_quizzesDict['it']
+    const allQuizzes = lpic1_101_allQuizzesDict[currentLang] ?? lpic1_101_allQuizzesDict['en'] ?? lpic1_101_allQuizzesDict['it']
 
     const getTopic = (id) => topics.find(t => t.id === Number(id))
     const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
@@ -149,16 +167,16 @@ export function useTopics() {
       lessonContent,
       quizzesByTopic,
       allQuizzes,
-      extendedContent: lpic1_101_extendedContentDict[currentLang] ?? lpic1_101_extendedContentDict['it'] ?? {},
+      extendedContent: lpic1_101_extendedContentDict[currentLang] ?? lpic1_101_extendedContentDict['en'] ?? lpic1_101_extendedContentDict['it'] ?? {},
     }
   }
 
   // ─── LPIC-1 102 ──────────────────────────────────────────────────────────
   if (currentCourseId === 'lpic1-102') {
-    const topics = lpic1_102_TopicDict[currentLang] ?? lpic1_102_TopicDict['it']
-    const lessonContent = lpic1_102_LessonContentDict[currentLang] ?? lpic1_102_LessonContentDict['it']
-    const quizzesByTopic = lpic1_102_quizzesDict[currentLang] ?? lpic1_102_quizzesDict['it']
-    const allQuizzes = lpic1_102_allQuizzesDict[currentLang] ?? lpic1_102_allQuizzesDict['it']
+    const topics = lpic1_102_TopicDict[currentLang] ?? lpic1_102_TopicDict['en'] ?? lpic1_102_TopicDict['it']
+    const lessonContent = lpic1_102_LessonContentDict[currentLang] ?? lpic1_102_LessonContentDict['en'] ?? lpic1_102_LessonContentDict['it']
+    const quizzesByTopic = lpic1_102_quizzesDict[currentLang] ?? lpic1_102_quizzesDict['en'] ?? lpic1_102_quizzesDict['it']
+    const allQuizzes = lpic1_102_allQuizzesDict[currentLang] ?? lpic1_102_allQuizzesDict['en'] ?? lpic1_102_allQuizzesDict['it']
 
     const getTopic = (id) => topics.find(t => t.id === Number(id))
     const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
@@ -172,7 +190,7 @@ export function useTopics() {
       lessonContent,
       quizzesByTopic,
       allQuizzes,
-      extendedContent: lpic1_102_extendedContent[currentLang] ?? lpic1_102_extendedContent['it'] ?? {},
+      extendedContent: lpic1_102_extendedContent[currentLang] ?? lpic1_102_extendedContent['en'] ?? lpic1_102_extendedContent['it'] ?? {},
     }
   }
 
