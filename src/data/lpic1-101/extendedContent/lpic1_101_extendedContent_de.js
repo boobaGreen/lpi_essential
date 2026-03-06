@@ -129,7 +129,7 @@ Die Debian-Welt (Ubuntu, Mint, Kali, etc.) basiert auf \`.deb\`-Paketen.
 ### Die unterste Ebene: dpkg
 \`dpkg\` arbeitet ausschließlich lokal. Es kann Pakete installieren, entfernt oder abfragen, kann aber **keine** Abhängigkeiten automatisch aus dem Internet herunterladen.
 *   \`dpkg -i file.deb\` (Install): Installiert das Paket. (Bricht ab, wenn Abhängigkeiten fehlen).
-*   \`dpkg -r paket\` (Remove): Deinstalliert das Programm, lässt jedoch Systemkonfigurationsdateien (in `/etc/`) intakt.
+*   \`dpkg -r paket\` (Remove): Deinstalliert das Programm, lässt jedoch Systemkonfigurationsdateien (in \`/etc/\`) intakt.
 *   \`dpkg -P paket\` (Purge): **Vollständige** Deinstallation, löscht das Programm UND alle zugehörigen Konfigurationsdateien restlos.
 *   \`dpkg -l\`: Listet alle auf dem System installierten Pakete auf.
 *   \`dpkg -S /etc/apt/sources.list\` (Search): Rückwärtssuche. Zeigt an, zu welchem Paket eine existierende Datei gehört.
