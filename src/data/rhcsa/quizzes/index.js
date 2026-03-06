@@ -73,6 +73,18 @@ import { rhcsaTopic8QuizzesPT } from './pt/rhcsa_topic8_pt.js'
 import { rhcsaTopic9QuizzesPT } from './pt/rhcsa_topic9_pt.js'
 import { rhcsaTopic10QuizzesPT } from './pt/rhcsa_topic10_pt.js'
 
+// --- Russian ---
+import { rhcsaTopic1QuizzesRU } from './ru/rhcsa_topic1_ru.js'
+import { rhcsaTopic2QuizzesRU } from './ru/rhcsa_topic2_ru.js'
+import { rhcsaTopic3QuizzesRU } from './ru/rhcsa_topic3_ru.js'
+import { rhcsaTopic4QuizzesRU } from './ru/rhcsa_topic4_ru.js'
+import { rhcsaTopic5QuizzesRU } from './ru/rhcsa_topic5_ru.js'
+import { rhcsaTopic6QuizzesRU } from './ru/rhcsa_topic6_ru.js'
+import { rhcsaTopic7QuizzesRU } from './ru/rhcsa_topic7_ru.js'
+import { rhcsaTopic8QuizzesRU } from './ru/rhcsa_topic8_ru.js'
+import { rhcsaTopic9QuizzesRU } from './ru/rhcsa_topic9_ru.js'
+import { rhcsaTopic10QuizzesRU } from './ru/rhcsa_topic10_ru.js'
+
 // --- Dictionaries By Topic ---
 export const rhcsaQuizzesByTopicIT = {
   1: rhcsaTopic1Quizzes,
@@ -150,6 +162,19 @@ export const rhcsaQuizzesByTopicPT = {
   8: rhcsaTopic8QuizzesPT,
   9: rhcsaTopic9QuizzesPT,
   10: rhcsaTopic10QuizzesPT,
+}
+
+export const rhcsaQuizzesByTopicRU = {
+  1: rhcsaTopic1QuizzesRU,
+  2: rhcsaTopic2QuizzesRU,
+  3: rhcsaTopic3QuizzesRU,
+  4: rhcsaTopic4QuizzesRU,
+  5: rhcsaTopic5QuizzesRU,
+  6: rhcsaTopic6QuizzesRU,
+  7: rhcsaTopic7QuizzesRU,
+  8: rhcsaTopic8QuizzesRU,
+  9: rhcsaTopic9QuizzesRU,
+  10: rhcsaTopic10QuizzesRU,
 }
 
 // --- All Quizzes Flat Arrays ---
@@ -231,6 +256,19 @@ export const allRhcsaQuizzesPT = [
   ...rhcsaTopic10QuizzesPT,
 ]
 
+export const allRhcsaQuizzesRU = [
+  ...rhcsaTopic1QuizzesRU,
+  ...rhcsaTopic2QuizzesRU,
+  ...rhcsaTopic3QuizzesRU,
+  ...rhcsaTopic4QuizzesRU,
+  ...rhcsaTopic5QuizzesRU,
+  ...rhcsaTopic6QuizzesRU,
+  ...rhcsaTopic7QuizzesRU,
+  ...rhcsaTopic8QuizzesRU,
+  ...rhcsaTopic9QuizzesRU,
+  ...rhcsaTopic10QuizzesRU,
+]
+
 // --- Exports per locale ---
 export const rhcsaQuizzesDict = {
   it: rhcsaQuizzesByTopicIT,
@@ -239,6 +277,7 @@ export const rhcsaQuizzesDict = {
   fr: rhcsaQuizzesByTopicFR,
   de: rhcsaQuizzesByTopicDE,
   pt: rhcsaQuizzesByTopicPT,
+  ru: rhcsaQuizzesByTopicRU,
 }
 
 export const rhcsaAllQuizzesDict = {
@@ -248,4 +287,5 @@ export const rhcsaAllQuizzesDict = {
   fr: allRhcsaQuizzesFR,
   de: allRhcsaQuizzesDE,
   pt: allRhcsaQuizzesPT,
+  ru: allRhcsaQuizzesRU,
 }
