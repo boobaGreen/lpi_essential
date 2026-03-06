@@ -64,9 +64,21 @@ import { lpic1_101_extendedContentDict } from '../data/lpic1-101/extendedContent
 // ─── LPIC-1 102 ──────────────────────────────────────────────────────────────
 import { lpic1_102_topics as lpic1_102_TopicsIT } from '../locales/it/lpic1_102_topics.js'
 import { lpic1_102_topics as lpic1_102_TopicsEN } from '../locales/en/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsES } from '../locales/es/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsFR } from '../locales/fr/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsDE } from '../locales/de/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsPT } from '../locales/pt/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsRU } from '../locales/ru/lpic1_102_topics.js'
+import { lpic1_102_topics as lpic1_102_TopicsZH } from '../locales/zh/lpic1_102_topics.js'
 import { lpic1_102_lessonContent as lpic1_102_LessonContentIT } from '../locales/it/lpic1_102_lessonContent.js'
 import { lpic1_102_lessonContent as lpic1_102_LessonContentEN } from '../locales/en/lpic1_102_lessonContent.js'
-import { quizzes_it as lpic1_102_quizzesIT, allQuizzes_it as lpic1_102_allQuizzesIT, quizzes_en as lpic1_102_quizzesEN, allQuizzes_en as lpic1_102_allQuizzesEN } from '../data/lpic1-102/quizzes/index.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentES } from '../locales/es/lpic1_102_lessonContent.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentFR } from '../locales/fr/lpic1_102_lessonContent.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentDE } from '../locales/de/lpic1_102_lessonContent.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentPT } from '../locales/pt/lpic1_102_lessonContent.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentRU } from '../locales/ru/lpic1_102_lessonContent.js'
+import { lpic1_102_lessonContent as lpic1_102_LessonContentZH } from '../locales/zh/lpic1_102_lessonContent.js'
+import { quizzes_it as lpic1_102_quizzesIT, allQuizzes_it as lpic1_102_allQuizzesIT, quizzes_en as lpic1_102_quizzesEN, allQuizzes_en as lpic1_102_allQuizzesEN, quizzes_es as lpic1_102_quizzesES, allQuizzes_es as lpic1_102_allQuizzesES, quizzes_fr as lpic1_102_quizzesFR, allQuizzes_fr as lpic1_102_allQuizzesFR, quizzes_de as lpic1_102_quizzesDE, allQuizzes_de as lpic1_102_allQuizzesDE, quizzes_pt as lpic1_102_quizzesPT, allQuizzes_pt as lpic1_102_allQuizzesPT, quizzes_ru as lpic1_102_quizzesRU, allQuizzes_ru as lpic1_102_allQuizzesRU, quizzes_zh as lpic1_102_quizzesZH, allQuizzes_zh as lpic1_102_allQuizzesZH } from '../data/lpic1-102/quizzes/index.js'
 import { extendedContent as lpic1_102_extendedContent } from '../data/lpic1-102/extendedContent/index.js'
 
 
@@ -123,25 +135,31 @@ const lpic1_101_LessonContentDict = {
 
 // ─── Dizionari LPIC-1 102 ────────────────────────────────────────────────────
 const lpic1_102_TopicDict = { 
-  it: lpic1_102_TopicsIT, en: lpic1_102_TopicsEN, es: lpic1_102_TopicsEN,
-  fr: lpic1_102_TopicsEN, de: lpic1_102_TopicsEN, pt: lpic1_102_TopicsEN,
-  ru: lpic1_102_TopicsEN, zh: lpic1_102_TopicsEN
+  it: lpic1_102_TopicsIT, en: lpic1_102_TopicsEN, es: lpic1_102_TopicsES,
+  fr: lpic1_102_TopicsFR, de: lpic1_102_TopicsDE, pt: lpic1_102_TopicsPT,
+  ru: lpic1_102_TopicsRU, zh: lpic1_102_TopicsZH
 }
 const lpic1_102_LessonContentDict = { 
-  it: lpic1_102_LessonContentIT, en: lpic1_102_LessonContentEN, es: lpic1_102_LessonContentEN,
-  fr: lpic1_102_LessonContentEN, de: lpic1_102_LessonContentEN, pt: lpic1_102_LessonContentEN,
-  ru: lpic1_102_LessonContentEN, zh: lpic1_102_LessonContentEN
+  it: lpic1_102_LessonContentIT, en: lpic1_102_LessonContentEN, es: lpic1_102_LessonContentES,
+  fr: lpic1_102_LessonContentFR, de: lpic1_102_LessonContentDE, pt: lpic1_102_LessonContentPT,
+  ru: lpic1_102_LessonContentRU, zh: lpic1_102_LessonContentZH
 }
 const lpic1_102_quizzesDict = { 
-  it: lpic1_102_quizzesIT, en: lpic1_102_quizzesEN, es: lpic1_102_quizzesEN,
-  fr: lpic1_102_quizzesEN, de: lpic1_102_quizzesEN, pt: lpic1_102_quizzesEN,
-  ru: lpic1_102_quizzesEN, zh: lpic1_102_quizzesEN
+  it: lpic1_102_quizzesIT, en: lpic1_102_quizzesEN, es: lpic1_102_quizzesES,
+  fr: lpic1_102_quizzesFR, de: lpic1_102_quizzesDE, pt: lpic1_102_quizzesPT,
+  ru: lpic1_102_quizzesRU, zh: lpic1_102_quizzesZH
 }
 const lpic1_102_allQuizzesDict = { 
-  it: lpic1_102_allQuizzesIT, en: lpic1_102_allQuizzesEN, es: lpic1_102_allQuizzesEN,
-  fr: lpic1_102_allQuizzesEN, de: lpic1_102_allQuizzesEN, pt: lpic1_102_allQuizzesEN,
-  ru: lpic1_102_allQuizzesEN, zh: lpic1_102_allQuizzesEN
+  it: lpic1_102_allQuizzesIT, en: lpic1_102_allQuizzesEN, es: lpic1_102_allQuizzesES,
+  fr: lpic1_102_allQuizzesFR, de: lpic1_102_allQuizzesDE, pt: lpic1_102_allQuizzesPT,
+  ru: lpic1_102_allQuizzesRU, zh: lpic1_102_allQuizzesZH
 }
+
+
+
+
+
+
 
 
 export function useTopics() {

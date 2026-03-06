@@ -34,6 +34,18 @@ import { terminalChallengeData as tC_zh, memoryGameData as mG_zh } from '../loca
 // LPIC-1 102 game data
 import * as itLpic1_102Data from '../locales/it/lpic1_102_gamesData.js'
 import * as enLpic1_102Data from '../locales/en/lpic1_102_gamesData.js'
+import * as esLpic1_102Data from '../locales/es/lpic1_102_gamesData.js'
+import * as frLpic1_102Data from '../locales/fr/lpic1_102_gamesData.js'
+import * as deLpic1_102Data from '../locales/de/lpic1_102_gamesData.js'
+import * as ptLpic1_102Data from '../locales/pt/lpic1_102_gamesData.js'
+import * as ruLpic1_102Data from '../locales/ru/lpic1_102_gamesData.js'
+import * as zhLpic1_102Data from '../locales/zh/lpic1_102_gamesData.js'
+
+
+
+
+
+
 
 
 const lpiDataMap = {
@@ -58,13 +70,16 @@ const lpic1_101DataMap = {
 const lpic1_102DataMap = {
   it: itLpic1_102Data,
   en: enLpic1_102Data,
-  es: enLpic1_102Data,
-  fr: enLpic1_102Data,
-  de: enLpic1_102Data,
-  pt: enLpic1_102Data,
-  ru: enLpic1_102Data,
-  zh: enLpic1_102Data,
+  es: esLpic1_102Data,
+  fr: frLpic1_102Data,
+  de: deLpic1_102Data,
+
+  pt: ptLpic1_102Data,
+  ru: ruLpic1_102Data,
+  zh: zhLpic1_102Data,
+
 }
+
 
 
 export function useGameData() {
