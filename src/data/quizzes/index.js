@@ -1,8 +1,8 @@
-import { topic1Quizzes as itTopic1 } from './topic1.js'
-import { topic2Quizzes as itTopic2 } from './topic2.js'
-import { topic3Quizzes as itTopic3 } from './topic3.js'
-import { topic4Quizzes as itTopic4 } from './topic4.js'
-import { topic5Quizzes as itTopic5 } from './topic5.js'
+import { topic1Quizzes as itTopic1 } from '../../locales/it/quizzes_topic1.js'
+import { topic2Quizzes as itTopic2 } from '../../locales/it/quizzes_topic2.js'
+import { topic3Quizzes as itTopic3 } from '../../locales/it/quizzes_topic3.js'
+import { topic4Quizzes as itTopic4 } from '../../locales/it/quizzes_topic4.js'
+import { topic5Quizzes as itTopic5 } from '../../locales/it/quizzes_topic5.js'
 
 import { topic1Quizzes as enTopic1 } from '../../locales/en/quizzes_topic1.js'
 import { topic2Quizzes as enTopic2 } from '../../locales/en/quizzes_topic2.js'

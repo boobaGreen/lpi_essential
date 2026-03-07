@@ -1,6 +1,6 @@
 // LPIC-1 102 Quiz Pool — Italian — Topic 106 (Interfaces & Desktops)
 
-export const lpic1_102_topic2Quizzes = [
+export const lpic1_102_topic2Quizzes_it = [
   {
     topicId: 2,
     question: "Quale variabile d'ambiente viene usata da un client X11 per determinare a quale server connettersi?",
@@ -96,5 +96,149 @@ export const lpic1_102_topic2Quizzes = [
     ],
     correct: 1,
     explanation: "/etc/X11/xorg.conf è il percorso standard per la configurazione del server X."
+  },
+  {
+    topicId: 2,
+    question: "Quale componente software nell'architettura X11 è responsabile della gestione dell'hardware video, del mouse e della tastiera?",
+    options: [
+      "X Client",
+      "X Server",
+      "Window Manager",
+      "Display Manager"
+    ],
+    correct: 1,
+    explanation: "Il server X interagisce direttamente con l'hardware locale del sistema."
+  },
+  {
+    topicId: 2,
+    question: "In quale directory vengono solitamente memorizzati i frammenti di configurazione X11 moderni?",
+    options: [
+      "/etc/X11/xorg.conf",
+      "/etc/X11/xorg.conf.d/",
+      "/etc/X11/config.d/",
+      "/etc/graphics/"
+    ],
+    correct: 1,
+    explanation: "I sistemi moderni usano la directory /etc/X11/xorg.conf.d/ per una configurazione modulare."
+  },
+  {
+    topicId: 2,
+    question: "Quale comando viene usato per gestire i cookie di autenticazione per le sessioni X6?",
+    options: [
+      "xhost",
+      "xauth",
+      "xset",
+      "xrandr"
+    ],
+    correct: 1,
+    explanation: "xauth gestisce il file .Xauthority che contiene i token di autenticazione MIT-MAGIC-COOKIE-1."
+  },
+  {
+    topicId: 2,
+    question: "Quale strumento permette di cambiare risoluzione e orientamento dello schermo da riga di comando in X11?",
+    options: [
+      "xwininfo",
+      "xrandr",
+      "xdpyinfo",
+      "xset"
+    ],
+    correct: 1,
+    explanation: "xrandr (X Resize, Rotate and Reflect) è l'utilità standard per la configurazione degli schermi."
+  },
+  {
+    topicId: 2,
+    question: "Quale toolkit grafico è usato principalmente dall'ambiente desktop KDE Plasma?",
+    options: [
+      "GTK",
+      "Qt",
+      "Swing",
+      "Cocoa"
+    ],
+    correct: 1,
+    explanation: "KDE è costruito sul toolkit Qt, mentre GNOME usa principalmente GTK."
+  },
+  {
+    topicId: 2,
+    question: "Quale dei seguenti NON è un ambiente desktop per Linux?",
+    options: [
+      "XFCE",
+      "MATE",
+      "Apache",
+      "LXQt"
+    ],
+    correct: 2,
+    explanation: "Apache è un server web, non un ambiente desktop."
+  },
+  {
+    topicId: 2,
+    question: "Quale tecnologia permette a un utente di accedere a un desktop grafico remoto tramite una rete?",
+    options: [
+      "VNC",
+      "SSH con l'opzione -X",
+      "RDP",
+      "Tutte le precedenti"
+    ],
+    correct: 3,
+    explanation: "VNC, RDP e il forwarding di X su SSH sono tutti metodi comuni per l'accesso remoto grafico."
+  },
+  {
+    topicId: 2,
+    question: "Spice è un protocollo di visualizzazione remota usato principalmente con quale tecnologia di virtualizzazione?",
+    options: [
+      "Docker",
+      "KVM (virt-viewer)",
+      "VirtualBox",
+      "VMware"
+    ],
+    correct: 1,
+    explanation: "Spice è ampiamente usato in ambienti KVM per fornire accesso ad alte prestazioni alle macchine virtuali."
+  },
+  {
+    topicId: 2,
+    question: "Quale funzione di accessibilità ignora le pressioni brevi o ripetute velocemente dello stesso tasto?",
+    options: [
+      "Slow Keys",
+      "Sticky Keys",
+      "Bounce Keys",
+      "Repeat Keys"
+    ],
+    correct: 2,
+    explanation: "Le Bounce Keys (Tasti Rimbalzati) sono progettate per utenti con tremori che potrebbero premere un tasto più volte involontariamente."
+  },
+  {
+    topicId: 2,
+    question: "Qual è lo scopo della funzione 'Slow Keys'?",
+    options: [
+      "Rallenta il cursore del mouse",
+      "Richiede che un tasto sia premuto per un certo tempo prima di essere accettato",
+      "Legge il testo sullo schermo lentamente",
+      "Diminuisce il refresh rate del monitor"
+    ],
+    correct: 1,
+    explanation: "Le Slow Keys aiutano a prevenire pressioni accidentali richiedendo una pressione prolungata."
+  },
+  {
+    topicId: 2,
+    question: "Quale funzione permette di controllare il puntatore del mouse usando il tastierino numerico?",
+    options: [
+      "Sticky Mouse",
+      "Numeric Cursor",
+      "Mouse Keys",
+      "Key Mouse"
+    ],
+    correct: 2,
+    explanation: "Le Mouse Keys permettono di muovere il puntatore usando i tasti della tastiera."
+  },
+  {
+    topicId: 2,
+    question: "Display Braille e sintetizzatori vocali sono categorizzati come:",
+    options: [
+      "Tecnologie Assistive",
+      "Miglioramenti Visuali",
+      "Driver Hardware",
+      "Moduli del Kernel"
+    ],
+    correct: 0,
+    explanation: "Queste sono Tecnologie Assistive (AT) progettate per aiutare persone con disabilità a usare il sistema."
   }
 ];

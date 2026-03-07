@@ -1,9 +1,9 @@
-import { lpic1_102_topic1Quizzes } from './lpic1_102_topic1_it';
-import { lpic1_102_topic2Quizzes } from './lpic1_102_topic2_it';
-import { lpic1_102_topic3Quizzes } from './lpic1_102_topic3_it';
-import { lpic1_102_topic4Quizzes } from './lpic1_102_topic4_it';
-import { lpic1_102_topic5Quizzes } from './lpic1_102_topic5_it';
-import { lpic1_102_topic6Quizzes } from './lpic1_102_topic6_it';
+import { lpic1_102_topic1Quizzes_it } from './lpic1_102_topic1_it';
+import { lpic1_102_topic2Quizzes_it } from './lpic1_102_topic2_it';
+import { lpic1_102_topic3Quizzes_it } from './lpic1_102_topic3_it';
+import { lpic1_102_topic4Quizzes_it } from './lpic1_102_topic4_it';
+import { lpic1_102_topic5Quizzes_it } from './lpic1_102_topic5_it';
+import { lpic1_102_topic6Quizzes_it } from './lpic1_102_topic6_it';
 
 import { lpic1_102_topic1Quizzes_en } from './lpic1_102_topic1_en';
 import { lpic1_102_topic2Quizzes_en } from './lpic1_102_topic2_en';
@@ -51,21 +51,21 @@ import { lpic1_102_topic5Quizzes_zh } from './lpic1_102_topic5_zh';
 import { lpic1_102_topic6Quizzes_zh } from './lpic1_102_topic6_zh';
 
 export const quizzes_it = {
-  1: lpic1_102_topic1Quizzes,
-  2: lpic1_102_topic2Quizzes,
-  3: lpic1_102_topic3Quizzes,
-  4: lpic1_102_topic4Quizzes,
-  5: lpic1_102_topic5Quizzes,
-  6: lpic1_102_topic6Quizzes,
+  1: lpic1_102_topic1Quizzes_it,
+  2: lpic1_102_topic2Quizzes_it,
+  3: lpic1_102_topic3Quizzes_it,
+  4: lpic1_102_topic4Quizzes_it,
+  5: lpic1_102_topic5Quizzes_it,
+  6: lpic1_102_topic6Quizzes_it,
 };
 
 export const allQuizzes_it = [
-  ...lpic1_102_topic1Quizzes,
-  ...lpic1_102_topic2Quizzes,
-  ...lpic1_102_topic3Quizzes,
-  ...lpic1_102_topic4Quizzes,
-  ...lpic1_102_topic5Quizzes,
-  ...lpic1_102_topic6Quizzes,
+  ...lpic1_102_topic1Quizzes_it,
+  ...lpic1_102_topic2Quizzes_it,
+  ...lpic1_102_topic3Quizzes_it,
+  ...lpic1_102_topic4Quizzes_it,
+  ...lpic1_102_topic5Quizzes_it,
+  ...lpic1_102_topic6Quizzes_it,
 ];
 
 export const quizzes_en = {

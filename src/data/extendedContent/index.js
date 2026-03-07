@@ -1,8 +1,8 @@
-import { topic1Extended as itTopic1 } from './topic1Extended.js'
-import { topic2Extended as itTopic2 } from './topic2Extended.js'
-import { topic3Extended as itTopic3 } from './topic3Extended.js'
-import { topic4Extended as itTopic4 } from './topic4Extended.js'
-import { topic5Extended as itTopic5 } from './topic5Extended.js'
+import { topic1Extended as itTopic1 } from '../../locales/it/extendedContent_topic1.js'
+import { topic2Extended as itTopic2 } from '../../locales/it/extendedContent_topic2.js'
+import { topic3Extended as itTopic3 } from '../../locales/it/extendedContent_topic3.js'
+import { topic4Extended as itTopic4 } from '../../locales/it/extendedContent_topic4.js'
+import { topic5Extended as itTopic5 } from '../../locales/it/extendedContent_topic5.js'
 
 import { topic1Extended as enTopic1 } from '../../locales/en/extendedContent_topic1.js'
 import { topic2Extended as enTopic2 } from '../../locales/en/extendedContent_topic2.js'
