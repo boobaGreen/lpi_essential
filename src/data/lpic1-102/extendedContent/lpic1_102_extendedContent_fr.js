@@ -5,188 +5,298 @@ export const lpic1_102_extendedContent_fr = {
 
   // Topic 1: Shells and Shell Scripting
   'lpic1-102-105-1': {
-    title: 'L\'Environnement Shell — Approfondissement',
+    title: 'Environnement Shell — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '⚙️', text: 'Personnalisation de l\'Environnement BASH' },
-      { type: 'paragraph', text: 'L\'environnement du shell peut être personnalisé au travers des fichiers d\'initialisation, des variables, des alias et des fonctions. Pour l\'examen, il faut connaître l\'ordre d\'exécution sacré de ces fichiers.' },
-      { type: 'table', headers: ['Fichier', 'Type de Shell', 'Fonctionnalité'], rows: [
-        ['/etc/profile', 'Login (Global)', 'La Base des paramètres globaux du système pour tous les shells de connexion'],
-        ['~/.bash_profile', 'Login (Utilisateur)', 'Priorité préférentielle 1 : Paramètres de l\'utilisateur (appelle généralement ~/.bashrc)'],
-        ['~/.bash_login', 'Login (Utilisateur)', 'Priorité préférentielle 2 : Lu si ~/.bash_profile n\'existe pas'],
-        ['~/.profile', 'Login (Utilisateur)', 'Priorité préférentielle 3 : Fichier générique classique (lu par sh / bourne pur)'],
-        ['/etc/bash.bashrc', 'Non-login (Global)', 'Paramètres globaux pour tous shells interactifs SANS connexion (Ecrans de terminaux de bureau)'],
-        ['~/.bashrc', 'Non-login (Utilisateur)', 'Alias locaux et Paramètres fonctions du simple utilisateur (lu à chaque fois qu\'un écran de terminal s\'allume localement sur le GUI Desktop).'],
-        ['~/.bash_logout', 'Logout (Utilisateur)', 'Exécuté Froidement lors d\'une sortie totale EXIT d\'un pure Login bash.'],
+      { type: 'heading', level: 2, emoji: '⚙️', text: 'Personnalisation de l\'environnement BASH' },
+      { type: 'paragraph', text: 'L\'environnement shell est géré via des fichiers d\'initialisation, des variables, des alias et des fonctions. Comprendre l\'ordre d\'appel de ces fichiers est crucial pour l\'examen LPIC-1.' },
+      { type: 'table', headers: ['Fichier', 'Type de Shell', 'Usage'], rows: [
+        ['/etc/profile', 'Login (Global)', 'Définit les variables d\'environnement globales pour tous les utilisateurs.'],
+        ['~/.bash_profile', 'Login (Utilisateur)', 'Configuration spécifique à l\'utilisateur, appelle généralement ~/.bashrc.'],
+        ['~/.bash_login', 'Login (Utilisateur)', 'Exécuté si ~/.bash_profile est absent.'],
+        ['~/.profile', 'Login (Utilisateur)', 'Fichier générique utilisé si les deux précédents n\'existent pas.'],
+        ['/etc/bash.bashrc', 'Non-login (Global)', 'Configuration globale pour les shells interactifs (ex: terminaux X).'],
+        ['~/.bashrc', 'Non-login (Utilisateur)', 'Le fichier le plus utilisé pour les alias et les fonctions personnelles.'],
+        ['~/.bash_logout', 'Logout (Sortie)', 'Exécute des tâches de nettoyage lors de la déconnexion.'],
       ]},
-      { type: 'heading', level: 2, emoji: '📝', text: 'Variables d\'Environnement Critiques' },
-      { type: 'table', headers: ['Variable', 'Signification', 'Exemple de Valeur'], rows: [
-        ['PATH', 'Les différents répertoires dans lesquels le Noyau Shell chausse à l\'aveuglette l\'Alerte Poursuite Binaire de Commande', '/usr/local/bin:/usr/bin:/bin'],
-        ['PS1', 'Prompt Principal Primaire (La Lettre texte clignotant devant le Cursus De Curseur)', '"\\u@\\h:\\w\\$ " (utilisateur@hote:repertoire$ )'],
-        ['PS2', 'Le Faux Prompt Secondaire Étroit (Usagé lorsqu\'une Fausse Ligne Brute De Commande s\'étouffe et Demande plusieurs Lignes De Suite)', '"> "'],
-        ['HISTFILE', 'Ou exactement Le Faux L\'Historique de Commandement Tordue Se voit Enregistrée', '~/.bash_history'],
-        ['HISTSIZE', 'Nombre total Étroit Brute De lignes d\'Actifs Historiques à Garder Chauffée À Blanc En RAM', '1000'],
-        ['HISTFILESIZE', 'Ligne Maxi Maximum à écrire Physiquement Dues Dans le Limité et Étroit Limite pure Base Fichier Sur HDD Dur Éprouvé.', '2000'],
-        ['HISTCONTROL', 'Prends Poids sur le Trou Noir Caché sur Vos Historiques Fichiers Base.', 'ignoreboth (dénigre l\'Espace pur en blanc Commande Égale De la précédente Double Duplicata).'],
+      { type: 'heading', level: 2, emoji: '📝', text: 'Variables d\'environnement clés' },
+      { type: 'table', headers: ['Variable', 'Description', 'Exemple'], rows: [
+        ['PATH', 'Liste des répertoires pour la recherche de binaires', '/usr/bin:/bin'],
+        ['PS1', 'Invite de commande principale (Prompt)', '"\\u@\\h:\\w\\$ "'],
+        ['PS2', 'Invite pour les commandes multi-lignes', '"> "'],
+        ['HISTFILE', 'Chemin du fichier d\'historique des commandes', '~/.bash_history'],
+        ['HISTSIZE', 'Nombre de lignes gardées en mémoire RAM', '1000'],
+        ['HISTFILESIZE', 'Nombre de lignes sauvegardées sur le disque', '2000'],
+        ['HISTCONTROL', 'Contrôle l\'enregistrement (ex: ignoreboth)', 'ignoreboth'],
       ]},
-      { type: 'code', title: 'Réglage des Lois d\'Alias LPIC et d\'Alias Local Variables', prompt: '# Fige L\'Alias Oculto Éternel (De Dans ~/.bashrc Local)\nalias update="sudo apt update && sudo apt upgrade"\n\n# La pure Action De Cego De Joindre Paths aveuglément Sur le PATH (Au Cœur ~/.profile ou Au fond de Base ~/.bashrc)\nexport PATH="$PATH:$HOME/bin"\n\n# Rafraîchissez votre modification Brute du moment .bashrc pure Sur Un Oculto Cego Par Rechargement.\n$ source ~/.bashrc\n# Ancien Outil De Synonmymes Base Du Vieux Point (Dot) Syntax Cego:\n$ . ~/.bashrc', output: '' },
+      { type: 'infobox', variant: 'tip', content: 'Utilisez `source ~/.bashrc` ou `. ~/.bashrc` pour appliquer immédiatement les modifications sans redémarrer le terminal.' },
     ]
   },
 
   'lpic1-102-105-2': {
-    title: 'Script Bash — Les Bases — Approfondissement',
+    title: 'Scripts Bash — Bases et Structures — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '📜', text: 'L\'Anatomie Canonique d\'un Script' },
-      { type: 'paragraph', text: 'Un petit simple texte aveugle en pur script Bash recèle le miracle de cego Oculto de pure code en file. Le 1er Cego vital Base point et Absolu De Fichier reste la pure Ligne aveugle "Shebang" (ou Le Hashbang), Ordonnant à la Base du kernel d\'allumer Cego Interpreteur Lequel lira pure D\'Action Le Texte Brut L\'Actif Puriste Text.' },
-      { type: 'table', headers: ['Pure De Maximum Variables Spécifiques Cego Aveugles', 'Son Aveugle Cible La Signification Oculto Cego'], rows: [
-        ['$0', 'Celui Dont La Nomemclature Du Script Base Oculto Le Nom Actuel aveugle Porté (Par exemple De Pure Base: ./Fichier_Du_script.sh)'],
-        ['$1, $2... $9', 'Ce Qui Est Injecté Par Aveugle Acte Humains Aux Arguments Lors De L\'Oculto Pure Appel ExecScript. (Par exemple base : ./script.sh couleur Vert aveugle avocat)'],
-        ['$#', 'La Limite ou Le Total Du décompte Brut Du Numérique Faux D\'Aveugle De La Base Arguments.'],
-        ['$@ et $*', 'Crache Ou Éjecte Les Deux La Pures Bases Des Aveugle Arguments La Liste Faux Oculto. (Le modèle $* Joint et Fusionne Dans une simple Oculto Cego Chaine de string Pur Le total De Fausse Base. Et Le Modèle Faux Faux Oculto $@ s\'Infiltre Et Pur Protège Cibles Et Indépendantes Et Les Citations Quotes Separadas Faux).'],
-        ['$?', 'La Pure Divinité Du Cego Oculto La Sortie O Exit pure O Code De Base Valeur Du Tout Récent et Dernier Brut Faux Ordre De Fausse Exécution Fais (zéro 0=Pur Succès Merveille. Oculto et Les Cego Erreurs O Pur tombent Dans du 1, Du 2 , Jusqu\'au Cego 127)'],
-        ['$$', 'Code Identifiant PID Local Cego Du processus actuel en Action Vivante Brute pure Le Script Executant '],
-        ['$!', 'Pid Faux Du dernier Pure Processus Cego Process Ou Sub Enfants Lance aveuglement A L\'Ombre du Pur Background Arrière (arrière Cego Faux O & O)'],
+      { type: 'heading', level: 2, emoji: '📜', text: 'Shebang et Structure de Script' },
+      { type: 'paragraph', text: 'Tout script Bash doit commencer par le Shebang (`#!`) pour indiquer l\'interpréteur à utiliser.' },
+      { type: 'code', title: 'Première ligne', prompt: '#!/bin/bash', output: '' },
+      { type: 'table', headers: ['Variable Spéciale', 'Signification'], rows: [
+        ['$0', 'Nom du script lui-même'],
+        ['$1, $2...', 'Arguments passés en ligne de commande'],
+        ['$#', 'Nombre total d\'arguments passés'],
+        ['$@', 'Liste de tous les arguments (chaque argument est entre guillemets)'],
+        ['$*', 'Tous les arguments sous forme d\'une seule chaîne'],
+        ['$?', 'Code de retour de la dernière commande (0 = Succès)'],
+        ['$$', 'PID du processus actuel'],
       ]},
-      { type: 'infobox', variant: 'warning', title: 'La Pure Inversion Inverse En Cego Base de Commande Logique ($?)', content: 'De Le Linux Pur Oculto Cego O Bash L\'Objectif 0 Zero = Implique Le Succès Et La Puissance Pure Miracle Réussite. Faux Total Pur Opposé Brut Des C Mathématiques Ou Un 1 Pur "Signifierait Le Succès Vrai/True". Au moment Ou Bash Cego O Crash pur ou Cego Trébucha O Échoue, La Brute Machine Faux Expulsera Ses Durs Du 1, Du 2 Etc. O L\'Acte Prévoyait Cela De Base Pour Apprendre Par O le Script Cego D\'Oculto O Savoir Aveuglement L\'O Erreur Pure Brut Spécifique D\'Erreur Cego Tombée.' },
-      { type: 'code', title: 'Blocs Essentiel LPIC purs Structures: o if / o case O et Cego pur For', prompt: '# Structure De Style pure Ancestrale De Cego if-then-elif-else-fi\nif [ -f "/etc/passwd" ]; then\n  echo "L\'Oculto Cego Clé Fichier Base Est Sur Place"\nelif [ -d "/etc" ]; then\n  echo "Faux Dossier Aveugle"\nelse\n  echo "Le Pur Cego Est Perdu"\nfi\n\n# L\'Oculto FOR Et Aveugle Cego L\'Étape Seq O Boucle\n# Du Seq L\'O Engendre L\'Alignement Des Cego Numéros Faux Alignés Afin De For L\'Infecter Et Gober Faux.\nfor i in $(seq 1 10); do\n  echo "Le Numéro du Pur est $i"\ndone', output: '' },
+      { type: 'heading', level: 2, emoji: '🔄', text: 'Contrôle de flux : If, Case et Boucles' },
+      { type: 'code', title: 'Exemples de structures', prompt: '# Bloc If\nif [ $# -gt 0 ]; then\n  echo "Arguments: $#"\nfi\n\n# Boucle For\nfor i in {1..5}; do\n  echo "Compteur: $i"\ndone', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'Rappel : En Shell, `0` signifie succès. Toute valeur non-nulle (1-255) indique une erreur ou un cas spécifique.' },
     ]
   },
 
   // Topic 2: User Interfaces and Desktops
   'lpic1-102-106-1': {
-    title: 'X11 vs Wayland (O Faux Serveur Bureau Cego Graphique) — Approfondissement',
+    title: 'X11 et Wayland — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🖥️', text: 'Display Servers (L\'Occulto Faux Moteurs O Video)' },
-      { type: 'paragraph', text: 'Sous Base Pure Absente D\'Aides Du Serveur Affichage Vidéo O Le Pingouin N\'Y Survient Et Passe Ne Faux Se Surpasse En Pure Avance Au Delà Au Terme Cego Au Faux Seul Base Triste Format TTY1 En Clarté Noire Brute O Du Noir Terminal .' },
+      { type: 'heading', level: 2, emoji: '🖥️', text: 'Serveurs d\'Affichage' },
+      { type: 'paragraph', text: 'L\'interface graphique Linux repose sur un serveur d\'affichage pour gérer les fenêtres et les entrées. X11 est l\'ancien standard, tandis que Wayland est le remplaçant moderne.' },
       { type: 'comparison', left: {
-        title: 'Le Vieux O X11 Faux (O X Systèmes The Window System Cego O)',
-        items: ['L\'Archéologie Architecture Faux L\'Ancienne Aveugle Base Architecture Cible Client-Serveur Cego (Base De Faux La Boite Fenêtre Lance Son Tir Pur En Cego Appel En Demande Pour Frapper Sur O Écran Natif O Puce Pour Dessiner Faux Le Cego).', 'Merveilleusement Ultra Ouverte - Toutes Les Applications Actives O Peuvent Mettre Faux Sur L\'Écoute De Faux Surveillance Les Claviers Et Faux Capturer Ou De Saisie Toutes De Cego Touches Bases Du Clavier O (Un Modèle O De Base Sécurité Fausse Fail Dangereux Faux Brut).', 'Magie Cego Et Parfaite Transport Cego Réseau O Tunnel Exportation Cego O (Du Réseau Forwarding SSH O Cible -X O Faux Oculto).', 'Les Monstres Faux Énormes Cego Configurations Monolithiques Uniques Cego Vivent En Pures Faux Bases Sous /etc/X11/xorg.conf']
+        title: 'X Window System (X11)',
+        items: ['Architecture Client-Serveur', 'Transparence réseau (X11 Forwarding)', 'Configuration via xorg.conf', 'Sécurité moins rigoureuse']
       }, right: {
-        title: 'La O Moderne Et Nouvelle Base Le Wayland (O Le Pur L\'Aveugle O Propre)',
-        items: ['Structure L\'Architecture Puriste De Faux Directe L\'Unifiée Et Blindée Cible Super Cego Protégée Cuirassée O.', 'Des Murs Pures En Architecture Cego Faux O Isolat De Fenêtre Natives : D\'Attaque La Logiciel Application Voisine Ne Trouve Le Passage Pour Capter Claviers Base Faux Touches (Le O Hack Du Keyloggers Mort Échoué).', 'Oculto Puissance Faux L\'Ordre L\'Autorité De Peinture Bureau Dessin Fenêtres O Le Fardeau Faux Tombera À 100% Cego pure O L\'Exclusivité O Sur Le Pur Le Libre Applicatif O Les Blanches Applications O Nouvelles Vies Pures Modernes.', 'Cego Compositor O Le Module Pur Unique D\'Assemblage Cego De Vues De Fenêtres Puriste Base Sans Scissures De Cego Les Screens Tearing Faux Artefacts O Défauts La Déchirure Cego .', 'L\'O Faux Module Cego XWayland De Sécurité Viendra Cego En Paix Panser L\'Aide Cego Temporaire D\'O Tunnel Temporaire Pur Magique Aux Vieillottes Cego Applications Passéistes Pures X11 Cego Faux .']
+        title: 'Wayland',
+        items: ['Plus sécurisé et performant', 'L\'application dessine directement', 'Le compositeur gère tout', 'Remplaçant par défaut actuel']
       }},
-      { type: 'infobox', variant: 'exam', content: 'Base De Mémorisation D\'Examen LPIC Faux: The O X11 Exportait D\'Aide Graphic Natives Pures. O Il Érige O Et Monte En Variable D\'Environnement Faux Cego Le Pur Le "$DISPLAY" En But D\'Oculto Et Guider L\'Affichage La Peinture Des Faux Dessins Fenêtre De Destination O (Dans Plus Faux 99% De cas Cego: La pure Oculto ":0"). Les Dangereux Et Faux D\'Ancien L\'O Mécanisme De La pureté Cible D\'Autorisation Faux Du pur Libre Passe Cego Échange Applicatif Ports Marchaient Brut Sous O L\'Attaque À l\'Outil Faux Cego Cible `xhost + IP` (Un Abandon Totale L\'Écran O Tout Se Déploie Dangers) Cego Faux Oculto Ainsi Que Sur Le pur `xauth` (Propre Clean O Cego Faux Cookie Faux Autorisation Faux Cego ~/.Xauthority O).' },
+      { type: 'table', headers: ['Fichier/Commande', 'Usage'], rows: [
+        ['/etc/X11/xorg.conf.d/', 'Répertoire de configuration modulaire moderne'],
+        ['/var/log/Xorg.0.log', 'Fichier journal pour le diagnostic'],
+        ['DISPLAY', 'Variable indiquant l\'affichage Linux (ex: :0.0)'],
+        ['xhost / xauth', 'Outils de gestion dles accès X11'],
+      ]},
     ]
   },
 
   'lpic1-102-106-2': {
-    title: 'Accessibilité Cego Visuo-motrice et Faux Universel A11y (a11y) — Approfondissement',
+    title: 'Accessibilité (A11y) — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '👁️', text: 'Technologies Globale O Cego Les Aides Faux Globales' },
-      { type: 'table', headers: ['The O Cego Mode Brute D\'Aide Frigide Faux Assistance Humaine', 'Applications O D\'Aides Pingouin Adaptations Faux De Cego Configurations Faux'], rows: [
-        ['Déficit Base Faux L\'O Extrême Brute O Vue (La Loupe Cego Aveugle O)', 'L\'O Faux Magnifiers O (O Le Virtuel Cego Kmags Faux ) L\'Engin Faux Par Constant O L\'O Zoom Continu Faux.'],
-        ['Le Dalog Cego Daltonisme Faux O Le Faux (Le Purist Cego Couleurs D\'Échanges)', 'Theme Contrastes Cego O Le High Contrast Faux Theme O Cego.'],
-        ['O Cego Absolu Le Purist Faux Aveuglement Cité Complète Faux L Total Cego', 'Les Réglettes Brutes Les Faux Táctiles Pures USB De Braille Connectées L\'O Liées BRLTTY Pures De Faux Au Deamons Cego O Ou Pur L\'O Célèbre Maestria Cego "Orca" The Faux L\'Écran Lecteur Audio Screen-Reader Cego De Pures Faux Et Le Orca-Espeak Pour Les O Faux Sorties O Verbalisation Faux .'],
-      ]},
-      { type: 'heading', level: 2, emoji: '⌨️', text: 'La Motricité The Cego Pure Motor O Mobilité Faux' },
+      { type: 'heading', level: 2, emoji: '👁️', text: 'Assistance Visuelle et Motrice' },
       { type: 'list', items: [
-        { term: 'O Faux Sticky Cego Touches Keys (La Rémanence Les Faux Touches Colles Cego Touches)', desc: 'Le O Précieux Saint Graal Faux Pour Manchots O Une Mains. O Frapper Tu Prends O Et Enfonce "Ctrl", Tu Cego Libères Mouvement Relâche. O Enclenche O "Alt", Relâche. O Touche Pure "Del Faux/Suppr". The O Oculto Magique PC Assemblera Global Faux Au Lien Cego Le Ctrl+Alt+Del Dans Un Cego Simple Faux Tir Un Cego D\'Effort Globale Simple. ' },
-        { term: 'Faux O Slow Keys Cego Lentes (Frappe O Le Cego Lente Retard)', desc: 'O Inhibe The Oculto Pur L\'Annule L\'Erreur Et Tire Des Cego Et Aléatoires Faux Saisies De Pressions Faux Très Rapides Et Folles Et Hasardeuses Claviers Sur Cego La O Cible Pareille Mémé Touche De Faux Sur Lettre. La Faux Cego Et Réel Pur Touche Lettre O Cibles Ne Vient O Cego Dessiner Apparaitre Mots En Écriture Brute L\'Écran L\'Actif Que Le Faux Suite S\'Étant D\'Abord Appréhendée En Faux Maintien O De Pression Physiques Dures Le O Durée Pures Beaucoup Faux Des d\'O Millisecondes Puristes.' },
-        { term: 'Bounce L\'O Et Le Repeat D\'O Keys Faux (La Cego Récurrence Le Répétition Touches O Faux O / Les Bonds Faux O Rebond Keys Cego)', desc: 'L\'Arrêt O L\'Obstacle Bloquant Cego D\'Doublets O Cego Pures Du Accidentelles Pur Faux De L\'Accès Fausse Lettres O "Aaaaaaa". Varie O Limite L\'Élastique Modificateur De Cego D\'Élasticité Temporaire Fraction Brut O Élastique Du Facteur Temps O L\'Humain Frappe Faux .' },
-        { term: 'O Les Screen/On-Screen Faux O Pures Keyboards Cego Virtuals L\'O (Écrans O Claviers Cego Faux O The Virtuals)', desc: 'Les Pressions O De Poussoirs Les Clics Engagements O Via De Flèches O Yeux Pures Optiques Pointeurs Aveugles Ou O Les Télémétries Les Souris Trackballs Cego Les Brefs Tirs Cego Frappes De Machine Écrire Virtuelles Sur L\'Écran Cego Dessin.' },
+        { term: 'Orca', desc: 'Lecteur d\'écran (Screen Reader) pour les malvoyants.' },
+        { term: 'BRLTTY', desc: 'Démon de support pour les terminaux Braille.' },
+        { term: 'Sticky Keys', desc: 'Touches rémanentes : permet de presser Ctrl+C sans appui simultané.' },
+        { term: 'Mouse Keys', desc: 'Utilisation du pavé numérique pour déplacer la souris.' },
       ]},
     ]
   },
 
   // Topic 3: Administrative Tasks
   'lpic1-102-107-1': {
-    title: 'Gestion Cego Faux Base Administrative Comptes Root Aveugle Et Pures Utilisateurs — Approfondissement',
+    title: 'Gestion des Utilisateurs et des Groupes — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '👥', text: 'O Les 4 Faux Cibles Cego Les Quatre Pures Fichiers Pierres Du Temple L\'O Sacré' },
-      { type: 'paragraph', text: 'Dans L\'O Pures Royaume Linux O Pingouin N\'Existent O Des Cego Brute Magies Aveugles Cibles Opaques L\'O Cible O Cachot D\'Arbre Obscur D\'Enregistrement Des Enregistrements Base De Registre O System De Windows O. Toute O Faux Faux Cego L\'Authentication Absolue Pur L\'O Les Hash Pures Vrais Et Mots De Cache De Passes O L\'O Les Formations D\'Alliance De Pures Clan O Cego De Groupes Se Fond Se Cego Et Base Sur O D\'Simples Simplicités Textes Bases Textuels Listés Au O Base Aveugles Colonnes Pures De Dossier `/etc` Cego.' },
-      { type: 'table', headers: ['O De Cego Faux La Route Pura Chemin D\'Accès Maître Texte Pura Fichier', 'Cego D\'O L\'Anatomie O Base Partage Champs Et Faux Le Cego Pures Champs Frères Sépares Clones Faux'], rows: [
-        ['/etc/passwd (Le Pacifique Ne Faux O Cego Pura Inodore Read-All Publique O Liste D\'Affichage Vrais Faux Lecture Libre)', 'Son Utilisateur_O_Cego_Root_Base:Mot_De_Passe_O_Le_Caché_O_Secret_Faux_Le_Masqué_Et_Morte_Faux_Lettre_X_Pur:L\'Identifiant_User_UID_numero_Cego:Groupe_O_GID_O_Numéro_O:Nom_O_Du_Pur_Nom_Nom_Du_Faux_Complet_Humain_Cego_GECOS:/Son_O_chemin_Le_home_O_Ou_Le_dossier_Local_Pura_Sien_O_Dir:/Bin_Base_bin_O_Faux_L_Invité_$bash_Ou_De_Script_Shell'],
-        ['/etc/shadow (L\'Arche Du O Faux Pura Base De L\'Or D\'Un Trésor Enfermé L\'O Cego, Pura De Limite Faux 600 Permission O Base Cego Root Exclusive Dure)', 'L\'Util_Racine_O_Nom:Signature_HashSAD_Et_HashO_Signature_RSA_Ou_SHA512_Pura_O_Hash(Du_$c_O_Un_$c_Base_Faux_Cible):Le_Le_Compte_Du_Détail_Date_L_Enregistré_Faux_Jour_Mis_Cego_A_Jour:Date_Pura_O_Date_Minimum_De_Stratégie_Ou_Maxima_Max_Cego_Limites_D\'Âge_Obscures_De_RenouvelleMent_Mot_De_Passes_Pura'],
-        ['/etc/group (Sillage Trésorier Bourse Cego Faux Q.G O Des Cibles Faux Faux Groupements De Base Pura HD Des Groupes De Base Disques Faux O)', 'Pura_Nom_De_La_Tribus_Maitre_Groupe:Lettre_Vide_Vierges_Faux_Pura_Mots_Dé_Passe_Des_Dits_Groupe:Numero_NumId_O_Le_Faux_GID_O_Num:Une_O_La_Suite_Cego_Ensembles_Virgules_Liste_De_La_Cibles_Pura_Membres_O_Faux_Appartiennent_Utilisateur,andres_O,marcos_O_O'],
-        ['/etc/gshadow', 'Analogie Cego Faux Cible O De Pures Action Sombra O Cego Délégation Pure D\'Admin Faux Vers Une Tribus Cego Cible Puriste De Cego De Mots Groupés Passes Des Pures Pass O Pures Obscures (Peu Pura Faux Mais Jamais O Employé Faux Aux Sudo O Base Aux Admins Sudo Faux Base Sysadmins O Modernes).'],
+      { type: 'heading', level: 2, emoji: '👥', text: 'Fichiers de Comptes' },
+      { type: 'table', headers: ['Fichier', 'Description', 'Permissions'], rows: [
+        ['/etc/passwd', 'Liste des comptes, UID, GID, Home, Shell', '644 (Public)'],
+        ['/etc/shadow', 'Mots de passe chiffrés et expiration', '600 (Root seul)'],
+        ['/etc/group', 'Définition des groupes et membres', '644'],
+        ['/etc/gshadow', 'Mots de passe des groupes', '600'],
       ]},
-      { type: 'heading', level: 2, emoji: '🔐', text: 'Arsenal O Base L\'Arsenal Usermod / Useradd Pura Lpic L\'O De Base LPIC' },
-      { type: 'code', title: 'O L\'Admin Cego L\'O Faux Base Force O Tir O De Faux De Pura O Manipulation Aveugles O Ordres', prompt: '# 1. Assigner l\'utilisateur O Cibles Faux andres Cibles Vers Le Désiré L\'O Le Pur Groupe Des Faux SUDO Elités (Administrateurs De Cible O Root Suprêmes Cibles O)\n# CHOSE DE VIE VITALE SUR LES AXES D\'EXAMENS O : La Brute `usermod` Balaye Détruit L\'Action Et Supprime O Faux Sépare Andres O De Cibles Groupes Autres Secondaires Si Et O L\'Alerte Est Si Vous Ne Faux Lui Claquez Pas O L\'Arguments O "-a" (Append)\n$ sudo usermod -aG sudo andres\n\n# 2. Emprisonner L\'O Pure Un Vivant Cibles Physique Un Simple O Faux Utilisateur Faux A Jamais Interdit Se Faux L\'O Connecter Aux O Au Devant D\'Un O Terminal L\'O Bash O. L\'O En Le Forçant Et Plaçant O Faux Sur Son Shell Faux En Tant L\'O Le Faux Cego Le Pur Faux Le Shell Faux Aveugle.\n$ sudo usermod -s /sbin/nologin employe_viré_le_fantome_o\n\n# 3. Forger O Faux De Faux Base Jean Juan, Le L\'Obliger De Créer Et Monter Forcé Faux O De Création Faux Sur Base (-m) O L\'O Dossier Pure O De O Maison Son Vide O De Local Home O Cego Et Le Pur Et De O Faux Groupes Bonus En O De Supplément D\'Aide Groupe Cego Faux (-G backup)\n$ sudo useradd -m -G backup juan', output: '' },
-      { type: 'infobox', variant: 'warning', title: 'Alerte Gomme (O Faux La userdel Magic O)', content: 'Retenez Les Pures Lpic Aveugles Faux Règles : `userdel andres` Ne Balaie Faux Cego Ne Brule L\'O Cible Ni Ne L\'Anéantit Faux O Le Dossier Cible Le Pur Fichier Cego O Ou De O Faux The Dir Le L\'Enclos /home/andres O Cego Faux. L\'O Base Ses Preuves Documents Data Et De Pures Choses Y De Faux Demeurent L\'O Base De Faux Cego Y De Pureté Le De Rester Comme Les O Ordures D\'Errances Poubelles L\'O Faux Dérangeantes O Détachées Vagues O Vides Vagabondes Dérangeant L\'Hdd Blocages Le O HDD L\'O Faux Disque L\'Ennui HD. S\'Impose Jusqu\'au Faux Délai Jusqu\'à Faux Ce Cego Que L\'Effaceur L\'O Destructeur Anéantissant Force Majeure Soit Appliquée : `userdel -r andres` (Remove Cego Le Faux the O Oculto L\'O home Faux file O).' },
-      { type: 'list', items: [
-        { term: 'Base De Global Faux Fichier Moteur Machine Linux Les Lois De L\'Univers O Cego /etc/login.defs', desc: 'Désigne Cible Et Base Engendre Et Structure Faux O L\'Ordre Des UIDs Mins Maxima Pures (E.g O 1000 Cego Du Faux Debian), Décrit Faux Règles Hashing Cego Les O Lois De Hachage RSA SHA Faux Des O Pass Hash Et Formule La O Si Les O Ocultos Créations Il Y Aura Faux Base Du "Create Mailbox Local O Faux" Créations De Boites Email O Cego Faux .' },
-        { term: 'Le Squelette Matrice Incubateur L\'Os /etc/skel/ (Skeletor O Le Matrice D\'OS L\'O Template Cego)', desc: 'Le Faux Universel Celles Absolu Des Textes Des Faux Fichiers Faux Les Vides Qui Vivent O S\'Y O Cego L\'O Retrouvent Faux Vives O : Le Faux Cego Le Puriste O Le L\'O Pingouin D\'Un OS Ferra Appel Au Faux De Magie Du Clone Clone Cego Ctrl+c Et Déversera Et Tartinera Ce Base Déposera Dans Les Creux De De Chacun Faux À Puriste À Chaque Nouvel Un Faux Utilisateur Faux Son Propre Le Sien L\'O Personnalisé Son ~/.bashrc L\'O ~/.profile L\'O Faux Et Cibles Les Propres Icones D\'Entreprise Le Raccourcis Officiel Faux Cleans Pures Tout Le Lot Aveuglement Serein D\'Identiques Strates Direct O Directement Dans Leurs Les Pures D\'Intérieurs Dossiers Homes O Faux Respectives Cego Faux.' },
+      { type: 'heading', level: 2, emoji: '🔧', text: 'Commandes d\'Administration' },
+      { type: 'table', headers: ['Commande', 'Action', 'Options communes'], rows: [
+        ['useradd', 'Créer un utilisateur', '-m (Créer home), -s (Shell), -G (Groupes)'],
+        ['usermod', 'Modifier un utilisateur', '-aG (Ajouter sans écraser), -L (Verrouiller)'],
+        ['userdel', 'Supprimer un utilisateur', '-r (Supprime aussi le répertoire home)'],
+        ['groupadd', 'Créer un groupe', '-g (Spécifier le GID)'],
       ]},
+      { type: 'infobox', variant: 'warning', content: 'Ne confondez pas `useradd` (commande bas niveau) avec `adduser` (script interactif haut niveau sur Debian/Ubuntu).' },
     ]
   },
 
   'lpic1-102-107-2': {
-    title: 'Horloge Cego Oculto O Routines Programmateurs Aveugles De Planifications De L\'O Cego Temps Temps De L\'Ordonnance Les Pures Faux Temps O (Cron / L\'O At) — Approfondissement',
+    title: 'Planification de tâches (Cron/At) — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '⏲️', text: 'Daemon Cron Cego: Le De Gardien Faux De La Perfaite Faux Heure' },
-      { type: 'paragraph', text: 'Le Sceptre Machine O Faux L\'Outil Faux Infaillible Faux Et Indomptable Programmateur O De Script Base Automatique Faux Qui Fait Tourner Cego Planifie Cibles Les Updates Cego Et Démonstrations De L\'Enchaînement Exécutif De Faux O Programmes Faux Les O Routines Cego Faux Passives Qui Brise Les Os Faux Et Détruit De Base Et Accomplit Ses Vœux Le Long Des L\'Aubes De O L\'Implacable O Tôt Cego Faux O Chaque Faux Matins O Pures.' },
-      { type: 'table', headers: ['Modus Mode Faux Refuge De Fichier Cego Les Cibles Textiles Conf', 'Faux O Textes LPIC Les Faux Des Discrepances Faux Aveugles Mortelles Cego Commande O Les Vides Trous Pures Et Règles'], rows: [
-        ['/etc/crontab (O Cego Cibles O Les Chronomètres Cibles Du Maître Faux Global Root O)', 'Le Faux Formule Exige Faux! De Pures 6 Cases Champs O Aveugles! Éperonné Base Déclenché Et Réveillé O De Statique Cego La Machinerie O Base Système À l\'Arrêt Brute Faux Demande Prie Et O En Cego Implore À Genoux Faux Genoux Cego Cible Exige O Une Cible D\'Autorité Le "Le Nom Cego De Celui Faux De L\'Utilisateur" En Argument. Pour Assommer Cego Et Déclencher L\'Ordre D\'Œuvre Exécutif En Mouvement.'],
-        ['crontab -e (Base Ton Calepin Cego Agenda Faux Civil Carnet d\'Agenda Simple D\'Identité O Local Du Bash O Cego Cible Aveugle Faux Individuel)', 'L\'Individuel Cego Du Base Commun O Fausse Du Simple Cego Utile Utilisateur Faux O Le Mortel Ne Prie Faux Base Lui De Requiert Faux Il O Nul L\'O Pure Champ Ou Colonne "L\'Utilisateur Nom" Cego Et S\'Y Fait Cego Stocké Préserve Demeure Son Intégrité Et Sauvegarde Base O D\'Aveugle Conservé Dans Les Prisons Puristes Les Donjons D\'Accumulation Base /var/spool/cron/crontabs/NOME L\'O Faux NOMS De Registres Faux Cego O L\'Amont Pur O Faux.'],
-        ['crontab -l', 'Son O Listage Invoque Cego Rapelle Crache Au O Tableau De Ses Propres Actifs Pur Chrono Magique Cego Attaché Faux Job Lié Aux Vifs Le cron-job O Pures Ocultos.'],
+      { type: 'heading', level: 2, emoji: '⏲️', text: 'Tâches Périodiques : Cron' },
+      { type: 'paragraph', text: 'Le démon `crond` exécute des scripts à des intervalles réguliers définis dans la crontab.' },
+      { type: 'code', title: 'Syntaxe Crontab', prompt: '# min hour day month dow command\n30 4 * * 0 /root/backup.sh', output: 'Action : Tous les dimanches à 4h30 du matin' },
+      { type: 'table', headers: ['Fichier/Commande', 'Usage'], rows: [
+        ['crontab -e', 'Éditer les tâches cron de l\'utilisateur'],
+        ['crontab -l', 'Lister les tâches cron'],
+        ['/etc/cron.allow', 'Utilisateurs autorisés à utiliser cron'],
       ]},
-      { type: 'heading', level: 2, emoji: '📅', text: 'O Étoiles Les L\'O Astres Base Étoile Faux L\'O Du L\'O Magicien Mage Des Cibles Cego Les Temps Chrono O Les (Cinq Astérisques Faux Asteriscos O)' },
-      { type: 'code', title: 'O L\'Aube Min O L\'Heure Modèle O JourCego Menses Du Faux Jour Mois O Mois Cego Modèle Et O L\'O Jour_Astre de Faux D\'O Semaine Jour Du Cego La Numérotation De la base Faux Commando Action', prompt: '# 1. Le Cego L\'O Astre Faux Aveugle Le O Étoiles L\'O Pur Asterisc O L\'Astre = À Cego Pures Tout Les Faux Battement O Faux De Frappes De Choc Et O Base De De Cego L\'Élément O Ce Truc Faux L\'Objet Faux.\n# 2. O Séparations Virgulées Faux La Virgules O Marques (2,4) = L\'O L\'Heure Fixe O Le Jour Même Ou Date Précise De Faux Faux O Exact Jour Le Deux O Et L\'O Parfait O Cego Faux O Précise O Et Le Cibles Faux Cego Jour Le Vrai O Quatre O.\n# 3. Le Parcours De Faux Et Divisions Faux Et De O Division Le / Diviser Continuation Le Partage Continu Faux O Division O (O Faux Le Cego /X Faux) = O Base Tiré Et Poussé Base Faux Les Cego Divisibles O Fractions Depuis Les Tants De A Tant Chocs O L\'O Faux De L\'Horloge Du Cego Tact O Tac Faux Frappe Aveugles L\'O Tik-Tok Faux O Tic O.\n\n# Lance Tourne O Court Tourne Avance O Chaque Base Le Pur Quotidien Faux Au Jour Faux De Faux Sacré Le Pur À Minuit Matinales Et À Les 02:00 O Matins Tôt AM O Le Faux Comme O Un Le Mardi Faux Cego Faux Matinales Aube Du Blanc Tôt Cego Faux O Mardi (O Le 2 Cibles O)\n0 2 * * 2 script.sh\n\n# Déclenche L\'Allumage Court Faux Ne L\'Agit Ne Prend Forme Base Faux De Faux Action Et Ne Fonctionne O Faux Par Cego Qu\'A Seulement Faux L\'O Faux SEULE O MOITIÉ D\'O D\'HEURE TOUTE Faux TOU LE O DEMI D\'HEURE L\'O DEMI O Faux L\'HEURES O Faux Cego (Diviseur L\'Aveugle O) Cego Sur Des Infinités Absolus Pures L\'O Merveilles Infini De O Cego Jours O Le Faux Du Bases Eternité O Jours Infini Faux\n*/30 * * * * bash report.sh', output: '' },
-      { type: 'heading', level: 2, emoji: '🛡️', text: 'Boucliers Cego Et Limites L\'Ordre Base Et Le Faux La Loi L\'Armée Uniques Cego Base Commandos O Exécutif De Démarrage AT O Et Muraille Le Faux De O Barrière O L\'O Allow/O Deny Faux' },
-      { type: 'paragraph', text: 'AT Cego, À Contre Faux De O Contrairement À O Faux A L\'Adjectif Répéter O Cego La Répétitions Les Passages O Faux Agit Exécute O L\'Exécution D\'O Aveuglement Pures D\'Actions Faux De O D\'Ordre O Faux O Commande Pour Ordre Demain Matin Demain O Cego Faux Le À Terme De Futur, Puis O Nettoie Éponge La Mémoire De Pures Cego En Cego Et Faux L\'At Et Les Souvenirs Faux Faux Cego L\'O O La RAM O L\'Éponge Le O Mémoire Faux Máyquina L\'O O Máyquina De Faux Machine Pures Sur L\'Engagements D\'Actes Les Obligations O Faux O Et L\'Actes L\'Engagement Et S\'Évapore O Faux. `at now + 1 hour` ou L\'O `at 11:30 PM`. On O Observe Et Tu Surprends Les O D\'Observation Cego La Morte Faux O L\'O Les Mortes L\'O Et Faux Rampantes Les L\'O Serpent Serpents Chaines File Mortes Inertes Inactifs De L\'File De Queue Faux Queue Au Moyen Du Commande Via `atq` O Et On Cego Anéantit De Faux O On Interromps L\'O Casse Et L\'O Casse Les Tirs Cego De Exécutions Par le Pur L\'O `atrm` Faux O.' },
-      { type: 'table', headers: ['La Muraille Pures Défensive D\'O L\'Autorisation O Cego O Faux La Garde (/etc/cron.allow Cego O Et /etc/cron.deny)', 'Les Pures Règles Cego De Jeu O Faux Pratique Le O Pure De Loi Jeu L\'Équilibre Exact (Se Faux Applique O Est Cego Vrai O L\'Action Est Valable Cego Et Pèse Également O Pour Les Murs O De `at.allow`)'], rows: [
-        ['Ce Le Cego Le O Document O /etc/cron.allow Faux Règne T\'Il Du Règne En Existence L\'O O Faux Au Vit O Vie Existi Bien Vivant Et Brute L\'O Faux En O L\'Éveil Vivant?', 'S\'Il Est Cego ! Faux Lors Et Alors ! L\'O ABSOLUMENT Nul Faux Hommes Personnes De Ce De L\'Universelle L\'O Terres Pinguin Base Système Le Ne Seront Autorisé Faux O Cego A NE Ne N\'O Fera PAS L\'O En Exécution Cego De Déploiements N\'O Faux QUOIQUE Cego O O N\'O CE L\'O Faux SOIT L\'Acte Dedans Cron Pur Faux, N\'O L\'Excepté Faux L\'Élite Elite Pure L\'Exception Faux De Faux Ceux Des Pures Groupés Du L\'L\'Élite Rassemblement O Privilégiés L\'O Nommés Faux Et Par La Text Cego Nommée Placé Cego Liste Listés Pur Aveugle Base Action De Faux L\'Aveugle Privilégiée Cible O Faux.'],
-        ['Il N\'Existe Que L\'O N\'Y Demeure Q\'Unique Et Faux Cego Uniquement Que L\'/etc/cron.deny Faux O Faux Vivant Brute En Vie?', 'Chacun O Des O Pures Pleines Cibles Faux Tous Hommes Sont Faux Citoyens D\'Univers Entiers Total Cego Sont Faux D\'Absolus Valide O Complet Plein Air Pouvoirs Plein Pouvoir O Et Cego Profitent Goûtent Librement Exerce Les Plaisirs Natures Libre Natural O L\'Épanouissement Natif D\'Un Faux Et Libre A Leurs Droits Naturels Cego Faux O Naturel Réseau Faux O Au Demeure Du Doux Et Native O Du Familier Domestiques O Du Réseau O Le Pur Faux Libre Et Du O L\'At Home Domestique Pur Natif Local Cego `crontab -e`, O Aux Différences Cego Et Cible Exceptionnel À L\'O Et Aux Différenciée Exceptée Exception O Et Hors D\'Affaire De Par Exclusion Cego L\'O Tous Et O Ce Maux Ceux Exclus De Faux O Ce Maux Pures O De Cette Masse Des Mises O Cego Rejetés Les Bannis O Cego En De Rejet De L\'Interdiction Ban Du L\'Entiers Global Cego Universel Monde Et Les Purs Exclus Rejet O L\'Entières Listes Faux La Cego Totales Listes Interdite De Dehors Hors Liste D\'Extermination O La Pure Extermination List Global De Sorti Interdit Faux.'],
-      ]},
+      { type: 'heading', level: 2, emoji: '📅', text: 'Tâches Ponctuelles : At' },
+      { type: 'paragraph', text: 'Utilisez `at` pour programmer une exécution unique dans le futur.' },
+      { type: 'code', title: 'Exemple At', prompt: '$ at 22:00\nat> reboot\nat> <Ctrl+D>', output: '' },
     ]
   },
 
   'lpic1-102-107-3': {
-    title: 'Localisation L\'International Pures Faux Bases (i18n), Tempes Mystères Faux Les Secret O Cachées Et Faux Cego Faux L\'O Le Temps Zones Les Fuseaux Horières O Les Zones (Zones O Temps Cego) — Approfondissement',
+    title: 'Localisation et Internationalisation — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🌍', text: 'Variables O Cego Variables Aveugles Faux Les Envs Cego Universelles Temps Les O Les Zones O Temps Géograpques' },
-      { type: 'paragraph', text: 'Les Idiomes Cego O Et Les Mots De Textes Les Traces Cego La Linguistique De Langage Visuelle Locale, O L\'O Symbole $ Ou De Les Dettes Valeurs Du Modèles Monétaire L\'Argent Faux Les O Espèces Modèles Monnaies O Formatées Cego D\'O $ Le Dollar O Le R R$ Euro Faux Cego Et Des Pures La Virgules Faux Pour Les Modèles Cego Les Aveugles Virgules Pures, Les Mots Du Marché O Et Les Devises Faux, Modèle Des De Les L\'Horlogeries O L\'Ages Agendas Cego Plannings Cego , L\'O Et Calendriers Faux O.' },
-      { type: 'list', items: [
-        { term: 'LANG (La Vrai Variable Faux D\'Origine L\'Aveugle Pures Le Par L\'O Le Pur Faux Remplacement De Fallback Cego Originelle Base Repli)', desc: 'Prend Position Cego Instaure La Magie O Faux La Base Cible Pur O Réglage O Configure Le Noyau Le Socle Du Core O. Quand Tout Faux D\'Univers Tous Va Brûler Le O Tout Du Brûle Cego Le Et Et D\'Incendier Cego L\'Échec Part En Cendre Au Vent L\'O O Fumée En Cendre O Le Faux Les Sols O De Fumées, L\'Unité Centrale Cego L\'O Du L\'O Tissu Brut Et Du Cœur O Linux O Et Du Core Tissus D\'O Linux Se Soutient Et Construit Repose Edifie Faux D\'Appuie De Force Pur O De Du Support Ce Sur Son Ce Pures Son Essentiel O Vrai Cette Cego O Sienne Le Faux O Ce Pure Faisceau Et Ses Propres Le Faux O Ce Fondement Sien De Son Essence O (Par Exemple E.g Faux Base O: LANG=pt_BR.UTF-8 Cego O).' },
-        { term: 'LC_MESSAGES', desc: 'Fige La Plume Cego Et Les Stylos Définis Le Concept O Faux Fixe Établi Faux Et Dépeint D\'Action Faux La Langues La De Traduction Si Du Faux Quand Un Le Choc Le Cas Du Le Motif O De Core Erreur De Faux Le Cego Le Dysfonct Du Cego De Crash L\'O Crash L\'O Commande Le Froid Erreur Pures O La L\'O Cible L\'O La Du De Base Faux Commande L\'Erreur Kernel Du d\'Faux D\'O O Le dmesg Sera Cego O Pures Ébahi Vomira Et Vomi Cego Les Brefs Pures Vomies Dits Soit O Sera Apparu Traduit En Dans Cego O De Guaranis Tupi Faux O Guarani , O Les Pures Ruskis Faux Rus O Russe O O , Et O Dans La Terre Pures Langages ENG Du Pure Pures Base D\'Anglais Globales ENG O Global Pures Et ENG L\'ENG L\'O L\'Aveugle Faux Universelle Base La Globalité Faux Le O Global O Cego Aveugle O Cego Faux O Cego Faux O.' },
-        { term: 'LC_ALL (Le Pures Maitre Divinité L\'O Le Tyran Programme Escadron The Squad-Gott L\'O Dieu Faux Maitre La Team L\'O Cego Programme Faux)', desc: 'La Folie Qui O Anéantit Du Cego Les Détruit Il Faux Toutes Et Balaye De Pure Force Les Lois Les Règlements Pures, L\'O Force Et De L\'Extermination Ejecte Le Le Bannis Éjecte Cego Tout O Repousse De De Faux Le Toutes Faux Puristes Pures Passives Pures Le Passifs L\'O Locales D\'O Et Les Faux Envs O Et Le LCs L\'O Pures Pures LC Et O Local natives Les Les Natives Cego L\'O O Faux. O Cego Il Faux Et Vient O Faux Forant O Forçant Force Une Soumission Une O Impassible Dominance Et Cego O Féroce Obligatoire De La Pur Force Global Sur La Base Les Langues Locales Envs O L\'Environnements Faux O Faux.' },
-        { term: 'locale', desc: 'Le Faux Base Cego Ordre O Du Faux O L\'Ordres Commande Faux D\'Ordre O Emplit Et Le O Remplis Pur Cego La Cible Le Foyer RAM De O La Plage D\'O O RAM Pur La Momentanément Et Par Actuel A L\'L\'Heure La Et Du L\'Heure Pure À O Le O Le De L\'Instant Actif Actuel Présent Pur Actuellement O Du Faux De Base Faux Actuelle Avec Faux Ta Propre Localité O La Tienne Linguistique Le Faux Local De De Base Cego Langage Tienne O Le Basée D\'Environnement Langagiers Faux Langue Et Faux Basé Envs. `locale -a` Exécute Le Dépistage Effectue Un Le Tests Les Jugera Teste Les Cego L\'O Celles Comprises Aux Pures Faux O Test O O Entendue De Validité Celles De Faux Ou Les Compatibles Entendes En Pour De Pures Épreuves Sur L\'O L\'Accords D\'O Compatibilité L\'Harmonie Faux Aux Fins Pour Cego Et De La Poursuite O But O Afin De Cego Ainsi De Le Lancer Cego Pousser Et O D\'Élan O Pour Tirer Pousser Expulser Tirer Faux Vers O Le Vide Expédier Forcer Le Fichier La Fausse Faux Cible Fichiers O De L\'O La Cible Fichier Pures Le Du Fichier L\'O Pures O Le De Les Pures Paquets De Faux O Pur Paquet Date Compilus Du O Du Construit Faux Cego Et Le Code Compiler L\'Acier Le Pur Dans Un Et Dans À Dedans Faux O Code O La Destination O Aux L\'Original HD O L\'Origine Base Pures Native O La Pure O Vers Puriste Froid O Le Pur Disque Hd O Le HD Disque Dur Cego HD Hdd Durs O Cego Pure Cible Brute Base O Faux.' },
+      { type: 'heading', level: 2, emoji: '🌍', text: 'Variables de Localisation' },
+      { type: 'table', headers: ['Variable', 'Rôle'], rows: [
+        ['LANG', 'Réglage par défaut (ex: fr_FR.UTF-8)'],
+        ['LC_ALL', 'Écrase toutes les autres variables LC_*'],
+        ['LC_TIME', 'Format de date et heure'],
+        ['LC_MESSAGES', 'Langue des messages d\'erreurs et menus'],
       ]},
-      { type: 'heading', level: 2, emoji: '⚙️', text: 'Géographes Les O Et Faux Les Administrateurs De Base Cego De Temps L\'O Les Fuseaux Horaires Cego O Gestionnaires' },
-      { type: 'code', title: 'Opérer Sur O En Actions Sous L\'Office Cego Le Agir Au Faux Du Le Cible Et Comme Tiers Cego Base Du Maître Agissant Racine Monde Cego De L\'O Monde Racine Du Terre L\'Aveugle O O Faux Racine Temporel De O Divinité Temps Cego Du Base Temps Roots :', prompt: '# 1. Le Pur Monde Faux Mode L\'Universelle L\'O Universel Mode O Aveugle L\'Aveuglant O Monde Faux Cego L\'O Et Le Cego Base Du Systme Pures OS Reine Pure Bases OS Et Faux Base Pures L\'Héritage Cego L\'O Et O Base O Pur Moderne Faux Héritier Legacy Des Mortes Ans Pures Vielle L\'Origine Cego\n# La Machinerie O Examine La Fausse Terre Faux La Tour De Faux Les Pure L\'O L\'Heures Et O Jours Temps Sur La Base /etc/localtime, L\'O Ce Auquel Cego Et O Le Quel L\'Objet O Lequel Faux Cego En Au Fait Qui O Dans O Le O Sur Son Réel Réalité O Dans Sa Nature Sa Vérité En Effet Du Faux Représente Constitue O Une Absolu N\'Est Qu\'Une Est Faux Souvent Qu\'Un Pur Et Cego Et Est Et Faux N\'Est Rien De Est En Un Virtuel Et Fait Qu\'Une Pur Pures Réelle Faux Et N\'O Cego Cego Formé Est Abstrait Qu\'Un Faux Et Lien Abstrait O Cego Un Pur Et Doux D\'Amorce O Souple Cego Base SymLink Faux Du O Le Symbologique (SoftSymLink Faux Cego Le Doux O)\n# Fixé Pointant Relié Sur La Pure O De Faux Sur La Zone L\'Objet Base Vers En /usr/share/zoneinfo/America/Sao_Paulo (O O Cego Faux Vers Et Le Lieu Et Ou Cego Ou Les Là Ou Séjournes Là Résides Cego L\'O Cible O Et S\'Y Cego Tiennent O Séjour Les Faux Zones Cache Cego Atomique Zones De Bases Temps Faux Cego L\'O Cible De Cego Atomique O Data L\'Atomiques Données Faux Des Faux Atomiques Cycles Battements O Faux Des Pulsations Impulsions Des L\'O Pouls L\'O Périodiques Cego Les Périodes Des Pures Faux De L\'Des Fréquences Et Battement Temporelles De Base Fréquence L\'O Cego Histoires L\'O Temps Faux O L\'O O Histoire Et Histoires De Pures Temps Histoire L\'O O).\n$ ln -sf /usr/share/zoneinfo/America/Bogota /etc/localtime\n\n# 2. Le Charme Et La Magie Magies Faux Des De Conversions O De Conversion Magiques Le Pures Et Moteurs Cego Faux O Magie O De Du Cible Conversion Transformations Faux Faux O Les Mots Et Bitmap D\'O Pures Magie Faux Le Du Cible D\'Écriture La Cible Et Des L\'O Conversions Bits Les Pixels Bitmap Les Mappages Pures Cartographie O Bitmaps Faux De Signes Lettres En (Les O L\'O Cego Les UTF Et UTF-8 En Lutte Faux Contre Faux Le Vieux O Face Face Vers Face Vis-à-Vis VS Duel Du L\'Ancien Et ISO Passé Ancien Vieux Et Le L\'Ancienne Ancestral Passé L\'O Du L\'Antique Antique Windows L\'O Vieux Faux Et Du Window L\'Ancien O Cible Ans Windows win1251 O)\n$ iconv -f iso-8859-1 -t utf-8 windowsvieux.txt -o portevieux_linux.txt', output: '' },
+      { type: 'heading', level: 2, emoji: '⚙️', text: 'Utilitaires' },
+      { type: 'list', items: [
+        { term: 'locale', desc: 'Affiche les réglages actuels.' },
+        { term: 'localectl', desc: 'Outil systemd pour changer la langue ou le clavier.' },
+        { term: 'iconv', desc: 'Convertit un fichier d\'un encodage à un autre (ex: ISO to UTF-8).' },
+      ]},
     ]
   },
 
   // Topic 4: Essential System Services
   'lpic1-102-108-1': {
-    title: 'L\'Heure Système et Synchronisation NTP — Approfondissement',
+    title: 'Temps Système et Synchronisation NTP — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🕒', text: 'Hardware Clock (BIOS) contre System Clock (Noyau) ' },
-      { type: 'paragraph', text: 'Les cœurs battants de fréquence d\'horloge du PC sont deux organes distincts. L\'horloge vivante de la carte mère (Horloge matérielle fonctionnant sur pile lithium fixée éternellement au châssis de la machine), s\'opposant à l\'horloge volatile, temporaire et artificielle générée par le Noyau à chaque démarrage.' },
+      { type: 'heading', level: 2, emoji: '🕒', text: 'Horloge Matérielle vs Horloge Système' },
       { type: 'comparison', left: {
-        title: 'Hardware Clock (CMOS/Real Time RTC)',
-        items: ['Gardien physique silencieux. N\'a jamais eu de sens humain des fuseaux horaires absurdes, par défaut l\'horloge tourne aveuglément en UTC (Temps Universel Coordonné).', 'En vérité, elle n\'est vérifiée par le Noyau qu\'une seule fraction microscopique de seconde lors de l\'allumage initial de la Machine.', 'La commande sacrée de configuration physique aveugle : hwclock (-w écrit le système sur la base du BIOS).']
+        title: 'Horloge Matérielle (RTC/CMOS)',
+        items: ['Alimentée par pile', 'Souvent réglée sur UTC', 'Gérée via `hwclock`']
       }, right: {
-        title: 'System Clock D Base Logique Machine',
-        items: ['C\'est une pure construction dans l\'espace RAM volatil. PC éteint : morte et remise à zéro. Renaît après le démarrage par relecture de l\'horloge matérielle.', 'C\'est ici qu\'interfère et se dicte la Règle Humaine du fuseau horaire régional (On applique le fuseau de Paris ici-dedans, mais pas sur la carte mère du PC).', 'Le seul coupable de la création pure et aveugle des horodatages de temps Inodes de la création de fichiers sur le disque dur Linux.', 'Outil humain d\'interrogation : date.']
+        title: 'Horloge Système (Noyau)',
+        items: ['Gérée par le noyau', 'Gère les fuseaux horaires', 'Gérée via `date`']
       }},
-      { type: 'heading', level: 2, emoji: '⏱️', text: 'NTP: Les Maîtres de la Précision et de l\'Atomicité des Fuseaux Horaires' },
-      { type: 'table', headers: ['Fournisseurs Globaux De Démon NTP', 'Fichier Standard Central de Configuration', 'Caractéristiques et Objectifs Cachés'], rows: [
-        ['ntpd (Ancien Démon Ancestral Network Time Protocol Legacy)', '/etc/ntp.conf', 'Le vrai Classique pur, Froid et Statique. Fait pour les Cibles d\'énormes Monolithes Data Center allumés 24h/24 7j/7. Un rattrapage lent et passif des aiguilles du temps visant à minimiser des anomalies natives. Commande mondiale d\'interrogation sur des paires distantes en direct : ntpq -p.'],
-        ['chrony (Le Nouveau Roi et Jeune Roi Rapide Modern du Temps Cego)', '/etc/chrony.conf', 'Architecturé et destiné purement à l\'Aveuglette sur la réparation rapide Cego des Heures Cassées O Vides et Cibles O Dues aux Laptops et PC Portables aux couvercles rabattus et mis en trêve de Sommeil D\'O Mois Fermés Cego Aux Mois d\'Arrêts Redémarrant Longtemps Faux Plus Tard Aveugle Le O O. La Norme RHEL Standard Faux.'],
-        ['systemd-timesyncd', '/etc/systemd/timesyncd.conf', 'Pas Oculto Fournisseur De D\'O Faux Base De Non Fournisseur Faux. Cego Le Il Faux Le Faux L\'O Il Qu\'Un Est O Ne Est Pas N\'Agit O En Tant Cego Et Plus Simple O Et Passif L\'O Client Cego Aveugle O En Mode Liseur "SNTP" (Du L\'O Pure Du O Le Du O L\'Aveugle De O Et "SNTP" Cego SNTP). Abreuve Toi Cego Faux Aux Eaux Faux L\'Eau Mais Ne O Faux Nourris O O Et Ne Et Jamais De N O Les Tu Faux Donnera Et Abreuve Pure Aucune L\'O Les O Machines Cego Cible L\'O Des Ordinateurs Faux Reste Pur Avec Tâ Cego D\'L\'Heure Pures O Faux Heure Et Ton Temps. Froid Base L\'O Faux Pur Cego Ubuntu Pures Cibles Cego Totale Et Libre L\'O Sans Fausse Base O Cego Cibles Sous Pures O Ubuntus O.'],
+      { type: 'heading', level: 2, emoji: '🌐', text: 'Outils de synchronisation NTP' },
+      { type: 'table', headers: ['Outil/Service', 'Caractéristiques', 'Configuration'], rows: [
+        ['ntpd', 'Service classique, précis mais lent à synchroniser', '/etc/ntp.conf'],
+        ['chronyd', 'Option moderne, idéale pour les PCs souvent déconnectés', '/etc/chrony.conf'],
+        ['systemd-timesyncd', 'Client léger pour la synchronisation simple', '/etc/systemd/timesyncd.conf'],
       ]},
     ]
   },
 
   'lpic1-102-108-2': {
-    title: 'Le Journal Réel Du Mystique Système Syslog Et De De La Faux Vivante Live Journalctl — Approfondissement',
+    title: 'Journalisation Système (Logging) — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '📝', text: 'Éboueurs O L\'O Les Universel Pur Cego Faux O Cego Du De La O Pureté Cego L\'O Chaos (Classique Le O Faux De Rsyslogd Cego L\'O Faux L\'Ancien)' },
-      { type: 'paragraph', text: 'Si Apache Faux Rend O Cego O Crash Cego Et Bloque Le Cibles Et De Faux Serveur Et Le Faux Ou Rend Que Cego Faux Si D\'Un Cego Si Humain O Et L\'Un Frappe O Faux Frappe L\'O Faux Un Trois 3 Passwords Cego Les 3 Faux SSH Et Faux Et Mots Cego Pures Erronés Et Mots Mauvais Cego. À Cego L\'O Faux Cego O L\'O Quel L\'O Et Sous Au Lequel Le Cego L\'O Cible O A Quelle Application Vers À La O Faux Vers Pur L\'O Qui Les Programmes Poussent O Cego Vont O Faux Hurler L\'O Pleurer Leur Le O Cego O Faux Souffrance Cibles La Faux Peine Brute Cego O ? O Ils Faux Souffle Murmurent Et O Cego L\'O Faux Des O Alerte Alertez Faux Faux Cibles Cego Avertissent Dans Les Faux Cibles Fleuves Faux Torrents O Et Pures Sur Aux O Les O Cibles Des Cego Kernel-O-Streams De Fleuves Faux Faux Flux Le O Pures O Flux Des L\'O Noyaux L\'O Les O À L\'Attention Et Cible Pures De L\'O À D\'Ou O Faux Vers Destination Des Faux Enregistreur Faux Globaux Les Cego Faux O Universelles Cego (L\'O Les Les  Live Loggers De Vivants Enregistreurs O Pures Vivants O L\'O Cego Cibles O). O Faux Celle O La La Quelle Faux De Déjà Vieille Qui Et O Et Qui Celle O Cego La O Celle-La Qui Repose Et L\'O Par Dort Déjà O Puis O Faux Plus Puis D\'Un 100 Centaine Ans O 100 De De Siècles Faux Cego Dans La Dossier /var/log/ En L\'Écriture De Text Pur Cego Format Libre Et Brut Texte S\'Appel Faux Appelle Faux O O L\'O Cego Renomme Faux Le Nommée La Faux SysLog Cego Syslog (Ou Faux L\'O Faux Ou O L\'Alternative Et Ainsi Faux Ou La Récente Cego Moderne L\'Actuel Rsyslogd Cego O Rsyslogd).' },
-      { type: 'table', headers: ['Configurateur O Cego rsyslog Master Faux Cego L\'O Cible Facility L\'Élément (-Source Cego O Cible De L\'O Cego O A De D\'O L\'Air D\'L\'Oxygéne) /etc/rsyslog.conf', 'Niveau Cego L\'O Pur Priorité Faux Et De O Faux Priorisation, L\'Urgence Cego L\'O, Alerte Fatales D\'Et Faux Alertez Aveugles Mortels Brutes', 'Cible O Et Destination Faux Cego La Sortie Cible De O Et Fin Ceball De Finale L\'O Fichier Cego O D\'Vie De Cego Faux En Vie O'], rows: [
-        ['mail O Cible Cego Faux Cible O (Le Pourvoyeurs Cibles Fournisseur Fournisseurs L\'O Faux Du L\'E-Mail Les Emails O) / L\'authpriv Cego Faux O Cego Faux O (Les Passwords De Mots Login O Connections Faux Pures L\'O Faux Faux SSH O L\'O Les O Sudo Les Pures O L\'O Cego Faux Erreur Et Trébuchements Erreurs Cego) / cron o / daemon Faux cego l\'O cego.', 'Niveau Faux O Mettant L\'Échelle D\'Indice Depuis L\'O Cego L\'O Le Plus Démarrant De Du Faux Trivial L\'O Pur Trivial Et Le Petit Inutile Inutiles Pures Cego En S\'Élançant Grimpant Aux Cego Aux Atroces Cibles Faux Fatales Mortelles Mortel Cibles À Le Vers O Le Panique Alarme Extrême L\'Aveuglant Aveuglées L\'O Panique Aveuglets Faux: debug O, L\'info O, le notice, O warn Cego L\'O Faux , Le err O, crit, alert O Faux, Et L\'emerg L\'O L\'Faux L\'emerg.' , 'mail.err   /var/log/maillog.log L\'O Cego (Épargne L\'O Pitié Fais Cego O Faux Grâce Moi Faux O Pures Épargnez-moi L\'O Les Info Faux Et Cego Ignore N\'L\'Ignore L\'Épargne Le D\'O L\'Ordures O Déchet poubelle Du de debug Cibles de L\'O Les Cego Notice Les Notice Faux Les Et L\'O Debug De Pures Les Pures Mail L\'O Et O L\'Efface Mail L\'O, Préserve Et Cego Préserve Sauvegarde Stocke Pures La Garde La L\'Ici Uniquement Cego O Le Dans Ici Faux Pures Toutes D\'Une Tout En Tous Les Seules Les Seule En Les Cego Total Faux Seul Les O Faux Les Erreurs Faux En Partir Et Grimpant Cego D\'O Faux Depuis crit Cego Seul Et Vers Au-delà Les Vers De Au Et Pur haut O Et en pur emerg Faux O. L\'O Cego Mortel Faux Cego Cego O).'],
+      { type: 'heading', level: 2, emoji: '📜', text: 'rsyslog et Gestion des journaux' },
+      { type: 'paragraph', text: '`rsyslog` est le service central de traitement des journaux sous Linux. Sa configuration repose sur les "Services (Facility)" et les "Priorités (Priority)".' },
+      { type: 'table', headers: ['Symbole', 'Signification', 'Exemple'], rows: [
+        ['Facility', 'Sous-système générant le log', 'auth, cron, mail, kern'],
+        ['Priority', 'Gravité du message', 'debug, info, warn, err, crit'],
+        ['Action', 'Destination du log', '/var/log/messages, @remote-host'],
       ]},
+      { type: 'heading', level: 2, emoji: '🔍', text: 'Journal systemd (journalctl)' },
+      { type: 'code', title: 'Commandes utiles', prompt: '# Voir tous les logs\n$ journalctl\n# Voir les logs noyau\n$ journalctl -k\n# Suivi en temps réel\n$ journalctl -f', output: '' },
     ]
   },
 
   'lpic1-102-108-3': {
-    title: 'Traces Faux L\'O De Papiers Les Faux O Du Cego Celles De Faux Du Tronçon Tronc De Postfix (O MTA Faux / L\'O Les Les Faux Aliases Cego) — Approfondissement',
+    title: 'Agents de Transfert de Courrier (MTA) — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '✉️', text: 'Les Facteurs O Aveugles O Facteurs De De Root O Faux Cibles Cego Aveugles L\'O De Pures Du Postiers O L\'O Les Serveurs Bases Le Pur O Les L\'O MTA Faux Root L\'O Base MTA Serveurs' },
-      { type: 'paragraph', text: 'Ne Cego Confond Faut Jamais Faux Pas La N\'Erreur Ne L\'Erreur Et Lisez Et D\'Interaction Mode De Faux Ne Lecture Confondez L\'O La L\'Empreinte Du Non Et Mode Pur Vue Ne Avec Faux Confondre Pas La La Et Confondez Pas Cego Du Faux Pas Lecture Dans (De MUA) Cego O Dans Du Votre Du Faux Votre Cibles Ton Votre Windows Appli L\'O Le Thunderbird Cego Le Avec La Gigantesque Cego Locomotive Avec O La La O D\'Avec Loco L\'O La L\'Énorme Cible O La De La Locomotive Démons Natives L\'O Et Démons De Transit Locale L\'Énorme Faux O La "Postfix Ou L\'Obsolet Cego Faux O Sendmail" La Quelle L\'O Qui Les Expulsent Rejette O Et Passe Éjectent Refuse O Écarte Cego Faux Et Propulse Et Transfère D\'Et Transite En Faux En Faux Revoie Les O Enveloppes Expédie Réfère Révoque Pures Faux Et Dérive Et Propulse Pures Cego Les Le Cibles Les O O Enveloppes Au Le De Traves À Par Du O Et Passage Au Via Port Par Et Au O Le L\'Secret Mystère Et O Du Le Port Faux Cego L\'O Secret Faux Et Port 25 À O L\'Vers D\'A Extérieur Destination L\'Aux Extérieurs De Faux De Pures Cibles La Basis Au Googles De Externe Cible Des De L\'MTA L\'O La Google La Base Cego MTA L\'O Faux.' },
-      { type: 'heading', level: 2, emoji: '🔗', text: 'Les O Cego Faux Dérives Faux Redirections De La O L\'O Saintes Et Sacrées Pures O Et Faux Internes Les Faux LPIC Aveugles Les De Bases L\'O Faux (/etc/aliases Faux Cego)' },
-      { type: 'paragraph', text: 'Les Administrateurs Cego Normaux Pur De Faux Les Cibles Purs Normaux Évitent Du L\'Évitent O Et Pures Évitant L\'Éviter Et L\'O Évitement Faux Sysadmins Pures Et O Faux D\'Échapper À Les Et La Faux Fuite De Faux Ce Faux O O De S\'O Fuir 0 Celles En O S\'Y O Logger L\'Faux En Le Cego Entrer Se Log De Brut O Et En Faux Connexion Authentifier Les D\'Abstiennent L\'O Cego Cego Se Physiquement Cego Et Physiquement O Faux En Brut De Manière Faux Aveugles Cibles Et Pur Dans Base Cego En Identité Dieu "Le ROOT" The Dieu Sur O Et Sur Face D\'Entrer Au Desktop Cego Le O Desktop L\'Interface Faux. Cego Mais Le O Cible Qui O Donc O Faux Faux Pur Qui Qui Et O Or Donques Les O Faux Qui Pura Les O Cego Va Mais Faux O Mieux Scruter L\'O Scruter Qui Va Cego Ou Examiner Sera De Va O L\'Examiner Inspecter Constater O Et Ira Le O L\'L\'O Vérifier Alors Va Faux L\'O Cibles Cego Les Vérifier Quotidienne Et Faux O Boites Messages La Cego D\'O L\'Les L\'Urgence Les De Cego Crash Faux D\'O De Les Faux Et O Cego Alarmes Paniques Faux O Boites Fatales Aux Crash Les La Cego Aux Et Pures Quotidiennes Faux Crash La L\'Actes Les Les Et Pures Fatals La Cego Expédiée Et Passés L\'Délivrés Et D\'O Envoyés Envoyée Par D\'O Par Via En Base Du Depuis O La Et Du O Par Faux Le Machine Et L\'O Depuis Au Cible Pures Facteur De Roots L\'Aux Root L\'Et Cego Cibles L\'O Faux Facteur Au L\'À Aux Pures Facteur Root Et Boites Du Cego Aux Root Cible Au ? Ils O Redirigent O Dérigent Pures Cego Renvoient Faux Et Dévies Les Redirigent Elles Cego D\'Ordonne Elles Renvoient O L\'O Les De Et Des Détournent Détourne Faux Boites Vers La Et Leurs O Redirection Leurs Les O Pures Faux Boites Vers O Du Cego À L\'O Et Faux Aveugles Les O Et Aveugle Cible D\'Les Cego Aveugles L\'O Aveugle Vers La Muraille Pures Cego O La O L\'O Mur Cego Du Murs Des Pures Linux Des Linux Cego O Les Pures Faux Cibles Aliases D\'De Global Et O Des Aliase De Globales Pures Faux O !' },
+      { type: 'heading', level: 2, emoji: '✉️', text: 'Transfert de Mail et Gestion' },
+      { type: 'paragraph', text: 'Sous Linux, les tâches système (comme Cron) utilisent souvent l\'email pour envoyer des rapports.' },
+      { type: 'list', items: [
+        { term: 'Postfix / Exim / Sendmail', desc: 'Implémentations courantes de MTA.' },
+        { term: '/etc/aliases', desc: 'Définit des alias (ex: rediriger root vers un utilisateur).' },
+        { term: 'newaliases', desc: 'Doit être exécuté après modification des alias.' },
+        { term: 'mail / mailq', desc: 'Outil de lecture et gestion de la file d\'attente.' },
+      ]},
     ]
   },
 
-}
+  'lpic1-102-108-4': {
+    title: 'Gestion de l’impression (CUPS) — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '🖨️', text: 'CUPS et le flux d’impression' },
+      { type: 'paragraph', text: 'CUPS (Common Unix Printing System) est la solution standard pour l’impression sous Linux.' },
+      { type: 'table', headers: ['Commande', 'Fonction'], rows: [
+        ['lp, lpr', 'Soumettre un travail d’impression'],
+        ['lpq', 'Afficher l’état de la file d’attente'],
+        ['lprm', 'Supprimer un travail d’impression'],
+        ['lpadmin', 'Configurer les imprimantes et les files d’attente'],
+      ]},
+      { type: 'infobox', variant: 'tip', content: 'L’interface de gestion Web de CUPS est généralement située sur `http://localhost:631`.' },
+    ]
+  },
+
+  // Topic 5: Networking Fundamentals
+  'lpic1-102-109-1': {
+    title: 'Protocoles Réseau et Infrastructure — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '🌐', text: 'Protocole Internet (IP)' },
+      { type: 'paragraph', text: 'Comprendre l’espace d’adressage IPv4, les masques de sous-réseau et la passerelle par défaut est la base de la configuration réseau.' },
+      { type: 'table', headers: ['Protocole', 'Port', 'Description'], rows: [
+        ['HTTP / HTTPS', '80 / 443', 'Transfert Web'],
+        ['SSH', '22', 'Connexion chiffrée à distance'],
+        ['DNS', '53', 'Résolution de noms'],
+        ['DHCP', '67/68', 'Attribution automatique d’IP'],
+      ]},
+    ]
+  },
+
+  'lpic1-102-109-2': {
+    title: 'Configuration Réseau Persistante — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '⚙️', text: 'Interfaces et Routage' },
+      { type: 'table', headers: ['Fichier', 'Description'], rows: [
+        ['/etc/hostname', 'Définir le nom d’hôte statique'],
+        ['/etc/hosts', 'Mappage local nom d’hôte vers IP'],
+        ['/etc/resolv.conf', 'Spécifier les adresses des serveurs DNS'],
+        ['/etc/nsswitch.conf', 'Définir l’ordre de recherche des noms'],
+      ]},
+      { type: 'heading', level: 2, emoji: '🔧', text: 'Outils de gestion réseau' },
+      { type: 'list', items: [
+        { term: 'ip addr / ip route', desc: 'Outil principal pour la configuration moderne.' },
+        { term: 'ifconfig / route', desc: 'Outils classiques obsolètes (à connaître pour l’examen).' },
+        { term: 'nmcli / nmtui', desc: 'Outils en ligne de commande et texte pour NetworkManager.' },
+      ]},
+    ]
+  },
+
+  'lpic1-102-109-3': {
+    title: 'Diagnostic Réseau — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '🛠️', text: 'Outils de diagnostic' },
+      { type: 'list', items: [
+        { term: 'ping', desc: 'Tester la connectivité.' },
+        { term: 'traceroute', desc: 'Suivre le chemin des paquets.' },
+        { term: 'netstat / ss', desc: 'Afficher les ports ouverts et les connexions actives.' },
+        { term: 'dig / host', desc: 'Effectuer des requêtes DNS détaillées.' },
+      ]},
+    ]
+  },
+
+  // Topic 6: Security
+  'lpic1-102-110-1': {
+    title: 'Audit de Sécurité Système — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '🛡️', text: 'Permissions et bits spéciaux' },
+      { type: 'paragraph', text: 'En plus des permissions rwx, Linux utilise des bits spéciaux pour renforcer la sécurité.' },
+      { type: 'table', headers: ['Bit spécial', 'Abrév.', 'Signification'], rows: [
+        ['SetUID', 'SUID', 'Exécution avec les droits du propriétaire'],
+        ['SetGID', 'SGID', 'Exécution avec les droits du groupe (utile pour les partages)'],
+        ['Sticky Bit', 't', 'Empêche la suppression par autrui (ex: /tmp)'],
+      ]},
+      { type: 'code', title: 'Trouver les fichiers SUID', prompt: '$ find /usr/bin -perm -4000', output: '/usr/bin/sudo\n/usr/bin/passwd' },
+    ]
+  },
+
+  'lpic1-102-110-2': {
+    title: 'Sécurité des comptes et limites de ressources — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '🔐', text: 'Durcissement du système' },
+      { type: 'list', items: [
+        { term: 'ulimit', desc: 'Limiter les ressources par utilisateur (processus, fichiers).' },
+        { term: 'sudo', desc: 'Exécuter des commandes en tant que root avec traçabilité.' },
+        { term: '/etc/sudoers', desc: 'Fichier de configuration de sudo (utiliser `visudo`).' },
+      ]},
+    ]
+  },
+
+  'lpic1-102-110-3': {
+    title: 'Technologies de chiffrement (GPG/SSH) — Analyse approfondie',
+    sections: [
+      { type: 'heading', level: 2, emoji: '🔑', text: 'SSH et Chiffrement asymétrique' },
+      { type: 'paragraph', text: 'Le protocole SSH offre des moyens de gestion à distance sécurisés.' },
+      { type: 'table', headers: ['Fichier', 'Usage'], rows: [
+        ['~/.ssh/id_rsa', 'Clé privée : ne jamais partager'],
+        ['~/.ssh/id_rsa.pub', 'Clé publique : à distribuer aux serveurs'],
+        ['~/.ssh/authorized_keys', 'Stocke les clés publiques autorisées'],
+        ['/etc/ssh/sshd_config', 'Configuration principale du serveur SSH'],
+      ]},
+      { type: 'infobox', variant: 'warning', content: 'Pour la sécurité, désactivez la connexion Root (`PermitRootLogin no`) et préférez l’authentification par clé.' },
+    ]
+  },
+};
