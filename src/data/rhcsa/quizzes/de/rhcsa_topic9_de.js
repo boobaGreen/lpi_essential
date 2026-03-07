@@ -1,4 +1,4 @@
-// RHCSA Quiz — Topic 9: SELinux and Security (Deutsch) — 20 questions
+// RHCSA Quiz — Topic 9: SELinux and Security (Deutsch) — 22 questions
 
 export const rhcsaTopic9QuizzesDE = [
   // ─── SELinux Modes ───
@@ -204,5 +204,24 @@ export const rhcsaTopic9QuizzesDE = [
     ],
     correct: 1,
     explanation: 'Der unantastbare `httpd_enable_homedirs`. Flips den Schalter und Apache darf endlich jenseits der /var/www/ auch fröhlich in private Home-Stuben vordringen um Daten zu saugen.',
+  },
+  {
+    id: 'q-rhcsa-9-x-006', lessonId: 'rhcsa-9-1', topicId: 9, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Typ von SELinux-Policy wird auf RHEL standardmäßig verwendet?',
+    options: ['minimum', 'mls', 'strict', 'targeted'],
+    correct: 3,
+    explanation: 'RHEL nutzt die "targeted" Policy: Sie schützt spezifische Daemons/Prozesse. "mls" ist für Hochsicherheitsumgebungen.',
+  },
+  {
+    id: 'q-rhcsa-9-x-007', lessonId: 'rhcsa-9-2', topicId: 9, difficulty: 'hard', type: 'mcq',
+    question: 'Eine mit mv verschobene Datei behält ihren ursprünglichen SELinux-Kontext. Wie korrigieren Sie den Kontext korrekt?',
+    options: [
+      'mv ändert den Kontext niemals',
+      'Die Datei behält den alten Kontext; verwenden Sie restorecon zur Korrektur',
+      'mv aktualisiert den Kontext automatisch',
+      'Sie müssen die Datei löschen und neu erstellen',
+    ],
+    correct: 1,
+    explanation: 'mv behält den SELinux-Kontext der Quelle, der am Zielort möglicherweise nicht korrekt ist. restorecon korrigiert ihn.',
   },
 ]

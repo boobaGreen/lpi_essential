@@ -140,4 +140,16 @@ export const ui = {
   'course_desc_lpic1-102': "Shell-Scripting, Schnittstellen, SQL-Datenbanken, Networking, Sicherheit.",
   'course_desc_lpic-2': "Fortgeschrittenes Linux: Kernel, Speicher, fortgeschrittenes Networking, Server.",
   'course_desc_rhcsa': "Red Hat Certified System Administrator: Speicher, Netzwerk, SELinux, Container.",
+  // Exam Info Fallbacks
+  'exam_info_lpi-010': "40 Fragen • 60 Minuten",
+  'exam_info_lpic1-101': "60 Fragen • 90 Minuten",
+  'exam_info_lpic1-102': "60 Fragen • 90 Minuten",
+  'exam_info_lpic-2': "60 Fragen • 90 min (Prüfungen 201 & 202)",
+  'exam_info_rhcsa': "50 Fragen • 60 Minuten",
+  // Exam Topics Titles
+  'exam_topics_lpi-010': "Die 5 Prüfungsthemen",
+  'exam_topics_lpic1-101': "Die 6 Prüfungsthemen",
+  'exam_topics_lpic1-102': "Die 6 Prüfungsthemen",
+  'exam_topics_lpic-2': "Die 13 Prüfungsthemen",
+  'exam_topics_rhcsa': "Die 10 Prüfungsthemen",
 }

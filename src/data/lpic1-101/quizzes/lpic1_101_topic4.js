@@ -4,35 +4,35 @@
 export const lpic1_101_topic4Quizzes = [
   // ─── 104.1 Partizioni e Filesystem (10 domande) ───
   {
-    id: 'q-lpic1-104-1-001', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'easy', type: 'mcq',
+    id: 'q-lpic1-101-4-001', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'easy', type: 'mcq',
     question: 'Quale comando elenca le partizioni di un disco?',
     options: ['lsblk', 'fdisk -l', 'df', 'lsblk e fdisk -l'],
     correct: 3,
     explanation: 'Sia lsblk che fdisk -l mostrano le partizioni. lsblk in formato ad albero, fdisk -l con dettagli tecnici.',
   },
   {
-    id: 'q-lpic1-104-1-002', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'easy', type: 'mcq',
+    id: 'q-lpic1-101-4-002', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'easy', type: 'mcq',
     question: 'Quale comando crea un filesystem ext4 su una partizione?',
     options: ['format /dev/sda1', 'mkfs.ext4 /dev/sda1', 'fsck.ext4 /dev/sda1', 'mount ext4 /dev/sda1'],
     correct: 1,
     explanation: 'mkfs.ext4 (make filesystem) formatta una partizione con il filesystem ext4.',
   },
   {
-    id: 'q-lpic1-104-1-003', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    id: 'q-lpic1-101-4-003', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
     question: 'Quale strumento è usato per partizionare dischi con tabella GPT?',
     options: ['fdisk (solo MBR)', 'gdisk o parted', 'mkfs', 'lvm'],
     correct: 1,
     explanation: 'gdisk è specifico per GPT, parted supporta sia MBR che GPT. fdisk supporta GPT nelle versioni recenti.',
   },
   {
-    id: 'q-lpic1-104-1-004', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    id: 'q-lpic1-101-4-004', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
     question: 'Quale comando crea una partizione swap e la prepara per l\'uso?',
     options: ['mkfs.swap', 'mkswap /dev/sda2', 'swapon /dev/sda2', 'mkswap poi swapon'],
     correct: 3,
     explanation: 'mkswap prepara la partizione come swap, swapon la attiva. Entrambi servono. La riga in /etc/fstab la rende permanente.',
   },
   {
-    id: 'q-lpic1-104-1-005', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'hard', type: 'mcq',
+    id: 'q-lpic1-101-4-005', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'hard', type: 'mcq',
     question: 'Qual è la differenza tra fdisk e parted?',
     options: [
       'fdisk opera in memoria e scrive solo su "w", parted applica immediatamente le modifiche',
@@ -44,28 +44,28 @@ export const lpic1_101_topic4Quizzes = [
     explanation: 'fdisk bufferizza le modifiche in memoria e le scrive con "w". parted applica le operazioni immediatamente sul disco.',
   },
   {
-    id: 'q-lpic1-104-1-006', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'easy', type: 'mcq',
+    id: 'q-lpic1-101-4-006', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'easy', type: 'mcq',
     question: 'Quale filesystem è il più comune su Linux per partizioni standard?',
     options: ['NTFS', 'FAT32', 'ext4', 'ReiserFS'],
     correct: 2,
     explanation: 'ext4 (Fourth Extended Filesystem) è il filesystem più usato su Linux: journaling, 1 exabyte max, performante.',
   },
   {
-    id: 'q-lpic1-104-1-007', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    id: 'q-lpic1-101-4-007', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
     question: 'Quale filesystem è il default su Red Hat/RHEL/Fedora?',
     options: ['ext4', 'xfs', 'btrfs', 'zfs'],
     correct: 1,
     explanation: 'XFS è il filesystem predefinito su RHEL e Fedora per le sue prestazioni su grandi file e scalabilità.',
   },
   {
-    id: 'q-lpic1-104-1-008', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    id: 'q-lpic1-101-4-008', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
     question: 'Quale comando mostra l\'UUID di una partizione?',
     options: ['blkid', 'lsblk -f', 'blkid e lsblk -f', 'fdisk -l'],
     correct: 2,
     explanation: 'Sia blkid che lsblk -f mostrano l\'UUID. L\'UUID è usato in /etc/fstab per un montaggio affidabile.',
   },
   {
-    id: 'q-lpic1-104-1-009', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'hard', type: 'mcq',
+    id: 'q-lpic1-101-4-009', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'hard', type: 'mcq',
     question: 'Quale vantaggio ha il journaling in un filesystem?',
     options: [
       'Maggiore velocità di scrittura',
@@ -77,7 +77,7 @@ export const lpic1_101_topic4Quizzes = [
     explanation: 'Il journaling registra le operazioni prima di eseguirle. In caso di crash, il journal permette un recovery rapido senza fsck completo.',
   },
   {
-    id: 'q-lpic1-104-1-010', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    id: 'q-lpic1-101-4-010', lessonId: 'lpic1-104-1-1', topicId: 4, difficulty: 'medium', type: 'mcq',
     question: 'Quale comando crea un filesystem XFS?',
     options: ['mkfs.ext4', 'mkfs.xfs', 'xfs_mkfs', 'format -t xfs'],
     correct: 1,

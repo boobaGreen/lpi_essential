@@ -28,28 +28,31 @@ export const lpic1_102_extendedContent_fr = {
         ['HISTFILESIZE', 'Nombre de lignes sauvegardées sur le disque', '2000'],
         ['HISTCONTROL', 'Contrôle l\'enregistrement (ex: ignoreboth)', 'ignoreboth'],
       ]},
-      { type: 'infobox', variant: 'tip', content: 'Utilisez `source ~/.bashrc` ou `. ~/.bashrc` pour appliquer immédiatement les modifications sans redémarrer le terminal.' },
+      { type: 'code', title: 'Définition des variables et alias', prompt: '# Rendre un alias permanent (dans ~/.bashrc)\nalias update="sudo apt update && sudo apt upgrade"\n\n# Modifier le PATH (dans ~/.profile o ~/.bashrc)\nexport PATH="$PATH:$HOME/bin"\n\n# Appliquer les changements immédiatement\n$ source ~/.bashrc\n# ou alternativement :\n$ . ~/.bashrc', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'Rappel : pour recharger un fichier de configuration dans le shell actuel, utilisez `source fichier` ou `. fichier`. Les fichiers ~/.bash_profile et ~/.profile sont lus UNIQUEMENT lors du login (ex: via ssh), alors que ~/.bashrc est lu à l\'ouverture d\'un nouveau terminal (non-login).' },
     ]
   },
 
   'lpic1-102-105-2': {
     title: 'Scripts Bash — Bases et Structures — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '📜', text: 'Shebang et Structure de Script' },
-      { type: 'paragraph', text: 'Tout script Bash doit commencer par le Shebang (`#!`) pour indiquer l\'interpréteur à utiliser.' },
-      { type: 'code', title: 'Première ligne', prompt: '#!/bin/bash', output: '' },
-      { type: 'table', headers: ['Variable Spéciale', 'Signification'], rows: [
-        ['$0', 'Nom du script lui-même'],
-        ['$1, $2...', 'Arguments passés en ligne de commande'],
+      { type: 'code', title: 'Exemple de script de base', prompt: '#!/bin/bash\n# Ceci est un commentaire\n\necho "Début du script"\n\nNAME="Linux"\necho "Système : $NAME"\n\n# Exécution :\n# 1. Donner les permissions d\'exécution : chmod +x script.sh\n# 2. Exécuter : ./script.sh', output: '' },
+      { type: 'heading', level: 2, emoji: '🔢', text: 'Variables Spéciales et Arguments' },
+      { type: 'table', headers: ['Variable', 'Signification'], rows: [
+        ['$0', 'Nom du script lui-même (ex: ./script.sh)'],
+        ['$1, $2... $9', 'Arguments passés au script (paramètre 1, 2, etc.)'],
         ['$#', 'Nombre total d\'arguments passés'],
-        ['$@', 'Liste de tous les arguments (chaque argument est entre guillemets)'],
-        ['$*', 'Tous les arguments sous forme d\'une seule chaîne'],
-        ['$?', 'Code de retour de la dernière commande (0 = Succès)'],
+        ['$@', 'Tous les arguments individuellement ("$1" "$2" "$3")'],
+        ['$*', 'Tous les arguments sous forme d\'une seule chaîne ("$1 $2 $3")'],
+        ['$?', 'Code de retour de la dernière commande (0=succès, >0=erreur)'],
         ['$$', 'PID du processus actuel'],
+        ['$!', 'PID du dernier job en arrière-plan'],
       ]},
-      { type: 'heading', level: 2, emoji: '🔄', text: 'Contrôle de flux : If, Case et Boucles' },
-      { type: 'code', title: 'Exemples de structures', prompt: '# Bloc If\nif [ $# -gt 0 ]; then\n  echo "Arguments: $#"\nfi\n\n# Boucle For\nfor i in {1..5}; do\n  echo "Compteur: $i"\ndone', output: '' },
-      { type: 'infobox', variant: 'exam', content: 'Rappel : En Shell, `0` signifie succès. Toute valeur non-nulle (1-255) indique une erreur ou un cas spécifique.' },
+      { type: 'infobox', variant: 'warning', title: 'Valeurs de retour ($?)', content: 'Sous Linux et Bash, un code de sortie 0 signifie que la commande a RÉUSSI. Tout autre nombre (ex: 1, 2, 127) indique une ERREUR. C\'est l\'opposé du fonctionnement des booléens dans beaucoup de langages de programmation.' },
+      { type: 'code', title: 'Structures conditionnelles : if / case', prompt: '# Structure if-then-elif-else-fi\nif [ -f "/etc/passwd" ]; then\n  echo "Le fichier existe"\nelif [ -d "/etc" ]; then\n  echo "C\'est un répertoire"\nelse\n  echo "Non trouvé"\nfi\n\n# Structure case (switch)\ncase "$1" in\n  start)\n    echo "Démarrage du service..."\n    ;;\n  stop)\n    echo "Arrêt du service..."\n    ;;\n  *)\n    echo "Usage: $0 {start|stop}"\n    exit 1\n    ;;\nesac', output: '' },
+      { type: 'heading', level: 2, emoji: '🔄', text: 'Boucles : for et while' },
+      { type: 'code', title: 'Structures itératives', prompt: '# Boucle for - sur une liste\nfor FILE in *.txt; do\n  echo "Traitement de $FILE"\n  cp "$FILE" "$FILE.bak"\ndone\n\n# Boucle while - tant que la condition est vraie\nCOUNTER=1\nwhile [ $COUNTER -le 5 ]; do\n  echo "Boucle $COUNTER"\n  COUNTER=$((COUNTER + 1))\ndone\n\n# Exécution de commande (Command Substitution)\nDATE=$(date +%Y-%m-%d)\n# syntaxe équivalente classique : DATE=`date +%Y-%m-%d`', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'L\'examen LPIC-1 attend que vous sachiez utiliser le construit seq dans une boucle for (ex: for i in $(seq 1 10)), comprendre la différence entre "$@" (arguments en entités séparées) et "$*" (chaîne unique), et reconnaître les comparateurs numériques (-eq, -lt) vs comparateurs de chaînes (=, <).' },
     ]
   },
 
@@ -61,30 +64,53 @@ export const lpic1_102_extendedContent_fr = {
       { type: 'paragraph', text: 'L\'interface graphique Linux repose sur un serveur d\'affichage pour gérer les fenêtres et les entrées. X11 est l\'ancien standard, tandis que Wayland est le remplaçant moderne.' },
       { type: 'comparison', left: {
         title: 'X Window System (X11)',
-        items: ['Architecture Client-Serveur', 'Transparence réseau (X11 Forwarding)', 'Configuration via xorg.conf', 'Sécurité moins rigoureuse']
+        items: ['Architecture client-serveur', 'Les applications communiquent avec le serveur X', 'Permet le déport d\'affichage via SSH (X11 Forwarding)', 'Ancien et complexe', 'Menus et fenêtres gérés par le Window Manager', 'Clients historiques : xhost, xauth']
       }, right: {
         title: 'Wayland',
-        items: ['Plus sécurisé et performant', 'L\'application dessine directement', 'Le compositeur gère tout', 'Remplaçant par défaut actuel']
+        items: ['Protocole moderne et plus sécurisé', 'Les apps dessinent directement dans le tampon', 'Composition intégrée au serveur', 'Latence et tearing réduits', 'Remplacera X11 (par défaut sur Fedora/Ubuntu)', 'XWayland pour les apps héritées']
       }},
-      { type: 'table', headers: ['Fichier/Commande', 'Usage'], rows: [
-        ['/etc/X11/xorg.conf.d/', 'Répertoire de configuration modulaire moderne'],
-        ['/var/log/Xorg.0.log', 'Fichier journal pour le diagnostic'],
-        ['DISPLAY', 'Variable indiquant l\'affichage Linux (ex: :0.0)'],
-        ['xhost / xauth', 'Outils de gestion dles accès X11'],
+      { type: 'heading', level: 2, emoji: '⚙️', text: 'Configuration X11' },
+      { type: 'table', headers: ['Fichier / Répertoire', 'Fonction'], rows: [
+        ['/etc/X11/xorg.conf', 'Fichier de configuration monolithique traditionnel (désormais optionnel)'],
+        ['/etc/X11/xorg.conf.d/', 'Répertoire pour des extraits de configuration modulaires'],
+        ['~/.xsession', 'Script utilisateur exécuté au démarrage via le Display Manager'],
+        ['~/.Xresources', 'Gérer les personnalisations des programmes X (couleurs, polices)'],
+        ['/usr/share/X11/', 'Données système pour le serveur X11'],
+        ['/var/log/Xorg.0.log', 'Journal principal du serveur X11 pour le dépannage'],
       ]},
+      { type: 'heading', level: 2, emoji: '🌐', text: 'Accès à distance et X11 Forwarding' },
+      { type: 'paragraph', text: 'L\'architecture client-serveur de X11 vous permet d\'exécuter une application graphique sur un serveur distant mais de l\'afficher sur votre moniteur local, via SSH.' },
+      { type: 'code', title: 'X11 Forwarding', prompt: '# Sur le client (PC local) activez le transfert X11\n$ ssh -X user@remote-server\n# ou -Y pour l\'activer en ignorant les contrôles de sécurité\n$ ssh -Y user@remote-server\n\n# Exécutez le programme distant qui s\'ouvrira sur l\'affichage local\nuser@remote:~$ firefox &', output: '' },
+      { type: 'table', headers: ['Commande d\'accès', 'Action'], rows: [
+        ['xhost +IP', 'Ancien mode peu sûr : autorise l\'IP à se connecter à l\'affichage X local'],
+        ['DISPLAY', 'Variable d\'environnement définissant le moniteur à utiliser (ex: :0.0)'],
+        ['VNC / RDP', 'Protocoles modernes pour l\'accès au bureau à distance (Wayland et X11)'],
+        ['SPICE', 'Protocole pour gérer les machines virtuelles KVM graphiquement'],
+      ]},
+      { type: 'infobox', variant: 'exam', content: 'Le LPIC-1 nécessite de distinguer le système X Window (architecture), les fichiers clés comme `xorg.conf.d`, le journal de débogage `Xorg.0.log`, et de comprendre le concept de variable display comme `DISPLAY=:0` et l\'option ssh `-X`.' },
     ]
   },
 
   'lpic1-102-106-2': {
     title: 'Accessibilité (A11y) — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '👁️', text: 'Assistance Visuelle et Motrice' },
-      { type: 'list', items: [
-        { term: 'Orca', desc: 'Lecteur d\'écran (Screen Reader) pour les malvoyants.' },
-        { term: 'BRLTTY', desc: 'Démon de support pour les terminaux Braille.' },
-        { term: 'Sticky Keys', desc: 'Touches rémanentes : permet de presser Ctrl+C sans appui simultané.' },
-        { term: 'Mouse Keys', desc: 'Utilisation du pavé numérique pour déplacer la souris.' },
+      { type: 'heading', level: 2, emoji: '👁️', text: 'Fonctionnalités d\'accessibilité visuelle' },
+      { type: 'paragraph', text: 'Les environnements de bureau Linux proposent des fonctionnalités pour aider les utilisateurs présentant des déficiences visuelles, auditives ou motrices. Ces outils sont connus sous le nom d\'a11y (Accessibility).' },
+      { type: 'table', headers: ['Condition physique', 'Outil logiciel', 'But et fonction'], rows: [
+        ['Basse vision', 'Orca', 'Lecteur d\'écran (lit l\'écran avec synthèse vocale dans GNOME)'],
+        ['Basse vision', 'Thème à haut contraste', 'Thème à contraste élevé (blanc sur noir / texte large)'],
+        ['Basse vision', 'Loupe / KMagnifier', 'Outil de grossissement de l\'écran'],
+        ['Cécité', 'BRLTTY', 'Démon pour gérer les afficheurs Braille en mode texte/console uniquement'],
       ]},
+      { type: 'heading', level: 2, emoji: '⌨️', text: 'Accessibilité motrice (Clavier)' },
+      { type: 'list', items: [
+        { term: 'Sticky Keys', desc: 'Permet de presser des combinaisons comme Ctrl+Alt+Suppr séquentiellement (l\'une après l\'autre) pour ceux qui ne peuvent pas presser plusieurs touches simultanément.' },
+        { term: 'Slow Keys', desc: 'Prévient les frappes accidentelles en exigeant qu\'une touche soit maintenue enfoncée pendant une fraction de seconde avant d\'être acceptée.' },
+        { term: 'Bounce Keys', desc: 'Ignore les pressions rapides et répétées sur une même touche. Utile pour les tremblements.' },
+        { term: 'Mouse Keys', desc: 'Permet de déplacer le curseur de la souris à l\'aide du pavé numérique.' },
+        { term: 'Clavier visuel', desc: 'Clavier virtuel à l\'écran contrôlable avec une souris ou des systèmes de suivi oculaire.' },
+      ]},
+      { type: 'infobox', variant: 'tip', title: 'Outils d\'assistance', content: 'Rappelez-vous les associations : Orca = Lecteur d\'écran. BRLTTY = Braille. Sticky/Slow/Bounce Keys = pour les limitations de mouvement.' },
     ]
   },
 
@@ -124,25 +150,45 @@ export const lpic1_102_extendedContent_fr = {
       { type: 'heading', level: 2, emoji: '📅', text: 'Tâches Ponctuelles : At' },
       { type: 'paragraph', text: 'Utilisez `at` pour programmer une exécution unique dans le futur.' },
       { type: 'code', title: 'Exemple At', prompt: '$ at 22:00\nat> reboot\nat> <Ctrl+D>', output: '' },
+      { type: 'table', headers: ['Fichier/Commande', 'Usage'], rows: [
+        ['at -l / atq', 'Lister les tâches en attente'],
+        ['at -r / atrm', 'Supprimer une tâche en attente'],
+        ['/etc/at.allow', 'Utilisateurs autorisés à utiliser at'],
+        ['/etc/at.deny', 'Utilisateurs non autorisés à utiliser at'],
+      ]},
+      { type: 'infobox', variant: 'exam', content: 'Retenez la syntaxe de la crontab (min heure jour mois jour_semaine commande) et la différence entre les crontabs utilisateur (`crontab -e`) et système (`/etc/crontab`, `/etc/cron.d/*`).' },
     ]
   },
 
   'lpic1-102-107-3': {
     title: 'Localisation et Internationalisation — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🌍', text: 'Variables de Localisation' },
-      { type: 'table', headers: ['Variable', 'Rôle'], rows: [
-        ['LANG', 'Réglage par défaut (ex: fr_FR.UTF-8)'],
-        ['LC_ALL', 'Écrase toutes les autres variables LC_*'],
-        ['LC_TIME', 'Format de date et heure'],
+      { type: 'heading', level: 2, emoji: '🌍', text: 'Variables de Locale (LC_*)' },
+      { type: 'table', headers: ['Variable', 'Description'], rows: [
+        ['LANG', 'Valeur par défaut pour toutes les catégories si non définies'],
+        ['LC_CTYPE', 'Classification des caractères et encodage (ex: UTF-8)'],
+        ['LC_TIME', 'Format de date et d\'heure'],
+        ['LC_NUMERIC', 'Format des nombres (séparateur décimal)'],
+        ['LC_MONETARY', 'Symbole monétaire et formatage'],
         ['LC_MESSAGES', 'Langue des messages d\'erreurs et menus'],
+        ['LC_ALL', 'L\'emporte sur toutes les autres variables locales'],
       ]},
+      { type: 'heading', level: 2, emoji: '🔤', text: 'Encodage : ASCII vs UTF-8' },
+      { type: 'comparison', left: {
+        title: 'ASCII',
+          items: ['7 bits par caractère', 'Uniquement l\'alphabet anglais de base', '128 caractères maximum', 'Ancien standard']
+      }, right: {
+        title: 'UTF-8 (Unicode)',
+          items: ['Variable (1 à 4 octets)', 'Supporte toutes les langues et emojis', 'Compatible avec ASCII', 'Standard moderne universel']
+      }},
       { type: 'heading', level: 2, emoji: '⚙️', text: 'Utilitaires' },
       { type: 'list', items: [
         { term: 'locale', desc: 'Affiche les réglages actuels.' },
         { term: 'localectl', desc: 'Outil systemd pour changer la langue ou le clavier.' },
         { term: 'iconv', desc: 'Convertit un fichier d\'un encodage à un autre (ex: ISO to UTF-8).' },
       ]},
+      { type: 'code', title: 'Commandes de localisation', prompt: '# Afficher la configuration actuelle\n$ locale\n\n# Lister toutes les locales installées\n$ locale -a\n\n# Changer temporairement la langue\n$ export LANG=en_US.UTF-8\n\n# Configurer le fuseau horaire (interactivement)\n$ tzselect', output: '' },
+      { type: 'infobox', variant: 'tip', title: 'I18n vs L10n', content: 'I18n (Internationalisation) prépare le logiciel pour plusieurs langues. L10n (Localisation) est l\'adaptation réelle à une région spécifique.' },
     ]
   },
 
@@ -186,13 +232,15 @@ export const lpic1_102_extendedContent_fr = {
     title: 'Agents de Transfert de Courrier (MTA) — Analyse approfondie',
     sections: [
       { type: 'heading', level: 2, emoji: '✉️', text: 'Transfert de Mail et Gestion' },
-      { type: 'paragraph', text: 'Sous Linux, les tâches système (comme Cron) utilisent souvent l\'email pour envoyer des rapports.' },
-      { type: 'list', items: [
-        { term: 'Postfix / Exim / Sendmail', desc: 'Implémentations courantes de MTA.' },
-        { term: '/etc/aliases', desc: 'Définit des alias (ex: rediriger root vers un utilisateur).' },
-        { term: 'newaliases', desc: 'Doit être exécuté après modification des alias.' },
-        { term: 'mail / mailq', desc: 'Outil de lecture et gestion de la file d\'attente.' },
+      { type: 'paragraph', text: 'Les MTA (Mail Transfer Agents) sont responsables de l\'envoi et du routage des emails. Sur Linux, les plus courants sont Postfix, Exim et Sendmail.' },
+      { type: 'table', headers: ['Composant', 'Description'], rows: [
+        ['/etc/aliases', 'Définit les redirections d\'emails (ex: root vers un utilisateur réel)'],
+        ['newaliases', 'Commande à lancer après avoir modifié /etc/aliases pour appliquer les changements'],
+        ['mailq / postqueue -p', 'Affiche la file d\'attente des emails sortants'],
+        ['~/.forward', 'Fichier utilisateur pour rediriger ses propres emails'],
       ]},
+      { type: 'code', title: 'Tester l\'envoi de mail', prompt: '# Envoyer un mail rapide par la console\n$ echo "Test body" | mail -s "Sujet" user@example.com\n\n# Vérifier la file d\'attente\n$ mailq', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'L\'examen porte sur les fichiers `/etc/aliases`, l\'importance de lancer `newaliases`, et la connaissance des grands noms des MTA.' },
     ]
   },
 
@@ -208,6 +256,20 @@ export const lpic1_102_extendedContent_fr = {
         ['lpadmin', 'Configurer les imprimantes et les files d’attente'],
       ]},
       { type: 'infobox', variant: 'tip', content: 'L’interface de gestion Web de CUPS est généralement située sur `http://localhost:631`.' },
+      { type: 'heading', level: 2, emoji: '📄', text: 'Fichiers de configuration et de spool' },
+      { type: 'table', headers: ['Fichier/Répertoire', 'Description'], rows: [
+        ['/etc/cups/cupsd.conf', 'Fichier de configuration principal du démon CUPS'],
+        ['/etc/cups/printers.conf', 'Définit les imprimantes configurées et leurs options'],
+        ['/var/spool/cups/', 'Répertoire de spool où les travaux d\'impression sont stockés temporairement'],
+        ['/usr/share/cups/model/', 'Contient les fichiers PPD (PostScript Printer Description)'],
+      ]},
+      { type: 'heading', level: 2, emoji: '🛠️', text: 'Commandes d\'administration CUPS' },
+      { type: 'list', items: [
+        { term: 'cupsenable / cupsdisable', desc: 'Active ou désactive une imprimante.' },
+        { term: 'cupsaccept / cupsreject', desc: 'Accepte ou rejette les travaux d\'impression pour une file d\'attente.' },
+        { term: 'cancel', desc: 'Annule un travail d\'impression par son ID.' },
+      ]},
+      { type: 'infobox', variant: 'exam', content: 'Le LPIC-1 se concentre sur les commandes de base (`lp`, `lpq`, `lprm`) et la compréhension de l\'architecture CUPS, y compris l\'accès via l\'interface web.' },
     ]
   },
 
@@ -215,46 +277,72 @@ export const lpic1_102_extendedContent_fr = {
   'lpic1-102-109-1': {
     title: 'Protocoles Réseau et Infrastructure — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🌐', text: 'Protocole Internet (IP)' },
-      { type: 'paragraph', text: 'Comprendre l’espace d’adressage IPv4, les masques de sous-réseau et la passerelle par défaut est la base de la configuration réseau.' },
-      { type: 'table', headers: ['Protocole', 'Port', 'Description'], rows: [
-        ['HTTP / HTTPS', '80 / 443', 'Transfert Web'],
-        ['SSH', '22', 'Connexion chiffrée à distance'],
-        ['DNS', '53', 'Résolution de noms'],
-        ['DHCP', '67/68', 'Attribution automatique d’IP'],
+      { type: 'paragraph', text: 'Comprendre TCP/IP est essentiel pour tout administrateur Linux. Voici les concepts clés abordés dans l\'examen.' },
+      { type: 'comparison', left: {
+        title: 'IPv4',
+        items: ['32 bits (ex: 192.168.1.1)', 'Environ 4 milliards d\'adresses (épuisement)', 'Configuration via DHCP ou statique', 'Format décimal à points']
+      }, right: {
+        title: 'IPv6',
+        items: ['128 bits (ex: 2001:db8::1)', 'Quasiment illimité', 'Auto-configuration native (SLAAC)', 'Format hexadécimal avec deux-points']
+      }},
+      { type: 'heading', level: 2, emoji: '🔌', text: 'Ports et Services Communs' },
+      { type: 'table', headers: ['Port', 'Protocole', 'Service'], rows: [
+        ['21', 'FTP', 'Transfert de fichiers'],
+        ['22', 'SSH', 'Accès sécurisé à distance'],
+        ['25', 'SMTP', 'Envoi d\'emails'],
+        ['53', 'DNS', 'Résolution de noms'],
+        ['80 / 443', 'HTTP / HTTPS', 'Web (non-sécurisé / sécurisé)'],
+        ['123', 'NTP', 'Synchronisation de l\'heure'],
       ]},
+      { type: 'heading', level: 2, emoji: '📦', text: 'TCP vs UDP' },
+      { type: 'comparison', left: {
+        title: 'TCP (Connection-oriented)',
+        items: ['Fiable (vérifie la réception)', 'Contrôle de flux', 'Plus lent (overhead)', 'Utilisé pour : Web, SSH, Mail']
+      }, right: {
+        title: 'UDP (Connectionless)',
+        items: ['Rapide (pas de vérification)', 'Léger', 'Pas de garantie d\'ordre', 'Utilisé pour : Streaming, DNS, DHCP']
+      }},
+      { type: 'infobox', variant: 'tip', title: 'Le masque de sous-réseau', content: 'Le masque (ex: 255.255.255.0 ou /24) définit la partie "réseau" et la partie "hôte" de l\'adresse IP.' },
     ]
   },
 
   'lpic1-102-109-2': {
     title: 'Configuration Réseau Persistante — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '⚙️', text: 'Interfaces et Routage' },
-      { type: 'table', headers: ['Fichier', 'Description'], rows: [
-        ['/etc/hostname', 'Définir le nom d’hôte statique'],
-        ['/etc/hosts', 'Mappage local nom d’hôte vers IP'],
-        ['/etc/resolv.conf', 'Spécifier les adresses des serveurs DNS'],
-        ['/etc/nsswitch.conf', 'Définir l’ordre de recherche des noms'],
+      { type: 'paragraph', text: 'Sur Linux, la configuration réseau peut être gérée par des fichiers texte ou des utilitaires comme NetworkManager.' },
+      { type: 'table', headers: ['Fichier', 'Fonction'], rows: [
+        ['/etc/hostname', 'Nom de la machine'],
+        ['/etc/hosts', 'Mappage local statique IP <-> Noms'],
+        ['/etc/resolv.conf', 'Définit les serveurs DNS à interroger'],
+        ['/etc/nsswitch.conf', 'Définit l\'ordre de priorité pour la résolution (ex: hosts avant dns)'],
+        ['/etc/network/interfaces', 'Configuration Debian/Ubuntu classique'],
       ]},
-      { type: 'heading', level: 2, emoji: '🔧', text: 'Outils de gestion réseau' },
-      { type: 'list', items: [
-        { term: 'ip addr / ip route', desc: 'Outil principal pour la configuration moderne.' },
-        { term: 'ifconfig / route', desc: 'Outils classiques obsolètes (à connaître pour l’examen).' },
-        { term: 'nmcli / nmtui', desc: 'Outils en ligne de commande et texte pour NetworkManager.' },
+      { type: 'heading', level: 2, emoji: '🔧', text: 'Outils de configuration et diagnostic' },
+      { type: 'table', headers: ['Outil', 'Usage'], rows: [
+        ['ifconfig / ip addr', 'Configurer ou afficher les interfaces réseau'],
+        ['route / ip route', 'Gérer la table de routage'],
+        ['netstat / ss', 'Afficher les connexions réseau et ports ouverts'],
+        ['nmcli / nmtui', 'Gérer NetworkManager via console'],
       ]},
+      { type: 'code', title: 'Exemples avec la commande ip', prompt: '# Afficher les adresses IP\n$ ip addr show\n\n# Activer une interface\n$ sudo ip link set eth0 up\n\n# Afficher la route par défaut (gateway)\n$ ip route show\n\n# Afficher les ports en écoute (ss est plus rapide que netstat)\n$ ss -tulpn', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'Soyez capable de localiser où configurer le DNS (`/etc/resolv.conf`) et de comprendre comment `ss` et `ip` remplacent les anciennes commandes `netstat` et `ifconfig`.' },
     ]
   },
 
   'lpic1-102-109-3': {
     title: 'Diagnostic Réseau — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🛠️', text: 'Outils de diagnostic' },
-      { type: 'list', items: [
-        { term: 'ping', desc: 'Tester la connectivité.' },
-        { term: 'traceroute', desc: 'Suivre le chemin des paquets.' },
-        { term: 'netstat / ss', desc: 'Afficher les ports ouverts et les connexions actives.' },
-        { term: 'dig / host', desc: 'Effectuer des requêtes DNS détaillées.' },
+      { type: 'paragraph', text: 'Une approche méthodique est nécessaire pour résoudre les problèmes réseau.' },
+      { type: 'table', headers: ['Outil', 'Diagnostic'], rows: [
+        ['ping', 'Vérifier la connectivité ICMP de base'],
+        ['traceroute', 'Identifier le chemin et les routeurs intermédiaires'],
+        ['host / dig', 'Tester la résolution de nom DNS'],
+        ['netstat -r', 'Vérifier la table de routage'],
+        ['telnet / nc', 'Vérifier si un port distant est ouvert'],
       ]},
+      { type: 'heading', level: 2, emoji: '🩹', text: 'Flux de dépannage classique' },
+      { type: 'code', title: 'Étapes de vérification', prompt: '# 1. L\'interface est-elle active ?\n$ ip link\n# 2. Ai-je une IP ?\n$ ip addr\n# 3. Puis-je pinger ma passerelle (gateway) ?\n$ ping -c 4 192.168.1.1\n# 4. Le DNS fonctionne-t-il ?\n$ host google.com\n# 5. La route externe fonctionne-t-elle ?\n$ traceroute 8.8.8.8', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'On vous demandera souvent quel outil utiliser pour : tester la route (`traceroute`), tester le DNS (`dig`), ou voir les ports ouverts localement (`ss`).' },
     ]
   },
 
@@ -269,19 +357,32 @@ export const lpic1_102_extendedContent_fr = {
         ['SetGID', 'SGID', 'Exécution avec les droits du groupe (utile pour les partages)'],
         ['Sticky Bit', 't', 'Empêche la suppression par autrui (ex: /tmp)'],
       ]},
-      { type: 'code', title: 'Trouver les fichiers SUID', prompt: '$ find /usr/bin -perm -4000', output: '/usr/bin/sudo\n/usr/bin/passwd' },
+      { type: 'code', title: 'Utiliser les bits spéciaux', prompt: '# Ajouter le SUID à un exécutable\n$ chmod u+s /usr/bin/mon-outil\n\n# Ajouter le SGID à un répertoire (héritage du groupe)\n$ chmod g+s /shared/data\n\n# Trouver tous les fichiers SUID sur le système\n$ find / -perm -4000 2>/dev/null', output: '' },
+      { type: 'heading', level: 2, emoji: '📉', text: 'Limites de ressources (ulimit)' },
+      { type: 'paragraph', text: 'La commande `ulimit` permet de définir des limites sur les ressources consommées par les processus utilisateur pour éviter les attaques par déni de service.' },
+      { type: 'code', title: 'Exemples ulimit', prompt: '# Afficher toutes les limites actuelles\n$ ulimit -a\n\n# Limiter le nombre maximum de fichiers ouverts\n$ ulimit -n 1024\n\n# Limiter la taille maximale d\'un fichier créé\n$ ulimit -f 100000', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'L\'examen LPIC-1 demande de savoir identifier les fichiers SUID/SGID par leur lettre (s) dans `ls -l` et de comprendre l\'utilité de `ulimit` pour la stabilité du système.' },
     ]
   },
 
   'lpic1-102-110-2': {
     title: 'Sécurité des comptes et limites de ressources — Analyse approfondie',
     sections: [
-      { type: 'heading', level: 2, emoji: '🔐', text: 'Durcissement du système' },
-      { type: 'list', items: [
-        { term: 'ulimit', desc: 'Limiter les ressources par utilisateur (processus, fichiers).' },
-        { term: 'sudo', desc: 'Exécuter des commandes en tant que root avec traçabilité.' },
-        { term: '/etc/sudoers', desc: 'Fichier de configuration de sudo (utiliser `visudo`).' },
+      { type: 'paragraph', text: 'La gestion des accès root via `sudo` est la méthode recommandée pour l\'administration, car elle est tracée et granulaire.' },
+      { type: 'table', headers: ['Fichier / Commande', 'Rôle'], rows: [
+        ['/etc/sudoers', 'Fichier de configuration principal (ne pas éditer directement)'],
+        ['visudo', 'Commande sécurisée pour éditer /etc/sudoers (vérifie la syntaxe)'],
+        ['/etc/login.defs', 'Configuration globale des limites de compte et mots de passe'],
+        ['/etc/securetty', 'Lister les terminaux où root peut se connecter directement'],
       ]},
+      { type: 'heading', level: 2, emoji: '🚫', text: 'Désactiver les comptes' },
+      { type: 'table', headers: ['Méthode', 'Action'], rows: [
+        ['/etc/nologin', 'Si ce fichier existe, seul root peut se connecter'],
+        ['passwd -l', 'Verrouille le mot de passe de l\'utilisateur'],
+        ['usermod -s /sbin/nologin', 'Empêche l\'accès au shell'],
+      ]},
+      { type: 'code', title: 'Utilisation de Sudo', prompt: '# Exécuter une commande comme root\n$ sudo apt update\n\n# Devenir root temporairement (shell interactif)\n$ sudo -i\n\n# Vérifier ses propres droits sudo\n$ sudo -l', output: '' },
+      { type: 'infobox', variant: 'exam', content: 'Concentrez-vous sur `visudo`, la différence entre verrouiller un compte et changer son shell, et l\'importance de `/etc/securetty`.' },
     ]
   },
 

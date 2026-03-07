@@ -195,3 +195,118 @@ export const terminalChallengeData = [
     category: 'permissions'
   }
 ]
+
+// ─── TRUE/FALSE GAME ─────────────────────────────────────
+export const trueFalseData = [
+  // Difficulty 1
+  { text: 'BIOS ist moderner als UEFI.', answer: false, explanation: 'UEFI ist der moderne Nachfolger mit GPT, Secure Boot und schnellerem Boot.', difficulty: 1 },
+  { text: '/proc ist ein virtuelles Dateisystem, das nur im RAM liegt.', answer: true, explanation: '/proc belegt keinen Plattenplatz; es wird dynamisch vom Kernel erzeugt.', difficulty: 1 },
+  { text: 'Der init/systemd-Prozess hat immer die PID 1.', answer: true, explanation: 'init oder systemd ist der erste vom Kernel gestartete Benutzerprozess mit PID 1.', difficulty: 1 },
+  { text: 'MBR unterstützt Festplatten größer als 2TB.', answer: false, explanation: 'MBR ist auf 2TB begrenzt. GPT unterstützt Festplatten bis zu 8ZiB.', difficulty: 1 },
+  { text: 'apt-get update installiert Paketaktualisierungen.', answer: false, explanation: 'update lädt nur die Paketlisten herunter. upgrade installiert die eigentlichen Updates.', difficulty: 1 },
+  { text: 'Gemeinsam genutzte .so-Bibliotheken werden zur Laufzeit geladen.', answer: true, explanation: '.so (Shared Objects) werden vom dynamischen Linker beim Ausführen eines Programms geladen.', difficulty: 1 },
+  { text: 'Der cat-Befehl dient hauptsächlich zum Erstellen leerer Dateien.', answer: false, explanation: 'cat verkettet und zeigt Dateien an. touch erstellt leere Dateien.', difficulty: 1 },
+  { text: 'Die | Pipe verbindet stdout eines Befehls mit stdin des nächsten.', answer: true, explanation: 'Eine Pipe erstellt eine Pipeline, die Ausgabe als Eingabe weitergibt.', difficulty: 1 },
+  { text: 'SIGKILL (9) kann von einem Prozess abgefangen werden.', answer: false, explanation: 'SIGKILL kann nicht abgefangen oder ignoriert werden. Es beendet sofort.', difficulty: 1 },
+  { text: 'Das ext4-Dateisystem unterstützt Journaling.', answer: true, explanation: 'ext4 hat eingebautes Journaling zum Schutz vor Abstürzen.', difficulty: 1 },
+  { text: 'chmod 644 macht eine Datei für alle ausführbar.', answer: false, explanation: '644 = rw-r--r--. Keine Ausführungsrechte. 755 enthält Ausführungsrechte.', difficulty: 1 },
+  { text: '/etc/fstab definiert Dateisysteme, die beim Booten automatisch eingehängt werden.', answer: true, explanation: 'fstab enthält Gerät, Einhängepunkt, Typ und Optionen.', difficulty: 1 },
+  // Difficulty 2
+  { text: 'modprobe handhabt Kernelmodul-Abhängigkeiten automatisch.', answer: true, explanation: 'modprobe nutzt depmod zur Abhängigkeitsauflösung, anders als insmod.', difficulty: 2 },
+  { text: 'rescue.target entspricht dem SysVinit Runlevel 5.', answer: false, explanation: 'rescue.target ist Einzelbenutzer (Runlevel 1). Grafisch ist Runlevel 5.', difficulty: 2 },
+  { text: 'dpkg installiert automatisch Paketabhängigkeiten.', answer: false, explanation: 'dpkg installiert .deb, löst aber KEINE Abhängigkeiten auf. apt tut dies.', difficulty: 2 },
+  { text: 'Der uniq-Befehl entfernt alle doppelten Zeilen in einer Datei.', answer: false, explanation: 'uniq entfernt nur AUFEINANDERFOLGENDE Duplikate. Nutze sort | uniq für alle.', difficulty: 2 },
+  { text: 'In einem Regex stimmt der . Punkt mit jedem Zeichen überein.', answer: true, explanation: 'Das . Metazeichen stimmt mit jedem einzelnen Zeichen (außer Newline) überein.', difficulty: 2 },
+  { text: 'Ein nice-Wert von -20 bedeutet die NIEDRIGSTE Priorität.', answer: false, explanation: '-20 ist die HÖCHSTE Priorität. +19 ist die niedrigste.', difficulty: 2 },
+  { text: 'parted wendet Partitionsänderungen sofort an.', answer: true, explanation: 'Anders als fdisk, das Änderungen puffert, wendet parted sie direkt auf die Platte an.', difficulty: 2 },
+  { text: 'Das Sticky Bit auf einem Verzeichnis verhindert, dass jemand Dateien löscht.', answer: false, explanation: 'Nur der Dateibesitzer (oder root) kann löschen. Es verhindert das Löschen fremder Dateien.', difficulty: 2 },
+  { text: 'fsck muss auf einem eingehängten Dateisystem ausgeführt werden.', answer: false, explanation: 'fsck muss auf AUSGEHÄNGTEN Dateisystemen laufen, um Datenverlust zu vermeiden.', difficulty: 2 },
+  { text: 'UUID ist eine eindeutige und permanente Kennung für ein Dateisystem.', answer: true, explanation: 'UUIDs werden bei der Formatierung erstellt und ändern sich nicht, anders als /dev/sdX-Namen.', difficulty: 2 },
+  // Difficulty 3
+  { text: 'In ERE-Regex benötigt + ein Escape (\\\\+) um zu funktionieren.', answer: false, explanation: 'In Extended RE (-E) funktioniert + ohne Escape. Es braucht Escape in Basic RE.', difficulty: 3 },
+  { text: 'emergency.target hängt nur / im Read-only ein und startet keine Dienste.', answer: true, explanation: 'emergency ist das restriktivste Target für extreme Wiederherstellung.', difficulty: 3 },
+  { text: 'Mit umask 077 erhalten neue Dateien rw------- (600) Berechtigungen.', answer: true, explanation: '666 Standard - 077 umask = 600.', difficulty: 3 },
+  { text: 'rpm -V überprüft die Abhängigkeiten eines installierten Pakets.', answer: false, explanation: 'rpm -V überprüft Integrität (Prüfsummen, Berechtigungen). rpm -R prüft Abhängigkeiten.', difficulty: 3 },
+  { text: 'Hard Links können auf Verzeichnisse zeigen.', answer: false, explanation: 'Linux verhindert Hard Links auf Verzeichnisse, um Dateisystem-Schleifen zu vermeiden.', difficulty: 3 },
+]
+
+// ─── FILL GAP GAME ───────────────────────────────────────
+export const fillGapData = [
+  // Difficulty 1
+  { prompt: 'lspci', answer: 'lspci', hint: 'PCI-Geräte auflisten', difficulty: 1 },
+  { prompt: 'systemctl get-_____', answer: 'default', hint: 'Standard-Target anzeigen', difficulty: 1 },
+  { prompt: 'apt-get _____', answer: 'update', hint: 'Paketliste aktualisieren', difficulty: 1 },
+  { prompt: 'head -n _____ file', answer: '10', hint: 'Standard-Zeilenanzahl', difficulty: 1 },
+  { prompt: 'mkdir _____ /a/b/c', answer: '-p', hint: 'übergeordnete Verzeichnisse erstellen', difficulty: 1 },
+  { prompt: 'chmod _____ file', answer: '755', hint: 'setze rwxr-xr-x', difficulty: 1 },
+  { prompt: '_____ /dev/sda1 /mnt', answer: 'mount', hint: 'Dateisystem einhängen', difficulty: 1 },
+  { prompt: 'rm _____ /dir', answer: '-r', hint: 'rekursiv entfernen', difficulty: 1 },
+  { prompt: 'ps _____', answer: 'aux', hint: 'alle Prozesse anzeigen', difficulty: 1 },
+  { prompt: 'grep _____ \"pattern\" file', answer: '-i', hint: 'Groß-/Kleinschreibung ignorieren', difficulty: 1 },
+  // Difficulty 2
+  { prompt: 'modprobe _____ module', answer: '-r', hint: 'Modul entfernen', difficulty: 2 },
+  { prompt: 'shutdown _____ now', answer: '-h', hint: 'System anhalten', difficulty: 2 },
+  { prompt: 'grub-mkconfig -o _____', answer: '/boot/grub/grub.cfg', hint: 'GRUB-Konfigurationspfad', difficulty: 2 },
+  { prompt: 'dpkg _____ /path/to/file', answer: '-S', hint: 'Paket zu Datei suchen', difficulty: 2 },
+  { prompt: 'rpm _____ package', answer: '-qi', hint: 'Paketinfo anzeigen', difficulty: 2 },
+  { prompt: 'find /etc -name \"_____\"', answer: '*.conf', hint: 'Konfigurationsdateien', difficulty: 2 },
+  { prompt: 'kill _____ PID', answer: '-9', hint: 'SIGKILL-Signal', difficulty: 2 },
+  { prompt: 'nice -n _____ cmd', answer: '10', hint: 'niedrige Priorität', difficulty: 2 },
+  { prompt: 'mkfs._____ /dev/sda1', answer: 'ext4', hint: 'gängiges Linux-Dateisystem', difficulty: 2 },
+  { prompt: 'ln _____ /original /link', answer: '-s', hint: 'symbolischen Link erstellen', difficulty: 2 },
+  // Difficulty 3
+  { prompt: 'systemctl _____ rescue.target', answer: 'isolate', hint: 'Target ohne Neustart wechseln', difficulty: 3 },
+  { prompt: 'umask _____', answer: '022', hint: 'ergibt Datei 644, Verz. 755', difficulty: 3 },
+  { prompt: 'sed \"s/old/new/_____\" file', answer: 'g', hint: 'global ersetzen', difficulty: 3 },
+  { prompt: 'grep -_____ \"error|warning\" file', answer: 'E', hint: 'Extended Regex aktivieren', difficulty: 3 },
+  { prompt: 'renice -n -5 _____ PID', answer: '-p', hint: 'Prozess-ID angeben', difficulty: 3 },
+]
+
+// ─── DRAG & DROP GAME ────────────────────────────────────
+export const dragDropData = [
+  {
+    id: 'dd-boot-order',
+    category: 'Boot-Reihenfolge',
+    question: 'Ordne die Linux-Bootphasen:',
+    items: [
+      { text: 'Kernel initialisiert Hardware', order: 3 },
+      { text: 'init/systemd startet Dienste', order: 4 },
+      { text: 'BIOS/UEFI führt POST aus', order: 1 },
+      { text: 'GRUB2 lädt Kernel/initramfs', order: 2 },
+    ],
+  },
+  {
+    id: 'dd-runlevel-target',
+    category: 'Runlevel → Target',
+    question: 'Ordne SysVinit Runlevel dem systemd Target zu:',
+    items: [
+      { text: 'Runlevel 3 (Mehrbenutzermodus Text)', matches: 'multi-user.target' },
+      { text: 'Runlevel 5 (GUI)', matches: 'graphical.target' },
+      { text: 'Runlevel 1 (Einzelbenutzer)', matches: 'rescue.target' },
+      { text: 'Runlevel 0 (Halt)', matches: 'poweroff.target' },
+    ],
+  },
+  {
+    id: 'dd-pkg-family',
+    category: 'Paketfamilien',
+    question: 'Ordne die Befehle der Paketfamilie zu:',
+    items: [
+      { text: 'dpkg -i', category: 'Debian' },
+      { text: 'apt-get install', category: 'Debian' },
+      { text: 'rpm -i', category: 'RPM' },
+      { text: 'dnf install', category: 'RPM' },
+      { text: 'zypper install', category: 'RPM' },
+    ],
+  },
+  {
+    id: 'dd-permission-match',
+    category: 'Oktale Berechtigungen',
+    question: 'Ordne die Oktalnotation den Berechtigungen zu:',
+    items: [
+      { text: '755', matches: 'rwxr-xr-x' },
+      { text: '644', matches: 'rw-r--r--' },
+      { text: '700', matches: 'rwx------' },
+      { text: '777', matches: 'rwxrwxrwx' },
+    ],
+  },
+]

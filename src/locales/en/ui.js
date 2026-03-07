@@ -140,4 +140,16 @@ export const ui = {
   'course_desc_lpic1-102': "Shell scripting, interfaces, SQL databases, networking, security.",
   'course_desc_lpic-2': "Advanced Linux: kernel, storage, advanced networking, servers.",
   'course_desc_rhcsa': "Red Hat Certified System Administrator: storage, networking, SELinux, containers.",
+  // Exam Info Fallbacks
+  'exam_info_lpi-010': "40 questions • 60 minutes",
+  'exam_info_lpic1-101': "60 questions • 90 minutes",
+  'exam_info_lpic1-102': "60 questions • 90 minutes",
+  'exam_info_lpic-2': "60 questions • 90 min (Exam 201 & 202)",
+  'exam_info_rhcsa': "50 questions • 60 minutes",
+  // Exam Topics Titles
+  'exam_topics_lpi-010': "The 5 Exam Topics",
+  'exam_topics_lpic1-101': "The 6 Exam Topics",
+  'exam_topics_lpic1-102': "The 6 Exam Topics",
+  'exam_topics_lpic-2': "The 13 Exam Topics",
+  'exam_topics_rhcsa': "The 10 Exam Topics",
 }

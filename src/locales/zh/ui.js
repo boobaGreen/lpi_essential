@@ -140,4 +140,16 @@ export const ui = {
   'course_desc_lpic1-102': "Shell 脚本编写、界面、SQL 数据库、网络、安全。",
   'course_desc_lpic-2': "高级 Linux：内核、存储、高级网络、服务器。",
   'course_desc_rhcsa': "红帽认证系统管理员：存储、网络、SELinux、容器。",
+  // Exam Info Fallbacks
+  'exam_info_lpi-010': "40 个问题 • 60 分钟",
+  'exam_info_lpic1-101': "60 个问题 • 90 分钟",
+  'exam_info_lpic1-102': "60 个问题 • 90 分钟",
+  'exam_info_lpic-2': "60 个问题 • 90 分钟 (考试 201 和 202)",
+  'exam_info_rhcsa': "50 个问题 • 60 分钟",
+  // Exam Topics Titles
+  'exam_topics_lpi-010': "5 个考试主题",
+  'exam_topics_lpic1-101': "6 个考试主题",
+  'exam_topics_lpic1-102': "6 个考试主题",
+  'exam_topics_lpic-2': "13 个考试主题",
+  'exam_topics_rhcsa': "10 个考试主题",
 }

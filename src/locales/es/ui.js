@@ -140,4 +140,16 @@ export const ui = {
   'course_desc_lpic1-102': "Scripting de shell, interfaces, bases de datos SQL, redes, seguridad.",
   'course_desc_lpic-2': "Linux avanzado: kernel, almacenamiento, redes avanzadas, servidores.",
   'course_desc_rhcsa': "Red Hat Certified System Administrator: almacenamiento, redes, SELinux, contenedores.",
+  // Exam Info Fallbacks
+  'exam_info_lpi-010': "40 preguntas • 60 minutos",
+  'exam_info_lpic1-101': "60 preguntas • 90 minutos",
+  'exam_info_lpic1-102': "60 preguntas • 90 minutos",
+  'exam_info_lpic-2': "60 preguntas • 90 min (Exámenes 201 & 202)",
+  'exam_info_rhcsa': "50 preguntas • 60 minutos",
+  // Exam Topics Titles
+  'exam_topics_lpi-010': "Los 5 Temas del Examen",
+  'exam_topics_lpic1-101': "Los 6 Temas del Examen",
+  'exam_topics_lpic1-102': "Los 6 Temas del Examen",
+  'exam_topics_lpic-2': "Los 13 Temas del Examen",
+  'exam_topics_rhcsa': "Los 10 Temas del Examen",
 }

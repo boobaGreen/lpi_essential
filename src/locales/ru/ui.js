@@ -140,4 +140,16 @@ export const ui = {
   'course_desc_lpic1-102': "Shell-скриптинг, интерфейсы, базы данных SQL, сети, безопасность.",
   'course_desc_lpic-2': "Продвинутый Linux: ядро, хранилище, продвинутые сети, серверы.",
   'course_desc_rhcsa': "Red Hat Certified System Administrator: хранилище, сеть, SELinux, контейнеры.",
+  // Exam Info Fallbacks
+  'exam_info_lpi-010': "40 вопросов • 60 минут",
+  'exam_info_lpic1-101': "60 вопросов • 90 минут",
+  'exam_info_lpic1-102': "60 вопросов • 90 минут",
+  'exam_info_lpic-2': "60 вопросов • 90 мин (Экзамены 201 & 202)",
+  'exam_info_rhcsa': "50 вопросов • 60 минут",
+  // Exam Topics Titles
+  'exam_topics_lpi-010': "5 Тем Экзамена",
+  'exam_topics_lpic1-101': "6 Тем Экзамена",
+  'exam_topics_lpic1-102': "6 Тем Экзамена",
+  'exam_topics_lpic-2': "13 Тем Экзамена",
+  'exam_topics_rhcsa': "10 Тем Экзамена",
 }
