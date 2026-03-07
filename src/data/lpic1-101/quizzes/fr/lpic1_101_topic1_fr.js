@@ -1,153 +1,269 @@
-// LPIC-1 101 Topic 1 Quiz - French
+// LPIC-1 101 Quiz — Topic 1: Architecture du système (Français)
 
 export const lpic1_101_topic1_fr = [
-  // L1: Développer votre connaissance
+  // ─── 101.1 Matériel et périphériques (12 questions) ───
   {
-    id: 10111,
-    question: "Laquelle de ces commandes va scanner le bus USB matériel et imprimer la liste de tous ses périphériques détectés localement au contrôleur d'un système Linux ?",
+    id: 'q-lpic1-101-1-001', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quel est l’avantage principal de l’UEFI par rapport au BIOS traditionnel ?',
     options: [
-      "lspci",
-      "pciusb",
-      "lsusb",
-      "usbinfo"
+      'C’est un matériel open source',
+      'Il ne supporte que les systèmes 32 bits',
+      'Il supporte les partitions GPT supérieures à 2 To et le Secure Boot',
+      'Il ne nécessite pas de chargeur d’amorçage comme GRUB2'
     ],
-    correctAnswer: "lsusb",
-    explanation: "La commande lsusb (List USB) interroge le sous-système udev et sysfs pour lister les contrôleurs USB et les appareils qui y sont connectés."
+    correct: 2,
+    explanation: 'L’UEFI remplace le BIOS traditionnel, offrant le support des disques GPT > 2 To, le Secure Boot et un processus de démarrage plus rapide.',
   },
   {
-    id: 10112,
-    question: "Depuis quel répertoire virtuel le noyau (Kernel) expose-t-il directement en temps réel à l'utilisateur des informations systèmes cruciales comme les interruptions IRQ et les statistiques pure mémoire (cpuinfo, meminfo) ?",
-    options: [
-      "/dev",
-      "/sys",
-      "/proc",
-      "/var/run"
-    ],
-    correctAnswer: "/proc",
-    explanation: "Le répertoire numérique RAM /proc est le système de fichiers virtuel historique fournissant un regard interne et des interfaces d'accès immédiats sur l'état général du processeur, des processus et du cœur dynamique de base Linux (kernel runtime)."
+    id: 'q-lpic1-101-1-002', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quel répertoire virtuel du noyau contient des informations sur le matériel et les processus système ?',
+    options: ['/dev', '/sys', '/proc', '/etc'],
+    correct: 2,
+    explanation: '/proc est un système de fichiers virtuel en mémoire qui fournit une vue sur le noyau, affichant les processus en cours et les infos matériel.',
   },
   {
-    id: 10113,
-    question: "Si vous désirez inspecter explicitement quels 'drivers' (Modules Kernel) sont instantanément branchés pour piloter la carte réseau, quelle commande de consultation utiliserez-vous ?",
-    options: [
-      "lsmod",
-      "modprobe",
-      "insmod",
-      "dmesg"
-    ],
-    correctAnswer: "lsmod",
-    explanation: "lsmod 'List Modules' liste proprement un dump formaté lu depuis le fichier brut /proc/modules, permettant à l'humain d'observer tout élément additionnel (comme un module audio ou réseau) actuellement chargé en RAM dans l'espace kernel."
+    id: 'q-lpic1-101-1-003', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quel répertoire virtuel est utilisé par udev pour créer dynamiquement des nœuds de périphériques ?',
+    options: ['/dev', '/udev', '/sys', '/proc'],
+    correct: 0,
+    explanation: '/dev contient les nœuds de périphériques (ex: /dev/sda) gérés dynamiquement par le service udev.',
   },
   {
-    id: 10114,
-    question: "Quelle commande permet d'obtenir des données détaillées (Paramètre, auteur, licence logiciel) à propos d'un module compilé du noyau, sans pour autant le forcer purement à se charger ou s'activer au système ?",
-    options: [
-      "lsmod",
-      "modprobe",
-      "modinfo",
-      "sysctl"
-    ],
-    correctAnswer: "modinfo",
-    explanation: "modinfo prend en argument brut le nom d'un driver/module (.ko) et l'analyse techniquement avant de requérir qu'il ne se lance, offrant transparence sur sa conception et configuration potentielle admise."
+    id: 'q-lpic1-101-1-004', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quelle commande liste tous les périphériques PCI connectés au système ?',
+    options: ['lsusb', 'lshw', 'lspci', 'lsscsi'],
+    correct: 2,
+    explanation: 'lspci affiche des informations détaillées sur tous les bus et périphériques PCI du système.',
   },
   {
-    id: 10115,
-    question: "Parmi les assertions suivantes vis-à-vis la gestion des pilotes Linux (Modules), laquelle représente la bonne pratique pour INJECTER un module .ko et prendre en charge gracieusement et automatiquement toute dépendance manquante qu'il réclame en cascade ?",
-    options: [
-      "insmod e1000",
-      "modprobe e1000",
-      "systemctl start e1000",
-      "kernel-load e1000"
-    ],
-    correctAnswer: "modprobe e1000",
-    explanation: "modprobe est l'outil intelligent de haut niveau absolu. Contrairement à 'insmod' qui insère aveuglément (au risque d'échec critique module introuvable frère), modprobe sonde et active d'abord ses sous-dépendances primaires via (modules.dep) assurant sa bonne intégration globale OS."
-  },
-
-  // L2: Boot
-  {
-    id: 10121,
-    question: "Immédiatement au démarrage de la machine, où sont conservées et archivées les dizaines de messages diagnostics de vérifications matérielles signalées par le kernel Linux lors de l'amorçage (Boot Ring-Buffer) ?",
-    options: [
-      "/var/log/boot.log",
-      "Dans le tampon d'anneau d'information système lisible par 'dmesg'",
-      "Seulement affichable via le BIOS/UEFI",
-      "Dans /dev/kernel_boot"
-    ],
-    correctAnswer: "Dans le tampon d'anneau d'information système lisible par 'dmesg'",
-    explanation: "Le kernel imprime de fond ces données dans un buffer RAM circulaire que la commande 'dmesg' vient extraire et récupérer sur l'interface terminal (souvent archivés par la suite statiquement sous /var)."
+    id: 'q-lpic1-101-1-005', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quelle commande liste les modules du noyau actuellement chargés en mémoire ?',
+    options: ['modprobe', 'lsmod', 'insmod', 'modinfo'],
+    correct: 1,
+    explanation: 'lsmod lit /proc/modules et affiche une liste formatée des modules du noyau actuellement chargés.',
   },
   {
-    id: 10122,
-    question: "Durant la séquence d'amorçage classique standard Linux moderne, quelle composante succède chronologiquement à l'initialisation brut POST du BIOS (ou phase UEFI boot) pour prendre immédiatement la main d'action matériel de l'ordinateur ?",
-    options: [
-      "Le noyau (Vmlinuz)",
-      "Le Chargeur d'Amorçage (Bootloader, tel que GRUB2)",
-      "Le système global systemd (PID 1)",
-      "Le système de fichiers /proc"
-    ],
-    correctAnswer: "Le Chargeur d'Amorçage (Bootloader, tel que GRUB2)",
-    explanation: "Le firmware amorce et appelle le Bootloader (situé au secteur zéro MBR ou /boot/efi). Le rôle fondamental du chargeur (GRUB) est de trouver le Noyau Kernel dans le disque et de le charger en mémoire centrale."
+    id: 'q-lpic1-101-1-006', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quelle commande est la méthode recommandée pour charger un module du noyau avec ses dépendances ?',
+    options: ['insmod', 'depmod', 'modprobe', 'lsmod'],
+    correct: 2,
+    explanation: 'modprobe charge intelligemment un module et résout/charge automatiquement tous les modules dépendants.',
   },
   {
-    id: 10123,
-    question: "Quel rôle technique fondamental est assuré par le dossier condensé de démarrage 'initramfs' ou 'initrd' lors du processus initial Kernel au boot de Linux ?",
+    id: 'q-lpic1-101-1-007', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Comment supprimer en toute sécurité un module du noyau nommé "e1000" ?',
+    options: ['rmmod -f e1000', 'modprobe -r e1000', 'delete e1000', 'rm /lib/modules/e1000'],
+    correct: 1,
+    explanation: 'modprobe -r supprime proprement un module et ses dépendances inutilisées.',
+  },
+  {
+    id: 'q-lpic1-101-1-008', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'hard', type: 'mcq',
+    question: 'Quel est le but du système de fichiers /sys (sysfs) ?',
     options: [
-      "Démarrer the serveur de fenêtre graphique X11 (GUI) pour les logins.",
-      "Vérifier manuellement et scanner physiquement le BIOS de virus.",
-      "Offrir temporairement l'environnement de base de drivers/pilotes vitaux pour que le kernel puisse voir, monter et débloquer physiquement le VRAI disque Root racine (/) de sa machine.",
-      "Chiffrement logique local des mots de passe en bootant."
+      'Stocker les fichiers de configuration système (comme /etc)',
+      'Contenir les images compilées du noyau',
+      'Exposer le modèle de périphériques du noyau et la hiérarchie matérielle',
+      'Enregistrer les erreurs système'
     ],
-    correctAnswer: "Offrir temporairement l'environnement de base de drivers/pilotes vitaux pour que le kernel puisse voir, monter et débloquer physiquement le VRAI disque Root racine (/) de sa machine.",
-    explanation: "L'initial RAM file system est un mini-linux éphémère. Il fournit au Kernel (qui ne peut pas stocker dans son binaire TOUT driver) l'extension requise (pilote RAID, pilote LVM, Ext4 module) suffisante de décoder et comprendre comment accéder à la gigantesque et véritable partition / externe du disque physique de l'ordinateur !"
+    correct: 2,
+    explanation: 'sysfs (/sys) expose la hiérarchie interne des objets et pilotes du noyau vers l’espace utilisateur.',
+  },
+  {
+    id: 'q-lpic1-101-1-009', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quelle commande affiche les messages générés par le noyau pendant le processus de démarrage ?',
+    options: ['syslog', 'dmesg', 'tail /var/log/messages', 'journalctl -k'],
+    correct: 1,
+    explanation: 'dmesg affiche le tampon circulaire du noyau (kernel ring buffer), contenant les messages de détection de matériel.',
+  },
+  {
+    id: 'q-lpic1-101-1-010', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quel fichier contient les options de configuration exactes passées au noyau par le chargeur d’amorçage ?',
+    options: ['/boot/grub/grub.cfg', '/sys/kernel', '/etc/default/grub', '/proc/cmdline'],
+    correct: 3,
+    explanation: '/proc/cmdline contient les arguments passés au noyau lors du démarrage.',
+  },
+  {
+    id: 'q-lpic1-101-1-011', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'hard', type: 'mcq',
+    question: 'Quel répertoire contient les fichiers de configuration pour charger automatiquement des modules au démarrage ?',
+    options: ['/etc/modprobe.d/', '/etc/modules-load.d/', '/lib/modules/', '/boot/modules/'],
+    correct: 1,
+    explanation: '/etc/modules-load.d/ est utilisé par systemd pour charger des modules inconditionnellement au boot.',
+  },
+  {
+    id: 'q-lpic1-101-1-012', lessonId: 'lpic1-101-1-1', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quelle commande affiche des informations détaillées sur un module (description, auteur, paramètres) ?',
+    options: ['modprobe -i', 'modinfo', 'lsmod -v', 'sysctl'],
+    correct: 1,
+    explanation: 'modinfo extrait et affiche les métadonnées d’un fichier de module du noyau.',
   },
 
-  // L3: Niveaux et Targets SystemD
+  // ─── 101.2 Processus de démarrage (10 questions) ───
   {
-    id: 10131,
-    question: "Quelle cibles (Target) de remplacement de systemd s'aligne exactement sur le fonctionnement restrictif et historique de secours de feu 'l'ancien Runlevel 1 ou S' mono-utilisateur (Single-User) ?",
+    id: 'q-lpic1-101-2-001', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quel est l’ordre correct du processus de démarrage Linux ?',
     options: [
-      "rescue.target",
-      "multi-user.target",
-      "graphical.target",
-      "emergency.target"
+      'Bootloader -> BIOS -> init -> Kernel',
+      'BIOS/UEFI -> Bootloader -> Kernel -> init/systemd',
+      'Kernel -> BIOS -> Bootloader -> systemd',
+      'Bootloader -> Kernel -> BIOS -> init'
     ],
-    correctAnswer: "rescue.target",
-    explanation: "La rescue.target fournit l'accès direct en console Root exclusif et brut local, en omettant délibérément de charger tout logiciel et de monter le serveur Web réseau, utile lors de graves cassures système base locale !"
+    correct: 1,
+    explanation: 'Le firmware (BIOS/UEFI) s’exécute en premier, passe le contrôle au chargeur (GRUB), qui charge le Noyau, lequel lance le premier processus (init/systemd).',
   },
   {
-    id: 10132,
-    question: "Par quel ordre systemctl basculerons-nous IMMÉDIATEMENT sur un environnement Terminal de pure Console sans Interface graphique ni serveur (Passant donc vivement du Target graphical -> multi-user.target) sur la plateforme locale active Systemd ?",
+    id: 'q-lpic1-101-2-002', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quel est le but de l’initramfs pendant le processus de démarrage ?',
     options: [
-      "systemctl restart multi-user.target",
-      "systemctl set-default multi-user.target",
-      "systemctl isolate multi-user.target",
-      "telinit 5"
+      'Formater le disque dur',
+      'Fournir un système de fichiers racine temporaire avec les pilotes essentiels pour monter la racine réelle',
+      'Vérifier la RAM pour les erreurs matérielles',
+      'C’est une copie de sauvegarde du noyau'
     ],
-    correctAnswer: "systemctl isolate multi-user.target",
-    explanation: "La commande 'isolate' ferme brutalement toutes les applications graphiques non rattachées à ce sous-niveau pour conformer le système instantanément au nouveau stade sélectionné ciblé (Similaire à switcher de telinit 5 à init 3)."
+    correct: 1,
+    explanation: 'L’initramfs est chargé par le bootloader et fournit les modules nécessaires (ex: RAID, LVM) pour monter le système de fichiers racine réel.',
   },
   {
-    id: 10133,
-    question: "Le runlevel historique 'Runlevel 5' ou mode d'utilisation de Base Visuel pour postes clients, se traduit chez l'architecture de systemd par la cible par défaut nommée :",
-    options: [
-      "graphical.target",
-      "multi-user.target",
-      "default.target",
-      "desktop.target"
-    ],
-    correctAnswer: "graphical.target",
-    explanation: "graphical.target englobe toutes les fonctionnalités réseaux complètes (multi-user.target) en y additionnant logiquement les serveurs d'affichages d'UI (Display Manager, X11, serveur audio)."
+    id: 'q-lpic1-101-2-003', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quel processus est historiquement le premier processus utilisateur lancé par le noyau avec le PID 1 ?',
+    options: ['bash', 'grub', 'init', 'kthreadd'],
+    correct: 2,
+    explanation: 'init (ou systemd sur les systèmes modernes) est le premier processus lancé après le boot du noyau, prenant l’ID 1.',
   },
   {
-    id: 10134,
-    question: "Un agent logiciel doit exiger l'Extinction globale immédiate des instances locales sans attendre (Halt pur OS et mise hors tension). Quelle commande UNIX classique est d'application universelle correcte pour cet effet ?",
+    id: 'q-lpic1-101-2-004', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'hard', type: 'mcq',
+    question: 'Quel est le fichier de configuration principal généré pour GRUB2 ?',
+    options: ['/boot/grub/menu.lst', '/etc/grub.conf', '/boot/grub/grub.cfg', '/etc/default/grub2'],
+    correct: 2,
+    explanation: '/boot/grub/grub.cfg est le fichier principal généré par grub-mkconfig.',
+  },
+  {
+    id: 'q-lpic1-101-2-005', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Pour configurer le délai de GRUB2 ou les paramètres noyau par défaut, quel fichier faut-il éditer ?',
+    options: ['/boot/grub/grub.cfg', '/etc/default/grub', '/etc/grub.d/00_header', '/boot/grub/menu.lst'],
+    correct: 1,
+    explanation: '/etc/default/grub contient les variables personnalisables utilisées pour générer le grub.cfg.',
+  },
+  {
+    id: 'q-lpic1-101-2-006', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Après avoir édité /etc/default/grub sur Debian/Ubuntu, quelle commande applique les changements ?',
+    options: ['grub-install /dev/sda', 'update-grub', 'grub-update', 'systemctl restart grub'],
+    correct: 1,
+    explanation: 'update-grub est un script sur Debian qui lance grub-mkconfig pour régénérer la configuration.',
+  },
+  {
+    id: 'q-lpic1-101-2-007', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quelle commande installe le chargeur GRUB2 dans le MBR du premier disque ?',
+    options: ['grub-mkconfig /dev/sda', 'update-grub /dev/sda', 'grub-install /dev/sda', 'fdisk /dev/sda'],
+    correct: 2,
+    explanation: 'grub-install copie les images GRUB et les intègre dans le MBR du disque spécifié.',
+  },
+  {
+    id: 'q-lpic1-101-2-008', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'hard', type: 'mcq',
+    question: 'Où se trouvent les scripts shell que GRUB2 utilise pour générer le fichier de configuration ?',
+    options: ['/boot/grub/', '/etc/default/grub.d/', '/etc/grub.d/', '/usr/lib/grub/'],
+    correct: 2,
+    explanation: '/etc/grub.d/ contient les scripts exécutables utilisés par grub-mkconfig.',
+  },
+  {
+    id: 'q-lpic1-101-2-009', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quelle est la taille maximale de disque supportée par la table de partition MBR traditionnelle ?',
+    options: ['2 Go', '2 To', '8 To', '8 ZiB'],
+    correct: 1,
+    explanation: 'L’MBR utilise un adressage 32 bits, ce qui limite la taille des partitions à 2 Téraoctets.',
+  },
+  {
+    id: 'q-lpic1-101-2-010', lessonId: 'lpic1-101-1-2', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Sur un système utilisant systemd, quelle commande affiche les logs du démarrage actuel ?',
+    options: ['journalctl -b', 'dmesg -boot', 'tail /var/log/boot.log', 'systemctl logs'],
+    correct: 0,
+    explanation: 'journalctl -b filtre le journal systemd pour ne montrer que les messages depuis le dernier boot.',
+  },
+
+  // ─── 101.3 Niveaux d’exécution et Targets (10 questions) ───
+  {
+    id: 'q-lpic1-101-3-001', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Dans SysVinit, quel runlevel est traditionnellement utilisé pour un environnement multi-utilisateur AVEC interface graphique ?',
+    options: ['Runlevel 1', 'Runlevel 3', 'Runlevel 5', 'Runlevel 6'],
+    correct: 2,
+    explanation: 'Le Runlevel 5 inclut le réseau, le support multi-utilisateur et lance l’interface graphique.',
+  },
+  {
+    id: 'q-lpic1-101-3-002', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quel target systemd équivaut au Runlevel 3 de SysVinit (mode texte multi-utilisateur) ?',
+    options: ['graphical.target', 'multi-user.target', 'network.target', 'rescue.target'],
+    correct: 1,
+    explanation: 'multi-user.target fournit un système multi-utilisateur complet sans interface graphique.',
+  },
+  {
+    id: 'q-lpic1-101-3-003', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quelle commande affiche la cible de démarrage par défaut sur un système systemd ?',
+    options: ['systemctl default', 'systemctl status', 'systemctl get-default', 'runlevel'],
+    correct: 2,
+    explanation: 'systemctl get-default affiche le target dans lequel systemd démarrera par défaut.',
+  },
+  {
+    id: 'q-lpic1-101-3-004', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Comment basculer systemd vers le mode texte (multi-user.target) sans redémarrer ?',
     options: [
-      "shutdown -r now",
-      "shutdown -h now",
-      "kill -9 pid_1",
-      "halt -reboot"
+      'systemctl switch multi-user.target',
+      'systemctl isolate multi-user.target',
+      'systemctl start multi-user.target',
+      'systemctl default multi-user.target'
     ],
-    correctAnswer: "shutdown -h now",
-    explanation: "Le flag '-h' pour Halt arrête formellement en fermant sagement processus et signaux. (Son ami associé et contraire le paramétrage '-r' déclencherai de sa part un Redémarrage d'ordinateur ou Reboot)."
-  }
-]
+    correct: 1,
+    explanation: 'systemctl isolate arrête les unités non nécessaires et lance le nouveau target immédiatement.',
+  },
+  {
+    id: 'q-lpic1-101-3-005', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'hard', type: 'mcq',
+    question: 'Quelle est la différence principale entre rescue.target et emergency.target ?',
+    options: [
+      'Aucune différence, ce sont des alias',
+      'rescue.target monte les fichiers locaux et services de base ; emergency.target monte uniquement / en lecture seule',
+      'emergency.target fournit le réseau, rescue.target non',
+      'rescue.target est pour GRUB'
+    ],
+    correct: 1,
+    explanation: 'emergency.target est le mode de récupération le plus minimal. rescue.target (runlevel 1) monte plus de systèmes de fichiers.',
+  },
+  {
+    id: 'q-lpic1-101-3-006', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Quelle commande redémarre le système immédiatement et en toute sécurité ?',
+    options: ['shutdown -h now', 'shutdown -r now', 'halt', 'init 0'],
+    correct: 1,
+    explanation: 'shutdown -r now (ou reboot) redémarre le système immédiatement.',
+  },
+  {
+    id: 'q-lpic1-101-3-007', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quelle commande planifie un arrêt du système dans 15 minutes avec un message d’avertissement ?',
+    options: [
+      'shutdown -t 15 "Arret"',
+      'shutdown +15 "Arret"',
+      'shutdown -h 15m "Arret"',
+      'halt +15'
+    ],
+    correct: 1,
+    explanation: 'shutdown +15 planifie un arrêt dans 15 minutes et prévient les utilisateurs.',
+  },
+  {
+    id: 'q-lpic1-101-3-008', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'easy', type: 'mcq',
+    question: 'Comment annuler un arrêt programmé ?',
+    options: ['shutdown -a', 'shutdown -c', 'killall shutdown', 'systemctl cancel shutdown'],
+    correct: 1,
+    explanation: 'shutdown -c annule tout arrêt programmé en attente.',
+  },
+  {
+    id: 'q-lpic1-101-3-009', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'Quelle commande envoie un message aux terminaux de tous les utilisateurs connectés ?',
+    options: ['broadcast', 'echo-all', 'wall', 'send'],
+    correct: 2,
+    explanation: 'wall (write all) envoie un message à tous les terminaux actifs.',
+  },
+  {
+    id: 'q-lpic1-101-3-010', lessonId: 'lpic1-101-1-3', topicId: 1, difficulty: 'medium', type: 'mcq',
+    question: 'En SysVinit, quelle commande affiche le niveau d’exécution précédent et actuel ?',
+    options: ['showlevel', 'runlevel', 'who -r', 'runlevel OU who -r'],
+    correct: 3,
+    explanation: 'Les deux commandes `runlevel` et `who -r` affichent les niveaux d’exécution (précédent et actuel).',
+  },
+];
+

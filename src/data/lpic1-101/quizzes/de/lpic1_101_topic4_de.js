@@ -1,123 +1,260 @@
-// LPIC-1 101 Topic 4 Quiz - German
+// LPIC-1 101 Quiz — Thema 4: Geräte, Linux-Dateisysteme, FHS (Deutsch)
 
 export const lpic1_101_topic4_de = [
-  // L1: Partitions et Formats
+  // ─── 104.1 Partitionen und Dateisysteme erstellen (5 Fragen) ───
   {
-    id: 10411,
-    question: "Das interaktive fdisk-Kommando zeichnet nur virtuelle Layout-Grenzen auf das Festplattenblech. Durch welchen formellen Befehl wird am Ende das Ext4 Fundament (Indexe/Journal) wirklich auf eine Partition z.B. /dev/sda1 gegossen, damit Dateien dauerhaft leben können?",
-    options: [
-      "make:ext4 /dev/sda1",
-      "mkfs.ext4 /dev/sda1",
-      "format -ext4 /dev/sdc",
-      "fdisk --write ext4"
-    ],
-    correctAnswer: "mkfs.ext4 /dev/sda1",
-    explanation: "Der 'Make File System' Befehl (mkfs) bestückt den nackten und leeren Rahmen der formatierten Laufwerke im Ext4-Stil. Hier wird die Tabelle für inodes geätzt, was Linux OS davor bewahrt, bei einem Kaltstart mit Kernel Error durch ungeloggte Fehler blind zu zerschellen."
+    id: 'q-lpic1-101-4-001', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Welches interaktive Befehlszeilenwerkzeug wird traditionell zum Erstellen und Bearbeiten von MBR-Partitionstabellen verwendet?',
+    options: ['mkfs', 'fdisk', 'partprobe', 'mount'],
+    correct: 1,
+    explanation: '`fdisk` ist das traditionelle interaktive textbasierte Werkzeug zur Bearbeitung von Partitionstabellen (insbesondere MBR).',
   },
   {
-    id: 10412,
-    question: "Ein Swap-Speicher für den fehlenden RAM benötigt keine visuelle Baumstruktur mit Ordnern wie klassische Platten. Welche Syntax formatiert und bereitet deshalb die Auslagerungspartition /dev/sdb2 vor, bevor der Kernel sie schlucken darf?",
-    options: [
-      "mkfs.swap /dev/sdb2 gefolgt von mount",
-      "mkswap /dev/sdb2 gefolgt von swapon /dev/sdb2",
-      "fdisk swap danach active /dev/sdb2",
-      "init-swap /dev/sdb2"
-    ],
-    correctAnswer: "mkswap /dev/sdb2 gefolgt von swapon /dev/sdb2",
-    explanation: "Da die flüchtige Virtuelle RAM-Oase keine Datenordner speichert, erhält sie die exklusiv darauf angepasste Setup-Instanz mkswap. Im zweiten Linux-Gebot ermächtigt dann der Schalter swapon den Prozessor formell zum unkontrollierten Auslagern."
-  },
-
-  // L2: Fsck et Santé
-  {
-    id: 10421,
-    question: "Welches bittere und fatale Todesurteil verhängt sich ein SysAdmin selbst auf Servern, wenn er eine Check-Operation 'fsck' auf ein ext4-Dateisystem loslässt, welches in exakt jenem Moment online im Netzwerk als Live (Read/Write) Schreib-Ziel gemountet ist?",
-    options: [
-      "Gar nichts, Hot-Plugging Checks sind ein beständiger Alltag!",
-      "Der Befehl wird enorm langsam durch wartende SQL-Client Aufrufe gedrosselt.",
-      "Die absolut unausweichliche Zerstörung (Massive Korruption) seiner gesamten Dateiregister-Strukturen, was seine OS-Sektoren komplett unwiderruflich auslöschen kann!",
-      "Das Reparaturskript friert als Hintergrunddienst in Systemd ein."
-    ],
-    correctAnswer: "Die absolut unausweichliche Zerstörung (Massive Korruption) seiner gesamten Dateiregister-Strukturen, was seine OS-Sektoren komplett unwiderruflich auslöschen kann!",
-    explanation: "Dies ist eine rote Haltelinie im LPIC. Es ist untersagt, die tiefe Speicherstruktur zu manipulieren oder nach verlorenen Blöcken graben zu lassen, während der Systemkernel oder Anwender gleichzeitig laufenden Datei-Code hineinpressen und alles physisch abändern!"
+    id: 'q-lpic1-101-4-002', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welches Partitionierungswerkzeug wurde speziell für die Arbeit mit GPT (GUID Partition Table) entwickelt und bietet eine fdisk-ähnliche Oberfläche?',
+    options: ['fdisk', 'gdisk', 'parted', 'sfdisk'],
+    correct: 1,
+    explanation: '`gdisk` (GPT fdisk) ist an fdisk angelehnt, verarbeitet aber speziell GPT-Partitionstabellen.',
   },
   {
-    id: 10422,
-    question: "Für CentOS/RedHat Server (die gigantische XFS-Speicherformate bevorzugen) hat sich der Befehl fsck als zu schwach bewiesen. Mit welchem massiven C-Binary rücken Administratoren aus, wenn es um tiefe XFS-Rettungsmissionen am ungemounteten System geht?",
-    options: [
-      "xfs_repair",
-      "fsck.xfs",
-      "mkfs.xfs check",
-      "e2fsck -xfs"
-    ],
-    correctAnswer: "xfs_repair",
-    explanation: "XFS verlangt seinen eigenen Chirurgen. Reparieren durch 'xfs_repair' wird (nach dem sturen unmount des Pfades!) dem klassischen generellen fsck im Linux vorgezogen, um Blockzerfall tiefer Serverdatenbänke im Netz zu kitten."
+    id: 'q-lpic1-101-4-003', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welches Partitionierungswerkzeug kann im Gegensatz zu fdisk Änderungen sofort anwenden, ohne dass ein expliziter Schreibbefehl erforderlich ist?',
+    options: ['gdisk', 'parted', 'cfdisk', 'sfdisk'],
+    correct: 1,
+    explanation: '`parted` (GNU Parted) führt Befehle (wie das Erstellen oder Löschen von Partitionen) sofort auf der Festplatte aus.',
+  },
+  {
+    id: 'q-lpic1-101-4-004', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl schreibt ein ext4-Dateisystem auf die Partition /dev/sdb1?',
+    options: ['format /dev/sdb1 ext4', 'ext4 /dev/sdb1', 'mkfs.ext4 /dev/sdb1', 'fdisk /dev/sdb1'],
+    correct: 2,
+    explanation: '`mkfs.ext4` erstellt ein ext4-Dateisystem auf einem angegebenen Gerät oder einer Partition.',
+  },
+  {
+    id: 'q-lpic1-101-4-005', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl bereitet eine Partition für die Verwendung als Auslagerungsspeicher (Swap) vor?',
+    options: ['mkfs.swap', 'swapon', 'mkswap', 'fdisk'],
+    correct: 2,
+    explanation: '`mkswap` formatiert die Partition oder Datei mit einer Swap-Signatur.',
   },
 
-  // L3: Mounts
+  // ─── 104.2 Integrität von Dateisystemen aufrechterhalten (5 Fragen) ───
   {
-    id: 10431,
-    question: "Beim Ausfüllen der heiligen /etc/fstab Bootanweisung zwingt Sie das Linux-Lehrbuch dazu, für Laufwerke niemals den volatilen Pfad-Namen (z.B. /dev/sda2) zu tippen, sondern stoisch die exakte, lange Identnummer (UUID=123x...) zu verwenden. Aus welchem kritischen, technischen Grund?",
+    id: 'q-lpic1-101-4-006', lessonId: 'lpic1-101-4-2', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Was ist eine kritische Voraussetzung vor dem Ausführen von `fsck`, um ein Dateisystem zu reparieren?',
     options: [
-      "Eine UUID verschlüsselt passiv Laufwerksgrößen am EXT4 Format.",
-      "Da die Reihenfolge der USBs/SATA Stecker variiert. Startet der PC mit einem USB-Stick extra, rutscht SDA um zu SDB... Linux fände die Partition nicht mehr und crasht im Kernel-Panic boot, wenn fstab auf Namenszuweisung beruht!",
-      "Die UUID ist nötig, um den Schutzwall von SUID vor Hackern auf Disk-Ebene zementiert zu lassen.",
-      "Dies ist ein graphischer Zwangswechsel in Desktopumgebungen."
+      'Das System muss in das Rescue-Target neu gestartet werden',
+      'Das Dateisystem muss ausgehängt oder nur lesbar eingehängt sein',
+      'Der Root-Benutzer muss es mit dem Flag --force ausführen',
+      'Das Dateisystem muss ein logisches Volume sein'
     ],
-    correctAnswer: "Da die Reihenfolge der USBs/SATA Stecker variiert. Startet der PC mit einem USB-Stick extra, rutscht SDA um zu SDB... Linux fände die Partition nicht mehr und crasht im Kernel-Panic boot, wenn fstab auf Namenszuweisung beruht!",
-    explanation: "/dev/sda ist der flüchtige Name für 'das allererste gefundene Medium'. Ändert man Hardwarekabel, kollabieren simple Dateipfade. Der Fingerabdruck 'UUID' (auslesbar mittels Konsolenbefehl 'blkid') ignoriert Anschlüsse tiefst und verankert die Partition untrennbar lebenslang."
+    correct: 1,
+    explanation: 'Das Ausführen von fsck auf einem aktiv eingehängten Schreib-Lese-Dateisystem kann zu schwerer Datenkorruption führen.',
+  },
+  {
+    id: 'q-lpic1-101-4-007', lessonId: 'lpic1-101-4-2', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl zeigt den gesamten Festplattenspeicher, den belegten und den verfügbaren Speicher auf allen eingehängten Dateisystemen an?',
+    options: ['du -h', 'df -h', 'lsblk', 'fdisk -l'],
+    correct: 1,
+    explanation: '`df` (disk free) berichtet über die Speicherplatzbelegung des Dateisystems. Das Flag `-h` macht die Ausgabe menschenlesbar.',
+  },
+  {
+    id: 'q-lpic1-101-4-008', lessonId: 'lpic1-101-4-2', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Wenn Sie wissen müssen, wie viel Speicherplatz ein bestimmtes Verzeichnis (wie /var/log) verbraucht, welchen Befehl verwenden Sie?',
+    options: ['df /var/log', 'du -sh /var/log', 'ls -s /var/log', 'fsck /var/log'],
+    correct: 1,
+    explanation: '`du` (disk usage) schätzt den Dateispeicherverbrauch; `-s` fasst die Summe zusammen.',
+  },
+  {
+    id: 'q-lpic1-101-4-009', lessonId: 'lpic1-101-4-2', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Welches Tool ermöglicht es Ihnen, Parameter (wie maximale Einhängezyklen oder Fehlerverhalten) eines bestehenden ext4-Dateisystems zu ändern?',
+    options: ['dumpe2fs', 'fsck.ext4', 'tune2fs', 'e2label'],
+    correct: 2,
+    explanation: '`tune2fs` ermöglicht die Anpassung einstellbarer Dateisystemparameter auf ext2/ext3/ext4-Systemen.',
+  },
+  {
+    id: 'q-lpic1-101-4-010', lessonId: 'lpic1-101-4-2', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Welcher Befehl wird speziell zum Prüfen und Reparieren von XFS-Dateisystemen verwendet?',
+    options: ['fsck.xfs', 'xfs_repair', 'tune2fs', 'xfs_check'],
+    correct: 1,
+    explanation: 'Obwohl `fsck.xfs` aus Kompatibilitätsgründen existiert, ist `xfs_repair` das Hauptwerkzeug für XFS-Prüfungen.',
   },
 
-  // L4: Permissions Utilisateurs et Avancées UNIX (SUID/Sticky)
+  // ─── 104.3 Einhängen und Aushängen von Dateisystemen steuern (5 Fragen) ───
   {
-    id: 10441,
-    question: "Lesen Sie Oktale! Einer simplen Setup.txt wurde eine Systemberechtigung von '644' anvertraut. Welcher visuellen Buchstabensuppe der Dateiliste (`ls -l`) wird Sie beim Betrachten der Rechte im Textbildschirm anschnauzen?",
-    options: [
-      "rw-r--r--",
-      "rwxrwxrwx",
-      "rwxrw-r--",
-      "rwxr-xr-x"
-    ],
-    correctAnswer: "rw-r--r--",
-    explanation: "Die Aufteilung ist klar: User=6 (Read 4 + Write 2). Group=4 (Nur read). Others=4 (Nur read). Linux baut dies stoisch zusammen und signalisiert: Ich darf bearbeiten, der ungenannte Rest der Systemwelt liest lediglich."
+    id: 'q-lpic1-101-4-011', lessonId: 'lpic1-101-4-3', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Welche Konfigurationsdatei liest das Betriebssystem beim Booten, um Dateisysteme automatisch einzuhängen?',
+    options: ['/etc/mtab', '/etc/fstab', '/proc/mounts', '/etc/mount.conf'],
+    correct: 1,
+    explanation: '/etc/fstab (filesystem table) enthält statische Informationen über Dateisysteme und Einhängepunkte.',
   },
   {
-    id: 10442,
-    question: "Das mysteriöse, kleine, spezielle S-Bit ('Set User ID' / SUID) verleiht standard Linux-Accounts durch einen Hack eine sehr temporäre unantastbare Eigenschaft. Welche?",
+    id: 'q-lpic1-101-4-012', lessonId: 'lpic1-101-4-3', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl hängt alle in /etc/fstab erwähnten Dateisysteme ein, die die Option "auto" haben?',
+    options: ['mount --all', 'mount -a', 'mount --fstab', 'automount'],
+    correct: 1,
+    explanation: '`mount -a` führt einen Einhängebefehl für jeden Eintrag in /etc/fstab aus, außer für solche mit "noauto".',
+  },
+  {
+    id: 'q-lpic1-101-4-013', lessonId: 'lpic1-101-4-3', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Wozu dient in /etc/fstab das sechste Feld (pass)?',
     options: [
-      "Nur Logs unter Root in das flüchtige /tmp public zu werfen.",
-      "Der unbekannte Passagier-User darf kurzerhand und sekundenweise mit der Autorität, Macht und der absoluten Identität des originalen Dateibesitzers herrschend dieses Skript und Binary (wie 'passwd') abfeuern!",
-      "Er vermacht das Verzeichnis seiner Linux-Zweitgruppe restlos in ewiges Eigentum.",
-      "Bündelt in einem Hardlink die Dateigrößen."
+      'Es definiert die Anzahl der Einhängevorgänge vor einer Prüfung',
+      'Es steuert, ob das Dateisystem Swap verwendet',
+      'Es bestimmt die Reihenfolge, in der fsck die Dateisysteme beim Booten prüft',
+      'Es legt die Backup-Frequenz für dump fest'
     ],
-    correctAnswer: "Der unbekannte Passagier-User darf kurzerhand und sekundenweise mit der Autorität, Macht und der absoluten Identität des originalen Dateibesitzers herrschend dieses Skript und Binary (wie 'passwd') abfeuern!",
-    explanation: "So greifen simple Linux-User auf Shadow-Password Hashes vom Rootverzeichnis der Admins zu: Der 'passwd'-Befehl zückt sein SUID-Schwert für eine Mikrosekunde - erhebt euch zum allmächtigen Executer - und befördert Euch augenblicklich danach ins dunkle Nichts als einfacher Arbeiter der Gruppe zurück."
+    correct: 2,
+    explanation: 'Das pass-Feld gibt fsck die Reihenfolge vor. Root ist 1, andere sind 2, 0 bedeutet keine Prüfung.',
+  },
+  {
+    id: 'q-lpic1-101-4-014', lessonId: 'lpic1-101-4-3', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welche fstab-Option verhindert, dass Benutzer ausführbare Dateien auf diesem Dateisystem starten?',
+    options: ['nosuid', 'nodev', 'noexec', 'ro'],
+    correct: 2,
+    explanation: 'Die Option `noexec` verhindert die Ausführung von Binärdateien auf dem Dateisystem.',
+  },
+  {
+    id: 'q-lpic1-101-4-015', lessonId: 'lpic1-101-4-3', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Welche Datei (oder symbolischer Link) liefert eine Liste der aktuell vom Kernel eingehängten Dateisysteme?',
+    options: ['/etc/fstab', '/etc/mtab', '/proc/mounts', '/boot/mounts'],
+    correct: 2,
+    explanation: '`/proc/mounts` ist eine virtuelle Datei, die den aktuellen Zustand der Einhängungen des Kernels widerspiegelt.',
   },
 
-  // L5: Les Liens Logiques d'Atajos et Inodes (Ln)
+  // ─── 104.5 Dateiberechtigungen und -eigentum verwalten (6 Fragen) ───
   {
-    id: 10451,
-    question: "Was kennzeichnet den tief verankerten fundamentalsten Unterschied einer simplen Systemverknüpfung (Symbolic Link) zu einem absolut verknüpften harten Zwillingsbruder (Hard Link, `ln`) am EXT4 Laufwerk?",
+    id: 'q-lpic1-101-4-016', lessonId: 'lpic1-101-4-5', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Wenn eine Datei die Berechtigungen `rwxr-xr--` hat, was ist die numerische (oktale) Entsprechung?',
+    options: ['754', '744', '755', '774'],
+    correct: 0,
+    explanation: 'rwx (7), r-x (5), r-- (4). Ergebnis: 754.',
+  },
+  {
+    id: 'q-lpic1-101-4-017', lessonId: 'lpic1-101-4-5', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl ändert Eigentümer und Gruppe einer Datei bericht.doc auf Benutzer "alice" und Gruppe "finanzen"?',
+    options: ['chmod alice:finanzen bericht.doc', 'chown alice:finanzen bericht.doc', 'chgrp alice:finanzen bericht.doc', 'chuser alice:finanzen bericht.doc'],
+    correct: 1,
+    explanation: '`chown benutzer:gruppe datei` ändert sowohl Eigentümer als auch Gruppe.',
+  },
+  {
+    id: 'q-lpic1-101-4-018', lessonId: 'lpic1-101-4-5', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Was passiert, wenn bei einer ausführbaren Binärdatei das SUID-Bit (Set User ID) gesetzt ist?',
     options: [
-      "Der Hard Link erlaubt Sprünge rüber in gänzlich fremdartige ISO Dateisysteme auf DVD Rohlingen.",
-      "Ein Hardlink rettet ausschließlich Pfad-Buchstaben im Cache.",
-      "Der Hardlink teilt sich mit der Mutter exakt und wahrhaftig untrennbar denselben Inode-Platzblock tief unten im Dateisystem-Fundament! Eine namentliche Löschung des Originals wird physikalisch somit gar keine Text-Auslöschung der eigentlichen Bytes provozieren!",
-      "Symlinks verschlingen bei der Datengruppierung unweigerlich weit mehr Terabytes."
+      'Die Datei kann nur vom Root-Benutzer geändert werden',
+      'Der Prozess wird bei Ausführung mit den Rechten des Dateieigentümers gestartet',
+      'Die Datei wird automatisch im Hintergrund ausgeführt',
+      'Sie kann von niemandem außer Root gelöscht werden'
     ],
-    correctAnswer: "Der Hardlink teilt sich mit der Mutter exakt und wahrhaftig untrennbar denselben Inode-Platzblock tief unten im Dateisystem-Fundament! Eine namentliche Löschung des Originals wird physikalisch somit gar keine Text-Auslöschung der eigentlichen Bytes provozieren!",
-    explanation: "Hardlinks sind wahre Zwillinge. Es sind keine Umleitungen. Für den Chip existiert auf der SSD tief drinnen keine Differenz ob er Eintrag 1 ('Wichtig') oder Eintrag 2 ('Klon') aufruft... beide Nummern lauten gleich. Tilgt das 'rm' den Eintrag 1 aus dem Sichtbereich, hält Eintrag Nummer 2 den SSD Speicherfleck im System unangetastet am Leben, bis auch er irgendwann in Flammen aufgeht!"
+    correct: 1,
+    explanation: 'SUID ermöglicht es einem Prozess, mit den Rechten des Dateieigentümers zu laufen.',
+  },
+  {
+    id: 'q-lpic1-101-4-019', lessonId: 'lpic1-101-4-5', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Ein Verzeichnis (/shared) hat die Berechtigungen 1777 (drwxrwxrwt). Was bewirkt das Sticky Bit (das "t") hier?',
+    options: [
+      'Neu erstellte Dateien erben die Gruppenzugehörigkeit',
+      'Es erzwingt Nur-Lese-Zugriff für alle Dateien',
+      'Benutzer können nur Dateien löschen, die ihnen selbst gehören',
+      'Es macht das Verzeichnis unveränderlich'
+    ],
+    correct: 2,
+    explanation: 'Das Sticky Bit verhindert das Löschen von Dateien in einem Verzeichnis durch Nicht-Eigentümer.',
+  },
+  {
+    id: 'q-lpic1-101-4-020', lessonId: 'lpic1-101-4-5', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Wenn die umask 0022 ist, welche Standardberechtigungen erhält eine neu erstellte Textdatei?',
+    options: ['666 (rw-rw-rw-)', '644 (rw-r--r--)', '755 (rwxr-xr-x)', '777 (rwxrwxrwx)'],
+    correct: 1,
+    explanation: 'Dateien starten mit 666 Basisrechten; 666 - 022 = 644.',
+  },
+  {
+    id: 'q-lpic1-101-4-021', lessonId: 'lpic1-101-4-5', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welches Flag wird mit `chmod` oder `chown` verwendet, um Änderungen rekursiv auf alle Dateien in einem Verzeichnis anzuwenden?',
+    options: ['-a', '-r', '-R', '-f'],
+    correct: 2,
+    explanation: 'Das Flag `-R` steht für rekursiv und wendet den Befehl auf den gesamten Verzeichnisbaum an.',
   },
 
-  // L6: PHS! Architecture OS! 
+  // ─── 104.6 Harte und symbolische Links erstellen und ändern (4 Fragen) ───
   {
-    id: 10461,
-    question: "Welches eherne globale Architekturgesetz des Linux-Standardisierungs-Gremiums bestimmt den eisernen Laufweg von Dateien? (Z.b dass in `/etc` Niemals Ausführbare Binärdateien hausen dürfen, oder Log-Volumen zwingend in `/var` abgesondert sind)?",
+    id: 'q-lpic1-101-4-022', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl erstellt einen symbolischen Link namens `shortcut` auf `datei.txt`?',
+    options: ['ln datei.txt shortcut', 'ln -s datei.txt shortcut', 'link datei.txt shortcut', 'ln -c datei.txt shortcut'],
+    correct: 1,
+    explanation: '`ln -s ziel name` erstellt einen symbolischen Link.',
+  },
+  {
+    id: 'q-lpic1-101-4-023', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Welche Aussage über harte Links ist RICHTIG?',
     options: [
-      "FHS (Filesystem Hierarchy Standard)",
-      "GNU Posix GPL",
-      "LBS (Linux Base Specifications)",
-      "LFS (Linux From Scratch)"
+      'Sie können auf Verzeichnisse zeigen',
+      'Sie können über Dateisystemgrenzen hinweg zeigen',
+      'Sie teilen sich exakt dieselbe Inode-Nummer mit der Originaldatei',
+      'Wird das Original gelöscht, funktioniert der harte Link nicht mehr'
     ],
-    correctAnswer: "FHS (Filesystem Hierarchy Standard)",
-    explanation: "Die Architektur des Filesystem Hierarchy Standard beendet jeden Wildwuchs an Software-Deployments weltweit. Admins der Antarktis oder in Europa wissen durch das FHS Zertifikat sofort stoisch: Variable Web-Drucker-Logs finden sie niemals bei Betriebssystem-Befehlen."
-  }
-]
+    correct: 2,
+    explanation: 'Harte Links zeigen direkt auf die Inode und teilen sich dieselbe Inode-Nummer.',
+  },
+  {
+    id: 'q-lpic1-101-4-024', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Was passiert mit einem symbolischen Link, wenn die Originaldatei gelöscht wird?',
+    options: [
+      'Der symbolische Link wird "gebrochen" und funktioniert nicht mehr',
+      'Der symbolische Link wird automatisch gelöscht',
+      'Die Daten bleiben über den symbolischen Link erreichbar',
+      'Der symbolische Link wird in einen harten Link umgewandelt'
+    ],
+    correct: 0,
+    explanation: 'Ein symbolischer Link wird "tot" (dangling), wenn sein Ziel entfernt wird.',
+  },
+  {
+    id: 'q-lpic1-101-4-025', lessonId: 'lpic1-101-4-1', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Was passiert mit dem Link-Zähler einer Inode, wenn Sie einen harten Link auf eine Datei erstellen?',
+    options: [
+      'Er verringert sich um 1',
+      'Er erhöht sich um 1',
+      'Er bleibt gleich',
+      'Er wird auf 0 gesetzt'
+    ],
+    correct: 1,
+    explanation: 'Das Erstellen eines harten Links erhöht den nlink-Zähler in der Inode.',
+  },
+
+  // ─── 104.7 Systemdateien finden und Dateien an den richtigen Ort platzieren (5 Fragen) ───
+  {
+    id: 'q-lpic1-101-4-026', lessonId: 'lpic1-101-4-7', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Wo sollten laut Filesystem Hierarchy Standard (FHS) systemweite Konfigurationsdateien liegen?',
+    options: ['/opt', '/usr', '/etc', '/var'],
+    correct: 2,
+    explanation: '/etc enthält hostspezifische systemweite Konfigurationsdateien.',
+  },
+  {
+    id: 'q-lpic1-101-4-027', lessonId: 'lpic1-101-4-7', topicId: 4, difficulty: 'easy', type: 'mcq',
+    question: 'Welches Verzeichnis ist für sich schnell ändernde Daten wie Protokolldateien und Datenbanken vorgesehen?',
+    options: ['/var', '/tmp', '/srv', '/usr'],
+    correct: 0,
+    explanation: '/var enthält variable Datendateien.',
+  },
+  {
+    id: 'q-lpic1-101-4-028', lessonId: 'lpic1-101-4-7', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'Wo sollten optionale Softwarepakete von Drittanbietern laut FHS installiert werden?',
+    options: ['/usr/local', '/opt', '/var', '/bin'],
+    correct: 1,
+    explanation: '/opt ist für die Installation zusätzlicher Softwarepakete reserviert.',
+  },
+  {
+    id: 'q-lpic1-101-4-029', lessonId: 'lpic1-101-4-7', topicId: 4, difficulty: 'medium', type: 'mcq',
+    question: 'In modernen Linux-Systemen ist welches Verzeichnis oft ein symbolischer Link auf /usr/bin?',
+    options: ['/sbin', '/etc', '/bin', '/dev'],
+    correct: 2,
+    explanation: 'Viele moderne Distributionen haben `/bin` und `/usr/bin` zusammengeführt, wobei `/bin` ein Link auf `/usr/bin` ist.',
+  },
+  {
+    id: 'q-lpic1-101-4-030', lessonId: 'lpic1-101-4-7', topicId: 4, difficulty: 'hard', type: 'mcq',
+    question: 'Welches Verzeichnis enthält temporäre Dateien, deren Erhalt zwischen Systemneustarts NICHT garantiert ist?',
+    options: ['/var/tmp', '/tmp', '/home/tmp', '/mnt/tmp'],
+    correct: 1,
+    explanation: '`/tmp` ist für temporäre Dateien; viele Systeme leeren es beim Neustart.',
+  },
+];

@@ -1,199 +1,321 @@
-// LPIC-1 101 Topic 3 Quiz - German
+// LPIC-1 101 Quiz — Thema 3: GNU- und Unix-Befehle (Deutsch)
 
 export const lpic1_101_topic3_de = [
-  // L1: Ligne de commande
+  // ─── 103.1 Auf der Befehlszeile arbeiten (7 Fragen) ───
   {
-    id: 10311,
-    question: "Welche Syntax repräsentiert die streng korrekte Methode unter Linux Bash, um das Wort 'Hallo' temporär in die lokale Speicherhülle einer neuen Variable mit dem Namen 'GRUSS' zu legen?",
-    options: [
-      "set GRUSS = Hallo",
-      "GRUSS='Hallo'",
-      "GRUSS = 'Hallo'",
-      "export $GRUSS=Hallo"
-    ],
-    correctAnswer: "GRUSS='Hallo'",
-    explanation: "Die Bash verbietet jegliche Leerzeichen rund um das Gleichheitszeichen '=' bei Zuweisungen strikt. Es muss direkt aneinanderkleben als NAME=WERT formuliert sein!"
+    id: 'q-lpic1-101-3-001', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher der folgenden Befehle bestimmt, ob ein bestimmter Name ein Shell-Builtin, ein Alias oder ein externer Befehl ist?',
+    options: ['find', 'which', 'type', 'locate'],
+    correct: 2,
+    explanation: 'Der Befehl `type` zeigt genau an, wie die Shell einen Namen interpretiert (Builtin, Alias, Datei oder Funktion).',
   },
   {
-    id: 10312,
-    question: "Um zweifelsfrei zu verifizieren, dass ein Sysadmin keinen versehentlich überschriebenen Alias namens 'rm' ruft, sondern die tatsächliche Binärdatei der Löschapplikation vom Laufwerk ansteuert... welches Werkzeug verrät den genauen Code-Typus der Befehlsausführung?",
-    options: [
-      "whereis rm",
-      "type rm",
-      "whatis rm",
-      "find rm"
-    ],
-    correctAnswer: "type rm",
-    explanation: "'type' unterscheidet und verrät, ob ein Wort eine manipulierte Shell-Funktion, ein abstrakter Alias, ein RAM-internes Shell Built-in (wie 'cd') ist, oder ob es wirklich von der externen Programmdatei '/bin/rm' stammt!"
+    id: 'q-lpic1-101-3-002', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welche Umgebungsvariable enthält eine durch Doppelpunkte getrennte Liste von Verzeichnissen, in denen die Shell nach ausführbaren Befehlen sucht?',
+    options: ['EXEC_DIR', 'PATH', 'COMMAND_DIR', 'BASH_ENV'],
+    correct: 1,
+    explanation: 'Die Variable $PATH definiert die Verzeichnisse, in denen die Shell nach ausführbaren Dateien sucht.',
   },
   {
-    id: 10313,
-    question: "Wie verleihen wir dem geschlossenen Zustand einer lokalen Variable MYSQL_PORT='3306' globale Reichweite, so dass jedes später geöffnete kleine Unterskript aus dieser aktuellen Console diesen Wert 'erbt'?",
-    options: [
-      "global MYSQL_PORT",
-      "export MYSQL_PORT",
-      "bash_ENV MYSQL_PORT",
-      "publish MYSQL_PORT"
-    ],
-    correctAnswer: "export MYSQL_PORT",
-    explanation: "Das Shell-Build-in 'export' verlagert einen simplen String aus dem lokalen Gefängnis in die weite Umgebungssphäre (Environment). Er wird so in die Blutbahn aufgerufen untergeordneter Skript-Kinder gepumpt."
-  },
-
-  // L2: Filtres
-  {
-    id: 10321,
-    question: "Dieser Unix-Textsezierer bricht Log-Dateien auf: Welcher Befehl isoliert strengstens NUR die 3. Text-Spalte (Wenn die Daten durch einen Doppelpunkt ':' als Delimiter getrennt sind)?",
-    options: [
-      "cut -d: -f3 daten.txt",
-      "cut -c ':' -N 3 daten.txt",
-      "grep -d ':' -f 3 daten.txt",
-      "awk ':' print 3"
-    ],
-    correctAnswer: "cut -d: -f3 daten.txt",
-    explanation: "'cut' ist das Skalpell der Passwd- und Systemtabellen. '-d' wählt das exklusive Trennsymbol. Der Parameter '-f' (Field) zupft dann genau diese definierte Stelle zur Sichtbarkeit heraus."
+    id: 'q-lpic1-101-3-003', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl zeigt Kurzinformationen über die Systemarchitektur, die Kernel-Version und den Hostnamen an?',
+    options: ['arch', 'sysinfo', 'lsb_release', 'uname -a'],
+    correct: 3,
+    explanation: 'uname mit dem Flag -a (all) gibt alle Systeminformationen einschließlich Kernel und Hardware aus.',
   },
   {
-    id: 10322,
-    question: "Wie zwingt man ein Terminal, eine Apache Logdatei live endlos zu überwachen und in Echtzeit permanent selbst zu aktualisieren, falls dort eine Sekunde später plötzlich tief unten eine neue Codezeile geschrieben wird?",
+    id: 'q-lpic1-101-3-004', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Wie definieren Sie eine Shell-Variable namens `MYVAR` mit dem Text "Hallo", so dass sie auch für Kindprozesse verfügbar ist?',
     options: [
-      "cat -all /var/log/apache.log",
-      "tail -f /var/log/apache.log",
-      "head -end /var/log/apache.log",
-      "less +F /var/log/apache.log"
+      'MYVAR="Hallo"',
+      'set MYVAR="Hallo"',
+      'export MYVAR="Hallo"',
+      'env MYVAR="Hallo"'
     ],
-    correctAnswer: "tail -f /var/log/apache.log",
-    explanation: "Durch den Flag '-f' (Follow / Folgen) gefriert 'tail' den Terminal-Prompt ein und pumpt alles Neue fließend und unmittelbar aus dem Ende des Dateischlunds auf den Monitor der Administratoren!"
+    correct: 2,
+    explanation: 'export erstellt eine Umgebungsvariable, die von allen Kindprozessen geerbt wird.',
   },
   {
-    id: 10323,
-    question: "Sie müssen strikt nur die bloße numerische Zahl ausgeben: Zeig mir den Totalen Zeilenwert vom Roman 'Krieg_und_Frieden.txt'!",
+    id: 'q-lpic1-101-3-005', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Was ist der Hauptunterschied zwischen einfachen Anführungszeichen (\') und doppelten Anführungszeichen (") in Bash?',
     options: [
-      "count -l krieg.txt",
-      "wc -l krieg.txt",
-      "grep -c '*' krieg.txt",
-      "tail -n count krieg.txt"
+      'Einfache Anführungszeichen erlauben Variablenexpansion ($VAR), doppelte nicht',
+      'Doppelte Anführungszeichen erlauben Variablenexpansion ($VAR), einfache verhindern jegliche Expansion',
+      'Doppelte Anführungszeichen sind für Zahlen, einfache für Strings',
+      'Es gibt keinen Unterschied'
     ],
-    correctAnswer: "wc -l krieg.txt",
-    explanation: "'wc' (Word Count) ermittelt den Umfang des Textes. Reduziert durch den Modifikator '-l' (Lines) wird das Output-Format allein auf die puristische Mathe-Ausdruck der Returns-Zahlen limitiert."
+    correct: 1,
+    explanation: 'Doppelte Anführungszeichen erlauben die Variablenexpansion, während einfache Anführungszeichen den literalen Wert aller Zeichen beibehalten.',
+  },
+  {
+    id: 'q-lpic1-101-3-006', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welche Tastenkombination startet eine Rückwärtssuche in der Bash-Befehlshistorie?',
+    options: ['Ctrl+C', 'Ctrl+D', 'Ctrl+R', 'Ctrl+Z'],
+    correct: 2,
+    explanation: 'Ctrl+R startet eine Rückwärtssuche, mit der Sie zuvor ausgeführte Befehle abrufen können.',
+  },
+  {
+    id: 'q-lpic1-101-3-007', lessonId: 'lpic1-101-3-1', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Was bewirkt der Befehl `!55` in Bash?',
+    options: [
+      'Er beendet den Prozess mit der PID 55',
+      'Er führt den Befehl Nummer 55 aus der Historienliste aus',
+      'Er löscht den Befehl Nummer 55 aus der Historie',
+      'Er führt den Befehl "55" aus'
+    ],
+    correct: 1,
+    explanation: 'Das Symbol `!` ruft die Historienerweiterung auf. `!n` bezieht sich auf die Befehlszeile n in der Historienliste.',
   },
 
-  // L3: Fichiers de base
+  // ─── 103.2 Textströme mit Filtern verarbeiten (6 Fragen) ───
   {
-    id: 10331,
-    question: "Der rohe 'find' Befehl krallt sich langsam an jedem Ordnerzweig der gesamten echten Server-Festplatte hinab. Was ist das technische Gegenstück dazu bei 'locate'?",
-    options: [
-      "Eine Google-Webanfrage",
-      "Sucht absolut exklusiv im RAM-Müll.",
-      "Das Abfragen einer zuvor in einer stillen Nachtstunde (cron) statisch generierten, extrem schnellen mlocate.db Inhaltsdatenbank.",
-      "DNS-Netzwerk-Routing"
-    ],
-    correctAnswer: "Das Abfragen einer zuvor in einer stillen Nachtstunde (cron) statisch generierten, extrem schnellen mlocate.db Inhaltsdatenbank.",
-    explanation: "Die Magie hinter Millisekunden-Suchen bei 'locate': Es schaut niemals wirklich auf Ihre C:/ D:/ Laufwerke in diesem Sekundenbruchteil! Es liest im Systemarchiv. Dateigeburten am heutigen Morgen wird er folglich auch vollends ignorieren!"
+    id: 'q-lpic1-101-3-008', lessonId: 'lpic1-101-3-2', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl gibt standardmäßig die LETZTEN 10 Zeilen einer Datei aus?',
+    options: ['head', 'cat', 'tail', 'end'],
+    correct: 2,
+    explanation: 'tail gibt die letzten Zeilen einer Datei aus; standardmäßig 10 Zeilen.',
   },
   {
-    id: 10332,
-    question: "Das Band-Archiv 'tar' besitzt ursprünglich keinerlei Datenbeschneidung/Kompression. Mit welcher geheimen Parameter-Zutat zwingen wir den tar-Aufruf, während des Erschaffens still und heimlich GZIP-Quetschung über die gepackten Dokumente auszuüben?",
-    options: [
-      "tar -xjf datei",
-      "tar -czvf ordner.tar.gz zielordner",
-      "tar -create -zip ordner.zip",
-      "gzip -tar ordner"
-    ],
-    correctAnswer: "tar -czvf ordner.tar.gz zielordner",
-    explanation: "C = Neuerstellung einer Tarball-Archive. Z = Der Schlüssel! Zieht den starken Code von GunZIP. V = Plapperndes 'Verbose'. F = Finale Bestimmung des Outupt-Namen ('ordner.tar.gz')."
-  },
-
-  // L4: Flux
-  {
-    id: 10341,
-    question: "Welcher dieser Konsolen-Idioms entkoppelt radikal Kanal 1 (Erfolge textlich ins ewige Leere in den Linux Nulldev auslöschen!), ABER bündelt schlauerweise den Alarm für dichte Errors von Stream 2 zwingend auf jenes ehemals positive Outputrohr Stream 1?",
-    options: [
-      "find / -name 'conf' > /dev/null 2>&1",
-      "find / -name 'conf' 2> /dev/null > 1",
-      "find / -name 'conf' | dev null 2 1",
-      "find / -name 'conf' >> /dev/null &2=1"
-    ],
-    correctAnswer: "find / -name 'conf' > /dev/null 2>&1",
-    explanation: "Es ist DAS klassisch-Linux Routing. Erst eliminiert man das Positve ('> /dev/null'). Direkt danach zerschmilzt man Error mit der Syntax '2>&1' und verschweißt so exakt die Error 2 Umleitung IN das soeben geleerte Rohr von 1... ins Nichts!"
+    id: 'q-lpic1-101-3-009', lessonId: 'lpic1-101-3-2', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl liest eine Datei und gibt sie mit vorangestellten Zeilennummern aus?',
+    options: ['nl', 'wc -l', 'cat -n', 'Sowohl nl als auch cat -n'],
+    correct: 3,
+    explanation: 'Sowohl `nl` (number lines) als auch `cat -n` stellen den Ausgabezeilen Nummern voran.',
   },
   {
-    id: 10342,
-    question: "Klemptner-Weiche im Terminal! Welches Spezial-Tool verzweigt einen laufenden Wasserstrom an Kommando-Output aus einer Pipe in einer Art Y-Form, um den Fluss PARALLEL in eine gespeicherte Festplattendatei abzufüllen und zeitgleich sofort die Reste weiter auf Sicht an sein nachrückendes Monitor-Zusatzprogramm fließen zu lassen?",
+    id: 'q-lpic1-101-3-010', lessonId: 'lpic1-101-3-2', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welche drei Standardattribute einer Datei zählt der Befehl `wc`?',
     options: [
-      "cat pass | split save.txt | grep root",
-      "cat pass | tee save.txt | grep root",
-      "cat pass >> save.txt | grep root",
-      "cat pass > tee.txt & grep root"
+      'Zeilen, Zeichen, Bytes',
+      'Sätze, Wörter, Zeichen',
+      'Zeilen, Wörter, Bytes/Zeichen',
+      'Zeilen, Wörter, Absätze'
     ],
-    correctAnswer: "cat pass | tee save.txt | grep root",
-    explanation: "'tee' verschluckt fließende Eingangs-Standard-In, druckt davon eine reale Kopie als Hard-Datei 'save.txt' statisch vor die Feste ab, und lässt dann tapfer das Originalwasser fließend unbeirrt dem 'grep' an die Kehle springen!"
-  },
-
-  // L5: Gestion des Process
-  {
-    id: 10351,
-    question: "Ein Node-Backbone in Ihrem Enterprise hängt unrettbar fest und zerschmettert die RAM. Es ist Zeit für eine Kernel-Hinrichtung (SigKill) einer PID auf Prozessebene. Welche Klinge schneidet hier scharf und fatal ohne Nachfrage?",
-    options: [
-      "kill -15 3042",
-      "kill -9 3042",
-      "killall node",
-      "kill -stop 3042"
-    ],
-    correctAnswer: "kill -9 3042",
-    explanation: "Der 'Neuener' ist der Linux-Sensengriff (-9). Er verzichtet gnadenlos auf Warnung SIGTERM (-15). Das Node-Tool ahnt nicht einmal sterben zu müssen, der Kernel raubt ihm nur brachial in der Hundertstelsekunde sämtlichen Speicherzugriff zum Exitus."
+    correct: 2,
+    explanation: 'wc (word count) gibt die Anzahl der Zeilen, Wörter und Bytes/Zeichen aus.',
   },
   {
-    id: 10352,
-    question: "Oops! Sie entfesselten eine gewaltige wget-Saugaktion in ihrer Haupt-Shell, jedoch das flinke Hintertür-Ampersand '&' vergessen! Jetzt friert der Bildschirm nutzlos für den Download ein. Mit welchem Tastengriff zwingen wir das Monster augenblicklich in den Stand-By-Sleep (Suspended) und schnappen uns den sauberen Terminalprompt wieder?",
+    id: 'q-lpic1-101-3-011', lessonId: 'lpic1-101-3-2', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl wird verwendet, um aufeinanderfolgende doppelte Zeilen aus einer sortierten Datei zu entfernen?',
+    options: ['sort -u', 'uniq', 'Sowohl sort -u als auch uniq', 'rmdup'],
+    correct: 2,
+    explanation: '`uniq` entfernt aufeinanderfolgende Dubletten. `sort -u` sortiert und entfernt Dubletten global.',
+  },
+  {
+    id: 'q-lpic1-101-3-012', lessonId: 'lpic1-101-3-2', topicId: 3, difficulty: 'hard', type: 'mcq',
+    question: 'Welcher Befehl extrahiert das erste Feld der Datei /etc/passwd, wenn die Felder durch Doppelpunkte (":") getrennt sind?',
     options: [
-      "Ctrl + C",
-      "Ctrl + D",
-      "Ctrl + Z",
-      "Alt  + F4"
+      'awk {print $1} /etc/passwd',
+      'cut -c 1 /etc/passwd',
+      'cut -d: -f1 /etc/passwd',
+      'grep -f1 /etc/passwd'
     ],
-    correctAnswer: "Ctrl + Z",
-    explanation: "'Ctrl+Z' fröstelt die Aktivität. Linux verurteilt es in den passiven Systemschlaf (Stopped). Sie befreien Ihre Finger ans weiße Prompt zurück. Nun lässt er sich per 'bg' als Geist dauerhaft verdammen zu rechnen ohne Sie dabei einzugrenzen."
+    correct: 2,
+    explanation: '`cut -d:` setzt das Trennzeichen auf Doppelpunkt und `-f1` wählt das erste Feld aus.',
+  },
+  {
+    id: 'q-lpic1-101-3-013', lessonId: 'lpic1-101-3-2', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher sed-Befehl ersetzt das Wort "apple" bei jedem Vorkommen in file.txt vollständig durch "orange"?',
+    options: ['sed "r/apple/orange/" file.txt', 'sed "s/apple/orange/g" file.txt', 'sed "s/apple/orange" file.txt', 'sed "sub/apple/orange/all" file.txt'],
+    correct: 1,
+    explanation: 'Der Ersetzungsbefehl `s/Muster/Ersatz/g` ersetzt alle Vorkommen in jeder Zeile.',
   },
 
-  // L6: Priorité
+  // ─── 103.3 Grundlegende Dateiverwaltung (6 Fragen) ───
   {
-    id: 10361,
-    question: "Über die UNIX Rechenuhr des Scheduling (Nice-Levels oder NI): Wecher konkrete Prioritäts-Wert erschafft die ultimativste bösartigste egoistisch forderndste Maschine, vor der gar alle anderen Kernel-Prozesse zitternd beiseitetreten müssen?",
+    id: 'q-lpic1-101-3-014', lessonId: 'lpic1-101-3-3', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl erstellt eine leere Datei namens "notes.txt" oder aktualisiert deren Zeitstempel, falls sie bereits existiert?',
+    options: ['create notes.txt', 'touch notes.txt', 'echo notes.txt', 'mkfile notes.txt'],
+    correct: 1,
+    explanation: 'touch ändert Dateizeitstempel oder erstellt eine leere Datei, wenn sie nicht existiert.',
+  },
+  {
+    id: 'q-lpic1-101-3-015', lessonId: 'lpic1-101-3-3', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl erstellt ein Verzeichnis namens `project` und dessen übergeordnetes Verzeichnis `work`, falls dieses nicht existiert?',
+    options: ['mkdir work/project', 'mkdir -p work/project', 'mkdir --all work/project', 'mkdir -r work/project'],
+    correct: 1,
+    explanation: 'mkdir -p (--parents) erstellt Zwischenverzeichnisse nach Bedarf.',
+  },
+  {
+    id: 'q-lpic1-101-3-016', lessonId: 'lpic1-101-3-3', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Sie möchten ein gesamtes Verzeichnis `/docs` und seinen Inhalt nach `/backup` kopieren. Welchen Befehl verwenden Sie?',
+    options: ['cp /docs /backup', 'copy /docs /backup', 'cp -r /docs /backup', 'cp -a /docs'],
+    correct: 2,
+    explanation: 'Das Flag -r (rekursiv) weist `cp` an, Verzeichnisse zusammen mit ihrem Inhalt zu kopieren.',
+  },
+  {
+    id: 'q-lpic1-101-3-017', lessonId: 'lpic1-101-3-3', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Worauf passt der Platzhalter `?` beim Bash-Globbing?',
+    options: ['Beliebige Anzahl von Zeichen', 'Genau ein Zeichen', 'Null oder ein Zeichen', 'Nur Zahlen'],
+    correct: 1,
+    explanation: 'Beim Globbing passt `?` auf genau ein Zeichen.',
+  },
+  {
+    id: 'q-lpic1-101-3-018', lessonId: 'lpic1-101-3-3', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welcher Befehl sucht in Echtzeit im aktiven Dateisystem nach einer Datei?',
+    options: ['locate file', 'updatedb', 'grep file', 'find / -name file'],
+    correct: 3,
+    explanation: '`find` durchläuft den tatsächlichen Dateisystembaum, um Dateien zu lokalisieren.',
+  },
+  {
+    id: 'q-lpic1-101-3-019', lessonId: 'lpic1-101-3-3', topicId: 3, difficulty: 'hard', type: 'mcq',
+    question: 'Welcher Befehl komprimiert das Verzeichnis `/home/user` in ein einzelnes mit gzip komprimiertes tar-Archiv?',
     options: [
-      "Die Positive Zahl +19",
-      "Der Extrem-Minuspunkt -20",
-      "Die Gleichgewichtszahl 0",
-      "Eine Plus 10"
+      'tar -xzvf backup.tar.gz /home/user',
+      'tar -czvf backup.tar.gz /home/user',
+      'zip backup.tar.gz /home/user',
+      'gzip /home/user > backup.tar.gz'
     ],
-    correctAnswer: "Der Extrem-Minuspunkt -20",
-    explanation: "Negative Ziffern erheben den Super-Zwang für sich alleine (Aggressiv zu anderen Tasks). Das Recht so gnadenlos Rechenzyklen abzufordern (-20), muss aus strikten Limitierungen vom Kernel gar verwehrt werden und ist in Linux einzig Root erlaubt! (Werte wie +19 machen äußerst nachgiebig/nett!)"
+    correct: 1,
+    explanation: '`tar -czvf` erstellt (-c) ein mit gzip komprimiertes (-z) Archiv.',
   },
 
-  // L7: Regex
+  // ─── 103.4 Ströme, Rohre und Umleitungen verwenden (4 Fragen) ───
   {
-    id: 10371,
-    question: "Wenn Sie in Basic Regular Expressions (RegEx) das Anker-Zeichen namens 'Zirkumflex / Caret' `^` positionieren, zwingen Sie strengstens das Suchprogramm: Ein Trefferwort darf absolut erst als korrekt zählen wenn:",
+    id: 'q-lpic1-101-3-020', lessonId: 'lpic1-101-3-4', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Was bewirkt der Umleitungsoperator `>>`?',
     options: [
-      "Es das Textziel an den ultimativen und wahrhaften nackten Anfang jeder beginnenden Reihe bindet.",
-      "Es keinerlei unsaubere Vokale enthält.",
-      "Es exakt auf die Linie mit einem Carriage Return vor dem Fall hinabkracht.",
-      "Ein Buchstabe mit einem Stern ins unendliche springt."
+      'Leitet stdout in eine Datei um und überschreibt diese',
+      'Leitet stdin aus einer Datei um',
+      'Leitet stdout in eine Datei um und hängt sie an das Ende an',
+      'Leitet stderr in eine Datei um'
     ],
-    correctAnswer: "Es das Textziel an den ultimativen und wahrhaften nackten Anfang jeder beginnenden Reihe bindet.",
-    explanation: "Der '^'-Pfeil nagelt Suchergebnisse auf Spalte 1, Position 1 fest! In einem Satz wie 'Ein root Admin kam', scheitert `^root` wehklagend. (Um Treffer unnachgiebig auf das Ende des Text-Abgrunds festzufrieren, existiert für grep das '$')"
+    correct: 2,
+    explanation: '`>>` hängt stdout an eine Datei an, ohne den vorhandenen Inhalt zu löschen.',
+  },
+  {
+    id: 'q-lpic1-101-3-021', lessonId: 'lpic1-101-3-4', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Wie leiten Sie die Standardfehlerausgabe (stderr) in eine Datei namens `error.log` um?',
+    options: ['> error.log', '2> error.log', '&> error.log', '1> error.log'],
+    correct: 1,
+    explanation: 'Der Dateideskriptor 2 repräsentiert stderr; `2>` leitet diesen um.',
+  },
+  {
+    id: 'q-lpic1-101-3-022', lessonId: 'lpic1-101-3-4', topicId: 3, difficulty: 'hard', type: 'mcq',
+    question: 'Was bewirkt das Anhängen von `2>&1` an einen Befehl?',
+    options: [
+      'Es leitet stdout nach stderr um',
+      'Es sendet sowohl stdout als auch stderr an denselben Ort',
+      'Es unterdrückt jegliche Ausgabe',
+      'Es führt Befehl 2 und dann Befehl 1 aus'
+    ],
+    correct: 1,
+    explanation: '`2>&1` leitet stderr dorthin um, wohin stdout gerade zeigt.',
+  },
+  {
+    id: 'q-lpic1-101-3-023', lessonId: 'lpic1-101-3-4', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welches Tool liest von der Standardeingabe und schreibt SOWOHL in die Standardausgabe als auch in eine oder mehrere Dateien?',
+    options: ['pipe', 'cat', 'tee', 'xargs'],
+    correct: 2,
+    explanation: '`tee` teilt die Eingabe und sendet sie sowohl an die Ausgabe als auch an eine Datei.',
   },
 
-  // L8: Vi
+  // ─── 103.5 Prozesse erstellen, überwachen und beenden (5 Fragen) ───
   {
-    id: 10381,
-    question: "Wie löst die Urversion des Editors 'VI' im ruhigen 'Befehlsmodus' instinktiv und in einem brutalen Schlag das Skalpell-Manöver der Vollen-Zerschneidung und dem Eliminieren (Ausschneiden) jener gesamten Zeile, die Ihr Cursor just berührt?",
+    id: 'q-lpic1-101-3-024', lessonId: 'lpic1-101-3-5', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl bietet eine dynamische Echtzeitansicht der laufenden Prozesse im System?',
+    options: ['ps', 'jobs', 'top', 'w'],
+    correct: 2,
+    explanation: '`top` zeigt eine interaktive, aktualisierte Liste der Systemprozesse an.',
+  },
+  {
+    id: 'q-lpic1-101-3-025', lessonId: 'lpic1-101-3-5', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welches Signal wird standardmäßig vom Befehl `kill` gesendet, wenn keines angegeben ist?',
+    options: ['SIGKILL (9)', 'SIGTERM (15)', 'SIGINT (2)', 'SIGHUP (1)'],
+    correct: 1,
+    explanation: '`kill` sendet standardmäßig SIGTERM (15) und bittet damit um eine saubere Beendung.',
+  },
+  {
+    id: 'q-lpic1-101-3-026', lessonId: 'lpic1-101-3-5', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Wenn ein Prozess einen normalen kill-Befehl ignoriert, wie können Sie dessen sofortige Beendigung erzwingen?',
+    options: ['kill -1 PID', 'kill -9 PID', 'kill -15 PID', 'pkill PID'],
+    correct: 1,
+    explanation: '`kill -9` sendet SIGKILL, welches vom Prozess nicht ignoriert werden kann.',
+  },
+  {
+    id: 'q-lpic1-101-3-027', lessonId: 'lpic1-101-3-5', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Welche Tastenkombination pausiert den aktiven Vordergrund-Job in einem Terminal?',
+    options: ['Ctrl+C', 'Ctrl+D', 'Ctrl+Z', 'Alt+F4'],
+    correct: 2,
+    explanation: 'Ctrl+Z pausiert den Vordergrundprozess, der dann fortgesetzt oder in den Hintergrund verschoben werden kann.',
+  },
+  {
+    id: 'q-lpic1-101-3-028', lessonId: 'lpic1-101-3-5', topicId: 3, difficulty: 'hard', type: 'mcq',
+    question: 'Wie führen Sie einen Befehl so aus, dass er auch nach dem Abmelden vom Terminal weiterläuft?',
+    options: ['command &', 'bg command', 'nohup command &', 'service command start'],
+    correct: 2,
+    explanation: '`nohup` macht einen Befehl immun gegen das Auflegesignal (SIGHUP).',
+  },
+
+  // ─── 103.6 Ausführungsprioritäten von Prozessen ändern (3 Fragen) ───
+  {
+    id: 'q-lpic1-101-3-029', lessonId: 'lpic1-101-3-6', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Was ist der gültige Bereich für "nice"-Werte unter Linux?',
+    options: ['Von 0 bis 100', 'Von -20 bis +19', 'Von -19 bis +20', 'Von 1 bis 99'],
+    correct: 1,
+    explanation: 'Nice-Werte reichen von -20 (höchste Priorität) bis +19 (niedrigste Priorität).',
+  },
+  {
+    id: 'q-lpic1-101-3-030', lessonId: 'lpic1-101-3-6', topicId: 3, difficulty: 'hard', type: 'mcq',
+    question: 'Welche Aktion kann ein normaler Benutzer (nicht root) bezüglich Prozessprioritäten durchführen?',
     options: [
-      "Eine Kaskade aus ctrl+del",
-      "Buchstabe 'y' mal 'y'",
-      "Die doppelte schnelle Betätigung 'd' hintereinander getrommelt: 'dd'",
-      "Durch Alt + X"
+      'Den nice-Wert seiner eigenen Prozesse verringern',
+      'Den nice-Wert seiner eigenen Prozesse erhöhen (Priorität verringern)',
+      'Die Priorität jedes beliebiger Benutzerprozesse ändern',
+      'Den nice-Wert auf -20 setzen'
     ],
-    correctAnswer: "Die doppelte schnelle Betätigung 'd' hintereinander getrommelt: 'dd'",
-    explanation: "Die Command Area duldet keinen Roman! 'dd' reißt das Fundament rücksichtslos heraus (Delete). Wenn Sie sanft klonen und zeilenweise den Puffer im Gedächtnis speisen wollten, ordert der Editor das Yank-Kommando ('yy')."
-  }
-]
+    correct: 1,
+    explanation: 'Normale Benutzer können nur den nice-Wert erhöhen (Priorität senken) ihrer eigenen Prozesse.',
+  },
+  {
+    id: 'q-lpic1-101-3-031', lessonId: 'lpic1-101-3-6', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Befehl startet einen neuen Prozess mit einer angepassten Scheduling-Priorität?',
+    options: ['renice', 'nice', 'top', 'priority'],
+    correct: 1,
+    explanation: '`nice` startet einen neuen Prozess mit geänderter Priorität; `renice` ändert bestehende Prozesse.',
+  },
+
+  // ─── 103.7 Textdateien mit regulären Ausdrücken durchsuchen (2 Fragen) ───
+  {
+    id: 'q-lpic1-101-3-032', lessonId: 'lpic1-101-3-7', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Was stellt der Anker `^` in regulären Ausdrücken dar?',
+    options: ['Das Zeilenende', 'Beliebige Gruppe von Zeichen', 'Der Zeilenanfang', 'Negation'],
+    correct: 2,
+    explanation: 'Das Zeichen `^` ankert die Übereinstimmung am Anfang der Zeile.',
+  },
+  {
+    id: 'q-lpic1-101-3-033', lessonId: 'lpic1-101-3-7', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Was bedeutet `.*` in einem regulären Ausdruck?',
+    options: [
+      'Null oder mehr literale Punkte',
+      'Ein literaler Punkt gefolgt von einem literalen Sternchen',
+      'Null oder mehr beliebige Zeichen',
+      'Genau ein Punkt'
+    ],
+    correct: 2,
+    explanation: 'Der Punkt passt auf jedes Zeichen und das Sternchen auf null oder mehr; zusammen passen sie auf jede Zeichenkette.',
+  },
+
+  // ─── 103.8 Grundlegende Dateibearbeitung (3 Fragen) ───
+  {
+    id: 'q-lpic1-101-3-034', lessonId: 'lpic1-101-3-8', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Welcher Modus ist standardmäßig aktiv, wenn Sie vi öffnen?',
+    options: ['Einfügemodus', 'Visueller Modus', 'Normal- (Befehls-) Modus', 'Ex-Modus'],
+    correct: 2,
+    explanation: 'vi öffnet sich im Normalmodus, in dem Tasteneingaben als Befehle interpretiert werden.',
+  },
+  {
+    id: 'q-lpic1-101-3-035', lessonId: 'lpic1-101-3-8', topicId: 3, difficulty: 'medium', type: 'mcq',
+    question: 'Was bewirkt der Befehl `dd` im Normalmodus von vi?',
+    options: ['Löscht das aktuelle Zeichen', 'Löscht die gesamte aktuelle Zeile', 'Verdoppelt die aktuelle Zeile', 'Speichert das Dokument'],
+    correct: 1,
+    explanation: '`dd` löscht (schneidet aus) die gesamte aktuelle Zeile in vi.',
+  },
+  {
+    id: 'q-lpic1-101-3-036', lessonId: 'lpic1-101-3-8', topicId: 3, difficulty: 'easy', type: 'mcq',
+    question: 'Wie erzwingen Sie das Beenden von vi, ohne Änderungen zu speichern?',
+    options: [':wq!', ':x', ':q!', ':quit'],
+    correct: 2,
+    explanation: '`:q!` erzwingt das Beenden des Editors, ohne Änderungen zu speichern.',
+  },
+];
