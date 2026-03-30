@@ -1,5 +1,5 @@
 export const quizzes_en = {
-  // Topic 1: Kubernetes Fundamentals (15 questions)
+  // Topic 1: Kubernetes Fundamentals (28 questions - 46%)
   1: [
     {
       id: "kcna-1-q1",
@@ -105,10 +105,101 @@ export const quizzes_en = {
       options: ["Annotations are only used to hide encrypted passwords.", "Annotations cannot be used to select objects by the scheduler (not queryable); they only contain long informational metadata for external tools or rollout revisions.", "Annotations alter Ingress network routing weights, labels do not.", "Annotations are strictly reserved for ReplicaSet objects."],
       correctAnswer: 1,
       explanation: "While Labels act as essential identifiers for 'Selectors', Annotations hold large unstructured payloads (like git commits, builder ids) that K8s ignores for object selection."
+    },
+    {
+      id: "kcna-1-q16",
+      question: "What exactly is an Ingress in Kubernetes?",
+      options: ["A LoadBalancer type Service operating at layer 4 (TCP/UDP).", "An API object that manages external access to the services in a cluster, typically HTTP/HTTPS, handling virtual hosts and path-based routing.", "A command to inject malicious traffic and test resilience.", "The default firewall installed on every Worker node."],
+      correctAnswer: 1,
+      explanation: "Ingress is not a Service, but an L7 (HTTP) routing rule applied to the Ingress Controller, allowing you to funnel traffic towards multiple Services using a single exposed IP, discriminating by URL domain or path."
+    },
+    {
+      id: "kcna-1-q17",
+      question: "What is the relationship regarding IP addresses among Containers within the exact same Pod?",
+      options: ["Each container has its own distinct private IP on the VPC net.", "Containers in the same Pod share the exact same IP address and port space (network namespace), thus they communicate with each other via 'localhost'.", "They cannot communicate with each other except through an external ClusterIP Service.", "They share the IP but cannot expose multiple ports."],
+      correctAnswer: 1,
+      explanation: "The network namespace is generated at the Pod level. All enclosed containers share 'localhost'; if Container A exposes port 80 and Container B exposes 8080, A will contact B on localhost:8080."
+    },
+    {
+      id: "kcna-1-q18",
+      question: "At the CLI level, what is the `kubeconfig` file and what is its purpose?",
+      options: ["It initiates the worker node's operating system configuration.", "It is a bash script compiling the kube-apiserver sources.", "It is a client-side configuration file used by `kubectl` to authenticate to the API Server and determine which cluster (and context) to connect to.", "It is the internal file Kubelet utilizes to speak with containerd."],
+      correctAnswer: 2,
+      explanation: "The `~/.kube/config` file contains Details about Clusters, Users (TLS certificates or tokens), and Contexts (user-cluster-namespace mapping) to allow kubectl reliable communication."
+    },
+    {
+      id: "kcna-1-q19",
+      question: "What best describes the use case of Minikube, Kind, or K3s in the Kubernetes ecosystem?",
+      options: ["They are cloud-native distributions used for multi-region clusters on an enterprise global scale.", "CLI tools to massively delete orphaned pods.", "Lightweight versions of Kubernetes typically used to run single-node clusters on local machines (laptops) for development and testing purposes.", "CSI storage drivers for NVMe disk virtualization."],
+      correctAnswer: 2,
+      explanation: "Minikube, Kind (Kubernetes In Docker), or MicroK8s are optimal solutions for running a K8s cluster locally consuming minimal resources (CPU/RAM)."
+    },
+    {
+      id: "kcna-1-q20",
+      question: "If you need to perform a complete backup and snapshot of the cluster's configuration state, from which component must you extract the data?",
+      options: ["kube-apiserver", "Kubelet logs", "etcd", "Root Filesystem of the Worker Node"],
+      correctAnswer: 2,
+      explanation: "Since etcd is the datastore where K8s saves its declarative state completely (your definitions of secrets, pods, deploys, configmaps), a full etcd snapshot backup equates to backing up the cluster."
+    },
+    {
+      id: "kcna-1-q21",
+      question: "What does the 'CronJob' K8s Resource represent compared to a simple 'Job'?",
+      options: ["A CronJob runs infinitely without ever stopping or dying (like a Deployment).", "A CronJob allows you to specify a recurring time schedule (Linux cron style: * * * * *) to start Jobs repeatedly at precise times.", "A CronJob executes processes requiring permanent Storage.", "A CronJob allocates predetermined GPU resources."],
+      correctAnswer: 1,
+      explanation: "A Job is a 'one-shot' operation (starts a container, does a task, exits successfully and terminates). A CronJob does the same thing but triggers a Job following a calendar schedule (e.g. midnight every night)."
+    },
+    {
+      id: "kcna-1-q22",
+      question: "How does the declarative logic (Desired State vs Actual State) governed by the Control Plane work in K8s?",
+      options: ["The user tells the API Server *what* they want (e.g. 5 replicas). Controllers constantly observe the difference between the requested state (Desired) and the cluster reality (Actual), and actively take measures to zero out the divergence.", "The user provides an imperative set of bash steps (1. create Pod, 2. check if exists, 3. repeat 5 times).", "The Worker node emails the Sysadmin if replicas fall below target, requesting manual start authorization.", "If etcd falls K8s adapts to run statically from cache in perpetual 'Actual State'."],
+      correctAnswer: 0,
+      explanation: "The Kube-Controller-Manager embodies the Control-Loop (Control Theory): Desired vs Actual. If they are different, it commands corrections."
+    },
+    {
+      id: "kcna-1-q23",
+      question: "What is a Custom Resource Definition (CRD) in Kubernetes?",
+      options: ["An additional physical firewall installed in datacenters.", "A natural extension of the base Kubernetes APIs, permitting you to create and save custom non-native objects and Controllers (e.g. Certificate, Issuer, KafkaCluster).", "A yaml cli command to deactivate namespaces.", "An executive method converting K8s into Docker Swarm."],
+      correctAnswer: 1,
+      explanation: "CRDs allow K8s extensibility. You can instruct the API Server to start comprehending nonexistent objects like `kind: DatabasePostgres`, which will then be interpreted by a Custom Controller (Operator Pattern)."
+    },
+    {
+      id: "kcna-1-q24",
+      question: "Select the true statement regarding Multi-container Pods.",
+      options: ["The various containers cannot under any circumstances share local disk folders or files.", "All containers will have a distinct standalone private IP Address and communicate via ARP.", "They must all be compiled with the identical OS programming language.", "They can share state by mounting the exact same Storage Volumes (e.g., container A writes a file in /var/www, container B reads it during runtime)."],
+      correctAnswer: 3,
+      explanation: "Sharing Network and Storage namespaces, processes inside a Multi-container Pod can communicate via local IPC (Localhost) or by reading the same folders passed as EmptyDir Volumes."
+    },
+    {
+      id: "kcna-1-q25",
+      question: "How does the K8s orchestrator ensure that passwords in Secret files do not inadvertently end up printed on console screens or left on unformatted Hard Drives?",
+      options: ["Secrets are never encrypted but are written onto hard disks encrypted with TLS algorithms.", "By default, K8s mounts them inside Pods not as physical files but in tmpfs (Node RAM - RAM-backed file system) so the data bypasses local resident storage.", "Secrets are rendered illegible to anyone lacking the private SSH key.", "It uses a protected and transient FTP protocol."],
+      correctAnswer: 1,
+      explanation: "Kubelet physically mounts Secret blocks (Volume mount) as 'tmpfs'. When the pod is destroyed or closes, the RAM memory evaporates, ensuring no remnants reside on the host server's physical storage."
+    },
+    {
+      id: "kcna-1-q26",
+      question: "What is an incorrect use case for a ConfigMap?",
+      options: ["Saving the 'nginx.conf' or 'redis.conf' configuration file.", "Storing generic Staging environment URLs for frontend API calls.", "Configuring an entire lightweight shell script for daemon execution.", "Storing dozens of sensitive RSA private keys and AWS API Keys."],
+      correctAnswer: 3,
+      explanation: "A ConfigMap possesses no safe separation RBAC shielding for text, displaying it in clear-text. Sensitive files (RSA/AWS Keys) must be categorically saved into the 'Secret' object."
+    },
+    {
+      id: "kcna-1-q27",
+      question: "If you accidentally or voluntarily delete the correctly running Pod of a Deployment via `kubectl delete pod my-app-xyz`, what happens?",
+      options: ["The website will generate a permanent 404 error and the deployment is deemed Corrupted.", "Nothing, the application processes inside do not die because they survive the container in the background.", "The underlying ReplicaSet managed by the Deployment will immediately notice there is 1 replica fewer than the Desired State and will spin up a new Pod to replace it within seconds.", "The Control Plane deletes the Deployment to align it with the new actual state of its Pods."],
+      correctAnswer: 2,
+      explanation: "This is the genuine power of self-healing: the ReplicaSet will act instantly (Control Loop) cloning a Pod to maintain the, say, 3 set replicas."
+    },
+    {
+      id: "kcna-1-q28",
+      question: "What occurs if you configure a 'DaemonSet' without explicit toleration rules while restrictive 'Taints' are active on the Master (Control Plane) nodes?",
+      options: ["The DaemonSet forces placement and spins up pods even on the Master to bypass the rule.", "The DaemonSet will only expand clone pods on un-tainted Worker nodes, ignoring the Masters and not spawning anything there.", "It generates a CrashLoopBackoff.", "It disconnects the Master's Kubelet."],
+      correctAnswer: 1,
+      explanation: "The Scheduler still evaluates Taints and Tolerations for DaemonSets. Without specific tolerations, the master node will be spared and preserved."
     }
   ],
 
-  // Topic 2: Container Orchestration (10 questions)
+  // Topic 2: Container Orchestration (13 questions - 22%)
   2: [
     {
       id: "kcna-2-q1",
@@ -134,7 +225,7 @@ export const quizzes_en = {
     {
       id: "kcna-2-q4",
       question: "What problem does an orchestrator solve via the 'Pod Anti-Affinity' option?",
-      options: ["Assigning Pods only to nodes with powerful GPU graphics cards.", "Preventing two or more Pods of the same vital service from being allocated simultaneously on the same node, protecting against a total application outage in case the host hardware explodes.", "Rejecting Kubelet Pod startups if the global OS RAM usage exceeds 80%.", "Automatically migrating DBs to faster NVMe storage upon performance drop."],
+      options: ["Assigning Pods only to nodes with powerful GPU graphics cards.", "Preventing two or more Pods of the same vital service from being allocated simultaneously on the same node, protecting against a total application outage in case the host hardware fails.", "Rejecting Kubelet Pod startups if the global OS RAM usage exceeds 80%.", "Automatically migrating DBs to faster NVMe storage upon performance drop."],
       correctAnswer: 1,
       explanation: "Anti-Affinity rules prevent lethal clustering; they force the Scheduler to place Pods of the same group onto geographically (or physically) separate nodes, maximizing High Availability."
     },
@@ -154,10 +245,10 @@ export const quizzes_en = {
     },
     {
       id: "kcna-2-q7",
-      question: "Which Probe does the Kubelet use to internally understand if the base container process inside the pod (e.g., Nginx web server) has successfully started up and hasn't hung during boot?",
+      question: "Which Probe does the Kubelet use to analyze if the base container process (e.g. Nginx web server) has successfully started up and hasn't experienced a critical freeze during its runtime, deciding whether to restart it?",
       options: ["OOM Probe", "Readiness Probe", "Liveness Probe", "Startup Probe"],
-      correctAnswer: 3,
-      explanation: "The Startup Probe delays the start of other checks for slow-booting apps. The Liveness Probe periodically checks if the app is deadlocked and needs a restart. The Readiness Probe checks if the pod can actually serve TCP/IP traffic."
+      correctAnswer: 2,
+      explanation: "The Liveness Probe is the survival tool. If it repeatedly fails, the kubelet considers the container malfunctioning and orders its termination and generative restart."
     },
     {
       id: "kcna-2-q8",
@@ -171,18 +262,39 @@ export const quizzes_en = {
       question: "Which pattern and architectural component guarantees that a specific Pod is cloned and runs exactly one identical instance for EVERY single physical worker node in the cluster?",
       options: ["DaemonSet", "CronJob", "StatefulSet", "Horizontal Pod Autoscaler"],
       correctAnswer: 0,
-      explanation: "A DaemonSet ensures one Pod uniquely runs 1-to-1 per node (if I have 150 active VMs, I'll invariably have 150 log-forwarder agents on each). If a 151st server joins, the Master automatically drops a clone on it."
+      explanation: "A DaemonSet ensures one Pod uniquely runs 1-to-1 per node (if I have 150 active VMs, I'll invariably have 150 agents on each, excellent for driver handling or metrics)."
     },
     {
       id: "kcna-2-q10",
-      question: "What specifically is Kustomize within the native K8s orchestration landscape?",
-      options: ["A decentralized relational database integrated into etcd.", "A client-side tool (integrated into `kubectl -k`) for customizing YAML manifests declaratively via 'overlays' without resorting to text templating engines (like Helm).", "A specialized volume class in the cloud for AWS Elastic Block Storage CSI.", "A plugin that boots inside the Control Plane to rename Selectors based on node hashes."],
+      question: "Considering runtime execution in the Open Container Initiative (OCI), what does this standard define?",
+      options: ["Only the YAML syntax for Helm charts.", "Formal, neutral specifications of both the Image format (Image Spec) and runtime (Runtime Spec) to create vendor-agnostic containers (working for Docker, Podman, and Crio alike).", "LDAP authentication permissions.", "Mandatory CAdvisor metrics to send to Prometheus."],
       correctAnswer: 1,
-      explanation: "Kustomize is excellent for generating diverse manifests for 'Environments' (Dev, Prod, Staging) through folder-based Patching logic (bases and overlays). It is natively integrated into kubectl v1.14+."
+      explanation: "The OCI was established to have a unified image format. An image compiled on Docker.app can run perfectly on containerd, Podman, or buildah thanks to the OCI Image Specification."
+    },
+    {
+      id: "kcna-2-q11",
+      question: "What is intended by an 'Image Tag' in container architectural deployments?",
+      options: ["An HTTP header label generated by the k8s API Gateway.", "The exact version identifier of the container image (e.g. `nginx:1.24-alpine`). It guarantees pointing unequivocally to a strict binary OS imprint over time.", "The developer's encoded private password.", "The unique hardware IP assignment identifier on the CNI subnet."],
+      correctAnswer: 1,
+      explanation: "Tags curb regressions. The use of floating `:latest` tags in production is heavily discouraged as they introduce untracked divergences during subsequent image re-pulls."
+    },
+    {
+      id: "kcna-2-q12",
+      question: "In the context of Orchestration, why is a 'StatefulSet' preferred for applications like Master-Slave Databases (e.g. MongoDB) over a classic 'Deployment'?",
+      options: ["Because it dynamically scales according to HTTP traffic.", "Because the StatefulSet provides predictable deterministic names, fixed network routing, and guarantees serial boot ordering, vital for stable DB attachments to a persistent VolumeClaim disk over time.", "Because it destroys pods much faster without waiting for SigTerm signals.", "Because it utilizes RAM memory and never permanent PV disk."],
+      correctAnswer: 1,
+      explanation: "StatefulSet pods have predictable identifiable names (e.g., web-0, web-1), and if a pod dies, its replacement acquires the identical name and identical PVC (hard disk) attachment, keeping the 'State' intact."
+    },
+    {
+      id: "kcna-2-q13",
+      question: "What role does the 'Container Registry' (e.g. Docker Hub, Harbor, Amazon ECR) fulfill?",
+      options: ["A static Linux Library that Kubelet calls to boot the local app web process.", "A remote, centralized archive (Repository) utilized to host, maintain versioning, and physically distribute ready-to-use Container Images. Worker nodes pull from it during pod startup.", "The Master Node's etcd Database where the Kubernetes API lives.", "An external commercial Prometheus server."],
+      correctAnswer: 1,
+      explanation: "The registry is the colossal 'library' from which the runtime of any Kubernetes node fetches (Pulls) the binary package compiled via CI, extracting it onto its filesystem."
     }
   ],
 
-  // Topic 3: Cloud Native Architecture & CNCF (10 questions)
+  // Topic 3: Cloud Native Architecture & CNCF (10 questions - 16%)
   3: [
     {
       id: "kcna-3-q1",
@@ -238,7 +350,7 @@ export const quizzes_en = {
       question: "What classification does the Helm tool fall under according to the CNCF Kubernetes paradigm?",
       options: ["Container Network Interface CNI.", "An Eulerian Kernel Runtime.", "A Service Mesh Control Plane UI.", "A templating Package Manager that deploys complex, complete applications and their aggregated YAML assets (like databases and agents) as abstract monolithic units called 'Charts'."],
       correctAnswer: 3,
-      explanation: "Helm (Graduated Project) immensely simplifies K8s maintenance, reducing 30 manifests into a single installable package via `helm install redis bitnami/redis`, quite analogous to `apt-get` on linux architectures."
+      explanation: "Helm (Graduated Project) immensely simplifies K8s maintenance, reducing 30 manifests into a single installable package via `helm install redis-server bitnami/redis`, quite analogous to `apt-get` on linux architectures."
     },
     {
       id: "kcna-3-q9",
@@ -256,7 +368,7 @@ export const quizzes_en = {
     }
   ],
 
-  // Topic 4: Cloud Native Observability (8 questions)
+  // Topic 4: Cloud Native Observability (5 questions - 8%)
   4: [
     {
       id: "kcna-4-q1",
@@ -267,56 +379,35 @@ export const quizzes_en = {
     },
     {
       id: "kcna-4-q2",
-      question: "Prometheus is considered the reigning champion of open-source cloud-native alerting. It is based on which internal formatting Storage Model?",
-      options: ["Relational Graph RBMs.", "Time-series Database (Scalar values sampled cyclically, aggregated and strictly associated to Unix timestamps).", "SQL Server Columnar format.", "NoSQL Document Store (JSON blobs format like MongoDB)."],
-      correctAnswer: 1,
-      explanation: "Prometheus leverages TSDBs, consistently storing samples formatted similarly to `http_requests_total{method='get'} 1056 @timestamp`."
-    },
-    {
-      id: "kcna-4-q3",
       question: "Within the Prometheus context, what does it mean to rely precisely on a PULL Model mechanism (Scraping)?",
       options: ["It signifies that your application containers are not tasked with placing calls toward the Prometheus IP. It is Prometheus (the host server) that proactively queries/pulls via HTTP GET the local /metrics endpoints of resources and Pods registered in the cluster at every tick.", "It means it uses GitOps to force git to send daily log update zips.", "It means the server peacefully waits for HTTPS Push messages from containers generating an alert.", "Prometheus instantly contacts Datadog Cloud extracting limited L7 Pull APIs."],
       correctAnswer: 0,
       explanation: "Prometheus is the controller constantly ringing the bell of the monitored app. Unlike antiquated Push models, if Prometheus staggers and crashes, target app Pods peacefully continue operations without saturating the network bus waiting endlessly on a downed Master DB server loop."
     },
     {
-      id: "kcna-4-q4",
+      id: "kcna-4-q3",
       question: "You are attempting to use the OpenTelemetry standard to export to the CNCF tool called Jaeger or Zipkin. What exact sort of diagnostic resource do these utilities produce internally?",
       options: ["Distributed Tracing (Tracing sequentially calculated timeline spans for requests smeared across assorted remote microservices).", "Raw Kernel OS Node raw IOps metrics.", "Webhook push notifications triggered by financial anomalies (FinOps).", "They emit and render raw systemd boot logs."],
       correctAnswer: 0,
-      explanation: "Jaeger gathers spans and weaves an overarching end-to-end timeline traversal. It allows an SRE/Dev team to unearth that the '/buy-cart' API taking 8 seconds to load is bottlenecked exactly because of a 7.8-second delay stemming solely inside the SQL Auth Database housed in a remote 'Node Z' container."
+      explanation: "Jaeger gathers spans and weaves an overarching end-to-end timeline traversal. It allows an SRE/Dev team to unearth what transaction proxies took how long comprehensively."
     },
     {
-      id: "kcna-4-q5",
+      id: "kcna-4-q4",
       question: "The FinOps practice in K8s ecosystems is a crucial talking point often intertwined with OTel tech visibility. What is its main objective?",
       options: ["To apply fiscal VAT taxes automatically via an isolated container traversing the ecommerce server pods.", "To construct analytical visibility spotting massive revenue hemorrhages caused by Cloud Sprawl (Thousands of dollars billed monthly by AWS for scaled, un-utilized orphan cluster pods), thereby empowering Devs and Business teams alike by merging finance and OPS into one DevOps culture.", "To plug crypto-wallets directly into Helm yaml files.", "To unconditionally outlaw horizontal scaling and permanently freeze CI pipelines exclusively on bank holidays depending on timezones."],
       correctAnswer: 1,
       explanation: "FinOps helps surgically slash and accurately calculate the cloud Run-Rate for an isolated single K8s Namespace (understanding who burnt the Azure fee quota, optimizing Tiers, or properly right-sizing Cluster limit requests)."
     },
     {
-      id: "kcna-4-q6",
-      question: "An obsolete legacy application engineered without standard metric embedding libraries for OTel desperately needs scraping by Prometheus into metrics. What Pattern or accessory tool allows integrating Legacy App metrics straight into PromQL?",
-      options: ["Prometheus Exporters (e.g., MySQL Exporter, Redis Exporter, cAdvisor).", "Fluentd Logs parsers.", "ArgoCD Webhooks reverse tunneled nodes.", "Replacing the dockershim engine with pure CRI-O."],
-      correctAnswer: 0,
-      explanation: "Exporters seamlessly transmute existing naked data into an exposed '/metrics' endpoint in a cleanly formatted TimeSeries ASCII arrangement, permitting Prometheus to scrape it indiscriminately."
-    },
-    {
-      id: "kcna-4-q7",
+      id: "kcna-4-q5",
       question: "Whilst assembling a sturdy Alert Manager blueprint utilizing Prometheus Metrics, you desire alerts for any threshold anomaly. Within the Cloud Native temporal tree database, which dialect do you write your historic, mathematical queries in?",
       options: ["Standard Relational MySQL", "MongoDB Json Aggregation Language", "Regex Regular Expression sed pattern", "PromQL (Prometheus Query Language)"],
       correctAnswer: 3,
       explanation: "PromQL provides potent spatial mathematical aggregators such as rate(), and histogram_quantile(), specifically architected by CNCF and deeply woven natively into Grafana and Alert configs."
-    },
-    {
-      id: "kcna-4-q8",
-      question: "What avant-garde Open Source CNCF tool is ordinarily instituted specifically and purely for the native aggregation of 'Logs' (raw textual string payloads)?",
-      options: ["Grafana Loki / Promtail / Fluentd", "CoreDNS / Envoy Proxy L7", "Etcd / Kube-api Server", "Helm Repo Manifest Server"],
-      correctAnswer: 0,
-      explanation: "Projects akin to LOKI and Fluentd are exquisitely focused on managing syslog console arrays (The 2nd 'L' in the MLT observability pillars), digesting JSON formatting stemming from myriad sprawling K8s nodes onto a centralized, metadata-labeled index."
     }
   ],
 
-  // Topic 5: Application Delivery & Security (7 questions)
+  // Topic 5: Application Delivery & Security (4 questions - 8%)
   5: [
     {
       id: "kcna-5-q1",
@@ -341,31 +432,10 @@ export const quizzes_en = {
     },
     {
       id: "kcna-5-q4",
-      question: "An elementary Prod Cloud Native Security infringement is engaging evasive container tags at Release stage. Why is publishing an image explicitly tagged as `nginx:latest` heavily execrated versus referencing `nginx:1.24.2-alpine@sha256-bd4v...` in tight DevOps K8s delivery chains?",
-      options: ["Because the containerd runtime operator purely identifies and parses images tagged internally 'red' for OS compiling constructs.", "Because utilizing 'latest' annihilates traceability parameterization. If the base image is overwritten upstream with a catastrophic vendor-breaking update tomorrow, and one of your pods crashes 6 months later, kubelet 'pull-policy' will re-fetch the novel flawed version. Your local test setup from 6 months ago remains pristine whilst production burns instantly due to untracked divergence.", "The default Kube scheduler outright denies build assignments possessing 'latest' syntax void of validated API tokens.", "The recursive cluster DNS negates IP dynamic balancing for untagged cipher repositories."],
-      correctAnswer: 1,
-      explanation: "Rigorous image tagging guarantees Immutability and inflexible Versioning, both for Docker images pulled and for declarative Infrastructure as Code continuity records."
-    },
-    {
-      id: "kcna-5-q5",
       question: "Your corporation establishes 'Shift Left' DevSecOps principles targeted at Containers. What procedural option concretely showcases a prototypical implementation action within this philosophy realm?",
       options: ["Shutting down K8s Worker node instances on Friday nights manually using the master prompt.", "Actively counter-attacking offensive internet botnets using cloud nmap terminal scans.", "Infusing adamant unyielding pipeline automations directly inside CI/CD logic paths that rigorously scan a generated Docker build image targeting identified CVE vulnerabilities and frail packages prior to pushing it towards Prod deployment (i.e. if the Java Log4j module discovers an inherent flaw, the Integration CI goes 'red', killing the Release).", "Providing clearance for privileged container access bypassing Admission Security profiles via administration user roles."],
       correctAnswer: 2,
-      explanation: "Moving 'Security' steadily to the 'Left' during the lifetime of SDLC operations indicates hunting down security anomalies drastically early in code build progression (Code Section: 4th C); essentially averting catastrophes aggressively earlier rather than panicking in Live-Production environments."
-    },
-    {
-      id: "kcna-5-q6",
-      question: "Excluding isolated NetworkPolicies & external OIDC Authentication procedures, which fundamental native K8s Control Plane mechanism ensures robust overarching Security by analyzing WHO is explicitly Permitted to alter, invoke or purely visualize discrete components inside an API call context?",
-      options: ["Network Security Default Groups", "Pod Security Guidelines (PSA)", "Role-Based Access Control (RBAC)", "ConfigMap TLS SSL Certificate checks policy lists"],
-      correctAnswer: 2,
-      explanation: "The mighty RBAC matrix (Roles, ClusterRoles, and matching RoleBindings YAML formats) reigns supreme as the Cluster's primary authorization engine. As an illustration, enforcing 'View API' privileges uniquely over isolated resources prevents an intern from executing a catastrophic delete sweep across unassigned multi-tenant namespaces."
-    },
-    {
-      id: "kcna-5-q7",
-      question: "Relating to Application Delivery infrastructure pipelines, what pivotal utility is furnished by a resilient Continuous Integration (CI) configuration midway through the pre-Orchestration lifespan of Cloud Native code?",
-      options: ["Unmanned automation covering holistic Unit tests, Quality Assurance feedback loops and the airtight build/packaging of standalone Binaries/Docker Containers confined efficiently to an ephemeral server node (ergo excluding real online deployments).", "An instantaneous reverse-proxy directing inbound internet L7 traffic dynamically via dynamic IPs based routing nodes.", "Acting as local hands-on maintenance mechanism for upgrading Helm dependencies sequentially via shell.", "Providing intrinsic End To End AWS IPSEC encrypted IPS/Storage layers spanning deep cluster PV storage bounds."],
-      correctAnswer: 0,
-      explanation: "Classic C.I. (Continuous Integration tools e.g., GitHub Actions, Jenkins CI) undertakes the rigorous automated Build/Integration & Syntax linting processes preceding Live deployment. It delivers lightning-fast compilation insights returning code coverage directly to developers guaranteeing seamless package assemblies."
+      explanation: "'Moving Security steadfastly to the Left' during the lifetime of SDLC operations indicates hunting down security anomalies drastically early in code build progression (Code Section: 4th C); essentially averting catastrophes aggressively earlier rather than panicking in Live-Production environments."
     }
   ]
 };
