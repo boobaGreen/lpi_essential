@@ -68,7 +68,8 @@ export default function QuizGame({ level = 1, onComplete }) {
     setSelected(index)
     setShowFeedback(true)
     const q = questions[current]
-    if (index === q.correct) {
+    const correctIdx = typeof q.correct !== 'undefined' ? q.correct : q.correctAnswer;
+    if (index === correctIdx) {
       setScore(s => s + 1)
     }
   }
@@ -76,8 +77,10 @@ export default function QuizGame({ level = 1, onComplete }) {
   const handleNext = () => {
     if (current + 1 >= questions.length) {
       setFinished(true)
-      const pct = ((score + (selected === questions[current]?.correct ? 0 : 0)) / questions.length) * 100
-      const actualScore = score + (selected === questions[current]?.correct ? 0 : 0)
+      const currentQ = questions[current];
+      const correctIdx = typeof currentQ?.correct !== 'undefined' ? currentQ?.correct : currentQ?.correctAnswer;
+      const pct = ((score + (selected === correctIdx ? 0 : 0)) / questions.length) * 100
+      const actualScore = score + (selected === correctIdx ? 0 : 0)
       if (actualScore >= Math.ceil(questions.length * 0.6)) {
         addXP(config.xp)
         completeGame(`quiz-lv${level}`)
@@ -159,7 +162,8 @@ export default function QuizGame({ level = 1, onComplete }) {
       {/* Options */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {q.options.map((opt, i) => {
-          const isCorrect = i === q.correct
+          const correctIdx = typeof q.correct !== 'undefined' ? q.correct : q.correctAnswer;
+          const isCorrect = i === correctIdx;
           const isSelected = i === selected
           let bg = 'rgba(255,255,255,0.03)'
           let border = 'var(--color-border)'
@@ -203,11 +207,11 @@ export default function QuizGame({ level = 1, onComplete }) {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
             <div style={{
               padding: '14px 18px', borderRadius: '10px', fontSize: '0.88rem', lineHeight: 1.6,
-              background: selected === q.correct ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
-              border: `1px solid ${selected === q.correct ? '#22c55e40' : '#ef444440'}`,
+              background: selected === (typeof q.correct !== 'undefined' ? q.correct : q.correctAnswer) ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
+              border: `1px solid ${selected === (typeof q.correct !== 'undefined' ? q.correct : q.correctAnswer) ? '#22c55e40' : '#ef444440'}`,
               color: 'var(--color-text-secondary)',
             }}>
-              {selected === -1 ? `⏱️ ${t('timeUp') || 'Tempo scaduto!'} ` : selected === q.correct ? `✅ ${t('correctBadge') || 'Corretto!'} ` : `❌ ${t('wrongBadge') || 'Sbagliato!'} `}
+              {selected === -1 ? `⏱️ ${t('timeUp', 'Tempo scaduto!')} ` : selected === (typeof q.correct !== 'undefined' ? q.correct : q.correctAnswer) ? `✅ ${t('correctAnswerFallback', 'Corretto!')} ` : `❌ ${t('wrongAnswerFallback', 'Sbagliato!')} `}
               {q.explanation}
             </div>
             <button className="btn-primary" onClick={handleNext} style={{ width: '100%', marginTop: '12px' }}>
