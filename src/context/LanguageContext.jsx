@@ -59,8 +59,8 @@ export function LanguageProvider({ children }) {
 
   // Helper function to get translation
   // Fallback to Italian (the base language) if a key is missing in the current language
-  const t = (key) => {
-    return dictionaries[currentLang][key] || dictionaries['it'][key] || key
+  const t = (key, defaultValue) => {
+    return dictionaries[currentLang][key] || dictionaries['it'][key] || defaultValue || key
   }
 
   return (
