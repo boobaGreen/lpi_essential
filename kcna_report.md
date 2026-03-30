@@ -19,10 +19,11 @@ All'interno di questi 5 Argomenti, sono state scritte **20 Lezioni Teoriche Inte
 
 ---
 
-## Domande d'esame e Quiz
-Per la parte pratica e preparazione d'esame, sono stati realizzati **20 Quiz approfonditi**:
-- Esattamente **4 Quiz per ogni Topic**, costruendo un test bilanciato.
-- Ogni quiz contiene: la domada d'esame, 4 opzioni complesse a risposta multipla, l'indice corretto e 1 paragrafo tecnico esteso di *Explanation (spiegazione dettagliata per quando l'utente sbaglia)*.
+## Domande d'esame e Quiz (MOCK EXAM MASSICCIO)
+Per la parte pratica e preparazione d'esame reale (simulazione), sono stati ora realizzati **50 Quiz approfonditi da simulazione esame in scala reale**:
+- Esattamente **tra le 7 e le 15 Domande per ogni Topic** (Ponderate per mappare accuratamente il curriculum KCNA: il primo Topic copre quasi un 46% del peso totale come all'esame originale CNCF).
+- Ogni quiz contiene: la domada d'esame in stile certificazione, 4 opzioni complesse a risposta multipla, l'indice corretto e 1 paragrafo tecnico esteso di *Explanation (spiegazione dettagliata per quando l'utente sbaglia o vuole revisionare)*.
+- Essendo presenti 50 domande, la piattaforma utilizzerà il motore `allQuizzes` per estrarle causalmente e generare una **vera e propria simulazione di esame finale KCNA**!
 
 ---
 
