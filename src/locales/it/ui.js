@@ -134,22 +134,26 @@ export const ui = {
   'course_name_lpic1-102': "LPIC-1 Exam 102",
   'course_name_lpic-2': "LPIC-2",
   'course_name_rhcsa': "RHCSA",
+  'course_name_kcna': "KCNA (Kubernetes and Cloud Native Associate)",
   // Course Descriptions
   'course_desc_lpi-010': "Fondamentali di Linux: FOSS, file system, comandi base, sicurezza.",
   'course_desc_lpic1-101': "Architettura di sistema, pacchetti, comandi GNU/Unix, filesystem e FHS.",
   'course_desc_lpic1-102': "Shell scripting, interfacce, database SQL, networking, sicurezza.",
   'course_desc_lpic-2': "Linux avanzato: kernel, storage, networking avanzato, server.",
   'course_desc_rhcsa': "Red Hat Certified System Administrator: storage, rete, SELinux, container.",
+  'course_desc_kcna': "Fondamenti Kubernetes, orchestrazione e architettura cloud native.",
   // Exam Info Fallbacks
   'exam_info_lpi-010': "40 domande • 60 minuti",
   'exam_info_lpic1-101': "60 domande • 90 minuti",
   'exam_info_lpic1-102': "60 domande • 90 minuti",
   'exam_info_lpic-2': "60 domande • 90 min (Esami 201 & 202)",
   'exam_info_rhcsa': "50 domande • 60 minuti",
+  'exam_info_kcna': "60 domande • 90 minuti",
   // Exam Topics Titles
   'exam_topics_lpi-010': "I 5 Topic dell'Esame",
   'exam_topics_lpic1-101': "I 6 Topic dell'Esame",
   'exam_topics_lpic1-102': "I 6 Topic dell'Esame",
   'exam_topics_lpic-2': "I 13 Topic dell'Esame",
   'exam_topics_rhcsa': "I 10 Topic dell'Esame",
+  'exam_topics_kcna': "I 5 Topic dell'Esame",
 }

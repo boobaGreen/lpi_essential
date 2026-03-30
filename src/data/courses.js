@@ -58,6 +58,17 @@ export const COURSES = {
     tags: ['Linux', 'RHEL', 'SysAdmin', 'Red Hat', 'EX200'],
     disclaimer: 'practical-exam',   // flag: mostra disclaimer "esame pratico"
   },
+  'kcna': {
+    id: 'kcna',
+    name: 'KCNA',
+    code: 'KCNA',
+    icon: '☸️',
+    color: '#326ce5',        // Kubernetes blue
+    topicCount: 5,
+    available: true,
+    description: 'Kubernetes and Cloud Native Associate: architettura k8s, orchestrazione e cloud native.',
+    tags: ['Kubernetes', 'Cloud Native', 'CNCF', 'Containers', 'KCNA'],
+  },
 }
 
 export const COURSES_LIST = Object.values(COURSES)

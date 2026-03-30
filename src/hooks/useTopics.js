@@ -103,6 +103,14 @@ import { lpic2_lessonContent as lpic2_LessonContentZH } from '../locales/zh/lpic
 import { lpic2_quizzesDict, lpic2_allQuizzesDict } from '../data/lpic2/quizzes/index.js'
 import { lpic2_extendedContentDict } from '../data/lpic2/extendedContent/index.js'
 
+// ─── KCNA ────────────────────────────────────────────────────────────────────
+import { kcna_topics as kcna_TopicsIT } from '../locales/it/kcna_topics.js'
+import { kcna_topics as kcna_TopicsEN } from '../locales/en/kcna_topics.js'
+import { kcnaLessonContent as kcna_LessonContentIT } from '../locales/it/kcna_lessonContent.js'
+import { kcnaLessonContent as kcna_LessonContentEN } from '../locales/en/kcna_lessonContent.js'
+import { kcnaQuizzesDict, kcnaAllQuizzesDict } from '../data/kcna/quizzes/index.js'
+import { kcnaExtendedContentDict } from '../data/kcna/extendedContent/index.js'
+
 // ─── Dizionari LPI ──────────────────────────────────────────────────────────
 const lessonContentDict = {
   it: itLessonContent, en: enLessonContent, es: esLessonContent,
@@ -188,12 +196,13 @@ const lpic2_LessonContentDict = {
   ru: lpic2_LessonContentRU, zh: lpic2_LessonContentZH
 }
 
-
-
-
-
-
-
+// ─── Dizionari KCNA ──────────────────────────────────────────────────────────
+const kcna_TopicDict = {
+  it: kcna_TopicsIT, en: kcna_TopicsEN
+}
+const kcna_LessonContentDict = {
+  it: kcna_LessonContentIT, en: kcna_LessonContentEN
+}
 
 export function useTopics() {
   const { currentLang } = useLanguage()
@@ -290,6 +299,29 @@ export function useTopics() {
       quizzesByTopic,
       allQuizzes,
       extendedContent: lpic2_extendedContentDict[currentLang] ?? lpic2_extendedContentDict['en'] ?? lpic2_extendedContentDict['it'] ?? {},
+    }
+  }
+
+  // ─── KCNA ──────────────────────────────────────────────────────────────────
+  if (currentCourseId === 'kcna') {
+    const topics = kcna_TopicDict[currentLang] ?? kcna_TopicDict['en'] ?? kcna_TopicDict['it']
+    const lessonContent = kcna_LessonContentDict[currentLang] ?? kcna_LessonContentDict['en'] ?? kcna_LessonContentDict['it']
+    const quizzesByTopic = kcnaQuizzesDict[currentLang] ?? kcnaQuizzesDict['en'] ?? kcnaQuizzesDict['it']
+    const allQuizzes = kcnaAllQuizzesDict[currentLang] ?? kcnaAllQuizzesDict['en'] ?? kcnaAllQuizzesDict['it']
+
+    const getTopic = (id) => topics.find(t => t.id === Number(id))
+    const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
+    const getTotalLessons = () => topics.reduce((sum, t) => sum + t.lessons.length, 0)
+
+    return {
+      topics,
+      getTopic,
+      getLesson,
+      getTotalLessons,
+      lessonContent,
+      quizzesByTopic,
+      allQuizzes,
+      extendedContent: kcnaExtendedContentDict[currentLang] ?? kcnaExtendedContentDict['en'] ?? kcnaExtendedContentDict['it'] ?? {},
     }
   }
 
