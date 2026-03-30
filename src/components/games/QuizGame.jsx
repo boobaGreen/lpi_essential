@@ -204,14 +204,14 @@ export default function QuizGame({ level = 1, onComplete }) {
             <div style={{
               padding: '14px 18px', borderRadius: '10px', fontSize: '0.88rem', lineHeight: 1.6,
               background: selected === q.correct ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
-              border: `1px solid \${selected === q.correct ? '#22c55e40' : '#ef444440'}`,
+              border: `1px solid ${selected === q.correct ? '#22c55e40' : '#ef444440'}`,
               color: 'var(--color-text-secondary)',
             }}>
-              {selected === -1 ? `⏱️ \${t('timeUp') || 'Tempo scaduto!'} ` : selected === q.correct ? `✅ \${t('correctBadge') || 'Corretto!'} ` : `❌ \${t('wrongBadge') || 'Sbagliato!'} `}
+              {selected === -1 ? `⏱️ ${t('timeUp') || 'Tempo scaduto!'} ` : selected === q.correct ? `✅ ${t('correctBadge') || 'Corretto!'} ` : `❌ ${t('wrongBadge') || 'Sbagliato!'} `}
               {q.explanation}
             </div>
             <button className="btn-primary" onClick={handleNext} style={{ width: '100%', marginTop: '12px' }}>
-              {current + 1 >= questions.length ? `📊 \${t('seeResultsBtn') || 'Vedi Risultati'}` : `\${t('nextBtn') || 'Prossima Domanda'} →`}
+              {current + 1 >= questions.length ? `📊 ${t('seeResultsBtn') || 'Vedi Risultati'}` : `${t('nextBtn') || 'Prossima Domanda'} →`}
             </button>
           </motion.div>
         )}
