@@ -135,6 +135,7 @@ export const ui = {
   'course_name_lpic-2': "LPIC-2",
   'course_name_rhcsa': "RHCSA",
   'course_name_kcna': "KCNA (Kubernetes and Cloud Native Associate)",
+  'course_name_itil-pim': "ITIL 4 Practitioner: Incident Management",
   // Course Descriptions
   'course_desc_lpi-010': "Fondamentali di Linux: FOSS, file system, comandi base, sicurezza.",
   'course_desc_lpic1-101': "Architettura di sistema, pacchetti, comandi GNU/Unix, filesystem e FHS.",
@@ -142,6 +143,7 @@ export const ui = {
   'course_desc_lpic-2': "Linux avanzato: kernel, storage, networking avanzato, server.",
   'course_desc_rhcsa': "Red Hat Certified System Administrator: storage, rete, SELinux, container.",
   'course_desc_kcna': "Fondamenti Kubernetes, orchestrazione e architettura cloud native.",
+  'course_desc_itil-pim': "Gestione dell'intero ciclo di vita degli incidenti IT per ripristinare i servizi rapidamente.",
   // Exam Info Fallbacks
   'exam_info_lpi-010': "40 domande • 60 minuti",
   'exam_info_lpic1-101': "60 domande • 90 minuti",
@@ -149,6 +151,7 @@ export const ui = {
   'exam_info_lpic-2': "60 domande • 90 min (Esami 201 & 202)",
   'exam_info_rhcsa': "50 domande • 60 minuti",
   'exam_info_kcna': "60 domande • 90 minuti",
+  'exam_info_itil-pim': "20 domande • 30 minuti",
   // Exam Topics Titles
   'exam_topics_lpi-010': "I 5 Topic dell'Esame",
   'exam_topics_lpic1-101': "I 6 Topic dell'Esame",
@@ -156,4 +159,5 @@ export const ui = {
   'exam_topics_lpic-2': "I 13 Topic dell'Esame",
   'exam_topics_rhcsa': "I 10 Topic dell'Esame",
   'exam_topics_kcna': "I 5 Topic dell'Esame",
+  'exam_topics_itil-pim': "I 5 Topic dell'Esame",
 }

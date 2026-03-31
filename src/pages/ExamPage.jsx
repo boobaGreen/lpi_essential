@@ -47,10 +47,11 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
   const isRhcsa = courseId === 'rhcsa'
   const isLpic1 = courseId === 'lpic1-101'
   const isLpic2 = courseId === 'lpic1-102'
-  const maxScore = isRhcsa ? 300 : ((isLpic1 || isLpic2) ? 800 : 800)
-  const passingScore = isRhcsa ? 210 : ((isLpic1 || isLpic2) ? 500 : 500)
-  const scaledScore = Math.round((score / questions.length) * maxScore)
-  const passed = scaledScore >= passingScore
+  const isItil = courseId === 'itil-pim'
+  const maxScore = isRhcsa ? 300 : (isItil ? 20 : ((isLpic1 || isLpic2) ? 800 : 800))
+  const passingScore = isRhcsa ? 210 : (isItil ? 13 : ((isLpic1 || isLpic2) ? 500 : 500))
+  const scaledScore = isItil ? score : Math.round((score / questions.length) * maxScore)
+  const passed = isItil ? score >= passingScore : scaledScore >= passingScore
   const percentage = Math.round((score / questions.length) * 100)
 
   // Per-topic breakdown
@@ -96,7 +97,7 @@ function ExamResults({ answers, questions, score, timeUsed, onClose, onRetry, co
         </div>
         <p className="text-[var(--color-text-secondary)]" style={{ marginTop: '8px' }}>
           {score}/{questions.length} {t('correctAnswers')} ({percentage}%)
-          {passed ? ' — ' + t('minToPass1') + ' ✅' : ` — Min: ${passingScore}/${maxScore}`}
+          {passed ? ' — ✅' : ` — Min: ${passingScore}/${maxScore}`}
         </p>
         <p className="text-[var(--color-text-muted)]" style={{ fontSize: '0.875rem', marginTop: '4px' }}>
           {t('timeLabel')} {Math.floor(timeUsed / 60)}m {timeUsed % 60}s
@@ -210,6 +211,15 @@ export default function ExamPage() {
       passingScore: 500,
       maxScore: 800,
       disclaimer: null,
+    }
+  } else if (courseId === 'itil-pim') {
+    examConfig = {
+      name: 'ITIL 4 Practitioner: Incident Management',
+      questions: 20,
+      timeMinutes: 30,
+      passingScore: 13,
+      maxScore: 20,
+      disclaimer: 'ℹ️ Formato ufficiale: 20 domande, 30 min, libro chiuso. Soglia: 13/20.',
     }
   } else {
     examConfig = {

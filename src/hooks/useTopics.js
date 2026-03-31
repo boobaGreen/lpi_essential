@@ -111,6 +111,12 @@ import { kcnaLessonContent as kcna_LessonContentEN } from '../locales/en/kcna_le
 import { kcnaQuizzesDict, kcnaAllQuizzesDict } from '../data/kcna/quizzes/index.js'
 import { kcnaExtendedContentDict } from '../data/kcna/extendedContent/index.js'
 
+// ─── ITIL 4 Practitioner: Incident Management ────────────────────────────────────
+import { itil_incident_topics as itilTopicsIT } from '../locales/it/itil_incident_topics.js'
+import { itilIncidentLessonContent as itilLessonContentIT } from '../locales/it/itil_incident_lessonContent.js'
+import { itilIncidentExtendedContent as itilExtendedContentIT } from '../locales/it/itil_incident_extendedContent.js'
+import { itilQuizzesDict as itilQuizzesDictIT, itilAllQuizzesDict as itilAllQuizzesDictIT } from '../data/itil_incident/quizzes/index.js'
+
 // ─── Dizionari LPI ──────────────────────────────────────────────────────────
 const lessonContentDict = {
   it: itLessonContent, en: enLessonContent, es: esLessonContent,
@@ -202,6 +208,23 @@ const kcna_TopicDict = {
 }
 const kcna_LessonContentDict = {
   it: kcna_LessonContentIT, en: kcna_LessonContentEN
+}
+
+// ─── Dizionari ITIL ──────────────────────────────────────────────────────────
+const itil_TopicDict = {
+  it: itilTopicsIT, en: itilTopicsIT // Fallback to IT
+}
+const itil_LessonContentDict = {
+  it: itilLessonContentIT, en: itilLessonContentIT // Fallback to IT
+}
+const itil_ExtendedContentDict = {
+  it: itilExtendedContentIT, en: itilExtendedContentIT // Fallback to IT
+}
+const itil_QuizzesDict = {
+  it: itilQuizzesDictIT, en: itilQuizzesDictIT
+}
+const itil_AllQuizzesDict = {
+  it: itilAllQuizzesDictIT, en: itilAllQuizzesDictIT
 }
 
 export function useTopics() {
@@ -322,6 +345,29 @@ export function useTopics() {
       quizzesByTopic,
       allQuizzes,
       extendedContent: kcnaExtendedContentDict[currentLang] ?? kcnaExtendedContentDict['en'] ?? kcnaExtendedContentDict['it'] ?? {},
+    }
+  }
+
+  // ─── ITIL 4 Practitioner: Incident Management ──────────────────────────────────
+  if (currentCourseId === 'itil-pim') {
+    const topics = itil_TopicDict[currentLang] ?? itil_TopicDict['it']
+    const lessonContent = itil_LessonContentDict[currentLang] ?? itil_LessonContentDict['it']
+    const quizzesByTopic = itil_QuizzesDict[currentLang] ?? itil_QuizzesDict['it']
+    const allQuizzes = itil_AllQuizzesDict[currentLang] ?? itil_AllQuizzesDict['it']
+
+    const getTopic = (id) => topics.find(t => t.id === Number(id))
+    const getLesson = (topicId, lessonId) => getTopic(topicId)?.lessons.find(l => l.id === lessonId)
+    const getTotalLessons = () => topics.reduce((sum, t) => sum + t.lessons.length, 0)
+
+    return {
+      topics,
+      getTopic,
+      getLesson,
+      getTotalLessons,
+      lessonContent,
+      quizzesByTopic,
+      allQuizzes,
+      extendedContent: itil_ExtendedContentDict[currentLang] ?? itil_ExtendedContentDict['it'] ?? {},
     }
   }
 

@@ -69,6 +69,17 @@ export const COURSES = {
     description: 'Kubernetes and Cloud Native Associate: architettura k8s, orchestrazione e cloud native.',
     tags: ['Kubernetes', 'Cloud Native', 'CNCF', 'Containers', 'KCNA'],
   },
+  'itil-pim': {
+    id: 'itil-pim',
+    name: 'ITIL 4 Practitioner: Incident Management',
+    code: 'ITIL4-PIM',
+    icon: '🆘',
+    color: '#9333ea',        // ITIL Purple
+    topicCount: 5,
+    available: true,
+    description: 'Gestione dell\'intero ciclo di vita degli incidenti IT per ripristinare i servizi rapidamente.',
+    tags: ['ITIL', 'ITSM', 'Service Management', 'Incident'],
+  },
 }
 
 export const COURSES_LIST = Object.values(COURSES)

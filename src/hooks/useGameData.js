@@ -51,6 +51,9 @@ import * as ptLpic2Data from '../locales/pt/lpic2_gamesData.js'
 import * as ruLpic2Data from '../locales/ru/lpic2_gamesData.js'
 import * as zhLpic2Data from '../locales/zh/lpic2_gamesData.js'
 
+// ITIL 4 Practitioner: Incident Management
+import * as itItilData from '../locales/it/itil_incident_gamesData.js'
+
 
 
 
@@ -94,6 +97,10 @@ const lpic2DataMap = {
   de: deLpic2Data, pt: ptLpic2Data, ru: ruLpic2Data, zh: zhLpic2Data,
 }
 
+const itilDataMap = {
+  it: itItilData, en: itItilData // Fallback to IT
+}
+
 
 export function useGameData() {
   const { currentLang } = useLanguage()
@@ -109,6 +116,8 @@ export function useGameData() {
     map = lpic2DataMap
   } else if (courseId === 'rhcsa') {
     map = rhcsaDataMap
+  } else if (courseId === 'itil-pim') {
+    map = itilDataMap
   } else {
     map = lpiDataMap
   }

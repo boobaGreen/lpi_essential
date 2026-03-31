@@ -20,14 +20,6 @@ const levelConfig = {
   3: { count: 18, timePerQuestion: 15, xp: 40, label: 'Esperto' },
 }
 
-const topicNames = {
-  1: 'Comunità Linux',
-  2: 'Uso del Sistema',
-  3: 'Command Line',
-  4: 'Sistema Operativo',
-  5: 'Sicurezza & Permessi',
-}
-
 export default function QuizGame({ level = 1, onComplete }) {
   const config = levelConfig[level]
   const [questions, setQuestions] = useState([])
@@ -38,8 +30,12 @@ export default function QuizGame({ level = 1, onComplete }) {
   const [finished, setFinished] = useState(false)
   const [timeLeft, setTimeLeft] = useState(config.timePerQuestion)
   const { addXP, completeGame } = useGame()
-  const { allQuizzes } = useTopics()
+  const { allQuizzes, topics } = useTopics()
   const { language, t } = useLanguage()
+
+  const getTopicName = (id) => {
+    return topics.find(t => t.id === id)?.title || ''
+  }
 
   useEffect(() => {
     setCurrent(0)
@@ -128,7 +124,7 @@ export default function QuizGame({ level = 1, onComplete }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
         <span>{t('questionNum') || 'Domanda'} {current + 1}/{questions.length}</span>
         <span style={{ color: q.topicId ? `var(--color-neon-${['blue','green','purple','orange','pink'][q.topicId-1]})` : 'var(--color-text-muted)', fontWeight: 600, fontSize: '0.75rem' }}>
-          {topicNames[q.topicId] || ''}
+          {getTopicName(q.topicId)}
         </span>
         <span style={{ fontWeight: 700, color: score > 0 ? '#22c55e' : 'inherit' }}>✅ {score}</span>
       </div>
